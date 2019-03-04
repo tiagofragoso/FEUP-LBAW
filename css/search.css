@@ -30,3 +30,8 @@
     bottom: 0;
     color: var(--white);
 }
+
+.dropdown .dropdown-menu .dropdown-title {
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--grey);
+}
