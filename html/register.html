@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LBAW</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/register.css">
+    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
+    <script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
+    <script defer src="../libs/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+      <!-- navbar start -->
+      <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <form class="form-inline mr-auto">
+                  <div class="input-group mb-3 my-2 my-lg-0">
+                      <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                          aria-describedby="button-addon2">
+                      <div class="input-group-append">
+                          <button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
+                      </div>
+                  </div>
+              </form>
+              <ul class="navbar-nav">
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Help</a>
+                  </li>
+              </ul>
+  
+          </div>
+      </nav>
+      <!-- navbar end -->
+        <!-- Logo -->
+        <div class="logo">
+          <img src="../assets/logo-vertical.svg" id="logo" alt="sound.hub logo" />
+        </div>
+    <div class="formCard">
+        <div id="formContent">
+           
+          <!-- Login Form -->
+          <form>
+            <input type="text" id="firstName" name="register" placeholder="first name">
+            <input type="text" id="lastName" name="register" placeholder="last name">
+            <input type="text" id="username" name="register" placeholder="username">
+            <input type="email" id="email" name="register" placeholder="email">
+
+            <input type="text" id="password" name="register" placeholder="password">
+            <input type="text" id="repeatpassword" name="register" placeholder="repeat password">
+            <button type="submit" name ="register" class="btn btn-primary">Register</button>
+          </form>
+      
+          <!-- Login -->
+          <div id="formFooter">
+            <a class="login" href="../html/login.html">Already have an account? Sign in </a>
+          </div>
+      
+        </div>
+      </div>
+</body>
+</html>
