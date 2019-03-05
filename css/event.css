@@ -6,3 +6,16 @@
 .nav .nav-item .nav-link.active {
 	border-color: var(--darkblue);
 }
+
+.card {
+	overflow: hidden;
+}
+
+.card-wrapper {
+	max-width: 720px;
+}
+
+.card-header {
+	font-weight: bold;
+	font-size: 1rem;
+}
