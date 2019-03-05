@@ -1,0 +1,64 @@
+:root {
+	--white: #fffefc;
+	--grey: #dedede;
+	--green: #7ee081;
+	--darkgreen: #5ca35e;
+	--blue: #002047;
+	--darkblue: #000022;
+}
+
+
+
+body {
+	background-color: var(--white);
+	font-family: 'Karla', sans-serif;
+  outline-color: rgba(0, 0, 0, 0.2);
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Rubik', sans-serif;
+}
+
+dt{
+  margin-top:15px;
+}
+
+
+@media screen and (min-width: 601px) {
+  dt {
+    font-size: 30px;
+  }
+  dt.faq {
+    font-size:20px;
+  }
+}
+@media screen and (max-width: 600px) {
+  dt {
+    font-size: 15px;
+  }
+  dt.faq {
+    font-size:10px;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  dd {
+    font-size: 20px;
+  }
+  dd.faq{
+    font-size:17px;
+
+  }
+}
+@media screen and (max-width: 600px) {
+  dd {
+    font-size: 8px;
+  }
+}
+.fa.fa-home,.fa-phone{
+  font-size:21px;
+}
+
+
+
