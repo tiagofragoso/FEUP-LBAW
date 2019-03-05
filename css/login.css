@@ -14,7 +14,7 @@ body {
 	background-color: var(--white);
 	font-family: 'Karla', sans-serif;
   outline-color: rgba(0, 0, 0, 0.2);
-  height: 100vh;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -47,13 +47,7 @@ a {
 /* STRUCTURE */
 
 .formCard {
-  display: flex;
-  align-items: center;
-  flex-direction: column; 
-  justify-content: center;
-  width: 100%;
   padding:20px;
-  
 }
 
 #formContent {
