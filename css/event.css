@@ -1,0 +1,8 @@
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--darkblue);
+}

@@ -63,6 +63,16 @@ h1, h2, h3, h4, h5, h6 {
 	color: var(--white);
 }
 
+.btn-light {
+	background-color: white;
+	border-color: white;
+}
+
+.btn-light:hover {
+	background-color: #F2F3F5;
+	border-color: #F2F3F5;
+}
+
 .dropdown-menu-right {
 	background-color: var(--white);
 }
