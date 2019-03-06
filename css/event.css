@@ -12,10 +12,19 @@
 }
 
 .card-wrapper {
-	max-width: 720px;
+	max-width: 960px;
 }
 
 .card-header {
 	font-weight: bold;
 	font-size: 1rem;
+}
+
+.carousel-item {
+	max-height: 360px;
+}
+
+.artists-wrapper {
+	overflow-x: auto; 
+	flex-wrap: nowrap;
 }
