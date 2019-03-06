@@ -1,0 +1,27 @@
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--darkblue);
+}
+.card-wrapper {
+	max-width: 960px;
+}
+
+.card-link {
+	color: var(--darkgrey);
+}
+
+.card-link:hover {
+	color: var(--green);
+}
+
+.card-title {
+    color: var(--blue);
+}
+
+.border-green {
+	border: 3px solid var(--green)!important;
+}
