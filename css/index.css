@@ -6,6 +6,7 @@
 	--darkgreen: #5ca35e;
 	--blue: #002047;
 	--darkblue: #000022;
+	--shadow: 0 0 20px rgba(27,39,51,.3);
 }
 
 body {

@@ -25,3 +25,7 @@
 .border-green {
 	border: 3px solid var(--green)!important;
 }
+
+.card-fade {
+    opacity: 0.3;
+}
