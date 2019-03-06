@@ -29,9 +29,6 @@ dt{
   dt {
     font-size: 30px;
   }
-  dt.faq {
-    font-size:20px;
-  }
 }
 @media screen and (max-width: 600px) {
   dt {
@@ -46,10 +43,6 @@ dt{
   dd {
     font-size: 20px;
   }
-  dd.faq{
-    font-size:17px;
-
-  }
 }
 @media screen and (max-width: 600px) {
   dd {
@@ -58,6 +51,13 @@ dt{
 }
 .fa.fa-home,.fa-phone{
   font-size:21px;
+}
+
+.faq a{
+  color: var(--blue);
+}
+.faq a:hover{
+  color:var(--darkblue);
 }
 
 
