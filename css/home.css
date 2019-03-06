@@ -29,8 +29,3 @@
     overflow: hidden;
     box-shadow: var(--shadow);
 }
-
-.activity-event-card .white-overlay {
-    background-image: linear-gradient(-45deg, transparent 50px, var(--white) 50px);
-    z-index: 10;
-}
