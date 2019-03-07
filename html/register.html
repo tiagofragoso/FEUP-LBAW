@@ -6,6 +6,7 @@
     <title>LBAW</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../libs/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/index.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/register.css">
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
     <script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
@@ -13,21 +14,18 @@
 </head>
 <body>
         <!-- Logo -->
-        <div class="logo">
-          <img src="../assets/logo-vertical.svg" id="logo" alt="sound.hub logo"/>
-        </div>
         <div class="formCard d-flex justify-content-center align-items-center flex-column w-100">
-        <div id="formContent">
-           
+            <div id="formContent">              
+              <!-- Logo -->
+              <div class="logo">
+                  <img src="../assets/logo-vertical.svg" id="logo" alt="sound.hub logo" />
+              </div>
           <!-- Login Form -->
           <form>
-            <input type="text" id="firstName" name="register" placeholder="first name">
-            <input type="text" id="lastName" name="register" placeholder="last name">
             <input type="text" id="username" name="register" placeholder="username">
             <input type="email" id="email"  name="register" placeholder="name@example.com">
-
             <input type="text" id="password" name="register" placeholder="password">
-            <input type="text" id="repeatpassword" name="register" placeholder="repeat password">
+            <input type="text" id="repeatpassword" name="register" placeholder="confirm password">
             <button type="submit" name ="register" class="btn btn-primary">Register</button>
           </form>
       
