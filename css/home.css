@@ -29,3 +29,22 @@
     overflow: hidden;
     box-shadow: var(--shadow);
 }
+
+.card {
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: none;
+}
+
+.card-wrapper {
+	max-width: 720px;
+}
+
+.card-header {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.post-card-header {
+    height: 75px;
+}
