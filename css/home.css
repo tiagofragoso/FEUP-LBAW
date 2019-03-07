@@ -1,12 +1,6 @@
 .event-card {
     border-radius: 4px;
     overflow: hidden;
-    border: 1px solid var(--grey);
-    transition: box-shadow 0.2s ease-in-out;
-}
-
-.event-card:hover {
-    box-shadow: var(--shadow);
 }
 
 .event-card .event-header {
@@ -27,12 +21,10 @@
 .activity-event-card {
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: var(--shadow);
 }
 
 .card {
     overflow: hidden;
-    box-shadow: var(--shadow);
     border: none;
 }
 
@@ -47,4 +39,13 @@
 
 .post-card-header {
     height: 75px;
+}
+
+.hover-shadow {
+    border: 1px solid var(--grey);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.hover-shadow:hover, .hover-shadow:focus {
+    box-shadow: var(--shadow);
 }
