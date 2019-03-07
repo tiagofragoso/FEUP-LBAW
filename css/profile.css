@@ -29,3 +29,8 @@
 .card-fade {
     opacity: 0.3;
 }
+
+.mytickets {
+    overflow-x: auto; 
+	flex-wrap: nowrap;
+}

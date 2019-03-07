@@ -1,0 +1,12 @@
+.ticket {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.ticket-location, .ticket-date {
+    opacity: 0.5;
+}
+
+.ticket-logo {
+    color: var(--green);
+}
