@@ -1,25 +1,3 @@
-:root {
-	--white: #fffefc;
-	--grey: #dedede;
-	--green: #7ee081;
-	--darkgreen: #5ca35e;
-	--blue: #002047;
-	--darkblue: #000022;
-}
-
-
-
-body {
-	background-color: var(--white);
-	font-family: 'Karla', sans-serif;
-  outline-color: rgba(0, 0, 0, 0.2);
-  height: 100vh;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Rubik', sans-serif;
-}
-
 dt{
   margin-top:15px;
 }
@@ -49,9 +27,6 @@ dt{
     font-size: 8px;
   }
 }
-.fa.fa-home,.fa-phone{
-  font-size:21px;
-}
 
 .faq a{
   color: var(--blue);
@@ -59,6 +34,8 @@ dt{
 .faq a:hover{
   color:var(--darkblue);
 }
+
+
 
 
 
