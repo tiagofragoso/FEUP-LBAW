@@ -67,14 +67,16 @@
 				<div class="card pb-4">
 					<div class="card-header">
 						<div class="row justify-content-center">
-							<div class="col-6 mb-3 mt-3 text-center">
+							<div class="col-6 mb-3 mt-3 text-center position-relative">
 								<img src="../assets/user.svg" alt="..." class="rounded-circle border border-green"
 									width="120" height="120">
+								<i class="fas fa-camera position-absolute icon-btn" id="profile-picture-btn"></i>
 							</div>
 						</div>
-						<div class="row justify-content-center">
-							<div class="col-10 text-center">
-								<h3 class="card-title">John Smith</h5>
+						<div class="row justify-content-center position-relative">
+							<div class="col-5 text-center">
+								<h3 class="card-title user-name">John Smith</h3>
+								<i class="fas fa-pen icon-btn position-absolute" id="name-btn"></i>
 							</div>
 						</div>
 						<div class="row justify-content-center mb-2">
@@ -83,10 +85,10 @@
 							</div>
 						</div>
 						<div class="row justify-content-center mb-4">
-							<div class="col-2 text-center border-right pr-0">
+							<div class="col-4 text-right border-right pr-2">
 								<p class="card-text">123 followers</p>
 							</div>
-							<div class="col-2 text-center pl-0">
+							<div class="col-4 text-left pl-0 ml-2">
 								<p class="card-text">124 following</p>
 							</div>
 						</div>
@@ -96,14 +98,14 @@
 									role="button" aria-expanded="false" aria-controls="mytickets">My tickets</a>
 							</div>
 							<div class="col text-left">
-								<a href="#" class="card-link border-bottom">Settings</a>
+								<a href="settings.html" class="card-link border-bottom">Settings</a>
 							</div>
 						</div>
 					</div>
 					<div class="card-body">
 						<div class="mytickets collapse mb-2" id="mytickets">
 							<div class="row pl-3">
-								<div class="col-4 card ticket mr-1 ml-1 pt-2 pb-2" data-toggle="modal"
+								<div class="col-6 col-md-4 card ticket mr-1 ml-1 pt-2 pb-2" data-toggle="modal"
 									data-target="#ticket1">
 									<div class="row">
 										<div class="col-12">
@@ -126,7 +128,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-4 card ticket mr-1 ml-1 pt-2 pb-2">
+								<div class="col-6 col-md-4 card ticket mr-1 ml-1 pt-2 pb-2">
 									<div class="row">
 										<div class="col-12">
 											<h4 class="ticket-title">Event title</h4>
@@ -148,7 +150,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-4 card ticket mr-1 ml-1 pt-2 pb-2">
+								<div class="col-6 col-md-4 card ticket mr-1 ml-1 pt-2 pb-2">
 									<div class="row">
 										<div class="col-12">
 											<h4 class="ticket-title">Event title</h4>
@@ -171,7 +173,7 @@
 
 									</div>
 								</div>
-								<div class="col-4 card ticket mr-1 ml-1 pt-2 pb-2">
+								<div class="col-6 col-md-4 card ticket mr-1 ml-1 pt-2 pb-2">
 									<div class="row">
 										<div class="col-12">
 											<h4 class="ticket-title">Event title</h4>

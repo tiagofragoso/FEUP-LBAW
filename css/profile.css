@@ -34,3 +34,22 @@
     overflow-x: auto; 
 	flex-wrap: nowrap;
 }
+
+#profile-picture-btn {
+    top: 5%;
+    right: 35%;
+}
+
+.icon-btn {
+    color: var(--darkgrey);
+}
+
+.icon-btn:hover {
+	color: var(--blue);
+	cursor: pointer;
+}
+
+#name-btn {
+	right: 25%;
+	top: 20%;
+}
