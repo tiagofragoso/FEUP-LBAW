@@ -32,6 +32,7 @@
 .activity-event-card {
     border-radius: 4px;
     overflow: hidden;
+    height: 150px;
 }
 
 .card {
@@ -50,6 +51,7 @@
 
 .post-card-header {
     height: 75px;
+    background-color: rgba(0,0,0,.03);
 }
 
 .hover-shadow {
