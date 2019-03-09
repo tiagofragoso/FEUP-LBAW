@@ -7,7 +7,7 @@
 	border-color: var(--darkblue);
 }
 .card-wrapper {
-	max-width: 960px;
+    max-width: 960px;
 }
 
 .card-link {
@@ -30,7 +30,7 @@
     opacity: 0.3;
 }
 
-.mytickets {
+.mytickets > .row{
     overflow-x: auto; 
 	flex-wrap: nowrap;
 }

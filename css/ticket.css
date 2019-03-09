@@ -1,12 +1,24 @@
 .ticket {
     background-color: var(--blue);
     color: var(--white);
+    cursor: pointer;
 }
 
 .ticket-location, .ticket-date {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .ticket-logo {
     color: var(--green);
+
 }
+
+.download-button {
+    opacity: 0.7;
+}
+
+.download-button:hover {
+    color: var(--green);
+    opacity: 1;
+}
+

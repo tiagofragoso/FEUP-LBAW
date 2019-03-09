@@ -80,3 +80,7 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
 	color: var(--darkblue);
 }
+
+.navbar {
+	border: 1px solid var(--grey);
+}
