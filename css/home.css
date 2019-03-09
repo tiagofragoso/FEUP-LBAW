@@ -1,3 +1,14 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.link:focus, .link:hover, .link:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .event-card {
     border-radius: 4px;
     overflow: hidden;
