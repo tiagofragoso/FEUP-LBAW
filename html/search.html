@@ -27,7 +27,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline mr-auto">
-                <div class="input-group mb-3 my-2 my-lg-0 d-none">
+                <div class="input-group mb-3 my-2 my-lg-0">
                     <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
@@ -63,13 +63,13 @@
                 <div class="col-12 input-group mb-3">
                     <input type="text" class="form-control py-4 h-100" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
                     <div class="input-group-append h-100">
-                        <button type="submit" class="btn btn-primary px-5" type="button" id="button-addon2">Button</button>
+                        <button type="submit" class="btn btn-primary px-2 px-sm-4 px-md-5 w-100" type="button" id="button-addon2">Go!</button>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownDate" data-toggle="dropdown"
+                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownDate" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Date
                     </button>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownLocation" data-toggle="dropdown"
+                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownLocation" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Location
                     </button>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownPrice" data-toggle="dropdown"
+                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownPrice" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Price
                     </button>
@@ -104,8 +104,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="dropdown col-sm-6 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownCategory" data-toggle="dropdown"
+                <div class="dropdown col-sm-4 col-md-2 mt-3">
+                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownCategory" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Category
                     </button>
@@ -116,8 +116,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="dropdown col-sm-6 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownStatus" data-toggle="dropdown"
+                <div class="dropdown col-sm-4 col-md-2 mt-3">
+                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownStatus" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Status
                     </button>
@@ -126,6 +126,17 @@
                         <p>
                             What's the status?
                         </p>
+                    </div>
+                </div>
+                <div class="dropdown col-sm-4 col-md-2 mt-3">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownSort" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Sort by
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownSort2">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                 </div>
             </div>
@@ -142,7 +153,7 @@
         </div>
         <div class="row mt-3">
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownDate" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownDate" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Date
                 </button>
@@ -154,7 +165,7 @@
                 </div>
             </div>
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownLocation" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownLocation" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Location
                 </button>
@@ -166,7 +177,7 @@
                 </div>
             </div>
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownPrice" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownPrice" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Price
                 </button>
@@ -178,7 +189,7 @@
                 </div>
             </div>
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownCategory" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownCategory" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Category
                 </button>
@@ -190,7 +201,7 @@
                 </div>
             </div>
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100" id="dropdownStatus" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownStatus" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Status
                 </button>
@@ -202,7 +213,7 @@
                 </div>
             </div>
             <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100" id="dropdownSort2" data-toggle="dropdown"
+                <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownSort" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Sort by
                 </button>
