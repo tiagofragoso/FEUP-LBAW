@@ -18,14 +18,25 @@ a {
   text-decoration: none;
   font-weight: 400;
 }
-
-.formCard {
-  padding:30px;
+@media screen and (min-width: 601px) {
+  .formCard {
+    padding:30px;
+  }
+  #formContent{
+    padding:50px;
+  }
+}
+@media screen and (max-width: 600px) {
+ .formCard{
+   padding:10px;
+ }
+ #formContent{
+   padding:22px;
+ }
 }
 
 #formContent {
   background: var(--white);
-   padding: 50px;
   max-width: 400px;
   position: relative;
   text-align: center;
@@ -35,7 +46,6 @@ a {
   box-shadow: var(--shadow);
   
 }
-
 
 #formFooter {
   background-color: var(--white);
@@ -78,7 +88,7 @@ input[name=register][type=text], input[name=register][type=email]{
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 253px;
   border: 2px solid var(--grey);
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -95,7 +105,7 @@ input[name=register][type=text], input[name=register][type=email]{
 }
 button[name=register]{
   margin-top: 5px;
-  width:85%;
+  width: 253px;
 }
 
 
