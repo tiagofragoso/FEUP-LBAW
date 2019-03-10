@@ -5,11 +5,14 @@
 	--darkgreen: #5ca35e;
 	--blue: #002047;
 	--darkblue: #000022;
+	--hyperlinkblue: #5C7189;
+	--hoverblue: #173457;
 }
 
 body {
 	background-color: var(--white);
 	font-family: 'Karla', sans-serif;
+	color: var(--darkblue);
 	outline-color: rgba(0, 0, 0, 0.2);
 }
 
