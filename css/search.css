@@ -1,9 +1,21 @@
+.navbar {
+    background-color: transparent !important;
+}
+
 .banner-container {
-    height: calc(100vh - 66px);
+    height: calc(100vh);
+    position: relative;
+    top: -66px;
     background-image: url('../assets/search-background.jpeg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.banner-container .search-card {
+    background-color: var(--white);
+    box-shadow: 0 0 40px rgba(27,39,51,1);
+    border-radius: 0.25rem;
 }
 
 #results-container {
