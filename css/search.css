@@ -60,15 +60,20 @@
     min-height: calc(100vh - 114px);
 }
 
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.link:focus, .link:hover, .link:active {
+    text-decoration: none;
+    color: inherit;
+}
+
 .event-card {
     border-radius: 4px;
     overflow: hidden;
-    border: 1px solid var(--grey);
-    transition: box-shadow 0.2s ease-in-out;
-}
-
-.event-card:hover {
-    box-shadow: var(--shadow);
 }
 
 .event-card .event-header {
@@ -85,6 +90,16 @@
     bottom: 0;
     color: var(--white);
 }
+
+.hover-shadow {
+    border: 1px solid var(--grey);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.hover-shadow:hover, .hover-shadow:focus {
+    box-shadow: var(--shadow);
+}
+
 
 .dropdown .dropdown-menu .dropdown-title {
     padding-bottom: 5px;
