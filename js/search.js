@@ -4,8 +4,10 @@
 (new IntersectionObserver((e,o) => {
     if (e[0].intersectionRatio > 0){
         document.querySelector('nav').classList.remove('stuck');
+        document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal-white.svg';
     } else {
         document.querySelector('nav').classList.add('stuck');
+        document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal.svg';
     };
 })).observe(document.querySelector('.trigger'));
 

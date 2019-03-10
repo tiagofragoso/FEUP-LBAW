@@ -1,33 +1,69 @@
 .navbar {
     background-color: transparent !important;
-    -webkit-transition: background-color 0.2s ease-in-out;
-    -moz-transition: background-color 0.2s ease-in-out;
-    -o-transition: background-color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out;
 }
 
 .navbar .input-group {
     opacity: 0;
-    -webkit-transition: opacity 0.2s ease-in-out;
-    -moz-transition: opacity 0.2s ease-in-out;
-    -o-transition: opacity 0.2s ease-in-out;
-    transition: opacity 0.2s ease-in-out;
+}
+
+.navbar .nav-link {
+    color: var(--white) !important;
+}
+
+.navbar .btn-primary {
+    background-color: var(--white);
+    border-color: var(--white);
+    color: var(--blue);
+}
+
+.navbar .btn-primary:hover {
+    color: var(--white);
 }
 
 .navbar.stuck {
     background-color: var(--white) !important;
-    -webkit-transition: background-color 0.2s ease-in-out;
-    -moz-transition: background-color 0.2s ease-in-out;
-    -o-transition: background-color 0.2s ease-in-out;
-    transition: background-color 0.2s ease-in-out;
 }
 
 .navbar.stuck .input-group {
     opacity: 1;
+}
+
+.navbar.stuck .nav-link {
+    color: var(--blue) !important;
+}
+
+.navbar.stuck .btn-primary {
+    background-color: var(--blue);
+    border-color: var(--blue);
+    color: var(--white);
+}
+
+.navbar, .navbar.stuck, .navbar .btn-primary, .navbar.stuck .btn-primary {
+    -webkit-transition: background-color 0.2s ease-in-out !important;
+    -moz-transition: background-color 0.2s ease-in-out !important;
+    -o-transition: background-color 0.2s ease-in-out !important;
+    transition: background-color 0.2s ease-in-out !important;
+}
+
+.navbar .input-group, .navbar.stuck .input-group {
     -webkit-transition: opacity 0.2s ease-in-out;
     -moz-transition: opacity 0.2s ease-in-out;
     -o-transition: opacity 0.2s ease-in-out;
     transition: opacity 0.2s ease-in-out;
+}
+
+.navbar .nav-link, .navbar.stuck .nav-link, .navbar .btn-primary, .navbar.stuck .btn-primary {
+    -webkit-transition: color 0.2s ease-in-out !important;
+    -moz-transition: color 0.2s ease-in-out !important;
+    -o-transition: color 0.2s ease-in-out !important;
+    transition: color 0.2s ease-in-out !important;
+}
+
+.navbar .btn-primary, .navbar.stuck .btn-primary {
+    -webkit-transition: border-color 0.2s ease-in-out;
+    -moz-transition: border-color 0.2s ease-in-out;
+    -o-transition: border-color 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out;
 }
 
 .banner-container {
@@ -44,15 +80,6 @@
     .banner-container {
         top: -57.23px;
     }
-}
-
-.banner-overlay {
-    width: 100%;
-    height: 15%;
-    position: absolute;
-    top: 0;
-    background: linear-gradient(#fff, transparent);
-    z-index: 1;
 }
 
 .banner-container .search-card {
