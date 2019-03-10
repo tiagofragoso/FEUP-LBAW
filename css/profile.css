@@ -53,3 +53,38 @@
 	right: 25%;
 	top: 20%;
 }
+
+.comment {
+	box-sizing: border-box;
+}
+
+.comment-text {
+	background-color: #eff1f3;
+	border-radius: 4px;
+}
+
+.author {
+	font-weight: bold;
+}
+
+.ban-btn, .diss-btn{
+	color: var(--darkgrey);
+}
+
+.ban-btn:hover {
+	color: var(--orange);
+	cursor: pointer;
+}
+
+.diss-btn:hover {
+	color: var(--green);
+	cursor: pointer;
+}
+
+.dissed-btn {
+	color: var(--green);
+}
+
+.baned-btn {
+	color: var(--orange);
+}
