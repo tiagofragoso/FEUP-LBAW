@@ -40,6 +40,12 @@
     background-size: cover;
 }
 
+@media screen and (max-width: 991px) {
+    .banner-container {
+        top: -57.23px;
+    }
+}
+
 .banner-overlay {
     width: 100%;
     height: 15%;
