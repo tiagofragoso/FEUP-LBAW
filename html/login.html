@@ -12,27 +12,39 @@
     <script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
     <script defer src="../libs/bootstrap/bootstrap.min.js"></script>
 </head>
-<body>   
-
-    <div class="formCard d-flex justify-content-center align-items-center flex-column w-100">
-        <div id="formContent">              
-          <!-- Logo -->
-          <div class="logo">
-              <img src="../assets/logo-vertical.svg" id="logo" alt="sound.hub logo" />
-            </div>   
-          <!-- Login Form -->
-          <form>
-            <input type="text" id="username" name="login" placeholder="username">
-            <input type="text" id="password" name="login" placeholder="password">
-            <button type="submit" name ="login" class="btn btn-primary">Login</button>
-          </form>
-      
-          <!-- Register -->
-          <div id="formFooter">
-            <a class="register" href="../html/register.html">Don't have an account? Sign up </a>
-          </div>
-      
+<body>
+    <div class="w-100 min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="mx-auto formContent p-5">
+                <div class="row mb-5 justify-content-center">
+                    <div class="col-7">
+                        <img src="../assets/logo-vertical.svg" alt="sound.hub logo">
+                    </div>
+                </div>
+    
+                <form class="row mb-5 justify-content-center">
+                    <div class="col-12 col-md-10 form-group">
+                        <input type="email" class="form-control w-100 text-center" placeholder="email">
+                    </div>
+                    
+                    <div class="col-12 col-md-10 form-group">
+                        <input type="password" class="form-control w-100 text-center" placeholder="password">
+                    </div>
+    
+                    <div class="col-12 col-md-10 ">
+                        <button type="submit" name="login" class="btn btn-primary w-100">
+                            Login
+                        </button>
+                    </div>
+                </form>
+    
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        Don't have an account? <a class="register" href="../html/register.html">Sign up </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 </body>
 </html>
