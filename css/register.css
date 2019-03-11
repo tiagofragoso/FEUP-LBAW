@@ -28,7 +28,7 @@ a {
 }
 @media screen and (max-width: 600px) {
  .formCard{
-   padding:10px;
+   padding:70px;
  }
  #formContent{
    padding:22px;
