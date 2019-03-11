@@ -1,10 +1,14 @@
 :root {
 	--white: #ffffff;
 	--grey: #dedede;
+	--darkgrey: #8E8E8E;
 	--green: #7ee081;
 	--darkgreen: #5ca35e;
 	--blue: #002047;
 	--darkblue: #000022;
+	--shadow: 0 0 20px rgba(27,39,51,.3);
+	--orange: #f79156;
+	--darkorange: #e1844f;
 	--hyperlinkblue: #5C7189;
 	--hoverblue: #173457;
 }
@@ -37,6 +41,16 @@ h1, h2, h3, h4, h5, h6 {
 .btn-secondary, .btn-secondary:focus {
 	background-color: var(--green);
 	border-color: var(--green);
+}
+
+.btn-danger, .btn-danger:focus {
+	background-color: var(--orange);
+	border-color: var(--orange);
+}
+
+.btn-danger:hover, .btn-danger:active {
+	background-color: var(--darkorange)!important;
+	border-color: var(--darkorange)!important;
 }
 
 .btn-secondary:hover, .btn-secondary:active {
@@ -90,4 +104,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
 	color: var(--darkblue);
+}
+
+.navbar {
+	border: 1px solid var(--grey);
 }
