@@ -1,0 +1,116 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.link:focus, .link:hover, .link:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.event-card {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.event-card .event-header {
+    height: 150px;
+    overflow: hidden;
+}
+
+.event-card .event-header .gradient-overlay {
+    background: rgba(0,0,0,0.2);
+    top: 0;
+}
+
+.event-card .event-header .event-title {
+    bottom: 0;
+    color: var(--white);
+}
+
+.activity-event-card {
+    border-radius: 4px;
+    overflow: hidden;
+    height: 150px;
+}
+
+.card {
+    overflow: hidden;
+    border: none;
+}
+
+.card-wrapper {
+	max-width: 720px;
+}
+
+.card-header {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.post-card-header {
+    height: 75px;
+    background-color: rgba(0,0,0,.03);
+}
+
+.post-card-header a {
+    color: var(--blue);
+}
+
+.hover-shadow {
+    border: 1px solid var(--grey);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.hover-shadow:hover, .hover-shadow:focus {
+    box-shadow: var(--shadow);
+}
+
+.user-tag {
+    color: var(--green);
+}
+
+.user-tag:hover {
+    color: var(--darkgreen);
+}
+
+@media screen and (max-width: 767px) {
+    .activity-event-card {
+        height: 110px;
+    }
+
+    .activity-event-card .event-title {
+        font-size: 0.9em;
+    }
+
+    .activity-event-card .event-date {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .event-location {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .join-btn {
+        font-size: 0.6em;
+    }
+
+    .post-card-header {
+        height: 50px;
+    }
+
+    .post-card-header .event-title {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .post-card-header {
+        height: 40px;
+    }
+
+    .post-card-header .event-title {
+        font-size: 0.7em;
+    }
+}
