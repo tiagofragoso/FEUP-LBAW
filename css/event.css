@@ -131,3 +131,9 @@ a.badge-secondary:hover {
 	height: 4px;
 	width: 100%;
 }
+
+.more-button {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+}

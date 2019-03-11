@@ -12,6 +12,9 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
 	<script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
 	<script defer src="../libs/bootstrap/bootstrap.min.js"></script>
 </head>
@@ -61,7 +64,17 @@
 	<!-- navbar end -->
 	<div class="container">
 		<div class="row">
-			<div class="card-wrapper col-12 mx-auto ">
+			<div class="card-wrapper col-12 mx-auto position-relative">
+				<div class="dropdown position-absolute more-button">
+					<button class="btn btn-light border-light" type="button" id="dropdownMenuButton"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-ellipsis-h"></i>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#">Report event</a>
+						<a class="dropdown-item" href="#">Share event</a>
+					</div>
+				</div>
 				<div class="card mb-5">
 					<div id="carouselExampleIndicators" class=" card-img-top carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
@@ -85,26 +98,28 @@
 					<div class="container mt-3">
 						<div class="row mb-2 justify-content-between">
 							<div class="col-12 col-sm-9">
-								<h5 class="card-title"><strong>Exposição Banksy's Dismaland and Others by Barry
-										Cawston</strong></h5>
+								<h5 class="card-title">
+									<strong>Exposição Banksy Dismaland and Others by Barry Cawston exactly 65</strong>
+								</h5>
 							</div>
 							<div class="col-12 col-sm-3">
 								<button type="submit" class="btn btn-primary w-100">Join</button>
 							</div>
 						</div>
+						<hr>
 						<div class="row mb-2 justify-content-between">
 							<div class="col-8">
-								<p class="card-subtitle mb-2 text-muted"><span>FRI, MAR 15 at 14:00</span> - <span>FRI,
+								<p class="card-subtitle text-muted"><span>FRI, MAR 15 at 14:00</span> - <span>FRI,
 										MAR 16 at 22:00</span></p>
 							</div>
 							<div class="col-3">
-								<p class="card-subtitle mb-2 text-muted text-right">445 <i
+								<p class="card-subtitle text-muted text-right">445 <i
 										class="mr-1 fas fa-users"></i></p>
 							</div>
 						</div>
-						<div class="row mb-2">
+						<div class="row mb-2 justify-content-between">
 							<div class="col-8">
-								<div class="d-flex flex-column card-subtitle mb-2 text-muted">
+								<div class="d-flex flex-column card-subtitle text-muted">
 									<p class="mb-0">
 										Alfândega do Porto
 									</p>
@@ -112,19 +127,23 @@
 										target="_blank" class="mb-0 event-addr">
 										Rua Nova da Alfândega, 4050-430 Porto, Portugal
 									</a>
-
 								</div>
 							</div>
 							<div class="col-4">
-								<p class="card-subtitle mb-2 text-muted text-right">Concert</p>
+								<p class="card-subtitle text-muted text-right">Concert</p>
 							</div>
 						</div>
-						<div class="row mb-2">
-							<div class="col-12">
+						<div class="row mb-2 justify-content-between">
+							<div class="col-8">
 								<p class="card-text">Some quick example text to build on the card title and make up the
 									bulk of the
-									card's content.</p>
+									card's content.
+								</p>
 							</div>
+							<div class="col-4">
+								<p class="card-subtitle text-muted text-right">Public</p>
+							</div>
+							
 						</div>
 						<div class="row justify-content-between">
 							<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
@@ -271,23 +290,24 @@
 											<div class="card col-12 col-lg-9 mb-4">
 												<div class="row">
 													<div class="col-12 col-md-10">
-														<div class="container py-3">
+														<div class="py-3 px-0 px-md-3 w-100">
 															<div class="row">
-																<div class="col-1">
+																<div class="col-12 d-flex flex-row">
 																	<img src="../assets/user.svg"
-																		class="rounded-circle rounded-circle border border-light"
-																		width="30" />
-																</div>
-																<div class="col-11 d-flex flex-column">
-																	<p class="card-text mb-0">
-																		<a href="#" class="badge badge-secondary">
-																			The 1975
-																		</a>
-																		created a <strong>post</strong>.
-																	</p>
-																	<span class="post-date text-muted">
-																		4 MAR | 15:58
-																	</span>
+																		class="rounded-circle rounded-circle border border-light mr-2"
+																		width="30" height="30" />
+																	<div class="d-flex flex-column">
+																		<p class="card-text mb-0">
+																			<a href="#" class="badge badge-secondary">
+																				The 1975
+																			</a>
+																			created a very very very long
+																			<strong>post</strong>.
+																		</p>
+																		<span class="post-date text-muted">
+																			MAR 4 | 15:58
+																		</span>
+																	</div>
 																</div>
 															</div>
 															<p class="card-text mt-3">
@@ -298,22 +318,30 @@
 														</div>
 													</div>
 													<div
-														class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto border-top border-md-0 border-light">
-														<button type="button" class="btn btn-light w-100 h-100">
+														class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto">
+														<!-- <button type="button" class="px-0 py-0 btn btn-light w-100 h-100 ">
+																<div
+																	class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+																	<i class="fas fa-ellipsis-h"></i>
+																</div>
+															</button> -->
+														<button type="button"
+															class="btn btn-light w-100 h-100 flex-grow-2">
 															<div
 																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-																<i class="far fa-thumbs-up"></i>
-																<span>312</span>
+																<!-- <i class="far fa-thumbs-up"></i> -->
+																<i class="fas fa-thumbs-up"></i>
+																<span><strong>312</strong></span>
 															</div>
 														</button>
 														<button type="button" data-toggle="collapse"
 															data-target="#comments1" aria-expanded="false"
 															aria-controls="collapseExample"
-															class="side-button btn btn-light w-100 h-100">
+															class="side-button btn btn-light w-100 h-100 flex-grow-2">
 															<div
 																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
 																<i class="far fa-comment-alt"></i>
-																<span>312</span>
+																<span>2</span>
 															</div>
 														</button>
 													</div>
