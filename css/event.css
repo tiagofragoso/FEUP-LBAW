@@ -59,13 +59,17 @@ a.badge-secondary:hover {
 	background-color: var(--darkgreen);
 }
 
+.submit-btn-wrapper {
+	bottom: 0;
+	right: 0;
+	height: 100%;
+}
+
 .submit-btn {
 	background-color: transparent;
 	border: 0;
-	bottom: 0.1em;
-	right: 0;
-	/* height: 100%; */
 	color: var(--grey);
+	vertical-align: middle;
 }
 
 .submit-btn:hover {
@@ -91,13 +95,12 @@ a.badge-secondary:hover {
 }
 
 .event-addr {
-	color: #5C7189;
-
+	color: var(--hyperlinkblue);
 	font-size: 85%;
 }
 
 .event-addr:hover {
-	color: #173457;
+	color: var(--hoverblue);
 }
 
 .step {
@@ -149,3 +152,33 @@ a.badge-secondary:hover {
 	bottom: 1rem;
 	opacity: 0.8;
 }
+
+.comment-footer {
+	font-size: 80%;
+}
+
+.comment-footer a {
+	color: var(--hyperlinkblue);
+}
+
+.comment-footer a:hover {
+	color: var(--hoverblue);
+}
+
+.qa-question {
+	color: var(--darkblue);
+	white-space: normal;
+}
+
+.qa-question:hover {
+	color: var(--hoverblue);
+}
+
+.view-all {
+	color: var(--hyperlinkblue);
+}
+
+.view-all:hover {
+	color: var(--hoverblue);
+}
+
