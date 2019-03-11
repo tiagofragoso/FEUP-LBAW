@@ -96,3 +96,12 @@ h1, h2, h3, h4, h5, h6 {
 .navbar {
 	border: 1px solid var(--grey);
 }
+
+.hover-shadow {
+    border: 1px solid var(--grey);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.hover-shadow:hover, .hover-shadow:focus {
+    box-shadow: var(--shadow);
+}
