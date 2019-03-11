@@ -64,19 +64,23 @@
 	<!-- navbar end -->
 	<div class="container">
 		<div class="row">
-			<div class="card-wrapper col-12 mx-auto position-relative">
-				<div class="dropdown position-absolute more-button">
-					<button class="btn btn-light border-light" type="button" id="dropdownMenuButton"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-ellipsis-h"></i>
-					</button>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-						<a class="dropdown-item" href="#">Report event</a>
-						<a class="dropdown-item" href="#">Share event</a>
-					</div>
-				</div>
+			<div class="card-wrapper col-12 mx-auto">
 				<div class="card mb-5">
-					<div id="carouselExampleIndicators" class=" card-img-top carousel slide" data-ride="carousel">
+					<div id="carouselExampleIndicators" class="position-relative card-img-top carousel slide"
+						data-ride="carousel">
+						<div class="dropdown position-absolute more-button">
+							<button class="btn btn-light border-light" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fas fa-ellipsis-h"></i>
+							</button>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="#">Report event</a>
+								<a class="dropdown-item" href="#">Share event</a>
+							</div>
+						</div>
+						<button class="btn btn-light border-light position-absolute tag-button" type="button">
+							<i class="fas fa-tag mr-1"></i> Rock
+						</button>
 						<ol class="carousel-indicators">
 							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
 							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -96,28 +100,28 @@
 						</div>
 					</div>
 					<div class="container mt-3">
-						<div class="row mb-2 justify-content-between">
-							<div class="col-12 col-sm-9">
+						<div class="row justify-content-between">
+							<div class="col-12 col-sm-9 mb-2 mb-sm-0 d-flex flex-column">
 								<h5 class="card-title">
 									<strong>Exposição Banksy Dismaland and Others by Barry Cawston exactly 65</strong>
 								</h5>
+								<p class="text-muted mb-0">Hosted by <strong>John Smith</strong> and 3 others</p>
 							</div>
 							<div class="col-12 col-sm-3">
 								<button type="submit" class="btn btn-primary w-100">Join</button>
 							</div>
 						</div>
 						<hr>
-						<div class="row mb-2 justify-content-between">
+						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
 								<p class="card-subtitle text-muted"><span>FRI, MAR 15 at 14:00</span> - <span>FRI,
 										MAR 16 at 22:00</span></p>
 							</div>
 							<div class="col-3">
-								<p class="card-subtitle text-muted text-right">445 <i
-										class="mr-1 fas fa-users"></i></p>
+								<p class="card-subtitle text-muted text-right">445 <i class="mr-1 fas fa-users"></i></p>
 							</div>
 						</div>
-						<div class="row mb-2 justify-content-between">
+						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
 								<div class="d-flex flex-column card-subtitle text-muted">
 									<p class="mb-0">
@@ -133,7 +137,7 @@
 								<p class="card-subtitle text-muted text-right">Concert</p>
 							</div>
 						</div>
-						<div class="row mb-2 justify-content-between">
+						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
 								<p class="card-text">Some quick example text to build on the card title and make up the
 									bulk of the
@@ -143,7 +147,7 @@
 							<div class="col-4">
 								<p class="card-subtitle text-muted text-right">Public</p>
 							</div>
-							
+
 						</div>
 						<div class="row justify-content-between">
 							<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
@@ -185,10 +189,11 @@
 								<div class="dropdown-divider"></div>
 							</div>
 						</div>
-						<div class="row my-3">
+						<div class="row my-3 justify-content-between align-items-center">
 							<div class="col-4">
 								<h5>Artists</h5>
 							</div>
+							<div class="col-4 text-right">View all</div>
 						</div>
 						<div class="row artists-wrapper pb-3">
 							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
