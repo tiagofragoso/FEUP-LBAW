@@ -67,6 +67,14 @@
     box-shadow: var(--shadow);
 }
 
+.user-tag {
+    color: var(--green);
+}
+
+.user-tag:hover {
+    color: var(--darkgreen);
+}
+
 @media screen and (max-width: 767px) {
     .activity-event-card {
         height: 110px;
