@@ -66,3 +66,43 @@
 .hover-shadow:hover, .hover-shadow:focus {
     box-shadow: var(--shadow);
 }
+
+@media screen and (max-width: 767px) {
+    .activity-event-card {
+        height: 110px;
+    }
+
+    .activity-event-card .event-title {
+        font-size: 0.9em;
+    }
+
+    .activity-event-card .event-date {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .event-location {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .join-btn {
+        font-size: 0.6em;
+    }
+
+    .post-card-header {
+        height: 50px;
+    }
+
+    .post-card-header .event-title {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .post-card-header {
+        height: 40px;
+    }
+
+    .post-card-header .event-title {
+        font-size: 0.7em;
+    }
+}
