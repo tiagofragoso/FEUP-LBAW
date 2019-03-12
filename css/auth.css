@@ -12,10 +12,3 @@
 .register:hover {
     color: var(--darkblue);
 }
-
-input:focus {
-    color: var(--blue) !important;
-    border-color: var(--green) !important;
-    outline: none !important;
-    box-shadow:none !important;
-}

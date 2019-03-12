@@ -132,3 +132,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	color: var(--green);
 }
+
+input:focus {
+    color: var(--blue) !important;
+    border-color: var(--green) !important;
+    outline: none !important;
+    box-shadow:none !important;
+}
