@@ -142,3 +142,21 @@ input:focus {
 .footer .logo-area {
     padding: 12px;
 }
+
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--green);
+}
+
+.nav .nav-item > a {
+	color: var(--grey);
+}
+
+.nav .nav-item > a.active {
+	font-weight: bold;
+	color: var(--green);
+}
