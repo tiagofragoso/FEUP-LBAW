@@ -1,136 +1,178 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LBAW</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="../libs/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/index.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/about.css">
-    <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
-  
-    
-    <script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
-    <script defer src="../libs/bootstrap/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LBAW</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" media="screen" href="../libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/about.css">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
+
+
+	<script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
+	<script defer src="../libs/bootstrap/bootstrap.min.js"></script>
 </head>
+
 <body>
- <!-- navbar start -->
- <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+	<!-- navbar start -->
+	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline mr-auto">
-            <div class="input-group mb-3 my-2 my-lg-0">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                    aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
-                </div>
-            </div>
-        </form>
-        <ul class="navbar-nav">
-            <li class="nav-item mx-2">
-                <button type="button" class="btn btn-primary">Create event</button>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Help</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../assets/user.svg" class="rounded-circle border border-light" />
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<form class="form-inline mr-auto">
+				<div class="input-group mb-3 my-2 my-lg-0">
+					<input type="text" class="form-control" placeholder="Search" aria-label="Search"
+						aria-describedby="button-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
+					</div>
+				</div>
+			</form>
+			<ul class="navbar-nav">
+				<li class="nav-item mx-2">
+					<button type="button" class="btn btn-primary">Create event</button>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Help</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="../assets/user.svg" class="rounded-circle border border-light" />
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+			</ul>
 
-    </div>
-</nav>
-<!-- navbar end --> 
+		</div>
+	</nav>
+	<!-- navbar end -->
 
-  <div class="container mt-5">
-    <dl>    
-        <div id ="aboutUs" class="row">
-          <dd class="col-md-6 d-none d-md-block"></dd>
-          <div class="col-md-6">
-        <dt>About us</dt>
-      <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec nunc tincidunt, facilisis neque sit amet, pharetra justo. Vestibulum hendrerit dolor ex, vel aliquet nibh placerat convallis. Mauris justo metus, aliquam ut placerat eget, vestibulum vitae sem. Nunc elementum facilisis odio, eget laoreet dui aliquam quis. Mauris non pulvinar eros. In vestibulum justo ac odio aliquam, at porta mi condimentum. In eu nisi ultricies, condimentum turpis sit amet, tincidunt nulla. Nunc pellentesque diam nisi, eu consectetur leo placerat id. Phasellus egestas massa tortor, a pellentesque magna bibendum quis. Sed a condimentum nibh. Ut est ex, faucibus ac lacus elementum, auctor tempor turpis. Nullam commodo elit ac felis sagittis, eget congue ex lobortis. Mauris suscipit ex arcu, in mollis ante tempus eget.</dd>
-    </div>  
-    </div>
-    <div id="faq" class="row">
-      <div class="col-md-6">
-      <dt>FAQs</dt>
-      <dd class="faq">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse" href="#ans1" role="button"
-                  aria-expanded="false" aria-controls="collapseExample">
-                  Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
-                </a>
-                <div class="collapse" id="ans1">
-                  <p>
-                    Maecenas elementum massa sed nunc consectetur gravida. 
-                  </p>
-                </div>
-              </li>
-          <li class="list-group-item">
-            <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse" href="#ans2" role="button"
-              aria-expanded="false" aria-controls="collapseExample">
-              Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
-            </a>
-            <div class="collapse" id="ans2">
-              <p>
-                Maecenas elementum massa sed nunc consectetur gravida. 
-              </p>
-            </div>
-          </li>
-          <li class="list-group-item">
-              <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse" href="#ans3" role="button"
-                aria-expanded="false" aria-controls="collapseExample">
-                Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
-              </a>
-              <div class="collapse" id="ans3">
-                <p>
-                  Maecenas elementum massa sed nunc consectetur gravida. 
-                </p>
-              </div>
-            </li>
-        </ul>
-      </div>
-      <dd class="col-md-6 d-none d-md-block"><img id ="faqImage" src="" class="img-fluid"></dd>
-    </div>
+	<dl mt-5>
+		<div class="p-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<dt>
+							<h3><strong>About us</strong></h3>
+						</dt>
+						<dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec nunc tincidunt, facilisis
+							neque sit amet, pharetra justo. Vestibulum hendrerit dolor ex, vel aliquet nibh placerat
+							convallis. Mauris justo metus, aliquam ut placerat eget, vestibulum vitae sem. Nunc
+							elementum
+							facilisis odio, eget laoreet dui aliquam quis. Mauris non pulvinar eros. In vestibulum justo
+							ac
+							odio aliquam, at porta mi condimentum. In eu nisi ultricies, condimentum turpis sit amet,
+							tincidunt nulla. Nunc pellentesque diam nisi, eu consectetur leo placerat id.</dd>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="faq-wrapper p-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 d-none d-md-block">
+						<img id="faqImage" src="../assets/concert.jpeg" class="img-fluid">
+					</div>
+					<div class="col-12 col-md-6">
+						<dt>
+							<h3><strong>FAQs</strong></h3>
+						</dt>
+						<dd class="faq">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
+										href="#ans1" role="button" aria-expanded="false"
+										aria-controls="collapseExample">
+										Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+									</a>
+									<div class="collapse" id="ans1">
+										<p>
+											Maecenas elementum massa sed nunc consectetur gravida.
+										</p>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
+										href="#ans2" role="button" aria-expanded="false"
+										aria-controls="collapseExample">
+										Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+									</a>
+									<div class="collapse" id="ans2">
+										<p>
+											Maecenas elementum massa sed nunc consectetur gravida.
+										</p>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
+										href="#ans3" role="button" aria-expanded="false"
+										aria-controls="collapseExample">
+										Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+									</a>
+									<div class="collapse" id="ans3">
+										<p>
+											Maecenas elementum massa sed nunc consectetur gravida.
+										</p>
+									</div>
+								</li>
+							</ul>
+					</div>
 
+				</div>
+			</div>
+		</div>
+		<div class="p-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<dt class="mb-3">
+							<h3><strong>Contacts</strong></h3>
+						</dt>
+						<dd class="row justify-content-between">
+							<div class="col-md-4 col-12 mb-3 mb-md-0 text-left text-md-center">
+								<span>
+									<i class="fas fa-map-marker-alt mr-2"></i>
+									<strong>Address</strong>
+								</span>
+								<p class="mt-2">R. Dr. Roberto Frias s/n<br>4400 Paranhos<br>
+									Porto, Portugal<br></p>
+							</div>
+							<div class="col-md-4 col-12 mb-3 mb-md-0 text-left text-md-center">
+								<span>
+									<i class="fa fa-envelope mr-2"></i>
+									<strong>E-mail</strong>
+								</span>
+								<p class="mt-2">support@sound.hub </p>
+							</div>
+							<div class="col-md-4 col-12 text-left text-md-center">
+								<span>
+									<i class="fa fa-phone mr-2"></i>
+									<strong>Phone</strong>
+								</span>
+								<p class="mt-2">(+351) 707 221 122</p>
+							</div>
+						</dd>
+					</div>
+				</div>
+			</div>
+		</div>
+	</dl>
 
-      <dt>Contact</dt>
-      <dd class="row justify-content-center">  
-        <div class="col-md-4 col-12">
-          <i class="fas fa-map-marker-alt"></i>
-             <p>R. Dr. Roberto Frias s/n<br>4400 Paranhos<br>
-            Porto, Portugal<br></p>
-          </div>
-          <div class="col-md-4 col-12">
-            <i class="fa fa-envelope"></i>
-             <p>support@sound.hub </p>
-            </div>
-            <div class="col-md-4 col-12">
-            <i class="fa fa-phone"></i>
-            <p>(+351) 707 221 122</p>
-          </div>
-        </dd>
-    </dl>
-  </div>
- 
 </body>
+
 </html>
