@@ -121,3 +121,7 @@
 .carousel-img {
 	background: url(../assets/event-placeholder.svg);
 }
+
+.img-container {
+	max-height: 360px;
+}
