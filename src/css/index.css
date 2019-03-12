@@ -123,9 +123,17 @@ nav .navbar-toggler {
     border-color: transparent !important;
 }
 
+nav {
+    height: 67px;
+}
+
 @media screen and (max-width: 991px) {
     nav .dropdown-menu {
         border: none;
+    }
+
+    nav {
+        height: auto;
     }
 }
 
