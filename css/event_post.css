@@ -1,0 +1,66 @@
+.badge {
+	font-size: 85%;
+}
+
+.badge-primary {
+	background-color: var(--blue);
+}
+
+a.badge-primary:hover {
+	background-color: var(--darkblue);
+}
+
+.badge-secondary {
+	background-color: var(--green);
+}
+
+a.badge-secondary:hover {
+	background-color: var(--darkgreen);
+}
+
+.submit-btn-wrapper {
+	bottom: 0;
+	right: 0;
+	height: 100%;
+}
+
+.submit-btn {
+	background-color: transparent;
+	border: 0;
+	color: var(--grey);
+	vertical-align: middle;
+}
+
+.submit-btn:hover {
+	color: var(--green);
+}
+
+.comment {
+	box-sizing: border-box;
+}
+
+.comment-text {
+	background-color: #eff1f3;
+	border-radius: 4px;
+}
+
+.author {
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.post-date {
+	font-size: 85%;
+}
+
+.comment-footer {
+	font-size: 80%;
+}
+
+.comment-footer a {
+	color: var(--hyperlinkblue);
+}
+
+.comment-footer a:hover {
+	color: var(--hoverblue);
+}

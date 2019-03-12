@@ -118,3 +118,21 @@ h1, h2, h3, h4, h5, h6 {
 .hover-shadow:hover, .hover-shadow:focus {
     box-shadow: var(--shadow);
 }
+
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--green);
+}
+
+.nav .nav-item > a {
+	color: var(--grey);
+}
+
+.nav .nav-item > a.active {
+	font-weight: bold;
+	color: var(--green);
+}

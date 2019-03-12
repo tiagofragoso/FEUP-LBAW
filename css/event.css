@@ -1,21 +1,3 @@
-.nav .nav-item .nav-link {
-	border-bottom: 3px solid var(--grey);
-	text-transform: uppercase;
-}
-
-.nav .nav-item .nav-link.active {
-	border-color: var(--green);
-}
-
-.nav .nav-item > a {
-	color: var(--grey);
-}
-
-.nav .nav-item > a.active {
-	font-weight: bold;
-	color: var(--green);
-}
-
 .card {
 	overflow: hidden;
 }
@@ -38,62 +20,6 @@
 	overflow-x: hidden; 
 	flex-wrap: nowrap;
 }
-
-.badge {
-	font-size: 85%;
-}
-
-.badge-primary {
-	background-color: var(--blue);
-}
-
-a.badge-primary:hover {
-	background-color: var(--darkblue);
-}
-
-.badge-secondary {
-	background-color: var(--green);
-}
-
-a.badge-secondary:hover {
-	background-color: var(--darkgreen);
-}
-
-.submit-btn-wrapper {
-	bottom: 0;
-	right: 0;
-	height: 100%;
-}
-
-.submit-btn {
-	background-color: transparent;
-	border: 0;
-	color: var(--grey);
-	vertical-align: middle;
-}
-
-.submit-btn:hover {
-	color: var(--green);
-}
-
-.comment {
-	box-sizing: border-box;
-}
-
-.comment-text {
-	background-color: #eff1f3;
-	border-radius: 4px;
-}
-
-.author {
-	font-weight: bold;
-	white-space: nowrap;
-}
-
-.post-date {
-	font-size: 85%;
-}
-
 .event-addr {
 	color: var(--hyperlinkblue);
 	font-size: 85%;
@@ -153,17 +79,7 @@ a.badge-secondary:hover {
 	opacity: 0.8;
 }
 
-.comment-footer {
-	font-size: 80%;
-}
 
-.comment-footer a {
-	color: var(--hyperlinkblue);
-}
-
-.comment-footer a:hover {
-	color: var(--hoverblue);
-}
 
 .qa-question {
 	color: var(--darkblue);
