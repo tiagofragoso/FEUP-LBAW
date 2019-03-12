@@ -6,9 +6,11 @@
         if (e[0].intersectionRatio > 0){
             document.querySelector('nav').classList.remove('stuck');
             document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal-white.svg';
+            document.querySelector('nav').classList.remove('border');
         } else {
             document.querySelector('nav').classList.add('stuck');
             document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal.svg';
+            document.querySelector('nav').classList.add('border');
         };
     }
 })).observe(document.querySelector('.trigger'));
