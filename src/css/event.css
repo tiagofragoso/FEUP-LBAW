@@ -15,10 +15,6 @@
 	font-size: 1rem;
 }
 
-.carousel-item {
-	max-height: 360px;
-}
-
 .artists-wrapper {
 	overflow-x: hidden; 
 	flex-wrap: nowrap;
@@ -116,10 +112,6 @@
 
 .view-all:hover {
 	color: var(--hoverblue);
-}
-
-.carousel-img {
-	background: url(../assets/event-placeholder.svg);
 }
 
 .img-container {
