@@ -1,5 +1,5 @@
 :root {
-	--white: #fffefc;
+	--white: #ffffff;
 	--grey: #dedede;
 	--darkgrey: #8E8E8E;
 	--green: #7ee081;
@@ -9,11 +9,14 @@
 	--shadow: 0 0 20px rgba(27,39,51,.3);
 	--orange: #f79156;
 	--darkorange: #e1844f;
+	--hyperlinkblue: #5C7189;
+	--hoverblue: #173457;
 }
 
 body {
 	background-color: var(--white);
 	font-family: 'Karla', sans-serif;
+	color: var(--darkblue);
 	outline-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -75,6 +78,16 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: var(--green);
 	background-color: var(--green);
 	color: var(--white);
+}
+
+.btn-light {
+	background-color: white;
+	border-color: white;
+}
+
+.btn-light:hover {
+	background-color: #F2F3F5;
+	border-color: #F2F3F5;
 }
 
 .dropdown-menu-right {

@@ -1,0 +1,184 @@
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--green);
+}
+
+.nav .nav-item > a {
+	color: var(--grey);
+}
+
+.nav .nav-item > a.active {
+	font-weight: bold;
+	color: var(--green);
+}
+
+.card {
+	overflow: hidden;
+}
+
+.card-wrapper {
+	max-width: 960px;
+	padding: 0;
+}
+
+.card-header {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.carousel-item {
+	max-height: 360px;
+}
+
+.artists-wrapper {
+	overflow-x: hidden; 
+	flex-wrap: nowrap;
+}
+
+.badge {
+	font-size: 85%;
+}
+
+.badge-primary {
+	background-color: var(--blue);
+}
+
+a.badge-primary:hover {
+	background-color: var(--darkblue);
+}
+
+.badge-secondary {
+	background-color: var(--green);
+}
+
+a.badge-secondary:hover {
+	background-color: var(--darkgreen);
+}
+
+.submit-btn-wrapper {
+	bottom: 0;
+	right: 0;
+	height: 100%;
+}
+
+.submit-btn {
+	background-color: transparent;
+	border: 0;
+	color: var(--grey);
+	vertical-align: middle;
+}
+
+.submit-btn:hover {
+	color: var(--green);
+}
+
+.comment {
+	box-sizing: border-box;
+}
+
+.comment-text {
+	background-color: #eff1f3;
+	border-radius: 4px;
+}
+
+.author {
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.post-date {
+	font-size: 85%;
+}
+
+.event-addr {
+	color: var(--hyperlinkblue);
+	font-size: 85%;
+}
+
+.event-addr:hover {
+	color: var(--hoverblue);
+}
+
+.step {
+	width: 100%;
+	height: 2rem;
+	background-color: var(--white);
+	z-index: 5;
+	border: 1px solid var(--green);
+	font-weight: bold;
+}
+
+.step.complete {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+.step.complete + span {
+	color: var(--green);
+}
+
+.step-wrapper {
+	width: 2rem;
+	overflow: visible;
+	white-space: nowrap;
+}
+
+.progress {
+	background: linear-gradient(to right, var(--green) 50%, var(--grey) 50%);
+	top: calc(1rem - 2px);
+	height: 4px;
+	width: 100%;
+}
+
+.more-button {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+}
+
+.more-button > .btn {
+	opacity: 0.8;
+}
+
+
+.tag-button {
+	z-index: 1;
+	right: 1rem;
+	bottom: 1rem;
+	opacity: 0.8;
+}
+
+.comment-footer {
+	font-size: 80%;
+}
+
+.comment-footer a {
+	color: var(--hyperlinkblue);
+}
+
+.comment-footer a:hover {
+	color: var(--hoverblue);
+}
+
+.qa-question {
+	color: var(--darkblue);
+	white-space: normal;
+}
+
+.qa-question:hover {
+	color: var(--hoverblue);
+}
+
+.view-all {
+	color: var(--hyperlinkblue);
+}
+
+.view-all:hover {
+	color: var(--hoverblue);
+}
+
