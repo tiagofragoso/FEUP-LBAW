@@ -45,3 +45,12 @@
         font-size: 0.6em;
     }
 }
+
+a.activity-event-card {
+    color: inherit;
+}
+
+a.activity-event-card:hover {
+    text-decoration: none;
+    color: inherit;
+}
