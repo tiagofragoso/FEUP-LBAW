@@ -117,3 +117,24 @@
 .img-container {
 	max-height: 360px;
 }
+
+.invite-btn {
+	width: 40px;
+	height: 40px;
+	font-weight: bold;
+	vertical-align: middle;
+	text-decoration: none;
+}
+
+.post-type input[type="radio"] + label {
+	padding: 0.2em 0.3em;
+	border-radius: 4px;
+}
+
+.post-type input[type="radio"] + label:hover {
+	background-color: var(--grey);
+}
+
+.post-type input[type="radio"]:checked + label {
+	background-color: var(--grey);
+}
