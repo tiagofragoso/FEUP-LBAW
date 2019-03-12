@@ -123,6 +123,12 @@ nav .navbar-toggler {
     border-color: transparent !important;
 }
 
+@media screen and (max-width: 991px) {
+    nav .dropdown-menu {
+        border: none;
+    }
+}
+
 input:focus {
     color: var(--blue) !important;
     border-color: var(--green) !important;
