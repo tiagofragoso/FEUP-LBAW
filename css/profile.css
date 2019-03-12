@@ -71,3 +71,7 @@
 .baned-btn {
 	color: var(--orange);
 }
+
+a:hover {
+	text-decoration: none;
+}
