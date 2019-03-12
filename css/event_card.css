@@ -24,6 +24,13 @@
     height: 150px;
 }
 
+.activity-event-card .event-title {
+    max-height: 2em;
+    line-height: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media screen and (max-width: 767px) {
     .activity-event-card {
         height: 110px;
