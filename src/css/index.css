@@ -102,12 +102,12 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: var(--grey)!important;
 }
 
-.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-	color: var(--darkblue);
+.border-navbar {
+	border-bottom: 1px solid var(--grey);
 }
 
-.navbar {
-	border: 1px solid var(--grey);
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+	color: var(--darkblue);
 }
 
 .hover-shadow {
@@ -117,4 +117,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover-shadow:hover, .hover-shadow:focus {
     box-shadow: var(--shadow);
+}
+
+.nav .nav-item .nav-link {
+	border-bottom: 3px solid var(--grey);
+	text-transform: uppercase;
+}
+
+.nav .nav-item .nav-link.active {
+	border-color: var(--green);
+}
+
+.nav .nav-item > a {
+	color: var(--grey);
+}
+
+.nav .nav-item > a.active {
+	font-weight: bold;
+	color: var(--green);
+}
+
+input:focus {
+    color: var(--blue) !important;
+    border-color: var(--green) !important;
+    outline: none !important;
+    box-shadow:none !important;
 }
