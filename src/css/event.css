@@ -1,9 +1,12 @@
+#content {
+	max-width: 960px!important;
+}
+
 .card {
 	overflow: hidden;
 }
 
 .card-wrapper {
-	max-width: 960px;
 	padding: 0;
 }
 
@@ -115,6 +118,6 @@
 	color: var(--hoverblue);
 }
 
-.carousel-item img {
-	object-fit: cover;
+.carousel-img {
+	background: url(../assets/event-placeholder.svg);
 }
