@@ -1,16 +1,20 @@
 /**
  * Navbar scroll transition.
  */
+let stuck = true;
+
 (new IntersectionObserver((e,o) => {
     if (document.querySelector('.navbar-toggler').classList.contains('collapsed')) {
         if (e[0].intersectionRatio > 0){
             document.querySelector('nav').classList.remove('stuck');
             document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal-white.svg';
             document.querySelector('nav').classList.remove('border-navbar');
+            stuck = true;
         } else {
             document.querySelector('nav').classList.add('stuck');
             document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal.svg';
             document.querySelector('nav').classList.add('border-navbar');
+            stuck = false;
         };
     }
 })).observe(document.querySelector('.trigger'));
@@ -45,9 +49,15 @@ document.getElementById('button-go').addEventListener('click', () => {
  * Navbar toggler click event.
  */
 document.querySelector('.navbar-toggler').addEventListener('click', () => {
-    document.querySelector('nav').classList.toggle('stuck');
+    let navbar = document.querySelector('nav');
+    
+    if (!stuck) {
+        return;
+    }
 
-    if (document.querySelector('nav').classList.contains('stuck'))
+    navbar.classList.toggle('stuck');
+
+    if (navbar.classList.contains('stuck'))
         document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal.svg';
     else
         document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal-white.svg';
