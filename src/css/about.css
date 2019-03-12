@@ -13,6 +13,10 @@
   color:var(--darkblue);
 }
 
+#logo-card {
+  width: 18em;
+}
 
-
-
+#faq-card {
+  width: 20em;
+}
