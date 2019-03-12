@@ -55,10 +55,21 @@
 }
 
 .progress {
-	background: linear-gradient(to right, var(--green) 50%, var(--grey) 50%);
 	top: calc(1rem - 2px);
 	height: 4px;
 	width: 100%;
+}
+
+.progress-1 {
+	background: linear-gradient(to right, var(--green) 1rem, var(--grey) 1rem);
+}
+
+.progress-2 {
+	background: linear-gradient(to right, var(--green) 50%, var(--grey) 50%);
+}
+
+.progress-3 {
+	background: linear-gradient(to right, var(--green) calc(100% - 1rem), var(--grey) calc(100% - 1rem) );
 }
 
 .more-button {
@@ -98,3 +109,6 @@
 	color: var(--hoverblue);
 }
 
+.carousel-item img {
+	object-fit: cover;
+}
