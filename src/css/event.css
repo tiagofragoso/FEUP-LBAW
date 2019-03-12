@@ -79,7 +79,13 @@
 	opacity: 0.8;
 }
 
+.artists-wrapper a {
+	color: var(--blue);
+}
 
+.artists-wrapper a:hover {
+	color: var(--darkblue);
+}
 
 .qa-question {
 	color: var(--darkblue);

@@ -53,11 +53,11 @@
     }
 }
 
-a.activity-event-card {
-    color: inherit;
+.activity-event-card a {
+    color: var(--blue);
 }
 
-a.activity-event-card:hover {
-    text-decoration: none;
-    color: inherit;
+.activity-event-card a:hover {
+    text-decoration: underline;
+    color: var(--darkblue);
 }
