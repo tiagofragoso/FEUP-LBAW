@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LBAW</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" media="screen" href="../libs/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="../css/event.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
+	<script defer src="../libs/jQuery/jquery-3.0.0.slim.min.js"></script>
+	<script defer src="./libs/popper/popper.min.js"></script>
+	<script defer src="../libs/bootstrap/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<!-- navbar start -->
+	<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<form class="form-inline mr-auto">
+				<div class="input-group mb-3 my-2 my-lg-0">
+					<input type="text" class="form-control" placeholder="Search" aria-label="Search"
+						aria-describedby="button-addon2">
+					<div class="input-group-append">
+						<button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
+					</div>
+				</div>
+			</form>
+			<ul class="navbar-nav">
+				<li class="nav-item mx-2">
+					<button type="button" class="btn btn-primary">Create event</button>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Help</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="../assets/user.svg" class="rounded-circle border border-light" />
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+	</nav>
+	<!-- navbar end -->
+	<div class="container">
+		<div class="row">
+			<div class="card-wrapper col-12 mx-auto">
+				<div class="card mb-5">
+					<div id="carouselExampleIndicators" class="position-relative card-img-top carousel slide"
+						data-ride="carousel">
+						<button class="btn btn-light border-light position-absolute tag-button" type="button">
+							<i class="fas fa-tag mr-1"></i> Rock
+						</button>
+						<ol class="carousel-indicators">
+							<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="d-flex w-100 h-100 align-items-center">
+									<img class="d-block w-100" src="../assets/concert-2.jpeg" alt="First slide">
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="d-flex w-100 h-100 align-items-center">
+									<img class="d-block w-100" src="../assets/search-background.jpeg"
+										alt="Second slide">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container mt-3">
+						<div class="row justify-content-between">
+							<div class="col-12 col-sm-9 mb-2 mb-sm-0 d-flex flex-column">
+								<input type="text" class="form-control card-title" placeholder="Event title">
+								<p class="text-muted mb-0">Hosted by <strong>John Smith</strong> and 3 others</p>
+							</div>
+							<div class="col-12 col-sm-3">
+								<button type="submit" class="btn btn-primary w-100">Join</button>
+							</div>
+						</div>
+						<hr>
+						<div class="row mb-3 justify-content-between">
+							<div class="col-8">
+								<p class="card-subtitle text-muted"><span>FRI, MAR 15 at 14:00</span> - <span>FRI,
+										MAR 16 at 22:00</span></p>
+							</div>
+							<div class="col-3">
+								<p class="card-subtitle text-muted text-right">445 <i class="mr-1 fas fa-users"></i></p>
+							</div>
+						</div>
+						<div class="row mb-3 justify-content-between">
+							<div class="col-8">
+								<div class="d-flex flex-column card-subtitle text-muted">
+									<p class="mb-0">
+										Alfândega do Porto
+									</p>
+									<a href="https://www.google.com/maps/search/R.+Nova+da+Alf%C3%A2ndega,+4050-430+Porto"
+										target="_blank" class="mb-0 event-addr">
+										Rua Nova da Alfândega, 4050-430 Porto, Portugal
+									</a>
+								</div>
+							</div>
+							<div class="col-4">
+								<p class="card-subtitle text-muted text-right">Concert</p>
+							</div>
+						</div>
+						<div class="row mb-3 justify-content-between">
+							<div class="col-8">
+								<p class="card-text">Some quick example text to build on the card title and make up the
+									bulk of the
+									card's content.
+								</p>
+							</div>
+							<div class="col-4">
+								<p class="card-subtitle text-muted text-right">Public</p>
+							</div>
+
+						</div>
+						<div class="row justify-content-between">
+							<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
+								<div class="d-flex flex-row justify-content-between position-relative">
+									<div class="progress position-absolute"></div>
+									<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
+										<div
+											class="step complete rounded-circle d-flex align-items-center justify-content-center">
+											1
+										</div>
+										<span>Planning</span>
+									</div>
+									<div class="step-wrapper d-flex flex-column align-items-center">
+										<div
+											class="step complete rounded-circle d-flex align-items-center justify-content-center">
+											2
+										</div>
+										<span>Buy a ticket</span>
+									</div>
+									<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
+										<div
+											class="step rounded-circle d-flex align-items-center justify-content-center">
+											3
+										</div>
+										<span>Live</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-3">
+								<button type="submit" class="btn btn-secondary w-100">
+									<i class="fas fa-ticket-alt mr-1"></i>
+									40€
+								</button>
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<hr>
+							</div>
+						</div>
+						<div class="row mb-3 justify-content-between align-items-center">
+							<div class="col-4">
+								<h5>Artists</h5>
+							</div>
+							<div class="col-4 text-right">
+								<a href="#" class="view-all">
+									View all
+								</a>
+							</div>
+						</div>
+						<div class="row artists-wrapper">
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+							<div class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
+									width="40" />
+								<span class="text-center">John Smith</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<hr>
+							</div>
+						</div>
+						<div class="event-content">
+							<ul class="nav justify-content-center mt-2" id="event-tabs" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab"
+										aria-controls="about" aria-selected="true">About</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+										aria-controls="posts" aria-selected="false">Posts</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="qa-tab" data-toggle="tab" href="#qa" role="tab"
+										aria-controls="qa" aria-selected="false">Q&A</a>
+								</li>
+							</ul>
+							<div class="tab-content my-3 mx-3" id="myTabContent">
+								<div class="tab-pane fade show active" id="about" role="tabpanel"
+									aria-labelledby="about-tab">
+									<div class="row justify-content-center">
+										<div class="about-text col-12 col-md-9">
+											<p class="card-text">
+												A Alfândega do Porto acolhe de 19 de janeiro a 31 de março, a “Exposição
+												"Banksy's
+												Dismaland and
+												Others by Barry Cawston".
+											</p>
+											<p class="card-text">
+												Esta é uma poderosa demonstração que nos leva numa viagem pelo trabalho
+												fenomenal,
+												de um artista
+												que
+												há mais de 25 anos usa a sua arte para questionar os valores da
+												sociedade e que
+												chega agora, e
+												pela
+												primeira vez, a Portugal. A mostra que conta com 44 fotografias de
+												grande
+												dimensão
+												(240 x 188),
+												integra imagens do projeto Dismaland (2015), o conhecido parque temático
+												criado
+												por
+												Banksy, numa
+												clara sátira aos parques da Disney e um dos seus trabalhos mais
+												insólitos. Para
+												além
+												destas, a
+												exposição irá integrar ainda outras obras identificativas do artista
+												como o
+												“Walled
+												Off Hotel”
+												(2017) ou “Flower Thrower” (2005), um dos seus trabalhos mais
+												conhecidos.
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+									<div class="posts">
+										<div class="row justify-content-center">
+											<div class="card col-12 col-lg-9 mb-4">
+												<div class="row">
+													<div class="col-12 col-md-10">
+														<div class="py-3 px-0 px-md-3 w-100">
+															<div class="row">
+																<div class="col-12 d-flex flex-row">
+																	<img src="../assets/user.svg"
+																		class="rounded-circle rounded-circle border border-light mr-2"
+																		width="30" height="30" />
+																	<div class="d-flex flex-column">
+																		<p class="card-text mb-0">
+																			<a href="#" class="badge badge-secondary">
+																				The 1975
+																			</a>
+																			created a
+																			<strong>post</strong>.
+																		</p>
+																		<span class="post-date text-muted">
+																			MAR 4 | 15:58
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<p class="card-text mt-3">
+																With supporting text below as a natural lead-in to
+																additional
+																content.
+															</p>
+														</div>
+													</div>
+													<div
+														class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto">
+														<button type="button"
+															class="btn btn-light w-100 h-100 flex-grow-2">
+															<div
+																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+																<i class="fas fa-thumbs-up"></i>
+																<span><strong>312</strong></span>
+															</div>
+														</button>
+														<button type="button" data-toggle="collapse"
+															data-target="#comments1" aria-expanded="false"
+															aria-controls="collapseExample"
+															class="side-button btn btn-light w-100 h-100 flex-grow-2">
+															<div
+																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+																<i class="far fa-comment-alt"></i>
+																<span>2</span>
+															</div>
+														</button>
+													</div>
+												</div>
+												<div class="row comment-section collapse mb-3 border-top border-light"
+													id="comments1">
+													<div
+														class="row col-12 mt-3 justify-content-center align-items-center">
+														<div
+															class="col-12 col-md-10 d-flex flex-row align-items-center">
+															<img src="../assets/user.svg"
+																class="rounded-circle rounded-circle border border-light mr-3"
+																width="30" height="30" />
+															<form class="position-relative w-100" action="#">
+																<textarea
+																	class="form-control position-relative w-100 pr-5"
+																	id="exampleFormControlTextarea1" rows="1"
+																	placeholder="Write a comment..."
+																	style="resize: none"></textarea>
+																<div
+																	class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
+																	<button class="submit-btn" type="submit">
+																		<i class="fas fa-angle-double-right"></i>
+																	</button>
+																</div>
+															</form>
+														</div>
+													</div>
+													<div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
+													<div
+														class="row col-12 comment align-items-start justify-content-center">
+														<div class="col-12 col-md-10 d-flex flex-row">
+															<img src="../assets/user.svg"
+																class="rounded-circle rounded-circle border border-light mr-3"
+																width="30" height="30" />
+															<div class="w-100 d-flex flex-column">
+																<div class="comment-wrapper d-flex flex-column w-100">
+																	<div class="comment-text px-3 py-2">
+																		<span>
+																			<span class=" author mr-2">John
+																				Smith</span>Lorem
+																			ipsum dolor sit amet, consectetur adipiscing
+																			elit.
+																			Aliquam feugiat orci sit amet ante ornare
+																			lobortis
+																			sed
+																			non enim. Vestibulum.
+																		</span>
+																	</div>
+																	<div class="comment-footer ml-3">
+																		<a href="#">Like</a>
+																		•
+																		<a href="#">More</a>
+																		•
+																		<span>2 weeks ago</span>
+																	</div>
+																</div>
+																<div
+																	class="pl-1 mt-3 align-items-start d-flex flex-row">
+																	<img src="../assets/user.svg"
+																		class="rounded-circle rounded-circle border border-light mr-3"
+																		width="30" height="30" />
+																	<div
+																		class="comment-wrapper d-flex flex-column w-100">
+																		<div class="comment-text px-3 py-2">
+																			<span>
+																				<span class=" author mr-2">John
+																					Smith</span>Lorem
+																				ipsum dolor sit amet, consectetur
+																				adipiscing elit.
+																				Aliquam feugiat orci sit amet ante
+																				ornare lobortis
+																				sed
+																				non enim. Vestibulum.
+																			</span>
+																		</div>
+																		<div class="comment-footer ml-3">
+																			<a href="#">Like</a>
+																			•
+																			<a href="#">More</a>
+																			•
+																			<span>2 weeks ago</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row justify-content-center">
+											<div class="card col-12 col-lg-9 mb-4">
+												<div class="row">
+													<div class="col-12 col-md-10">
+														<div class="py-3 px-0 px-md-3 w-100">
+															<div class="row">
+																<div class="col-12 d-flex flex-row">
+																	<img src="../assets/user.svg"
+																		class="rounded-circle rounded-circle border border-light mr-2"
+																		width="30" height="30" />
+																	<div class="d-flex flex-column">
+																		<p class="card-text mb-0">
+																			<a href="#" class="badge badge-primary">
+																				The 1975
+																			</a>
+																			created a
+																			<strong>poll</strong>.
+																		</p>
+																		<span class="post-date text-muted">
+																			MAR 4 | 15:58
+																		</span>
+																	</div>
+																</div>
+															</div>
+															<p class="card-text mt-3">
+																Which drink would you like to see featured in the
+																concert?
+															</p>
+															<div class="container">
+																<div class="row align-items-center mb-2">
+																	<div class="input-group col-12 col-sm-8">
+																		<div class="input-group-prepend">
+																			<div class="input-group-text">
+																				<input type="radio" name="poll"
+																					aria-label="">
+																			</div>
+																		</div>
+																		<span type="text" class="form-control">
+																			Super Bock
+																		</span>
+																	</div>
+																	<div
+																		class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted">
+																		412 votes
+																	</div>
+																</div>
+																<div class="row align-items-center mb-2">
+																	<div class="input-group col-12 col-sm-8">
+																		<div class="input-group-prepend">
+																			<div class="input-group-text">
+																				<input type="radio" name="poll"
+																					aria-label="">
+																			</div>
+																		</div>
+																		<span type="text" class="form-control">
+																			Nortada
+																		</span>
+																	</div>
+																	<div
+																		class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted">
+																		13 votes
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div
+														class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto">
+														<button type="button"
+															class="btn btn-light w-100 h-100 flex-grow-2">
+															<div
+																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+																<i class="far fa-thumbs-up"></i>
+																<span>312</span>
+															</div>
+														</button>
+														<button type="button" data-toggle="collapse"
+															data-target="#comments2" aria-expanded="false"
+															aria-controls="collapseExample"
+															class="side-button btn btn-light w-100 h-100 flex-grow-2">
+															<div
+																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+																<i class="far fa-comment-alt"></i>
+																<span>2</span>
+															</div>
+														</button>
+													</div>
+												</div>
+												<div class="row comment-section collapse mb-3 border-top border-light"
+													id="comments2">
+													<div
+														class="row col-12 mt-3 justify-content-center align-items-center">
+														<div
+															class="col-12 col-md-10 d-flex flex-row align-items-center">
+															<img src="../assets/user.svg"
+																class="rounded-circle rounded-circle border border-light mr-3"
+																width="30" height="30" />
+															<form class="position-relative w-100" action="#">
+																<textarea
+																	class="form-control position-relative w-100 pr-5"
+																	id="exampleFormControlTextarea1" rows="1"
+																	placeholder="Write a comment..."
+																	style="resize: none"></textarea>
+																<div
+																	class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
+																	<button class="submit-btn" type="submit">
+																		<i class="fas fa-angle-double-right"></i>
+																	</button>
+																</div>
+															</form>
+														</div>
+													</div>
+													<div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
+													<div
+														class="row col-12 comment align-items-start justify-content-center">
+														<div class="col-12 col-md-10 d-flex flex-row">
+															<img src="../assets/user.svg"
+																class="rounded-circle rounded-circle border border-light mr-3"
+																width="30" height="30" />
+															<div class="w-100 d-flex flex-column">
+																<div class="comment-wrapper d-flex flex-column w-100">
+																	<div class="comment-text px-3 py-2">
+																		<span>
+																			<span class=" author mr-2">John
+																				Smith</span>Lorem
+																			ipsum dolor sit amet, consectetur adipiscing
+																			elit.
+																			Aliquam feugiat orci sit amet ante ornare
+																			lobortis
+																			sed
+																			non enim. Vestibulum.
+																		</span>
+																	</div>
+																	<div class="comment-footer ml-3">
+																		<a href="#">Like</a>
+																		•
+																		<a href="#">More</a>
+																		•
+																		<span>2 weeks ago</span>
+																	</div>
+																</div>
+																<div
+																	class="pl-1 mt-3 align-items-start d-flex flex-row">
+																	<img src="../assets/user.svg"
+																		class="rounded-circle rounded-circle border border-light mr-3"
+																		width="30" height="30" />
+																	<div
+																		class="comment-wrapper d-flex flex-column w-100">
+																		<div class="comment-text px-3 py-2">
+																			<span>
+																				<span class=" author mr-2">John
+																					Smith</span>Lorem
+																				ipsum dolor sit amet, consectetur
+																				adipiscing elit.
+																				Aliquam feugiat orci sit amet ante
+																				ornare lobortis
+																				sed
+																				non enim. Vestibulum.
+																			</span>
+																		</div>
+																		<div class="comment-footer ml-3">
+																			<a href="#">Like</a>
+																			•
+																			<a href="#">More</a>
+																			•
+																			<span>2 weeks ago</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
+									<div class="container">
+										<div class="row justify-content-center align-items-center mb-4">
+											<div class="row col-12 mt-3 justify-content-center align-items-center">
+												<div class="col-12 col-md-10 d-flex flex-row align-items-center">
+													<img src="../assets/user.svg"
+														class="rounded-circle rounded-circle border border-light mr-3"
+														width="30" height="30" />
+													<form class="position-relative w-100" action="#">
+														<textarea class="form-control position-relative w-100 pr-5"
+															id="exampleFormControlTextarea1" rows="1"
+															placeholder="Ask a question"
+															style="resize: none"></textarea>
+														<div
+															class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
+															<button class="submit-btn" type="submit">
+																<i class="fas fa-angle-double-right"></i>
+															</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row justify-content-center">
+											<ul class="col-12 col-md-9 list-group list-group-flush">
+												<li class="list-group-item">
+													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
+														data-toggle="collapse" href="#collapse1" role="button"
+														aria-expanded="false" aria-controls="collapseExample">
+														Can I bring my dog to the exhibit?
+													</a>
+													<div class="collapse" id="collapse1">
+														<p class="text-muted">
+															No.
+														</p>
+													</div>
+												</li>
+												<li class="list-group-item">
+													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
+														data-toggle="collapse" href="#collapse2" role="button"
+														aria-expanded="false" aria-controls="collapseExample">
+														Can I buy something?
+													</a>
+													<div class="collapse" id="collapse2">
+														<p class="text-muted">
+															If you bring the cash, yes.
+														</p>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
