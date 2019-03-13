@@ -77,7 +77,7 @@
 .banner-container {
     height: calc(100vh);
     position: relative;
-    top: -66px;
+    top: -67px;
     background-image: url('../assets/search-background.jpg');
     background-position: center;
     background-repeat: no-repeat;
