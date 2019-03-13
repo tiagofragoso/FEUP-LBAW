@@ -1,0 +1,63 @@
+.event-card {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.event-card .event-header {
+    height: 150px;
+    overflow: hidden;
+}
+
+.event-card .event-header .gradient-overlay {
+    background: rgba(0,0,0,0.3);
+    top: 0;
+}
+
+.event-card .event-header .event-title {
+    bottom: 0;
+    color: var(--white);
+}
+
+.activity-event-card {
+    border-radius: 4px;
+    overflow: hidden;
+    height: 150px;
+}
+
+.activity-event-card .event-title {
+    max-height: 2em;
+    line-height: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 767px) {
+    .activity-event-card {
+        height: 110px;
+    }
+
+    .activity-event-card .event-title {
+        font-size: 0.9em;
+    }
+
+    .activity-event-card .event-date {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .event-location {
+        font-size: 0.6em;
+    }
+
+    .activity-event-card .join-btn {
+        font-size: 0.6em;
+    }
+}
+
+.activity-event-card .event-link {
+    color: var(--blue);
+}
+
+.activity-event-card .event-link:hover {
+    text-decoration: underline;
+    color: var(--darkblue);
+}

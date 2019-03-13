@@ -1,0 +1,14 @@
+.formContent {
+    max-width: 500px;
+    border-radius: 4px;
+    border: 1px solid var(--grey);
+    box-shadow: var(--shadow);
+}
+
+.register {
+    color: var(--blue);
+}
+
+.register:hover {
+    color: var(--darkblue);
+}

@@ -1,0 +1,22 @@
+.faq-wrapper {
+  background-color: #f9f9f9;
+}
+
+.list-group-item {
+  background-color: inherit;
+}
+
+.faq-wrapper a{
+  color: var(--blue);
+}
+.faq-wrapper a:hover{
+  color:var(--darkblue);
+}
+
+#logo-card {
+  width: 18em;
+}
+
+#faq-card {
+  width: 20em;
+}

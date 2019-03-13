@@ -1,0 +1,97 @@
+.profile-container {
+    min-height: calc(100vh - 213px);
+}
+
+@media screen and (max-width: 576px) {
+    .profile-container {
+        min-height: calc(100vh - 108.23px);
+    }
+}
+
+.card-wrapper {
+    max-width: 960px;
+}
+
+.card-link {
+	color: var(--darkgrey);
+}
+
+.card-link:hover {
+	color: var(--green);
+}
+
+.card-title {
+    color: var(--blue);
+}
+
+.border-green {
+	border: 3px solid var(--green)!important;
+}
+
+.card-fade {
+    opacity: 0.3;
+}
+
+.mytickets > .row{
+    overflow-x: auto; 
+	flex-wrap: nowrap;
+}
+
+#profile-picture-btn {
+    top: 5%;
+    right: 35%;
+}
+
+.icon-btn {
+    color: var(--darkgrey);
+}
+
+.icon-btn:hover {
+	color: var(--blue);
+	cursor: pointer;
+}
+
+#name-btn {
+	right: 25%;
+	top: 20%;
+}
+
+.author {
+	font-weight: bold;
+}
+
+.ban-btn, .diss-btn{
+	color: var(--darkgrey);
+}
+
+.ban-btn:hover {
+	color: var(--orange);
+	cursor: pointer;
+}
+
+.diss-btn:hover {
+	color: var(--green);
+	cursor: pointer;
+}
+
+.dissed-btn {
+	color: var(--green);
+}
+
+.baned-btn {
+	color: var(--orange);
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.more-button {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+}
+
+.more-button > .btn {
+	opacity: 0.8;
+}
