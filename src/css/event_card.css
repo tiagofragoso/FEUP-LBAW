@@ -53,11 +53,11 @@
     }
 }
 
-.activity-event-card a {
+.activity-event-card .event-link {
     color: var(--blue);
 }
 
-.activity-event-card a:hover {
+.activity-event-card .event-link:hover {
     text-decoration: underline;
     color: var(--darkblue);
 }
