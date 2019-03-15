@@ -4,7 +4,7 @@
 
 @media screen and (max-width: 576px) {
     .profile-container {
-        min-height: calc(100vh - 108.23px);
+        min-height: calc(100vh - 131.23px);
     }
 }
 
