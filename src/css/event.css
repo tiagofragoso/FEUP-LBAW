@@ -138,3 +138,39 @@
 .post-type input[type="radio"]:checked + label {
 	background-color: var(--grey);
 }
+
+.input-group-text {
+	background-color: var(--blue);
+	border-color: var(--blue);
+	color: white;
+	font-size: 1em;
+}
+
+.border-blue {
+	border-color: var(--blue);
+}
+
+.priceSelect .input-group-text{
+	background-color: var(--green);
+	border-color: var(--green);
+	color: white;
+	font-size: 1em;
+}
+
+select.currency {
+	/* background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; */
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border-color: var(--green);
+}
+
+#dateSelect .btn {
+	border-color: var(--blue);
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+#priceSelect .btn {
+	border-color: var(--green);
+	border-radius: 0;
+}
