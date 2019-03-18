@@ -75,53 +75,67 @@
 						<button class="btn btn-light border-light position-absolute tag-button" type="button">
 							<i class="fas fa-camera mr-1"></i> Upload a photo
 						</button>
-						<img class="d-block w-100" src="../assets/event-placeholder.svg" alt="First slide">
+						<img class="d-block w-100" src="../assets/event-placeholder.png" alt="First slide">
 					</div>
 					<div class="container-fluid mt-3">
 						<div class="row justify-content-between align-items-center">
-							<div class="col-12 col-md-9 mb-2 mb-sm-0">
+							<div class="col-12 col-md-8 mb-2 mb-md-0">
 								<input type="text" class="form-control form-control-lg" placeholder="Event title">
 							</div>
-							<div class="col-12 col-md-3">
+							<div class="col-12 col-md-4">
 								<div class="input-group categoryInput">
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="category"><i
 												class="fas fa-tag"></i></label>
 									</div>
-									<input id="category" type="text" class="form-control border-blue" placeholder="Category"
-										aria-label="category">
+									<input id="category" type="text" class="form-control border-blue"
+										placeholder="Category" aria-label="category">
 								</div>
 							</div>
 						</div>
 						<hr>
-						<div class="row mb-3">
-							<div class="dropdown col-12 col-md-4">
-								<button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField"
-									data-field="dropdownDate" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">
-									Date
-								</button>
-								<div class="dropdown-menu p-4" aria-labelledby="dropdownDate">
-									<h6 class="dropdown-title">Dates</h6>
-									<p>
-										This will be a date picker...
-									</p>
+						<div class="row mb-3 justify-content-between align-items-start">
+							<div class="col-12 col-md-8 order-1 order-md-0">
+								<input type="text" class="form-control" placeholder="Location">
+							</div>
+							<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
+								<div class="input-group w-100 justify-content-stretch">
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="dateSelect">
+											<i class="mr-1 far fa-calendar-alt"></i>
+										</label>
+									</div>
+									<div class="dropdown flex-grow-1" id="dateSelect">
+										<button class="btn w-100 custom-select text-left" type="button"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Date
+										</button>
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" href="#">TBD</a>
+											<a class="dropdown-item" href="#">Free</a>
+											<a class="dropdown-item" href="#">Insert value</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row mb-3 justify-content-between align-items-start">
 							<div class="col-12 col-md-8 mb-3 mb-md-0">
-								<div class="card-subtitle text-muted">
-									<input type="text" class="form-control mb-2" placeholder="Location">
-									<input class="form-control form-control-sm" type="text" placeholder="Address">
-								</div>
+								<input class="form-control form-control" type="text" placeholder="Address">
 							</div>
 							<div class="col-12 col-md-4">
-								<select class="form-control custom-select">
-									<option value="" disabled selected>Type</option>
-									<option>Concert</option>
-									<option>Festival</option>
-								</select>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="Visibility">
+											<i class="fas fa-music"></i>
+										</label>
+									</div>
+									<select class="custom-select border-blue" id="Visibility">
+										<option selected disabled>Performance type</option>
+										<option value="1">Concert</option>
+										<option value="2">Festival</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						<div class="row mb-3 justify-content-between">
@@ -130,14 +144,10 @@
 									style="resize:none"></textarea>
 							</div>
 							<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
-								<!-- <select class="form-control custom-select">
-									<option value="" disabled selected>Visibility</option>
-									<option>Private</option>
-									<option>Public</option>
-								</select> -->
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="Visibility"><i class="fas fa-eye"></i></label>
+										<label class="input-group-text" for="Visibility"><i
+												class="fas fa-eye"></i></label>
 									</div>
 									<select class="custom-select border-blue" id="Visibility">
 										<option selected disabled>Visibility</option>
@@ -149,7 +159,7 @@
 
 						</div>
 						<div class="row justify-content-between">
-							<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
+							<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
 								<div class="d-flex flex-row justify-content-between position-relative">
 									<div class="progress progress-3 position-absolute"></div>
 									<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
@@ -168,15 +178,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-lg-3">
+							<div class="col-12 col-md-4">
 								<div class="input-group priceSelect w-100">
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="priceSelect"><i
 												class="fas fa-ticket-alt"></i></label>
 									</div>
-									<div class="dropdown" id="priceSelect">
-										<button class="btn w-100 custom-select" type="button" data-toggle="dropdown"
-											aria-haspopup="true" aria-expanded="false">
+									<div class="dropdown flex-grow-1" id="priceSelect">
+										<button class="btn w-100 custom-select text-left" type="button"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Price
 										</button>
 										<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
