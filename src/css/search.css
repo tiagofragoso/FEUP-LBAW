@@ -111,11 +111,11 @@
 
 @media screen and (max-width: 767px) {
     .banner-container .slogan {
-        font-size: 1.8em;
+        font-size: 1.1em;
     }
 
     .banner-container .slogan-sub {
-        font-size: 1em;
+        font-size: 0.8em;
     }
 }
 
