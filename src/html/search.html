@@ -50,7 +50,7 @@
                     <a class="nav-link text-muted" href="create-event.html">Create event</a>
                 </li>
                 <li class="nav-item my-auto">
-                    <a class="nav-link text-muted" href="about.html">Help</a>
+                    <a class="nav-link text-muted" href="about.html">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -69,89 +69,106 @@
     </nav>
 
     <div class="d-flex banner-container justify-content-center align-items-center">
-        <form class="container mx-4 mx-sm-0 search-card p-4" action="#results-container">
+        <div class="container mx-2 mx-sm-0 search-container">
             <div class="row">
-                <div class="col-12 input-group mb-3">
-                    <input type="text" class="form-control py-4 h-100" placeholder="Search..." id="search-input" aria-describedby="button-go">
-                    <div class="input-group-append h-100">
-                        <button type="submit" class="btn btn-primary px-2 px-sm-4 px-md-5 w-100" type="button" id="button-go">Go!</button>
-                    </div>
-                </div>
+                <h1 class="col-12 slogan mb-3">
+                    Sound.hub, where sound meets.
+                </h1>
+                <h5 class="col-12 slogan-sub mb-3">
+                    Search for worldwide music events to collaborate and attend at any time and place.
+                </h5>
             </div>
-            <div class="row">
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownDate"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Date
-                    </button>
-                    <div class="dropdown-menu p-4" aria-labelledby="dropdownDate">
-                        <h6 class="dropdown-title">Dates</h6>
-                        <p>
-                            This will be a date picker...
-                        </p>
+            <form class="container search-card p-4" action="#results-container">
+                <div class="row">
+                    <div class="col-12 input-group mb-3">
+                        <input type="text" class="form-control py-3 py-md-4 h-100" placeholder="Search..." id="search-input" aria-describedby="button-go">
+                        <div class="input-group-append h-100">
+                            <button type="submit" class="btn btn-primary px-2 px-sm-4 px-md-5 w-100" type="button" id="button-go">Go!</button>
+                        </div>
                     </div>
                 </div>
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownLocation"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Location
-                    </button>
-                    <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
-                        <h6 class="dropdown-title">Location</h6>
-                        <p>
-                            This will be a location input...
-                        </p>
+                <div class="row">
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownDate"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 far fa-calendar-alt"></i>
+                            Date
+                        </button>
+                        <div class="dropdown-menu p-4" aria-labelledby="dropdownDate">
+                            <h6 class="dropdown-title">Dates</h6>
+                            <p>
+                                This will be a date picker...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownLocation"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 fas fa-map-marker-alt"></i>
+                            Location
+                        </button>
+                        <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
+                            <h6 class="dropdown-title">Location</h6>
+                            <p>
+                                This will be a location input...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownPrice"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 fas fa-ticket-alt"></i>
+                            Price
+                        </button>
+                        <div class="dropdown-menu p-4" aria-labelledby="dropdownPrice">
+                            <h6 class="dropdown-title">Price</h6>
+                            <p>
+                                This will be a price input...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownCategory"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 fas fa-tag"></i>
+                            Category
+                        </button>
+                        <div class="dropdown-menu p-4" aria-labelledby="dropdownCategory">
+                            <h6 class="dropdown-title">Category</h6>
+                            <p>
+                                This will be a category selection...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownStatus"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 fas fa-check-circle"></i>
+                            Status
+                        </button>
+                        <div class="dropdown-menu p-4" aria-labelledby="dropdownStatus">
+                            <h6 class="dropdown-title">Status</h6>
+                            <p>
+                                This will be the status selection...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownField text-left"
+                            data-field="dropdownSort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="mr-1 fas fa-random"></i>
+                            Sort by
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownSort2">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                     </div>
                 </div>
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownPrice"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Price
-                    </button>
-                    <div class="dropdown-menu p-4" aria-labelledby="dropdownPrice">
-                        <h6 class="dropdown-title">Price</h6>
-                        <p>
-                            This will be a price input...
-                        </p>
-                    </div>
-                </div>
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownCategory"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Category
-                    </button>
-                    <div class="dropdown-menu p-4" aria-labelledby="dropdownCategory">
-                        <h6 class="dropdown-title">Category</h6>
-                        <p>
-                            This will be a category selection...
-                        </p>
-                    </div>
-                </div>
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownStatus"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Status
-                    </button>
-                    <div class="dropdown-menu p-4" aria-labelledby="dropdownStatus">
-                        <h6 class="dropdown-title">Status</h6>
-                        <p>
-                            This will be the status selection...
-                        </p>
-                    </div>
-                </div>
-                <div class="dropdown col-sm-4 col-md-2 mt-3">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownField"
-                        data-field="dropdownSort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Sort by
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownSort2">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div class="banner-overlay w-100 h-100 position-absolute"></div>
     </div>
 
     <div class="container mt-5" id="results-container">
@@ -163,9 +180,10 @@
             </div>
         </div>
         <div class="row mt-3 mb-5">
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownDate"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownDate"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 far fa-calendar-alt"></i>
                     Date
                 </button>
                 <div class="dropdown-menu p-4" aria-labelledby="dropdownDate">
@@ -175,9 +193,10 @@
                     </p>
                 </div>
             </div>
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownLocation"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownLocation"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 fas fa-map-marker-alt"></i>
                     Location
                 </button>
                 <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
@@ -187,9 +206,10 @@
                     </p>
                 </div>
             </div>
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownPrice"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownPrice"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 fas fa-ticket-alt"></i>
                     Price
                 </button>
                 <div class="dropdown-menu p-4" aria-labelledby="dropdownPrice">
@@ -199,9 +219,10 @@
                     </p>
                 </div>
             </div>
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownCategory"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownCategory"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 fas fa-tag"></i>
                     Category
                 </button>
                 <div class="dropdown-menu p-4" aria-labelledby="dropdownCategory">
@@ -211,9 +232,10 @@
                     </p>
                 </div>
             </div>
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField" data-field="dropdownStatus"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownStatus"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 fas fa-check-circle"></i>
                     Status
                 </button>
                 <div class="dropdown-menu p-4" aria-labelledby="dropdownStatus">
@@ -223,9 +245,10 @@
                     </p>
                 </div>
             </div>
-            <div class="dropdown col-sm-4 col-md-2 mt-3">
-                <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownField"
+            <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
+                <button type="button" class="btn btn-outline-primary dropdown-toggle w-100 h-100 dropdownField text-left"
                     data-field="dropdownSort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mr-1 fas fa-random"></i>
                     Sort by
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownSort2">
@@ -240,7 +263,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -272,7 +295,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -304,7 +327,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -336,7 +359,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -368,7 +391,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -400,7 +423,7 @@
             <div class="col-12 col-md-6 col-lg-4">
                 <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
                     <header class="w-100 position-relative event-header d-flex align-items-center">
-                        <img src="../assets/event-placeholder.svg" class="w-100" alt="">
+                        <img src="../assets/event-placeholder.png" class="w-100" alt="">
                         <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                         <h6 class="position-absolute event-title px-3">
                             NOS Primavera Sound 2019
@@ -433,7 +456,7 @@
 
     <footer class="footer">
         <div class="container-fluid h-100">
-            <div class="d-flex align-items-center justify-content-between h-100">
+            <div class="d-flex align-items-center flex-column flex-sm-row justify-content-between h-100">
                 <span class="text-muted">Made by <a href="about.html">sound.hub</a> © 2019</span>
                 <a href="home.html" class="logo-area h-100">
                     <img src="../assets/logo-horizontal.svg" class="h-100" alt="">

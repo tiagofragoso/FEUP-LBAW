@@ -90,6 +90,18 @@ h1, h2, h3, h4, h5, h6 {
 	border-color: #F2F3F5;
 }
 
+.btn-info {
+	background-color: var(--grey);
+	color: var(--darkblue);
+	border: var(--grey);
+}
+
+.btn-info:hover, .btn-info:active {
+	background-color: var(--darkgrey)!important;
+	border-color: var(--darkgrey)!important;
+
+}
+
 .dropdown-menu-right {
 	background-color: var(--white);
 }
@@ -175,9 +187,3 @@ input:focus {
 	color: var(--green);
 }
 
-select {
-	appearance: none;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	background: url("../assets/arrow-down.svg") no-repeat center right/.8em content-box;
-}
