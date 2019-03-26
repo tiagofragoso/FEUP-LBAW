@@ -1,36 +1,36 @@
 -- PRAGMA FOREIGN_KEYS=ON;
 
-DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS member;
-DROP TABLE IF EXISTS admin;
-DROP TABLE IF EXISTS event;
-DROP TABLE IF EXISTS ticket;
-DROP TABLE IF EXISTS participation;
-DROP TABLE IF EXISTS invite_request;
-DROP TABLE IF EXISTS follow;
-DROP TABLE IF EXISTS post;
-DROP TABLE IF EXISTS post_like;
-DROP TABLE IF EXISTS comment;
-DROP TABLE IF EXISTS comment_like;
-DROP TABLE IF EXISTS poll;
-DROP TABLE IF EXISTS poll_option;
-DROP TABLE IF EXISTS poll_vote;
-DROP TABLE IF EXISTS file;
-DROP TABLE IF EXISTS thread;
-DROP TABLE IF EXISTS thread_comment;
-DROP TABLE IF EXISTS question;
-DROP TABLE IF EXISTS answer;
-DROP TABLE IF EXISTS user_report;
-DROP TABLE IF EXISTS event_report;
-DROP TABLE IF EXISTS currency;
-DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS admins;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS participations;
+DROP TABLE IF EXISTS invite_requests;
+DROP TABLE IF EXISTS follows;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS post_likes;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS comment_likes;
+DROP TABLE IF EXISTS polls;
+DROP TABLE IF EXISTS poll_options;
+DROP TABLE IF EXISTS poll_votes;
+DROP TABLE IF EXISTS files;
+DROP TABLE IF EXISTS threads;
+DROP TABLE IF EXISTS thread_comments;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS user_reports;
+DROP TABLE IF EXISTS event_reports;
+DROP TABLE IF EXISTS currencies;
+DROP TABLE IF EXISTS categories;
 
 CREATE TYPE event_type AS ENUM ('Concert', 'Festival', 'Liveset');
 CREATE TYPE event_status AS ENUM ('Planning', 'Tickets', 'Live');
 CREATE TYPE participation_type AS ENUM ('Host', 'Artist', 'Owner', 'Participant');
 CREATE TYPE status AS ENUM ('Pending', 'Accepted', 'Declined');
 
-CREATE TABLE user (
+CREATE TABLE users (
     id integer PRIMARY KEY,
     name text,
     username text UNIQUE NOT NULL,
@@ -38,17 +38,17 @@ CREATE TABLE user (
     password text NOT NULL
 );
 
-CREATE TABLE member (
-    user_id integer PRIMARY KEY REFERENCES user ON DELETE CASCADE,
+CREATE TABLE members (
+    user_id integer PRIMARY KEY REFERENCES users ON DELETE CASCADE,
     birthdate date NOT NULL,
     banned boolean NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE admin (
-    user_id integer PRIMARY KEY REFERENCES user ON DELETE CASCADE
+CREATE TABLE admins (
+    user_id integer PRIMARY KEY REFERENCES users ON DELETE CASCADE
 );
 
-CREATE TABLE event (
+CREATE TABLE events (
     id integer PRIMARY KEY,
     title text NOT NULL,
     start_date date,
@@ -60,151 +60,151 @@ CREATE TABLE event (
     description text,
     ticket_sale_start_date date,
     banned boolean NOT NULL DEFAULT FALSE,
-    category text REFERENCES category ON DELETE CASCADE,
+    category text REFERENCES categories ON DELETE CASCADE,
     type event_type NOT NULL,
     visibility boolean NOT NULL DEFAULT TRUE,
     status event_status NOT NULL,
-    currency text REFERENCES currency ON DELETE CASCADE
+    currency text REFERENCES currencies ON DELETE CASCADE
 );
 
-CREATE TABLE ticket (
+CREATE TABLE tickets (
     id integer PRIMARY KEY,
     qrcode text NOT NULL,
     purchase_date date NOT NULL DEFAULT today,
     price numeric NOT NULL CONTRAINT positive_price CHECK (price >= 0),
-    owner integer REFERENCES member ON DELETE CASCADE,
-    event_id integer REFERENCES event ON DELETE CASCADE
+    owner integer REFERENCES members ON DELETE CASCADE,
+    event_id integer REFERENCES events ON DELETE CASCADE
 );
 
-CREATE TABLE participation (
+CREATE TABLE participations (
     id integer PRIMARY KEY,
-    user_id integer REFERENCES member ON DELETE CASCADE,
-    event_id integer REFERENCES event ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    event_id integer REFERENCES events ON DELETE CASCADE,
     type participation_type NOT NULL,
     participation_date date NOT NULL DEFAULT today
 );
 
-CREATE TABLE invite_request (
+CREATE TABLE invite_requests (
     id integer PRIMARY KEY,
-    user_id integer REFERENCES member ON DELETE CASCADE,
-    invited_user_id integer REFERENCES member ON DELETE CASCADE,
-    event_id integer REFERENCES event ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    invited_user_id integer REFERENCES members ON DELETE CASCADE,
+    event_id integer REFERENCES events ON DELETE CASCADE,
     type participation_type NOT NULL,
     invite_status status NOT NULL,
     invite_date date NOT NULL DEFAULT today
 );
 
-CREATE TABLE follow (
-    follower_id integer REFERENCES member ON DELETE CASCADE,
-    followed_id integer REFERENCES member ON DELETE CASCADE,
+CREATE TABLE follows (
+    follower_id integer REFERENCES members ON DELETE CASCADE,
+    followed_id integer REFERENCES members ON DELETE CASCADE,
     PRIMARY KEY (followerId,followedId)
 );
 
-CREATE TABLE post (
+CREATE TABLE posts (
     id integer PRIMARY KEY,
     content text NOT NULL,
     post_date date NOT NULL DEFAULT today,
     likes integer NOT NULL DEFAULT 0 CONTRAINT positive_likes CHECK (likes >=0),
-    event_id integer REFERENCES event ON DELETE CASCADE,
-    author_id integer REFERENCES member ON DELETE CASCADE
+    event_id integer REFERENCES events ON DELETE CASCADE,
+    author_id integer REFERENCES members ON DELETE CASCADE
 );
 
-CREATE TABLE post_like (
-    user_id integer REFERENCES member ON DELETE CASCADE,
-    post_id integer REFERENCES post ON DELETE CASCADE,
+CREATE TABLE post_likes (
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    post_id integer REFERENCES posts ON DELETE CASCADE,
     PRIMARY KEY(user_id, post_id)
 );
 
-CREATE TABLE comment (
+CREATE TABLE comments (
     id integer PRIMARY KEY,
     content text NOT NULL,
     comment_date date NOT NULL DEFAULT today,
     likes integer NOT NULL DEFAULT 0 CONTRAINT positive_likes CHECK (likes >=0),
-    post_id integer REFERENCES post ON DELETE CASCADE,
-    user_id integer REFERENCES user ON DELETE CASCADE,
-    parent integer REFERENCES comment ON DELETE CASCADE
+    post_id integer REFERENCES posts ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    parent integer REFERENCES comments ON DELETE CASCADE
 );
 
-CREATE TABLE comment_like (
-    user_id integer REFERENCES member ON DELETE CASCADE,
-    comment_id integer REFERENCES comment ON DELETE CASCADE,
+CREATE TABLE comment_likes (
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    comment_id integer REFERENCES comments ON DELETE CASCADE,
     PRIMARY KEY(user_id, comment_id)
 );
 
-CREATE TABLE poll (
-    post_id integer PRIMARY KEY REFERENCES post ON DELETE CASCADE,
+CREATE TABLE polls (
+    post_id integer PRIMARY KEY REFERENCES posts ON DELETE CASCADE,
     title text NOT NULL
 );
 
-CREATE TABLE poll_option (
+CREATE TABLE poll_options (
     id integer PRIMARY KEY,
-    post_id integer REFERENCES poll ON DELETE CASCADE,
+    post_id integer REFERENCES polls ON DELETE CASCADE,
     name text NOT NULL,
     votes integer NOT NULL DEFAULT 0 CONTRAINT positive_votes CHECK (votes >=0)
 );
 
-CREATE TABLE poll_vote (
-    poll_option_id integer REFERENCES poll_option ON DELETE CASCADE,
-    user_id integer REFERENCES member ON DELETE CASCADE,
+CREATE TABLE poll_votes (
+    poll_option_id integer REFERENCES poll_options ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE,
     PRIMARY KEY(poll_option_id, user_id)
 );
 
-CREATE TABLE file (
-    post_id integer REFERENCES post ON DELETE CASCADE,
+CREATE TABLE files (
+    post_id integer REFERENCES posts ON DELETE CASCADE,
     file text NOT NULL
 );
 
-CREATE TABLE thread (
+CREATE TABLE threads (
     id integer PRIMARY KEY,
     content text NOT NULL,
     thread_date date NOT NULL DEFAULT today,
-    event_id integer REFERENCES event ON DELETE CASCADE,
-    author_id integer REFERENCES member ON DELETE CASCADE
+    event_id integer REFERENCES events ON DELETE CASCADE,
+    author_id integer REFERENCES members ON DELETE CASCADE
 );
 
-CREATE TABLE thread_comment (
+CREATE TABLE thread_comments (
     id integer PRIMARY KEY,
     content text NOT NULL,
     comment_date date NOT NULL DEFAULT today,
-    thread_id integer REFERENCES thread ON DELETE CASCADE,
-    user_id integer REFERENCES member ON DELETE CASCADE
+    thread_id integer REFERENCES threads ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE
 );
 
-CREATE TABLE question (
+CREATE TABLE questions (
     id integer PRIMARY KEY,
-    question text NOT NULL,
-    event_id integer REFERENCES event ON DELETE CASCADE
+    content text NOT NULL, -- change
+    event_id integer REFERENCES events ON DELETE CASCADE
 );
 
-CREATE TABLE answer (
+CREATE TABLE answers (
     id integer PRIMARY KEY,
-    answer text NOT NULL,
-    question_id integer REFERENCES question ON DELETE CASCADE
+    content text NOT NULL, -- change
+    question_id integer REFERENCES questions ON DELETE CASCADE
 );
 
-CREATE TABLE user_report (
-    user_id integer REFERENCES member ON DELETE CASCADE,
-    reported_user integer REFERENCES member ON DELETE CASCADE,
+CREATE TABLE user_reports (
+    user_id integer REFERENCES members ON DELETE CASCADE,
+    reported_user integer REFERENCES members ON DELETE CASCADE,
     report_status status NOT NULL,
     report_date date NOT NULL DEFAULT today,
     PRIMARY KEY(user_id, reported_user)
 );
 
-CREATE TABLE event_report (
-    event_id integer REFERENCES event ON DELETE CASCADE,
-    user_id integer REFERENCES member ON DELETE CASCADE,
+CREATE TABLE event_reports (
+    event_id integer REFERENCES events ON DELETE CASCADE,
+    user_id integer REFERENCES members ON DELETE CASCADE,
     report_status status NOT NULL,
     report_date date NOT NULL DEFAULT today,
     PRIMARY KEY(user_id, event_id)
 );
 
-CREATE TABLE currency (
+CREATE TABLE currencies (
     id integer PRIMARY KEY,
     code text UNIQUE NOT NULL,
     name text UNIQUE NOT NULL
 );
 
-CREATE TABLE category (
+CREATE TABLE categories (
     id integer PRIMARY KEY,
     name text UNIQUE NOT NULL
 );
