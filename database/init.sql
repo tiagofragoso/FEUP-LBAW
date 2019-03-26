@@ -55,7 +55,7 @@ CREATE TABLE events (
     end_date date,
     location text,
     address text,
-    price numeric DEFAULT 0 CONTRAINT positive_price CHECK (price >= 0),
+    price numeric DEFAULT 0 CONSTRAINT positive_price CHECK (price >= 0),
     brief text,
     description text,
     ticket_sale_start_date date,
@@ -71,7 +71,7 @@ CREATE TABLE tickets (
     id integer PRIMARY KEY,
     qrcode text NOT NULL,
     purchase_date date NOT NULL DEFAULT today,
-    price numeric NOT NULL CONTRAINT positive_price CHECK (price >= 0),
+    price numeric NOT NULL CONSTRAINT positive_price CHECK (price >= 0),
     owner integer REFERENCES members ON DELETE CASCADE,
     event_id integer REFERENCES events ON DELETE CASCADE
 );
@@ -104,7 +104,7 @@ CREATE TABLE posts (
     id integer PRIMARY KEY,
     content text NOT NULL,
     post_date date NOT NULL DEFAULT today,
-    likes integer NOT NULL DEFAULT 0 CONTRAINT positive_likes CHECK (likes >=0),
+    likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
     event_id integer REFERENCES events ON DELETE CASCADE,
     author_id integer REFERENCES members ON DELETE CASCADE
 );
@@ -119,7 +119,7 @@ CREATE TABLE comments (
     id integer PRIMARY KEY,
     content text NOT NULL,
     comment_date date NOT NULL DEFAULT today,
-    likes integer NOT NULL DEFAULT 0 CONTRAINT positive_likes CHECK (likes >=0),
+    likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
     post_id integer REFERENCES posts ON DELETE CASCADE,
     user_id integer REFERENCES members ON DELETE CASCADE,
     parent integer REFERENCES comments ON DELETE CASCADE
@@ -140,7 +140,7 @@ CREATE TABLE poll_options (
     id integer PRIMARY KEY,
     post_id integer REFERENCES polls ON DELETE CASCADE,
     name text NOT NULL,
-    votes integer NOT NULL DEFAULT 0 CONTRAINT positive_votes CHECK (votes >=0)
+    votes integer NOT NULL DEFAULT 0 CONSTRAINT positive_votes CHECK (votes >=0)
 );
 
 CREATE TABLE poll_votes (
