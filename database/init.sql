@@ -172,13 +172,13 @@ CREATE TABLE thread_comments (
 
 CREATE TABLE questions (
     id integer PRIMARY KEY,
-    content text NOT NULL, -- change
+    content text NOT NULL,
     event_id integer REFERENCES events ON DELETE CASCADE
 );
 
 CREATE TABLE answers (
     id integer PRIMARY KEY,
-    content text NOT NULL, -- change
+    content text NOT NULL,
     question_id integer REFERENCES questions ON DELETE CASCADE
 );
 
