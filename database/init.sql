@@ -63,8 +63,8 @@ CREATE TABLE events (
     type event_type NOT NULL,
     private boolean NOT NULL DEFAULT FALSE,
     status event_status NOT NULL,
-    currency text REFERENCES currencies ON DELETE CASCADE,
-    category text REFERENCES categories ON DELETE CASCADE
+    currency integer REFERENCES currencies ON DELETE CASCADE,
+    category integer REFERENCES categories ON DELETE CASCADE
 );
 
 CREATE TABLE tickets (
@@ -89,9 +89,9 @@ CREATE TABLE invite_requests (
     user_id integer REFERENCES members ON DELETE CASCADE,
     invited_user_id integer REFERENCES members ON DELETE CASCADE,
     event_id integer REFERENCES events ON DELETE CASCADE,
-    invite_type participation_type NOT NULL,
-    invite_status status NOT NULL,
-    invite_date date NOT NULL DEFAULT today
+    type participation_type NOT NULL,
+    "status" status NOT NULL,
+    "date" date NOT NULL DEFAULT today
 );
 
 CREATE TABLE follows (
@@ -103,7 +103,7 @@ CREATE TABLE follows (
 CREATE TABLE posts (
     id integer PRIMARY KEY,
     content text NOT NULL,
-    post_date date NOT NULL DEFAULT today,
+    "date" date NOT NULL DEFAULT today,
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
     event_id integer REFERENCES events ON DELETE CASCADE,
     author_id integer REFERENCES members ON DELETE CASCADE
@@ -118,7 +118,7 @@ CREATE TABLE post_likes (
 CREATE TABLE comments (
     id integer PRIMARY KEY,
     content text NOT NULL,
-    comment_date date NOT NULL DEFAULT today,
+    "date" date NOT NULL DEFAULT today,
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
     post_id integer REFERENCES posts ON DELETE CASCADE,
     user_id integer REFERENCES members ON DELETE CASCADE,
@@ -157,7 +157,7 @@ CREATE TABLE files (
 CREATE TABLE threads (
     id integer PRIMARY KEY,
     content text NOT NULL,
-    thread_date date NOT NULL DEFAULT today,
+    "date" date NOT NULL DEFAULT today,
     event_id integer REFERENCES events ON DELETE CASCADE,
     author_id integer REFERENCES members ON DELETE CASCADE
 );
@@ -165,7 +165,7 @@ CREATE TABLE threads (
 CREATE TABLE thread_comments (
     id integer PRIMARY KEY,
     content text NOT NULL,
-    comment_date date NOT NULL DEFAULT today,
+    "date" date NOT NULL DEFAULT today,
     thread_id integer REFERENCES threads ON DELETE CASCADE,
     user_id integer REFERENCES members ON DELETE CASCADE
 );
@@ -185,16 +185,16 @@ CREATE TABLE answers (
 CREATE TABLE user_reports (
     user_id integer REFERENCES members ON DELETE CASCADE,
     reported_user integer REFERENCES members ON DELETE CASCADE,
-    report_status status NOT NULL,
-    report_date date NOT NULL DEFAULT today,
+    "status" status NOT NULL,
+    "date" date NOT NULL DEFAULT today,
     PRIMARY KEY(user_id, reported_user)
 );
 
 CREATE TABLE event_reports (
     event_id integer REFERENCES events ON DELETE CASCADE,
     user_id integer REFERENCES members ON DELETE CASCADE,
-    report_status status NOT NULL,
-    report_date date NOT NULL DEFAULT today,
+    "status" status NOT NULL,
+    "date" date NOT NULL DEFAULT today,
     PRIMARY KEY(user_id, event_id)
 );
 
