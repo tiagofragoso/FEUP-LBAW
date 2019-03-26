@@ -170,7 +170,7 @@ CREATE TABLE poll_votes (
 
 CREATE TABLE files (
     post_id integer PRIMARY KEY REFERENCES posts ON DELETE CASCADE,
-    "file" text NOT NULL --TODO
+    "file" text NOT NULL 
 );
 
 CREATE TABLE threads (
