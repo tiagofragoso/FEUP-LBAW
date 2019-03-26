@@ -60,11 +60,11 @@ CREATE TABLE events (
     description text,
     ticket_sale_start_date date,
     banned boolean NOT NULL DEFAULT FALSE,
-    category text REFERENCES categories ON DELETE CASCADE,
     type event_type NOT NULL,
-    visibility boolean NOT NULL DEFAULT TRUE,
+    private boolean NOT NULL DEFAULT FALSE,
     status event_status NOT NULL,
-    currency text REFERENCES currencies ON DELETE CASCADE
+    currency text REFERENCES currencies ON DELETE CASCADE,
+    category text REFERENCES categories ON DELETE CASCADE
 );
 
 CREATE TABLE tickets (
@@ -89,7 +89,7 @@ CREATE TABLE invite_requests (
     user_id integer REFERENCES members ON DELETE CASCADE,
     invited_user_id integer REFERENCES members ON DELETE CASCADE,
     event_id integer REFERENCES events ON DELETE CASCADE,
-    type participation_type NOT NULL,
+    invite_type participation_type NOT NULL,
     invite_status status NOT NULL,
     invite_date date NOT NULL DEFAULT today
 );
