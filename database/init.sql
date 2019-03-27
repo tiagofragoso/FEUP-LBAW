@@ -97,7 +97,7 @@ CREATE TABLE participations (
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_participation_date CHECK ("participation_date" <= CURRENT_DATE)
+    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE)
 );
 
 CREATE TABLE invite_requests (
