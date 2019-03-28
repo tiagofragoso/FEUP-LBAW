@@ -194,9 +194,8 @@ CREATE TABLE questions (
 );
 
 CREATE TABLE answers (
-    id serial PRIMARY KEY,
-    content varchar(1000) NOT NULL,
-    question_id integer NOT NULL REFERENCES questions ON DELETE CASCADE
+    question_id integer PRIMARY KEY REFERENCES questions ON DELETE CASCADE,
+    content varchar(1000) NOT NULL
 );
 
 CREATE TABLE user_reports (
