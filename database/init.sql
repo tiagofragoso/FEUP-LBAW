@@ -34,7 +34,7 @@ CREATE TYPE participation_type AS ENUM ('Host', 'Artist', 'Owner', 'Participant'
 CREATE TYPE status AS ENUM ('Pending', 'Accepted', 'Declined');
 
 CREATE TABLE users (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     "name" varchar(30),
     username varchar(15) UNIQUE NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
@@ -52,18 +52,18 @@ CREATE TABLE admins (
 );
 
 CREATE TABLE currencies (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     code varchar(3) UNIQUE NOT NULL,
     "name" text UNIQUE NOT NULL
 );
 
 CREATE TABLE categories (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     "name" varchar(20) UNIQUE NOT NULL
 );
 
 CREATE TABLE events (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     title varchar(60) NOT NULL,
     "start_date" date CONSTRAINT future_start_date CHECK ("start_date" > CURRENT_DATE),
     "end_date" date CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_DATE),
@@ -84,7 +84,7 @@ CREATE TABLE events (
 );
 
 CREATE TABLE tickets (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     qrcode text NOT NULL,
     purchase_date date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_DATE),
     price numeric NOT NULL CONSTRAINT positive_price CHECK (price >= 0),
@@ -93,7 +93,7 @@ CREATE TABLE tickets (
 );
 
 CREATE TABLE participations (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE participations (
 );
 
 CREATE TABLE invite_requests (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     invited_user_id integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
@@ -117,7 +117,7 @@ CREATE TABLE follows (
 );
 
 CREATE TABLE posts (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
     "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
@@ -132,7 +132,7 @@ CREATE TABLE post_likes (
 );
 
 CREATE TABLE comments (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
     "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
@@ -154,7 +154,7 @@ CREATE TABLE polls (
 );
 
 CREATE TABLE poll_options (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     post_id integer NOT NULL REFERENCES polls ON DELETE CASCADE,
     "name" varchar(30) NOT NULL,
     votes integer NOT NULL DEFAULT 0 CONSTRAINT positive_votes CHECK (votes >= 0)
@@ -172,7 +172,7 @@ CREATE TABLE files (
 );
 
 CREATE TABLE threads (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
     "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
@@ -180,7 +180,7 @@ CREATE TABLE threads (
 );
 
 CREATE TABLE thread_comments (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
     "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
     thread_id integer NOT NULL REFERENCES threads ON DELETE CASCADE,
@@ -188,15 +188,14 @@ CREATE TABLE thread_comments (
 );
 
 CREATE TABLE questions (
-    id integer PRIMARY KEY,
+    id serial PRIMARY KEY,
     content varchar(1000) NOT NULL,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE
 );
 
 CREATE TABLE answers (
-    id integer PRIMARY KEY,
-    content varchar(1000) NOT NULL,
-    question_id integer NOT NULL REFERENCES questions ON DELETE CASCADE
+    question_id integer PRIMARY KEY REFERENCES questions ON DELETE CASCADE,
+    content varchar(1000) NOT NULL
 );
 
 CREATE TABLE user_reports (
