@@ -38,14 +38,14 @@ CREATE TABLE users (
     "name" varchar(30),
     username varchar(15) UNIQUE NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
-    followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
-    "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     "password" text NOT NULL
 );
 
 CREATE TABLE members (
     "user_id" integer PRIMARY KEY REFERENCES users ON DELETE CASCADE,
     birthdate date,
+    followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
+    "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     banned boolean NOT NULL DEFAULT FALSE
 );
 
