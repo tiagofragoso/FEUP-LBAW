@@ -54,3 +54,31 @@ CREATE TRIGGER post_likes_count
     AFTER INSERT OR DELETE ON post_likes
     FOR EACH ROW
     EXECUTE PROCEDURE post_likes_count();
+
+--Trigger: comment_likes_count
+
+DROP TRIGGER IF EXISTS comment_likes_count ON comment_likes;
+
+CREATE OR REPLACE FUNCTION comment_likes_count() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE comments
+        SET likes = likes + 1
+        WHERE New.comment_id = comments.id;
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+        UPDATE comments
+        SET likes = likes - 1
+        WHERE Old.comment_id = comments.id;
+    END IF;
+    RETURN NEW;
+END
+$BODY$ 
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER comment_likes_count
+    AFTER INSERT OR DELETE ON comment_likes
+    FOR EACH ROW
+    EXECUTE PROCEDURE comment_likes_count();
