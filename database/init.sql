@@ -38,6 +38,8 @@ CREATE TABLE users (
     "name" varchar(30),
     username varchar(15) UNIQUE NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
+    followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
+    "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     "password" text NOT NULL
 );
 
@@ -69,6 +71,7 @@ CREATE TABLE events (
     "end_date" date CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_DATE),
     "location" varchar(50),
     "address" varchar(100),
+    participants integer NOT NULL DEFAULT 0 CONSTRAINT positive_participants CHECK (participants >= 0),
     price numeric DEFAULT 0 CONSTRAINT positive_price CHECK (price >= 0),
     brief varchar(140),
     "description" text,
@@ -120,7 +123,8 @@ CREATE TABLE posts (
     id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
     "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
-    likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >=0),
+    likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
+    comments integer NOT NULL DEFAULT 0 CONSTRAINT positive_comments CHECK (comments >= 0),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     author_id integer NOT NULL REFERENCES members ON DELETE CASCADE
 );
