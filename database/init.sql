@@ -67,15 +67,15 @@ CREATE TABLE categories (
 CREATE TABLE events (
     id serial PRIMARY KEY,
     title varchar(60) NOT NULL,
-    "start_date" date CONSTRAINT future_start_date CHECK ("start_date" > CURRENT_DATE),
-    "end_date" date CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_DATE),
+    "start_date" timestamp CONSTRAINT future_start_date CHECK ("start_date" > CURRENT_TIMESTAMP),
+    "end_date" timestamp CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_TIMESTAMP),
     "location" varchar(50),
     "address" varchar(100),
     participants integer NOT NULL DEFAULT 0 CONSTRAINT positive_participants CHECK (participants >= 0),
     price numeric DEFAULT 0 CONSTRAINT positive_price CHECK (price >= 0),
     brief varchar(140),
     "description" text,
-    ticket_sale_start_date date CONSTRAINT future_ticket_sale_date CHECK ("ticket_sale_start_date" > CURRENT_DATE),
+    ticket_sale_start_date timestamp CONSTRAINT future_ticket_sale_date CHECK ("ticket_sale_start_date" > CURRENT_TIMESTAMP),
     banned boolean NOT NULL DEFAULT FALSE,
     "type" event_type NOT NULL,
     "private" boolean NOT NULL DEFAULT FALSE,
@@ -89,7 +89,7 @@ CREATE TABLE events (
 CREATE TABLE tickets (
     id serial PRIMARY KEY,
     qrcode text NOT NULL,
-    purchase_date date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_DATE),
+    purchase_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_TIMESTAMP),
     price numeric NOT NULL CONSTRAINT positive_price CHECK (price >= 0),
     "owner" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE
@@ -100,7 +100,7 @@ CREATE TABLE participations (
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 CREATE TABLE invite_requests (
@@ -110,7 +110,7 @@ CREATE TABLE invite_requests (
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 CREATE TABLE follows (
@@ -122,7 +122,7 @@ CREATE TABLE follows (
 CREATE TABLE posts (
     id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     comments integer NOT NULL DEFAULT 0 CONSTRAINT positive_comments CHECK (comments >= 0),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
@@ -138,7 +138,7 @@ CREATE TABLE post_likes (
 CREATE TABLE comments (
     id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     post_id integer NOT NULL REFERENCES posts ON DELETE CASCADE,
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
@@ -178,7 +178,7 @@ CREATE TABLE files (
 CREATE TABLE threads (
     id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     author_id integer NOT NULL REFERENCES members ON DELETE CASCADE
 );
@@ -186,7 +186,7 @@ CREATE TABLE threads (
 CREATE TABLE thread_comments (
     id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     thread_id integer NOT NULL REFERENCES threads ON DELETE CASCADE,
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE
 );
@@ -206,7 +206,7 @@ CREATE TABLE user_reports (
     "user_id" integer REFERENCES members ON DELETE CASCADE,
     reported_user integer REFERENCES members ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     PRIMARY KEY("user_id", reported_user)
 );
 
@@ -214,6 +214,6 @@ CREATE TABLE event_reports (
     event_id integer REFERENCES events ON DELETE CASCADE,
     "user_id" integer REFERENCES members ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" date NOT NULL DEFAULT CURRENT_DATE CONSTRAINT past_date CHECK ("date" <= CURRENT_DATE),
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     PRIMARY KEY("user_id", event_id)
 );
