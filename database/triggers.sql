@@ -83,4 +83,22 @@ CREATE TRIGGER comment_likes_count
     FOR EACH ROW
     EXECUTE PROCEDURE comment_likes_count();
 
---Trigger: 
+--Trigger: comments_count
+
+DROP TRIGGER IF EXISTS comments_count ON comments;
+
+CREATE OR REPLACE FUNCTION comments_count() RETURNS TRIGGER AS
+$BODY$
+BEGIN   
+    UPDATE posts
+    SET comments = comments + 1
+    WHERE New.post_id = posts.id;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER comments_count
+    AFTER INSERT ON comments
+    FOR EACH ROW
+    EXECUTE PROCEDURE comments_count();
