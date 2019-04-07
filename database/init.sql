@@ -165,9 +165,10 @@ CREATE TABLE poll_options (
 );
 
 CREATE TABLE poll_votes (
-    poll_option_id integer REFERENCES poll_options ON DELETE CASCADE,
+    poll_id integer REFERENCES polls ON DELETE CASCADE,
     "user_id" integer REFERENCES members ON DELETE CASCADE,
-    PRIMARY KEY(poll_option_id, "user_id")
+    poll_option integer NOT NULL REFERENCES poll_options,
+    PRIMARY KEY(poll_id, "user_id")
 );
 
 CREATE TABLE files (
