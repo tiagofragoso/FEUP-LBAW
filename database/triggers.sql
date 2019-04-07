@@ -102,3 +102,40 @@ CREATE TRIGGER comments_count
     AFTER INSERT ON comments
     FOR EACH ROW
     EXECUTE PROCEDURE comments_count();
+
+--Trigger: followers_count
+
+DROP TRIGGER IF EXISTS followers_count ON follows;
+
+CREATE OR REPLACE FUNCTION followers_count() RETURNS TRIGGER AS
+$BODY$
+BEGIN 
+    IF TG_OP = 'INSERT' THEN
+        UPDATE members
+        SET "following" = "following" + 1
+        WHERE New.follower_id = members.user_id;
+    
+        UPDATE members
+        SET followers = followers + 1
+        WHERE New.followed_id = members.user_id;
+    END IF;
+
+    IF TG_OP = 'DELETE' THEN
+        UPDATE members
+        SET "following" = "following" - 1
+        WHERE Old.follower_id = members.user_id;
+    
+        UPDATE members
+        SET followers = followers - 1
+        WHERE Old.followed_id = members.user_id;
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER followers_count
+    AFTER INSERT OR DELETE ON follows
+    FOR EACH ROW
+    EXECUTE PROCEDURE followers_count();
+
