@@ -308,17 +308,17 @@ insert into poll_options(post_id,"name",votes) VALUES (1,'June 8',3);
 
 /*poll_votes*/
 
-insert into poll_votes(poll_option_id,"user_id") VALUES (1,13);
-insert into poll_votes(poll_option_id,"user_id") VALUES (1,5);
-insert into poll_votes(poll_option_id,"user_id") VALUES (1,6);
-insert into poll_votes(poll_option_id,"user_id") VALUES (1,10);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,13,1);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,5,1);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,6,1);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,10,1);
 
-insert into poll_votes(poll_option_id,"user_id") VALUES (2,7);
-insert into poll_votes(poll_option_id,"user_id") VALUES (2,8);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,7,2);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,8,2);
 
-insert into poll_votes(poll_option_id,"user_id") VALUES (3,9);
-insert into poll_votes(poll_option_id,"user_id") VALUES (3,11);
-insert into poll_votes(poll_option_id,"user_id") VALUES (3,12);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,9,3);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,11,3);
+insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,12,3);
 
 
 /*files*/
