@@ -82,3 +82,5 @@ CREATE TRIGGER comment_likes_count
     AFTER INSERT OR DELETE ON comment_likes
     FOR EACH ROW
     EXECUTE PROCEDURE comment_likes_count();
+
+--Trigger: 
