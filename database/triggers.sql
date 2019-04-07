@@ -159,3 +159,29 @@ CREATE TRIGGER accept_invitation
     AFTER UPDATE ON invite_requests
     FOR EACH ROW
     EXECUTE PROCEDURE accept_invitation();
+
+--Trigger: poll_option_votes
+
+DROP TRIGGER IF EXISTS poll_option_votes ON poll_votes;
+
+CREATE OR REPLACE FUNCTION poll_option_votes() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE poll_options
+    SET votes = votes + 1
+    WHERE New.poll_option = poll_options.id;
+
+    IF TG_OP = 'UPDATE' THEN
+        UPDATE poll_options
+        SET votes = votes - 1
+        WHERE Old.poll_option = poll_options.id;
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER poll_option_votes
+    AFTER INSERT OR UPDATE ON poll_votes
+    FOR EACH ROW
+    EXECUTE PROCEDURE poll_option_votes();
