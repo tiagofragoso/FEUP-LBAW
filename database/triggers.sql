@@ -139,3 +139,23 @@ CREATE TRIGGER followers_count
     FOR EACH ROW
     EXECUTE PROCEDURE followers_count();
 
+--Trigger: accept_invitation
+
+DROP TRIGGER IF EXISTS accept_invitation ON invite_requests;
+
+CREATE OR REPLACE FUNCTION accept_invitation() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF New.status = 'Accepted' THEN
+        INSERT INTO participations("user_id", event_id, "type")
+        VALUES (New.invited_user_id, New.event_id, New.type);
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER accept_invitation
+    AFTER UPDATE ON invite_requests
+    FOR EACH ROW
+    EXECUTE PROCEDURE accept_invitation();
