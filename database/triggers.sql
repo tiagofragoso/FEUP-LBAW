@@ -188,7 +188,7 @@ CREATE TRIGGER poll_option_votes
 
 --Trigger: event_owner
 
-DROP TRIGGER IF EXISTS event_owner ON participants;
+DROP TRIGGER IF EXISTS event_owner ON participations;
 
 CREATE OR REPLACE FUNCTION event_owner() RETURNS TRIGGER AS
 $BODY$
@@ -208,3 +208,40 @@ CREATE TRIGGER event_owner
     FOR EACH ROW
     EXECUTE PROCEDURE event_owner();
 
+--Trigger: create_poll
+
+DROP TRIGGER IF EXISTS create_poll ON polls;
+
+CREATE OR REPLACE FUNCTION create_poll() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE posts
+    SET "type" = 'Poll'
+    WHERE New.post_id = posts.id;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER create_poll
+    AFTER INSERT ON polls
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_poll();
+
+DROP TRIGGER IF EXISTS create_file ON files;
+
+CREATE OR REPLACE FUNCTION create_file() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    UPDATE posts
+    SET "type" = 'File'
+    WHERE New.post_id = posts.id;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER create_file
+    AFTER INSERT ON files
+    FOR EACH ROW
+    EXECUTE PROCEDURE create_file();

@@ -140,7 +140,6 @@ insert into participations("user_id",event_id,"type","date") VALUES (5,1,'Partic
 insert into participations("user_id",event_id,"type","date") VALUES (6,1,'Participant','2019-03-02');
 insert into participations("user_id",event_id,"type","date") VALUES (8,1,'Participant','2019-03-02');
 insert into participations("user_id",event_id,"type","date") VALUES (9,1,'Participant','2019-03-07');
-insert into participations("user_id",event_id,"type","date") VALUES (10,1,'Participant','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (11,1,'Participant','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (20,1,'Artist','2019-03-06');
 insert into participations("user_id",event_id,"type","date") VALUES (10,1,'Artist','2019-03-07');
@@ -186,7 +185,6 @@ insert into participations("user_id",event_id,"type","date") VALUES (5,5,'Partic
 insert into participations("user_id",event_id,"type","date") VALUES (6,5,'Participant','2019-03-02');
 insert into participations("user_id",event_id,"type","date") VALUES (8,5,'Participant','2019-03-02');
 insert into participations("user_id",event_id,"type","date") VALUES (9,5,'Participant','2019-03-07');
-insert into participations("user_id",event_id,"type","date") VALUES (10,5,'Participant','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (11,5,'Participant','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (15,5,'Participant','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (16,5,'Participant','2019-03-07');
