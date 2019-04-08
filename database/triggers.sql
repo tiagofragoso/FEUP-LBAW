@@ -185,3 +185,26 @@ CREATE TRIGGER poll_option_votes
     AFTER INSERT OR UPDATE ON poll_votes
     FOR EACH ROW
     EXECUTE PROCEDURE poll_option_votes();
+
+--Trigger: event_owner
+
+DROP TRIGGER IF EXISTS event_owner ON participants;
+
+CREATE OR REPLACE FUNCTION event_owner() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF EXISTS 
+        (SELECT * FROM participations WHERE New.event_id = event_id AND "type" = 'Owner')
+    AND New.type = 'Owner' THEN 
+        RAISE EXCEPTION 'An event can only have one owner';
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER event_owner
+    BEFORE INSERT OR UPDATE ON participations
+    FOR EACH ROW
+    EXECUTE PROCEDURE event_owner();
+
