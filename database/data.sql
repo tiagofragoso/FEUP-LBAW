@@ -195,14 +195,14 @@ insert into participations("user_id",event_id,"type","date") VALUES (14,5,'Owner
 insert into participations("user_id",event_id,"type","date") VALUES (17,5,'Host','2019-03-07');
 insert into participations("user_id",event_id,"type","date") VALUES (18,5,'Host','2019-03-10');
 
-
+/*invite_requests*/
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (6,5,1,'Participant','Accepted','2019-03-02');
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (17,18,1,'Host','Accepted','2019-03-08');
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (9,16,1,'Participant','Pending','2019-03-09');
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (19,14,1,'Artist','Declined','2019-03-02');
 
 
-
+/*follows*/
 insert into follows(follower_id,followed_id) VALUES (15,5);
 insert into follows(follower_id,followed_id) VALUES (15,6);
 insert into follows(follower_id,followed_id) VALUES (15,7);
@@ -221,7 +221,33 @@ insert into follows(follower_id,followed_id) VALUES (11,5);
 insert into follows(follower_id,followed_id) VALUES (11,10);
 insert into follows(follower_id,followed_id) VALUES (11,14);
 insert into follows(follower_id,followed_id) VALUES (11,6);
+insert into follows(follower_id,followed_id) VALUES (6,5);
+insert into follows(follower_id,followed_id) VALUES (6,7);
+insert into follows(follower_id,followed_id) VALUES (6,10);
+insert into follows(follower_id,followed_id) VALUES (6,14);
+insert into follows(follower_id,followed_id) VALUES (6,12);
+insert into follows(follower_id,followed_id) VALUES (6,11);
+insert into follows(follower_id,followed_id) VALUES (13,5);
+insert into follows(follower_id,followed_id) VALUES (13,10);
+insert into follows(follower_id,followed_id) VALUES (13,14);
+insert into follows(follower_id,followed_id) VALUES (13,6);
+insert into follows(follower_id,followed_id) VALUES (17,15);
+insert into follows(follower_id,followed_id) VALUES (17,5);
+insert into follows(follower_id,followed_id) VALUES (17,12);
+insert into follows(follower_id,followed_id) VALUES (17,14);
+insert into follows(follower_id,followed_id) VALUES (17,16);
+insert into follows(follower_id,followed_id) VALUES (7,15);
+insert into follows(follower_id,followed_id) VALUES (7,5);
+insert into follows(follower_id,followed_id) VALUES (7,9);
+insert into follows(follower_id,followed_id) VALUES (7,12);
+insert into follows(follower_id,followed_id) VALUES (7,11);
+insert into follows(follower_id,followed_id) VALUES (9,13);
+insert into follows(follower_id,followed_id) VALUES (9,5);
+insert into follows(follower_id,followed_id) VALUES (9,10);
+insert into follows(follower_id,followed_id) VALUES (9,18);
+insert into follows(follower_id,followed_id) VALUES (9,16);
 
+/*posts */
 insert into posts(content,"date",event_id,author_id) VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','2019-04-01',1,19);
 insert into posts(content,"date",event_id,author_id) VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','2019-02-02',1,19);
 insert into posts(content,"date",event_id,author_id) VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','2019-04-01',2,17);
@@ -288,20 +314,39 @@ insert into comments(content,"date",post_id,"user_id",parent) VALUES ('It has ro
 
 insert into comment_likes("user_id",comment_id) VALUES (5,1);
 insert into comment_likes("user_id",comment_id) VALUES (12,1);
+insert into comment_likes("user_id",comment_id) VALUES (6,1);
+insert into comment_likes("user_id",comment_id) VALUES (13,1);
+insert into comment_likes("user_id",comment_id) VALUES (8,1);
+insert into comment_likes("user_id",comment_id) VALUES (9,1);
 
 insert into comment_likes("user_id",comment_id) VALUES (5,2);
 insert into comment_likes("user_id",comment_id) VALUES (7,2);
 insert into comment_likes("user_id",comment_id) VALUES (15,2);
 insert into comment_likes("user_id",comment_id) VALUES (16,2);
+insert into comment_likes("user_id",comment_id) VALUES (6,2);
+insert into comment_likes("user_id",comment_id) VALUES (8,2);
+insert into comment_likes("user_id",comment_id) VALUES (13,2);
+insert into comment_likes("user_id",comment_id) VALUES (14,2);
+
 /*polls*/
 
 insert into polls(post_id,title) VALUES (1,'Best festival day');
+insert into polls(post_id,title) VALUES (3,'Lorem Ipsum');
+insert into polls(post_id,title) VALUES (4,'Lorem Ipsum');
 
 /*poll_options*/
 
 insert into poll_options(post_id,"name") VALUES (1,'June 6');
 insert into poll_options(post_id,"name") VALUES (1,'June 7');
 insert into poll_options(post_id,"name") VALUES (1,'June 8');
+
+insert into poll_options(post_id,"name") VALUES (3,'Option 1');
+insert into poll_options(post_id,"name") VALUES (3,'Option 2');
+insert into poll_options(post_id,"name") VALUES (3,'Option 3');
+
+insert into poll_options(post_id,"name") VALUES (4,'Option 1');
+insert into poll_options(post_id,"name") VALUES (4,'Option 2');
+insert into poll_options(post_id,"name") VALUES (4,'Option 3');
 
 /*poll_votes*/
 
@@ -321,6 +366,22 @@ insert into poll_votes(poll_id,"user_id",poll_option) VALUES (1,12,3);
 /*files*/
 
 insert into files(post_id,"file") VALUES (2,'file1');
+insert into files(post_id,"file") VALUES (5,'file2');
+insert into files(post_id,"file") VALUES (6,'file3');
+insert into files(post_id,"file") VALUES (7,'file4');
+
+/*threads*/
+
+
+insert into threads(content,event_id,author_id) VALUES ('What is Lorem Ipsum?',1,17);
+insert into threads(content,event_id,author_id) VALUES ('What is Lorem Ipsum?',1,18);
+insert into threads(content,event_id,author_id) VALUES ('What is Lorem Ipsum?',2,17);
+insert into threads(content,event_id,author_id) VALUES ('What is Lorem Ipsum?',5,17);
+
+/*threads comments*/
+insert into thread_comments(content,thread_id,"user_id") VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry.',1,18);
+insert into thread_comments(content,thread_id,"user_id") VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry.',2,17);
+insert into thread_comments(content,thread_id,"user_id") VALUES ('Lorem Ipsum is simply dummy text of the printing and typesetting industry.',3,18);
 
 
 /* questions*/
