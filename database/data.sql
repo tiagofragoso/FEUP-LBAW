@@ -62,17 +62,16 @@ insert into currencies (code,"name") VALUES('CNH','Chinese renminbi');
 
 /*categories*/
 
-
-insert into categories("name") VALUES ('classical');
-insert into categories("name") VALUES ('country');
-insert into categories("name") VALUES ('latin');
-insert into categories("name") VALUES ('rock');
-insert into categories("name") VALUES ('jazz');
-insert into categories("name") VALUES ('r&b');
-insert into categories("name") VALUES ('metal');
-insert into categories("name") VALUES ('blues');
-insert into categories("name") VALUES ('indie');
-insert into categories("name") VALUES ('pop');
+insert into categories("name") VALUES ('Classical');
+insert into categories("name") VALUES ('Country');
+insert into categories("name") VALUES ('Latin');
+insert into categories("name") VALUES ('Rock');
+insert into categories("name") VALUES ('Jazz');
+insert into categories("name") VALUES ('R&B');
+insert into categories("name") VALUES ('Metal');
+insert into categories("name") VALUES ('Blues');
+insert into categories("name") VALUES ('Indie');
+insert into categories("name") VALUES ('Pop');
 /*events*/
 
 insert into events (title,"start_date","end_date","location","address",price,brief,"description","ticket_sale_start_date",banned,"type","private","status",currency,category) VALUES ('Nos Primavera Sound','2019-06-06','2019-06-08','Parque da Cidade Porto','Estrada Interior da Circunvalação, 4100-083 Porto','117','A oitava edição do festival reúne um total de 70 artistas, de 6 a 8 de Junho, no cartaz mais ousado da sua história. ','O Porto vai acolher a oitava edição do NOS Primavera Sound de 6 a 8 de Junho e vai fazê-lo com a mesma filosofia que inspirou o cartaz revolucionário do Primavera Sound Barcelona. As divas do R&B e soul Solange e Erykah Badu e o colombiano J Balvin encabeçam uma programação paritária e ecléctica que reflecte os tempos em que vivemos com a ousadia e diversidade estilística que marcam a actualidade musical.','2019-05-04',false,'Festival',false,'Live',1,6);
