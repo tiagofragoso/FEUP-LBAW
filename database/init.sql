@@ -26,12 +26,14 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS event_type CASCADE;
 DROP TYPE IF EXISTS event_status CASCADE;
 DROP TYPE IF EXISTS participation_type CASCADE;
-DROP TYPE IF EXISTS status CASCADE;
+DROP TYPE IF EXISTS "status" CASCADE;
+DROP TYPE IF EXISTS post_type CASCADE;
 
 CREATE TYPE event_type AS ENUM ('Concert', 'Festival', 'Liveset');
 CREATE TYPE event_status AS ENUM ('Planning', 'Tickets', 'Live');
 CREATE TYPE participation_type AS ENUM ('Host', 'Artist', 'Owner', 'Participant');
-CREATE TYPE status AS ENUM ('Pending', 'Accepted', 'Declined');
+CREATE TYPE "status" AS ENUM ('Pending', 'Accepted', 'Declined');
+CREATE TYPE post_type AS ENUM ('Post', 'Poll', 'File');
 
 CREATE TABLE users (
     id serial PRIMARY KEY,
@@ -100,7 +102,8 @@ CREATE TABLE participations (
     "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    UNIQUE("user_id", event_id)
 );
 
 CREATE TABLE invite_requests (
@@ -126,7 +129,8 @@ CREATE TABLE posts (
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     comments integer NOT NULL DEFAULT 0 CONSTRAINT positive_comments CHECK (comments >= 0),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
-    author_id integer NOT NULL REFERENCES members ON DELETE CASCADE
+    author_id integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    "type" post_type NOT NULL DEFAULT 'Post'
 );
 
 CREATE TABLE post_likes (
