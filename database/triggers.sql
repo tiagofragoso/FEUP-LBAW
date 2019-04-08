@@ -245,3 +245,43 @@ CREATE TRIGGER create_file
     AFTER INSERT ON files
     FOR EACH ROW
     EXECUTE PROCEDURE create_file();
+
+DROP TRIGGER IF EXISTS ban_user ON user_reports;
+
+CREATE OR REPLACE FUNCTION ban_user() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF New.status = 'Accepted' THEN
+        UPDATE members 
+        SET banned = true
+        WHERE New.reported_user = members.user_id;
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER ban_user
+    AFTER UPDATE ON user_reports
+    FOR EACH ROW
+    EXECUTE PROCEDURE ban_user();
+
+DROP TRIGGER IF EXISTS ban_event ON event_reports;
+
+CREATE OR REPLACE FUNCTION ban_event() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF New.status = 'Accepted' THEN
+        UPDATE events 
+        SET banned = true
+        WHERE New.event_id = events.id;
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER ban_event
+    AFTER UPDATE ON event_reports
+    FOR EACH ROW
+    EXECUTE PROCEDURE ban_event();
