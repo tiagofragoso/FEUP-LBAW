@@ -312,3 +312,30 @@ CREATE TRIGGER make_invitation
     BEFORE INSERT ON invite_requests
     FOR EACH ROW
     EXECUTE PROCEDURE make_invitation();
+
+--Trigger: event_search_update
+
+DROP TRIGGER IF EXISTS event_search_update on events;
+
+CREATE FUNCTION event_search_update() RETURNS TRIGGER AS 
+$BODY$
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+		NEW.search = setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english', NEW.brief), 'B') || 
+		setweight(to_tsvector('english', NEW.description), 'C') ;
+	END IF;
+	IF TG_OP = 'UPDATE' THEN
+		IF NEW.title <> OLD.title OR NEW.brief <> OLD.brief OR NEW.description <> OLD.description THEN
+			NEW.search = NEW.search = setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english', NEW.brief), 'B') || 
+			setweight(to_tsvector('english', NEW.description), 'C') ;
+		END IF;
+	END IF;
+	RETURN NEW;
+END
+$BODY$ 
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER event_search_update
+    BEFORE INSERT OR UPDATE ON events 
+    FOR EACH ROW
+    EXECUTE PROCEDURE event_search_update();
