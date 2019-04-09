@@ -326,7 +326,7 @@ BEGIN
 	END IF;
 	IF TG_OP = 'UPDATE' THEN
 		IF NEW.title <> OLD.title OR NEW.brief <> OLD.brief OR NEW.description <> OLD.description THEN
-			NEW.search = NEW.search = setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english', NEW.brief), 'B') || 
+			NEW.search = setweight(to_tsvector('english', NEW.title), 'A') || setweight(to_tsvector('english', NEW.brief), 'B') || 
 			setweight(to_tsvector('english', NEW.description), 'C') ;
 		END IF;
 	END IF;

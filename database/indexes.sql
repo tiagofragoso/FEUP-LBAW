@@ -27,6 +27,3 @@ CREATE INDEX username_idx ON users USING hash ("username");
 
 DROP INDEX IF EXISTS invite_requests_idx;
 CREATE INDEX invite_requests_idx ON invite_requests ("user_id", "status");
-
--- DROP INDEX IF EXISTS participations_user_idx;
--- CREATE INDEX participations_user_idx ON participations ("user_id");
