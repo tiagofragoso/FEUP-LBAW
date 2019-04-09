@@ -196,9 +196,7 @@ insert into participations("user_id",event_id,"type","date") VALUES (17,5,'Host'
 insert into participations("user_id",event_id,"type","date") VALUES (18,5,'Host','2019-03-10');
 
 /*invite_requests*/
-insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (6,5,1,'Participant','Accepted','2019-03-02');
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (17,18,1,'Host','Accepted','2019-03-08');
-insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (9,16,1,'Participant','Pending','2019-03-09');
 insert into invite_requests("user_id",invited_user_id, event_id,"type","status","date") VALUES (19,14,1,'Artist','Declined','2019-03-02');
 
 

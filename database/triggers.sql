@@ -228,6 +228,8 @@ CREATE TRIGGER create_poll
     FOR EACH ROW
     EXECUTE PROCEDURE create_poll();
 
+--Trigger: create_file
+
 DROP TRIGGER IF EXISTS create_file ON files;
 
 CREATE OR REPLACE FUNCTION create_file() RETURNS TRIGGER AS
@@ -245,6 +247,8 @@ CREATE TRIGGER create_file
     AFTER INSERT ON files
     FOR EACH ROW
     EXECUTE PROCEDURE create_file();
+
+--Trigger: ban_user
 
 DROP TRIGGER IF EXISTS ban_user ON user_reports;
 
@@ -266,6 +270,8 @@ CREATE TRIGGER ban_user
     FOR EACH ROW
     EXECUTE PROCEDURE ban_user();
 
+--Trigger: ban_event
+
 DROP TRIGGER IF EXISTS ban_event ON event_reports;
 
 CREATE OR REPLACE FUNCTION ban_event() RETURNS TRIGGER AS
@@ -285,3 +291,24 @@ CREATE TRIGGER ban_event
     AFTER UPDATE ON event_reports
     FOR EACH ROW
     EXECUTE PROCEDURE ban_event();
+
+--Trigger: make_invitation
+
+DROP TRIGGER IF EXISTS make_invitation ON invite_requests;
+
+CREATE OR REPLACE FUNCTION make_invitation() RETURNS TRIGGER AS
+$BODY$
+BEGIN
+    IF NOT EXISTS 
+        (SELECT * FROM participations WHERE "user_id" = New.user_id AND event_id = New.event_id AND ("type" = 'Owner' OR "type" = 'Host'))
+    THEN RAISE EXCEPTION 'Only a host or event owner can make invitations';
+    END IF;
+    RETURN NEW;
+END
+$BODY$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER make_invitation
+    BEFORE INSERT ON invite_requests
+    FOR EACH ROW
+    EXECUTE PROCEDURE make_invitation();
