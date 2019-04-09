@@ -123,7 +123,7 @@ INSERT INTO tickets(qrcode, price,"owner",event_id) VALUES ('qrcode36',13,19,4);
 INSERT INTO tickets(qrcode, price,"owner",event_id) VALUES ('qrcode37',13,20,4);
 
 
--- articipations
+-- Participations
 
 INSERT INTO participations("user_id",event_id,"type") VALUES (5,1,'Participant');
 INSERT INTO participations("user_id",event_id,"type") VALUES (6,1,'Participant');
@@ -308,7 +308,7 @@ INSERT INTO polls(post_id,title) VALUES (1,'Best festival day');
 INSERT INTO polls(post_id,title) VALUES (3,'Lorem Ipsum');
 INSERT INTO polls(post_id,title) VALUES (4,'Lorem Ipsum');
 
--- poll_options
+-- Poll options
 
 INSERT INTO poll_options(post_id,"name") VALUES (1,'June 6');
 INSERT INTO poll_options(post_id,"name") VALUES (1,'June 7');
