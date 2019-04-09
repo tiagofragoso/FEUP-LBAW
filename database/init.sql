@@ -83,7 +83,8 @@ CREATE TABLE events (
     "private" boolean NOT NULL DEFAULT FALSE,
     "status" event_status NOT NULL,
     currency integer NOT NULL REFERENCES currencies ON DELETE CASCADE,
-    category integer NOT NULL REFERENCES categories ON DELETE CASCADE
+    category integer NOT NULL REFERENCES categories ON DELETE CASCADE,
+    search tsvector,
     CONSTRAINT event_dates_integrity CHECK ("start_date" < "end_date"),
     CONSTRAINT ticket_sale_date_integrity CHECK ("ticket_sale_start_date" < "start_date")
 );
