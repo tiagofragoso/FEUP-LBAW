@@ -315,7 +315,7 @@ CREATE TRIGGER make_invitation
 
 --Trigger: event_search_update
 
-DROP TRIGGER IF EXISTS event_search_update on events;
+DROP TRIGGER IF EXISTS event_search_update ON events;
 
 CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS 
 $BODY$
