@@ -317,7 +317,7 @@ CREATE TRIGGER make_invitation
 
 DROP TRIGGER IF EXISTS event_search_update on events;
 
-CREATE FUNCTION event_search_update() RETURNS TRIGGER AS 
+CREATE OR REPLACE FUNCTION event_search_update() RETURNS TRIGGER AS 
 $BODY$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
