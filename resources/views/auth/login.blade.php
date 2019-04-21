@@ -29,7 +29,11 @@
                             </span>
                         @endif
                     </div>
-    
+
+                    <div class="col-12 col-md-10 text-center form-group">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                    </div>
+
                     <div class="col-12 col-md-10 ">
                         <button type="submit" name="login" class="btn btn-primary w-100">
                             Login
@@ -67,7 +71,7 @@
     @endif
 
     <label>
-        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+        
     </label>
 
     <button type="submit">
