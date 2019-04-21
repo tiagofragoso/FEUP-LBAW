@@ -10,13 +10,24 @@
                     </a>
                 </div>
 
-                <form class="row mb-5 justify-content-center" action="{{ route('login') }}">
+                <form class="row mb-5 justify-content-center" method="POST" action="{{ route('login') }}">
+                    {{ csrf_field() }}
                     <div class="col-12 col-md-10 form-group">
-                        <input type="email" class="form-control w-100" placeholder="email" required autofocus>
+                        <input name="email" type="email" class="form-control w-100" placeholder="email" value="{{ old('email') }}" required autofocus>
+                        @if ($errors->has('email'))
+                            <span class="error">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @endif
                     </div>
                     
                     <div class="col-12 col-md-10 form-group">
-                        <input type="password" class="form-control w-100" placeholder="password" required>
+                        <input name="password" type="password" class="form-control w-100" placeholder="password" required>
+                        @if ($errors->has('password'))
+                            <span class="error">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @endif
                     </div>
     
                     <div class="col-12 col-md-10 ">
@@ -28,7 +39,7 @@
     
                 <div class="row justify-content-center">
                     <div class="col-12 text-center">
-                        Don't have an account? <a class="register" href="{{ route('register') }}">Sign up </a>
+                        Don't have an account? <a class="register" href="{{ route('register') }}">Sign up</a>
                     </div>
                 </div>
             </div>
