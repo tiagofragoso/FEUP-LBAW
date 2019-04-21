@@ -40,7 +40,7 @@
         <div class="container">
             <div class="mx-auto my-3 formContent p-5">
                 <div class="row mb-5 justify-content-center">
-                    <a href="index.html" class="col-7">
+                    <a href="/" class="col-7">
                         <img src="../assets/logo-vertical.svg" alt="sound.hub logo">
                     </a>
                 </div>
