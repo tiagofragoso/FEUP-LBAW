@@ -15,9 +15,9 @@
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('libs/bootstrap/bootstrap.min.css') }}">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
-  <script defer src="{{ asset('libs/libs/jQuery/jquery-3.0.0.slim.min.js') }}"></script>
-  <script defer src="{{ asset('libs/libs/popper/popper.min.js') }}"></script>
-  <script defer src="{{ asset('libs/libs/bootstrap/bootstrap.min.js') }}"></script>
+  <script defer src="{{ asset('libs/jQuery/jquery-3.0.0.slim.min.js') }}"></script>
+  <script defer src="{{ asset('libs/popper/popper.min.js') }}"></script>
+  <script defer src="{{ asset('libs/bootstrap/bootstrap.min.js') }}"></script>
   <script type="text/javascript">
     // Fix for Firefox autofocus CSS bug
     // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
