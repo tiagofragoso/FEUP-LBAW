@@ -45,7 +45,7 @@ CREATE TABLE users (
     followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
     "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     banned boolean NOT NULL DEFAULT FALSE,
-    isAdmin boolean NOT NULL DEFAULT FALSE
+    is_admin boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE currencies (
