@@ -15,6 +15,9 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+// Settings
+Route::get('/settings', 'SettingsController@show');
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
