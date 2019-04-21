@@ -21,8 +21,6 @@ DROP TABLE IF EXISTS invite_requests CASCADE;
 DROP TABLE IF EXISTS participations CASCADE;
 DROP TABLE IF EXISTS tickets CASCADE;
 DROP TABLE IF EXISTS events CASCADE;
-DROP TABLE IF EXISTS admins CASCADE;
-DROP TABLE IF EXISTS members CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 
 DROP TYPE IF EXISTS event_type CASCADE;
@@ -42,19 +40,12 @@ CREATE TABLE users (
     "name" varchar(30),
     username varchar(15) UNIQUE NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
-    "password" text NOT NULL
-);
-
-CREATE TABLE members (
-    "user_id" integer PRIMARY KEY REFERENCES users ON DELETE CASCADE,
+    "password" text NOT NULL,
     birthdate date,
     followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
     "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
-    banned boolean NOT NULL DEFAULT FALSE
-);
-
-CREATE TABLE admins (
-    "user_id" integer PRIMARY KEY REFERENCES users ON DELETE CASCADE
+    banned boolean NOT NULL DEFAULT FALSE,
+    isAdmin boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE currencies (
@@ -96,13 +87,13 @@ CREATE TABLE tickets (
     qrcode text NOT NULL,
     purchase_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_TIMESTAMP),
     price numeric NOT NULL CONSTRAINT positive_price CHECK (price >= 0),
-    "owner" integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    "owner" integer NOT NULL REFERENCES users ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE
 );
 
 CREATE TABLE participations (
     id serial PRIMARY KEY,
-    "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
@@ -111,8 +102,8 @@ CREATE TABLE participations (
 
 CREATE TABLE invite_requests (
     id serial PRIMARY KEY,
-    "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
-    invited_user_id integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE,
+    invited_user_id integer NOT NULL REFERENCES users ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "status" status NOT NULL DEFAULT 'Pending',
@@ -120,8 +111,8 @@ CREATE TABLE invite_requests (
 );
 
 CREATE TABLE follows (
-    follower_id integer REFERENCES members ON DELETE CASCADE,
-    followed_id integer REFERENCES members ON DELETE CASCADE,
+    follower_id integer REFERENCES users ON DELETE CASCADE,
+    followed_id integer REFERENCES users ON DELETE CASCADE,
     PRIMARY KEY (follower_id, followed_id)
 );
 
@@ -132,12 +123,12 @@ CREATE TABLE posts (
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     comments integer NOT NULL DEFAULT 0 CONSTRAINT positive_comments CHECK (comments >= 0),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
-    author_id integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    author_id integer NOT NULL REFERENCES users ON DELETE CASCADE,
     "type" post_type NOT NULL DEFAULT 'Post'
 );
 
 CREATE TABLE post_likes (
-    "user_id" integer REFERENCES members ON DELETE CASCADE,
+    "user_id" integer REFERENCES users ON DELETE CASCADE,
     post_id integer REFERENCES posts ON DELETE CASCADE,
     PRIMARY KEY("user_id", post_id)
 );
@@ -148,13 +139,13 @@ CREATE TABLE comments (
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     post_id integer NOT NULL REFERENCES posts ON DELETE CASCADE,
-    "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE,
+    "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE,
     parent integer REFERENCES comments ON DELETE CASCADE
 );
 
 
 CREATE TABLE comment_likes (
-    "user_id" integer REFERENCES members ON DELETE CASCADE,
+    "user_id" integer REFERENCES users ON DELETE CASCADE,
     comment_id integer REFERENCES comments ON DELETE CASCADE,
     PRIMARY KEY("user_id", comment_id)
 );
@@ -173,7 +164,7 @@ CREATE TABLE poll_options (
 
 CREATE TABLE poll_votes (
     poll_id integer REFERENCES polls ON DELETE CASCADE,
-    "user_id" integer REFERENCES members ON DELETE CASCADE,
+    "user_id" integer REFERENCES users ON DELETE CASCADE,
     poll_option integer NOT NULL REFERENCES poll_options,
     PRIMARY KEY(poll_id, "user_id")
 );
@@ -188,7 +179,7 @@ CREATE TABLE threads (
     content varchar(5000) NOT NULL,
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
-    author_id integer NOT NULL REFERENCES members ON DELETE CASCADE
+    author_id integer NOT NULL REFERENCES users ON DELETE CASCADE
 );
 
 CREATE TABLE thread_comments (
@@ -196,7 +187,7 @@ CREATE TABLE thread_comments (
     content varchar(2500) NOT NULL,
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     thread_id integer NOT NULL REFERENCES threads ON DELETE CASCADE,
-    "user_id" integer NOT NULL REFERENCES members ON DELETE CASCADE
+    "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE
 );
 
 CREATE TABLE questions (
@@ -211,8 +202,8 @@ CREATE TABLE answers (
 );
 
 CREATE TABLE user_reports (
-    "user_id" integer REFERENCES members ON DELETE CASCADE,
-    reported_user integer REFERENCES members ON DELETE CASCADE,
+    "user_id" integer REFERENCES users ON DELETE CASCADE,
+    reported_user integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     PRIMARY KEY("user_id", reported_user)
@@ -220,7 +211,7 @@ CREATE TABLE user_reports (
 
 CREATE TABLE event_reports (
     event_id integer REFERENCES events ON DELETE CASCADE,
-    "user_id" integer REFERENCES members ON DELETE CASCADE,
+    "user_id" integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
     "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     PRIMARY KEY("user_id", event_id)
@@ -341,23 +332,23 @@ CREATE OR REPLACE FUNCTION followers_count() RETURNS TRIGGER AS
 $BODY$
 BEGIN 
     IF TG_OP = 'INSERT' THEN
-        UPDATE members
+        UPDATE users
         SET "following" = "following" + 1
-        WHERE New.follower_id = members.user_id;
+        WHERE New.follower_id = users.id;
     
-        UPDATE members
+        UPDATE users
         SET followers = followers + 1
-        WHERE New.followed_id = members.user_id;
+        WHERE New.followed_id = users.id;
     END IF;
 
     IF TG_OP = 'DELETE' THEN
-        UPDATE members
+        UPDATE users
         SET "following" = "following" - 1
-        WHERE Old.follower_id = members.user_id;
+        WHERE Old.follower_id = users.id;
     
-        UPDATE members
+        UPDATE users
         SET followers = followers - 1
-        WHERE Old.followed_id = members.user_id;
+        WHERE Old.followed_id = users.id;
     END IF;
     RETURN NEW;
 END
@@ -486,9 +477,9 @@ CREATE OR REPLACE FUNCTION ban_user() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF New.status = 'Accepted' THEN
-        UPDATE members 
+        UPDATE users 
         SET banned = true
-        WHERE New.reported_user = members.user_id;
+        WHERE New.reported_user = users.id;
     END IF;
     RETURN NEW;
 END
@@ -607,10 +598,10 @@ CREATE INDEX invite_requests_idx ON invite_requests ("user_id", "status");
 
 -- Users
 
-INSERT INTO users ("name",username,email,"password") VALUES ('Bryan Tremblay','btremblay','bTremblay@gmail.com','btremblayy');
-INSERT INTO users ("name",username,email,"password") VALUES ('Salvador Tyler','styler','styler@gmail.com','stylerr');
-INSERT INTO users ("name",username,email,"password") VALUES ('Salma Strong','sstrong','sstrong@gmail.com','sstrongg');
-INSERT INTO users ("name",username,email,"password") VALUES ('Soren Chase','schase','schase@gmail.com','schasee');
+INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Bryan Tremblay','btremblay','bTremblay@gmail.com','btremblayy', true);
+INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Salvador Tyler','styler','styler@gmail.com','stylerr', true);
+INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Salma Strong','sstrong','sstrong@gmail.com','sstrongg', true);
+INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Soren Chase','schase','schase@gmail.com','schasee', true);
 INSERT INTO users ("name",username,email,"password") VALUES ('Lola Cline','lcline','lcline@gmail.com','lclinee');
 INSERT INTO users ("name",username,email,"password") VALUES ('Leia Oconnor','loconnor','loconnor@gmail.com','loconnorr');
 INSERT INTO users ("name",username,email,"password") VALUES ('Evan Tran','etran','etran@gmail.com','etrann');
@@ -632,35 +623,6 @@ INSERT INTO users ("name",username,email,"password") VALUES ('Ed Sheeran', 'eshe
 INSERT INTO users ("name",username,email,"password") VALUES ('David Fonseca', 'dfonseca','geral@davidfonseca.com','dfonsecaa');
 INSERT INTO users ("name",username,email,"password") VALUES ('Eddie Vedder', 'evedder','geral@eddievedder.com','evedderr');
 
--- Members
-
-INSERT INTO members("user_id",birthdate,banned) VALUES (5,'1968-05-31',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (6,'1968-09-06',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (7,'1971-05-19',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (8,'1971-08-04',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (9,'1975-05-29',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (10,'1978-06-06',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (11,'1985-02-25',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (12,'1986-04-30',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (13,'1988-06-01',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (14,'1989-04-18',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (15,'1990-12-12',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (16,'1991-06-25',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (17,'1995-03-14',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (18,'1995-03-14',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (19,'1998-03-05',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (20,'2001-11-20',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (21,'1991-02-17',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (22,'1973-06-14',false);
-INSERT INTO members("user_id",birthdate,banned) VALUES (23,'1964-12-23',false);
-
-
--- Admins
-
-INSERT INTO admins("user_id") VALUES (1);
-INSERT INTO admins("user_id") VALUES (2);
-INSERT INTO admins("user_id") VALUES (3);
-INSERT INTO admins("user_id") VALUES (4);
 
 -- Currencies
 INSERT INTO currencies (code,"name") VALUES('EUR','Euro');
