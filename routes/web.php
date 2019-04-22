@@ -37,4 +37,4 @@ Route::post('register', 'Auth\RegisterController@register');
 
 //Profile
 
-Route::get('profile', 'ProfileController@profile');
+Route::get('profile', 'ProfileController@show');
