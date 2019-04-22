@@ -14,7 +14,7 @@
                         </a>
 
                         <div class="col-7 col-md-9 mt-4">
-                            <div class="text-muted event-date">{{(new DateTime($event->start_date))->format('d M Y')}}</div>
+                            <div class="text-muted event-date">{{(new DateTime($event->start_date))->format('j M Y')}}</div>
                             <div class="text-muted event-location">{{$event->location}}</div>
                         </div>
 

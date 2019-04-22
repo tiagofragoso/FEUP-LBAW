@@ -273,6 +273,37 @@ form input + span.error {
 	text-overflow: ellipsis;
 }
 
+@media screen and (max-width: 767px) {
+	.activity-event-card {
+			height: 110px;
+	}
+
+	.activity-event-card .event-title {
+			font-size: 0.9em;
+	}
+
+	.activity-event-card .event-date {
+			font-size: 0.6em;
+	}
+
+	.activity-event-card .event-location {
+			font-size: 0.6em;
+	}
+
+	.activity-event-card .join-btn {
+			font-size: 0.6em;
+	}
+}
+
+.activity-event-card .event-link {
+	color: var(--blue);
+}
+
+.activity-event-card .event-link:hover {
+	text-decoration: underline;
+	color: var(--darkblue);
+}
+
 
 /*event post*/
 
@@ -357,7 +388,7 @@ a.badge-secondary:hover {
 	padding: 0;
 }
 
-.card-header {
+.event-page .card-header {
 	font-weight: bold;
 	font-size: 1rem;
 }
@@ -543,7 +574,7 @@ select.currency {
 max-width: 720px;
 }
 
-.card-header {
+.home-page .card-header {
 font-weight: bold;
 font-size: 1rem;
 }
@@ -596,6 +627,10 @@ font-size: 1rem;
 	.profile-container {
 			min-height: calc(100vh - 131.23px);
 	}
+}
+
+.profile-container .card-subtitle::before {
+	content: '@';
 }
 
 .card-wrapper {
