@@ -13,8 +13,14 @@ class ProfileController extends Controller
 
         $data = Auth::user()->events();
         $data['user'] = Auth::user();
-        
 
+        if (Auth::check()) {
+            $data['joined'] = Auth::user()->eventsParticipation($data['joined']);
+            $data['hosting'] = Auth::user()->eventsParticipation($data['hosting']);
+            $data['performing'] = Auth::user()->eventsParticipation($data['performing']);
+            
+        }
+    
         return view('pages.profile',  $data);
     }
 

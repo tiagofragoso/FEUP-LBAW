@@ -19,10 +19,17 @@
                         </div>
 
                         <div class="col-5 col-md-3 mt-4">
+                            @if (isset($event->joined) && $event->joined)
+                               <button type="button"
+                               class="btn btn-outline-primary joined-btn w-100">
+                               Joined
+                           </button>
+                            @else
                             <button type="button"
-                                class="btn btn-outline-primary joined-btn w-100">
-                                Joined
+                                class="btn btn-primary joined-btn w-100">
+                                Join
                             </button>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -43,6 +43,22 @@ class User extends Authenticatable
         return $this->hasMany('App\Participation')->where('type', $type);
     }
 
+    public function participation($event) {
+        return $this->hasOne('App\Participation')->where('event_id', $event);
+    }
+
+    public function eventsParticipation($events) {
+        foreach ($events as $key => $value) {
+            if ($this->participation($value->id)->get()->isEmpty())  {
+                $value['joined'] = false;
+            } else {
+                $value['joined'] = true;
+            }
+        }
+
+        return $events;
+    } 
+
     public function events() {
         $data['joined'] = $this->participations('Participant')->get();
         $data['joined'] = $data['joined']->map(function ($item, $key) { return $item->event()->get()[0]; });

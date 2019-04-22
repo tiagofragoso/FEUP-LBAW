@@ -22,7 +22,7 @@
             <div class="row">
                 @if (count($joined) == 0)
                     <div class="text-muted col-12 col-md-10 mx-auto mt-5 d-flex justify-content-center">
-                        @if (Auth::user()->id == $user->id)
+                        @if (Auth::check() && Auth::user()->id == $user->id)
                         <span class="text-center"> 
                                 You haven't joined any events yet. 
                                 <a href="{{ url('/search')}}" class="card-link border-bottom ml-2"> Go discover.</a>
