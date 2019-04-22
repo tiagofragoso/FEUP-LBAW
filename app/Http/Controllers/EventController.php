@@ -5,15 +5,17 @@ use App;
 use App\Event;
 use App\Category;
 use App\Currency;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Participation;
 
 class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show']]);
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -58,7 +60,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:100',
@@ -73,41 +75,25 @@ class EventController extends Controller
 
         $event = Event::create($request->except('photo'));
 
-        return $this->show($event);
+        return $this->show($event->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  integer  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $event =collect(DB::select('SELECT title, "category", "start_date", 
-        end_date, "location", "address", participants, 
-        price, brief, "description", "type", "private",
-        "status", currencies.code AS currency, 
-        categories.name AS "category"
-         FROM events 
-        LEFT JOIN currencies ON (events.currency = currencies.id)
-        LEFT JOIN categories ON (events.category = categories.id)
-         WHERE events.id = ?;', [$id]))->first();
+        $event = Event::findOrFail($id);
 
-        $hosts = DB::select('SELECT users.id AS id, users.name, users.username FROM participations, users
-    WHERE participations.event_id = ?
-        AND participations.type = ? 
-        AND participations.user_id = users.id',[$id,"Host"]);    
-        
-        $numberHosts = count($hosts) - 1;
-        $firstHost = collect($hosts)->first();
-        $hostsInformation = array('firstHost'=> $firstHost,'numberHosts'=> $numberHosts);
-        
-        $artists = DB::select('SELECT users.id AS id, users.name, users.username FROM participations, users
-        WHERE participations.event_id = ?
-            AND participations.type = ? 
-            AND participations.user_id = users.id',[$id,"Artist"]);
-      
+        //$this->authorize('view', [Auth::user(), $event]);
+
+        $allHosts = $event->hosts();
+        $owner = $allHosts['Owner']->first();
+        $hosts = $allHosts['Host'];
+        $artists = $event->artists()->take(6);
         
         $posts = DB::select('SELECT posts.*, users.name AS author 
         FROM posts LEFT JOIN users ON (posts.author_id = users.id)
@@ -123,7 +109,8 @@ class EventController extends Controller
             $post->allComents = $comments;
         }
      
-    return view('pages.event', ['event' => $event,'host'=>$hostsInformation,'artists'=>$artists,'posts'=>$posts]);  
+        return view('pages.event', 
+            ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts]);  
 
     }
 

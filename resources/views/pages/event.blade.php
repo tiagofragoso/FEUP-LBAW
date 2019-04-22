@@ -30,13 +30,12 @@
 								<h5 class="card-title">
 									<strong>{{ $event->title }}</strong>
 								</h5>
-								<p class="text-muted mb-0">Hosted by <strong><a href="" //add route
-                                            class="host-name text-muted">{{$host['firstHost']->name}}</a></strong> 
-                                             
-                                            @if ($host['numberHosts'] > 1)
-                                            and {{$host['numberHosts']}}   others
-                                            @elseif ($host['numberHosts'] == 1)  and {{$host['numberHosts']}} other
-                                        @endif</p>
+							<p class="text-muted mb-0">Hosted by <strong><a href="{{ url('/users/' . $owner->id) }}"
+								class="host-name text-muted">{{$owner->displayName()}}</a></strong> 
+									@if ($hosts->count() > 0)
+										and {{$hosts->count()}} others
+									@endif
+							</p>
 							</div>
 							<div class="col-12 col-sm-3">
 								<button type="submit" class="btn btn-primary w-100">Join</button>
@@ -129,19 +128,17 @@
 							</div>
 							<div class="col-4 text-right">
 								<a href="#" class="view-all">
-                                    @if (sizeof($artists) > 8)
                                     View all
-                                    @endif
 								</a>
 							</div>
 						</div>
 						<div class="row artists-wrapper">
                             @foreach($artists as $artist)
-                            <a href="#" //route
+						<a href="{{ url('/users/'.$artist->id) }}"
 								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
 								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
 									width="40" />
-								<span class="text-center">{{$artist->name}}</span>
+								<span class="text-center">{{$artist->displayName()}}</span>
 							</a>
                             @endforeach
                           
