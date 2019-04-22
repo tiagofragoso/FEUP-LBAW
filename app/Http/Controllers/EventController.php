@@ -5,14 +5,17 @@ use App;
 use App\Event;
 use App\Category;
 use App\Currency;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use App\Participation;
 
 class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show']]);
+        $this->middleware('auth', ['except' => 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -57,7 +60,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:100',
@@ -72,18 +75,43 @@ class EventController extends Controller
 
         $event = Event::create($request->except('photo'));
 
-        return $this->show($event);
+        return $this->show($event->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  integer  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        //$this->authorize('view', [Auth::user(), $event]);
+
+        $allHosts = $event->hosts();
+        $owner = $allHosts['Owner']->first();
+        $hosts = $allHosts['Host'];
+        $artists = $event->artists()->take(6);
+        
+        $posts = DB::select('SELECT posts.*, users.name AS author 
+        FROM posts LEFT JOIN users ON (posts.author_id = users.id)
+        WHERE posts.event_id = ?
+        ORDER BY posts.date DESC',[$id]);
+       
+        foreach($posts as $post)
+        {
+            $comments =  DB::select('SELECT * 
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY date DESC',[$post->id]);
+            $post->allComents = $comments;
+        }
+     
+        return view('pages.event', 
+            ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts]);  
+
     }
 
     /**

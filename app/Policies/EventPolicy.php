@@ -13,14 +13,14 @@ class EventPolicy
 
     /**
      * Determine whether the user can view the event.
-     *
-     * @param  \App\User  $user
+     * 
+     * @param \App\User $user
      * @param  \App\Event  $event
      * @return mixed
      */
     public function view(User $user, Event $event)
     {
-        //
+        return $event->private == false;
     }
 
     /**

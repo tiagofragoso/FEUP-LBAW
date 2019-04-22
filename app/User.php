@@ -42,4 +42,8 @@ class User extends Authenticatable
     public function participations($type) {
         return $this->hasMany('App\Participation')->where('type', $type);
     }
+
+    public function displayName() {
+        return (empty($this->name)? '@'.$this->username : $this->name);
+    }
 }
