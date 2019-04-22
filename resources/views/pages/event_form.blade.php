@@ -16,9 +16,15 @@
 					<img class="d-block w-100" src="../assets/event-placeholder.png" alt="First slide">
 				</div>
 				<div class="container-fluid mt-3">
-					<div class="row justify-content-between align-items-center">
+					<div class="row justify-content-between align-items-start">
 						<div class="col-12 col-md-8 mb-2 mb-md-0">
-							<input type="text" class="form-control form-control-lg" placeholder="Event title">
+							<input type="text" name="title" class="form-control form-control-lg {{$errors->has('title')? 'is-invalid' : '' }}" 
+								placeholder="Event title" value="{{old('title') }}" required>
+							@if ($errors->has('title'))
+								<span class="invalid-feedback">
+									{{ $errors->first('title') }}
+								</span>
+                        	@endif
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group categoryInput">
@@ -26,15 +32,33 @@
 									<label class="input-group-text" for="category"><i
 											class="fas fa-tag"></i></label>
 								</div>
-								<input id="category" type="text" class="form-control border-blue"
-									placeholder="Category" aria-label="category">
+								<select id="category" name="category" type="text" class="custom-select border-blue {{$errors->has('category')? 'is-invalid' : '' }}"
+									placeholder="Category" aria-label="category" required>
+									<option {{ !empty(old('category')) ? '' : 'selected' }} disabled value="">Category</option>
+									@foreach ($categories as $cat)
+										<option value="{{ $cat->id }}" {{ (old('category')) == $cat->id ? 'selected' : '' }}>
+											{{ $cat->name }}
+										</option>
+									@endforeach
+								</select>
+								@if ($errors->has('category'))
+									<span class="invalid-feedback">
+										{{ $errors->first('category') }}
+									</span>
+                        		@endif
 							</div>
 						</div>
 					</div>
 					<hr>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 order-1 order-md-0">
-							<input type="text" class="form-control" placeholder="Location">
+							<input type="text" name="location" class="form-control {{$errors->has('location')? 'is-invalid' : '' }}" 
+								value="{{ old('location') }}" placeholder="Location">
+							@if ($errors->has('location'))
+								<span class="invalid-feedback">
+									{{ $errors->first('location') }}
+								</span>
+							@endif
 						</div>
 						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
 							<div class="input-group w-100 justify-content-stretch">
@@ -43,43 +67,56 @@
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<div class="dropdown flex-grow-1" id="dateSelect">
-									<button class="btn w-100 custom-select text-left" type="button"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Date
-									</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">TBD</a>
-										<a class="dropdown-item" href="#">Free</a>
-										<a class="dropdown-item" href="#">Insert value</a>
-									</div>
-								</div>
+								<input type="datetime-local" name="start_date" value="{{ old('start_date') }}" 
+									class="custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}">
+								@if ($errors->has('start_date'))
+									<span class="invalid-feedback">
+										{{ $errors->first('start_date') }}
+									</span>
+								@endif
 							</div>
 						</div>
 					</div>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 mb-3 mb-md-0">
-							<input class="form-control form-control" type="text" placeholder="Address">
+							<input name="address" class="form-control form-control {{$errors->has('address')? 'is-invalid' : '' }}" 
+								value="{{ old('address') }}" type="text" placeholder="Address">
+							@if ($errors->has('address'))
+								<span class="invalid-feedback">
+									{{ $errors->first('address') }}
+								</span>
+							@endif
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="Visibility">
+									<label class="input-group-text" for="type">
 										<i class="fas fa-music"></i>
 									</label>
 								</div>
-								<select class="custom-select border-blue" id="Visibility">
-									<option selected disabled>Performance type</option>
-									<option value="1">Concert</option>
-									<option value="2">Festival</option>
+								<select name="type" class="custom-select border-blue {{$errors->has('type')? 'is-invalid' : '' }}" id="type" required>
+									<option {{ !empty(old('type')) ? '' : 'selected' }} disabled value="">Performance type</option>
+									<option value="Concert" {{ (old('type') == 'Concert')? 'selected' : ''}}>Concert</option>
+									<option value="Festival" {{ (old('type') == 'Festival')? 'selected' : ''}}>Festival</option>
+									<option value="Liveset" {{ (old('type') == 'Liveset')? 'selected' : ''}}>Liveset</option>
 								</select>
+								@if ($errors->has('type'))
+									<span class="invalid-feedback">
+										{{ $errors->first('type') }}
+									</span>
+								@endif
 							</div>
 						</div>
 					</div>
 					<div class="row mb-3 justify-content-between">
 						<div class="col-12 col-md-8 order-1 order-md-0">
-							<textarea class="form-control" rows="3" placeholder="Brief description"
-								style="resize:none"></textarea>
+							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="3" name="brief" placeholder="Brief description"
+								value="{{ old('brief') }}" style="resize:none"></textarea>
+							@if ($errors->has('brief'))
+								<span class="invalid-feedback">
+									{{ $errors->first('brief') }}
+								</span>
+							@endif
 						</div>
 						<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
 							<div class="input-group">
@@ -87,11 +124,16 @@
 									<label class="input-group-text" for="Visibility"><i
 											class="fas fa-eye"></i></label>
 								</div>
-								<select class="custom-select border-blue" id="Visibility">
-									<option selected disabled>Visibility</option>
-									<option value="1">Public</option>
-									<option value="2">Private</option>
+								<select name="private" class="custom-select border-blue {{$errors->has('private')? 'is-invalid' : '' }}" id="Visibility" required>
+									<option {{ !empty(old('private')) ? '' : 'selected' }} disabled value="">Visibility</option>
+									<option value="0" {{ (old('private') == 0)? 'selected' : ''}}>Public</option>
+									<option value="1" {{ (old('private') == 1)? 'selected' : ''}}>Private</option>
 								</select>
+								@if ($errors->has('private'))
+									<span class="invalid-feedback">
+										{{ $errors->first('private') }}
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -99,19 +141,23 @@
 					<div class="row justify-content-between">
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
 							<div class="d-flex flex-row justify-content-between position-relative">
-								<div class="progress progress-3 position-absolute"></div>
+								<input type="radio" id="step-1" name="status" value="Planning" style="display: none;" 
+									{{ (old('status') == 'Planning' || empty(old('status')))? 'checked' : ''}}>
+								<div class="progress progress-1 position-absolute"></div>
 								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
-									<div
-										class="step complete rounded-circle d-flex align-items-center justify-content-center">
+									<label for="step-1"
+										class="step rounded-circle d-flex align-items-center justify-content-center">
 										1
-									</div>
+									</label>
 									<span>Planning</span>
 								</div>
+								<input type="radio" id="step-2" name="status" value="Tickets" style="display: none;" {{ (old('status') == 'Tickets')? 'checked' : ''}}>
+								<div class="progress progress-3 position-absolute"></div>
 								<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
-									<div
-										class="step complete rounded-circle d-flex align-items-center justify-content-center">
+									<label for="step-2"
+										class="step rounded-circle d-flex align-items-center justify-content-center">
 										2
-									</div>
+									</label>
 									<span>Buy a ticket</span>
 								</div>
 							</div>
@@ -122,24 +168,20 @@
 									<label class="input-group-text" for="priceSelect"><i
 											class="fas fa-ticket-alt"></i></label>
 								</div>
-								<div class="dropdown flex-grow-1" id="priceSelect">
-									<button class="btn w-100 custom-select text-left" type="button"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Price
-									</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">TBD</a>
-										<a class="dropdown-item" href="#">Free</a>
-										<a class="dropdown-item" href="#">Insert value</a>
-									</div>
-								</div>
+								<input type="number" name="price" min="0" placeholder="Free" id="priceSelect" value="{{ old('price') }}"
+									class="custom-select {{$errors->has('price')? 'is-invalid' : '' }}">
 								<div class="input-group-append">
-									<select class="custom-select currency">
-										<option selected>€</option>
-										<option value="1">$</option>
-										<option value="2">£</option>
+									<select class="custom-select currency" name="currency">
+										@foreach ($currencies as $curr)
+											<option value="{{ $curr->id }}" {{ (old('currency') == $curr->id)? 'selected' : ''}}>{{ $curr->symbol }}</option>
+										@endforeach
 									</select>
 								</div>
+								@if ($errors->has('price'))
+									<span class="invalid-feedback">
+										{{ $errors->first('price') }}
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -151,16 +193,16 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col-12">
-							<textarea rows="5" class="form-control"
+							<textarea rows="5" class="form-control" name="description"value="{{ old('description') }}"
 								placeholder="Comprehensive event description"></textarea>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<div class="col-6">
-							<button class="btn btn-info w-100">Cancel</button>
+							<a href="{{ url('/') }}" class="btn btn-info w-100">Cancel</a>
 						</div>
 						<div class="col-6">
-							<a href="event-host.html" class="btn btn-primary w-100">Submit</a>
+							<button type="submit" class="btn btn-primary w-100">Submit</button>
 						</div>
 					</div>
 				</div>

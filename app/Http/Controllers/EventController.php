@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App;
 use App\Event;
+use App\Category;
+use App\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
@@ -30,7 +33,18 @@ class EventController extends Controller
     public function create()
     {
         $this->authorize('create', Event::class);
-        return view('pages.event_form', ['title' => 'Create event']);
+
+        $currencies = Currency::all();
+        $locale = App::getLocale();
+        foreach($currencies as $c) {
+            $c->symbol = $c->getSymbol($locale);
+        }
+
+        return view('pages.event_form', 
+            ['title' => 'Create event',
+            'categories' => Category::all(),
+            'currencies' => $currencies]
+        );
 
     }
 
@@ -42,7 +56,24 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Event::class);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:60',
+            'location' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'brief' => 'nullable|string|max:140',
+            'category' => 'required',
+            'type' => 'required',
+            'private' => 'required',
+            'status' => 'required',
+            'price' => 'nullable|numeric|min:0',
+            'start_date' => 'nullable|date|after:now'
+        ])->validate();
+
+        $event = Event::create($request->except('photo'));
+
+        return $this->show($event);
     }
 
     /**
