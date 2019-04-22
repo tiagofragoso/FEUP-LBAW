@@ -30,15 +30,15 @@
 
 <body>
   @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
-  <header>
-    @if (Auth::check())
-    <a class="button" href="{{ url('/logout') }}"> Logout </a> <span>{{ Auth::user()->name }}</span>
-    @endif
-  </header>
+  @include('partials.navbar')
   @endunless
-  <section id="main">
-    @yield('content')
-  </section>
+ 
+  @yield('content')
+
+  @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
+  @include('partials.footer')
+  @endunless
+
 </body>
 
 </html>
