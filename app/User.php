@@ -2,15 +2,14 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
+
+    public $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -18,22 +17,25 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'email', 'password', 'is_admin', 'birthdate'
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be visible for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
+    protected $visible = [
+        'username', 'email'
     ];
 
     /**
      * The cards this user owns.
      */
-     public function cards() {
+
+    /* 
+    public function cards() {
       return $this->hasMany('App\Card');
     }
+    */
 }
