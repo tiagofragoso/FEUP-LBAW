@@ -4,54 +4,6 @@
 
 @section('content')
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-navbar">
-    <a class="navbar-brand" href="home.html"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline mr-auto d-none d-lg-block" action="search.html">
-            <div class="input-group mb-3 my-2 my-lg-0">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                    aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
-                </div>
-            </div>
-        </form>
-        <ul class="navbar-nav">
-            <li class="nav-item mr-2 my-auto d-none d-lg-block">
-                <a href="create-event.html">
-                    <button type="button" class="btn btn-primary">Create event</button>
-                </a>
-            </li>
-            <li class="nav-item my-lg-auto d-lg-none mt-3">
-                <a class="nav-link text-muted" href="search.html">Search page</a>
-            </li>
-            <li class="nav-item my-auto d-lg-none">
-                <a class="nav-link text-muted" href="create-event.html">Create event</a>
-            </li>
-            <li class="nav-item my-auto">
-                <a class="nav-link text-muted" href="about.html">About</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../assets/user.svg" class="rounded-circle border border-light" />
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-muted" href="profile.html">My profile</a>
-                    <a class="dropdown-item text-muted" href="settings.html">Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-muted" href="login.html">Log out</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-
 <div class="container-fluid my-0 my-sm-5">
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
@@ -74,20 +26,20 @@
                     </div>
                     <div class="row justify-content-center position-relative">
                         <div class="col-10 text-center">
-                            <h3 class="card-title user-name">John Smith</h3>
+                        <h3 class="card-title user-name">{{ $user->name }}</h3>
                         </div>
                     </div>
                     <div class="row justify-content-center mb-2">
                         <div class="col-10 text-center">
-                            <p class="card-subtitle text-muted">@john_smith</p>
+                            <p class="card-subtitle text-muted">@<span>{{ $user->username }}</span></p>
                         </div>
                     </div>
                     <div class="row justify-content-center mb-4">
                         <div class="col-4 text-right border-right pr-2">
-                            <p class="card-text">123 followers</p>
+                            <p class="card-text">{{ $user->followers }} followers</p>
                         </div>
                         <div class="col-4 text-left pl-0 ml-2">
-                            <p class="card-text">124 following</p>
+                            <p class="card-text">{{ $user->following }} following</p>
                         </div>
                     </div>
                     <div class="row justify-content-center mb-3">
@@ -96,27 +48,36 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="card-body">
+                    <div class="form-group-name">
+                        <label for="nameInput">Name</label>
+                        <input type="email" class="form-control mb-3" id="nameInput"
+                            placeholder="John Smith" value="{{ $user->name }}">
+                    </div>
                     <div class="form-group-email">
                         <label for="emailInput">Email address</label>
                         <input type="email" class="form-control mb-3" id="emailInput"
-                            placeholder="name@example.com">
+                            placeholder="name@example.com" value="{{ $user->email }}">
                     </div>
                     <div class="form-group-username">
                         <label for="emailInput">Username</label>
-                        <input type="username" class="form-control mb-3" id="usernameInput" placeholder="username">
+                        <input type="username" class="form-control mb-3" id="usernameInput" placeholder="username" value="{{ $user->username }}">
                     </div>
                     <div class="form-group-date">
                         <label for="dateofbirthInput">Date of birth</label>
-                        <input type="date" class="form-control" id="dateofbirthInput" placeholder="dd/mm/yyyy">
+                        <input type="date" class="form-control" id="dateofbirthInput" placeholder="dd/mm/yyyy" value="{{ $user->birthdate }}">
                         <button type="submit" class="btn btn-primary mt-3">Submit </button>
                     </div>
+
                     <div class="form-group-pass">
                         <h4 class="change-password-title mt-5">Change password</h4>
                         <label for="passwordInput">Old password</label>
-                        <input type="date" class="form-control mb-3" id="passwordInput" placeholder="">
+                        <input type="password" class="form-control mb-3" id="passwordInput" placeholder="Old password">
                         <label for="newpasswordInput">New password</label>
-                        <input type="date" class="form-control" id="newpasswordInput" placeholder="">
+                        <input type="password" class="form-control mb-3" id="newpasswordInput" placeholder="New password">
+                        <label for="newpasswordInput">Repeat new password</label>
+                        <input type="password" class="form-control" id="repeatpasswordInput" placeholder="Repeat password">
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     </div>
                 </div>
@@ -124,16 +85,5 @@
         </div>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container-fluid h-100">
-        <div class="d-flex align-items-center flex-column flex-sm-row justify-content-between h-100">
-            <span class="text-muted">Made by <a href="about.html">sound.hub</a> © 2019</span>
-            <a href="home.html" class="logo-area h-100">
-                <img src="../assets/logo-horizontal.svg" class="h-100" alt="">
-            </a>
-        </div>
-    </div>
-</footer>
 
 @endsection
