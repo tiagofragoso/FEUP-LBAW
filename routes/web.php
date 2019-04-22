@@ -24,6 +24,7 @@ Route::get('cards/{id}', 'CardController@show');
 
 // API
 Route::put('api/profile', 'SettingsController@update');
+Route::put('api/profile/password', 'SettingsController@updatePassword');
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');

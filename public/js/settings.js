@@ -15,13 +15,13 @@ function createErrors(errors, container) {
 
 function request(url, request, handler) {
     fetch(url, request)
-        .then(response => {
-            return response.json();
-        })
-        .then(handler)
-        .catch(error => {
-            console.log(error);
-        });
+    .then(response => {
+        return response.json();
+    })
+    .then(handler)
+    .catch(error => {
+        console.log(error);
+    });
 }
 
 document.getElementById('profile-submit').addEventListener('click', () => {
@@ -55,4 +55,34 @@ document.getElementById('profile-submit').addEventListener('click', () => {
             }
         }
     );
-})
+});
+
+document.getElementById('password-submit').addEventListener('click', () => {
+    clearErrors(['password-errors', 'new-password-errors']);
+
+    let requestBody = {
+        password: document.getElementById('passwordInput').value,
+        new_password: document.getElementById('newpasswordInput').value,
+        new_password_confirmation: document.getElementById('repeatpasswordInput').value
+    }
+
+    request(
+        '/api/profile/password',
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        },
+        response => {
+            if (response.errors) {
+                if (response.errors.password) createErrors(response.errors.password, 'password-errors');
+                if (response.errors.new_password) createErrors(response.errors.new_password, 'new-password-errors');
+                return;
+            }
+        }
+    );
+});

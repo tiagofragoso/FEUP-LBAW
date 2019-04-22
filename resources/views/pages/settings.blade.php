@@ -75,15 +75,14 @@
                     <div class="form-group-pass">
                         <h4 class="change-password-title mt-5">Change password</h4>
                         <label for="passwordInput">Old password</label>
-                        <input type="password" class="form-control mb-3" id="passwordInput" placeholder="Old password">
-                        <span id="old-password-errors"></span>
-                        <label for="newpasswordInput">New password</label>
-                        <input type="password" class="form-control mb-3" id="newpasswordInput" placeholder="New password">
+                        <input type="password" class="form-control" id="passwordInput" placeholder="Old password">
+                        <span id="password-errors"></span>
+                        <label class="mt-3" for="newpasswordInput">New password</label>
+                        <input type="password" class="form-control" id="newpasswordInput" placeholder="New password">
                         <span id="new-password-errors"></span>
-                        <label for="newpasswordInput">Repeat new password</label>
+                        <label class="mt-3" for="newpasswordInput">Repeat new password</label>
                         <input type="password" class="form-control" id="repeatpasswordInput" placeholder="Repeat password">
-                        <span id="repeat-password-errors"></span>
-                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                        <button type="submit" class="btn btn-primary mt-3" id="password-submit">Submit</button>
                     </div>
                 </div>
             </div>

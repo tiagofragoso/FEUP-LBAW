@@ -31,9 +31,9 @@ class SettingsController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'nullable|max:30',
+            'name' => 'nullable|string|max:30',
             'email' => 'required|unique:users,email,'.$user->id.'|email|max:255',
-            'username' =>'required|unique:users,username,'.$user->id.'|max:15',
+            'username' => 'required|string|unique:users,username,'.$user->id.'|max:15',
             'birthdate' => 'nullable|date'
         ]);
 
@@ -57,9 +57,8 @@ class SettingsController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'password' => 'required',
-            'new_password' => 'required',
-            'password' => 'same'
+            'password' => 'required|string|same:password',
+            'new_password' => 'required|string|min:6|confirmed'
         ]);
 
         $user->password = $request->input('new_password');
