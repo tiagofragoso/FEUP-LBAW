@@ -4,22 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comments extends Model
-{ 
+class Post extends Model
+{
+    //
     public $timestamps = false;
 
-    protected $table = 'comments';
 
     public function event() {
         return $this->belongsTo('App\Event');
     }
 
-    public function user() {
+    public function author() {
         return $this->belongsTo('App\User');
     }
 
-    public function post() {
-        return $this->belongsTo('App\Posts');
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
 
 }

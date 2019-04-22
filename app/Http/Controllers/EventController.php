@@ -96,7 +96,14 @@ class EventController extends Controller
         $artists = $event->artists()->take(6);
        
         
-        $posts =$event->posts($id);
+        $posts = $event->posts()->get();
+        
+        //dd($posts); -> Usar para testar o retorno
+
+        // foreach ($posts as $post) {
+        //     dd($post->comments()->get());
+        // }
+
         return view('pages.event', 
             ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts]);  
 
