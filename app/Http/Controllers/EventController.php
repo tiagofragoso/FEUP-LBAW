@@ -70,7 +70,9 @@ class EventController extends Controller
             'start_date' => 'nullable|date|after:now'
         ])->validate();
 
-        return Event::create($request->except('photo'));
+        $event = Event::create($request->except('photo'));
+
+        return $this->show($event);
     }
 
     /**
