@@ -19,6 +19,10 @@ Route::get('/', function () {
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
+// Events
+Route::get('events/create', 'EventController@create');
+Route::post('events', 'EventController@store');
+
 // API
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
@@ -42,4 +46,4 @@ Route::get('profile', 'ProfileController@show');
 
 Route::get('about', function () {
     return view('pages.about');
-    });
+});

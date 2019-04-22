@@ -382,16 +382,7 @@ a.badge-secondary:hover {
 	z-index: 5;
 	border: 1px solid var(--green);
 	font-weight: bold;
-}
-
-.step.complete {
-	background-color: var(--green);
-	color: var(--white);
-	border-color: var(--green);
-}
-
-.step.complete + span {
-	color: var(--green);
+	cursor: pointer;
 }
 
 .step-wrapper {
@@ -401,9 +392,24 @@ a.badge-secondary:hover {
 }
 
 .progress {
+	display: none;
 	top: calc(1rem - 2px);
 	height: 4px;
 	width: 100%;
+}
+
+input[type="radio"]:checked + .progress {
+	display: block;
+}
+
+input[type="radio"]:checked + .progress + .step-wrapper > label {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+input[type="radio"]:checked + .progress + .step-wrapper > label + span {
+	color: var(--green);
 }
 
 .progress-1 {
@@ -486,6 +492,8 @@ a.badge-secondary:hover {
 	background-color: var(--grey);
 }
 
+/** event form **/
+
 .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
@@ -511,15 +519,15 @@ select.currency {
 	border-color: var(--green);
 }
 
-#dateSelect .btn {
-	border-color: var(--blue);
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-}
 
-#priceSelect .btn {
+input#priceSelect {
 	border-color: var(--green);
 	border-radius: 0;
+}
+
+input[type="datetime-local"].custom-select, input[type="number"].custom-select {
+	background: none;
+	padding-right: .75rem;
 }
 
 /* home */
