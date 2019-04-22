@@ -38,4 +38,8 @@ class User extends Authenticatable
       return $this->hasMany('App\Card');
     }
     */
+
+    public function participations($type) {
+        return $this->hasMany('App\Participation')->where('type', $type);
+    }
 }

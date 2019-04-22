@@ -35,6 +35,9 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
+//Profile
+
+Route::get('profile', 'ProfileController@show');
 //About
 
 Route::get('about', function () {
