@@ -6,6 +6,7 @@ use App\Event;
 use App\Category;
 use App\Currency;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
@@ -54,6 +55,15 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Event::class);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:60|',
+            'location' => 'string|max:50',
+            'address' => 'string|max:100',
+            'brief' => 'string|max:140'
+        ])->validate();
+
         return Event::create($request->except('photo'));
     }
 

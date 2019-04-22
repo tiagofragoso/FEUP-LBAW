@@ -18,7 +18,7 @@
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-12 col-md-8 mb-2 mb-md-0">
-							<input type="text" name="title" class="form-control form-control-lg" placeholder="Event title" required>
+							<input type="text" name="title" class="form-control form-control-lg" placeholder="Event title" value="{{old('title') }}" required>
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group categoryInput">
@@ -28,9 +28,11 @@
 								</div>
 								<select id="category" name="category" type="text" class="custom-select border-blue"
 									placeholder="Category" aria-label="category" required>
-									<option selected disabled value="">Category</option>
+									<option {{ !empty(old('category')) ? '' : 'selected' }} disabled value="">Category</option>
 									@foreach ($categories as $cat)
-										<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+										<option value="{{ $cat->id }}" {{ (old('category')) == $cat->id ? 'selected' : '' }}>
+											{{ $cat->name }}
+										</option>
 									@endforeach
 								</select>
 							</div>
