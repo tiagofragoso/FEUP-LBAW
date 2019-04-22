@@ -486,6 +486,8 @@ a.badge-secondary:hover {
 	background-color: var(--grey);
 }
 
+/** event form **/
+
 .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
@@ -511,15 +513,15 @@ select.currency {
 	border-color: var(--green);
 }
 
-#dateSelect .btn {
-	border-color: var(--blue);
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-}
 
-#priceSelect .btn {
+input#priceSelect {
 	border-color: var(--green);
 	border-radius: 0;
+}
+
+input[type="datetime-local"].custom-select, input[type="number"].custom-select {
+	background: none;
+	padding-right: .75rem;
 }
 
 /* home */

@@ -18,7 +18,7 @@
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-12 col-md-8 mb-2 mb-md-0">
-							<input type="text" class="form-control form-control-lg" placeholder="Event title">
+							<input type="text" name="title" class="form-control form-control-lg" placeholder="Event title">
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group categoryInput">
@@ -26,15 +26,20 @@
 									<label class="input-group-text" for="category"><i
 											class="fas fa-tag"></i></label>
 								</div>
-								<input id="category" type="text" class="form-control border-blue"
+								<select id="category" name="category" type="text" class="custom-select border-blue"
 									placeholder="Category" aria-label="category">
+									<option selected disabled>Category</option>
+									@foreach ($categories as $cat)
+										<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 					</div>
 					<hr>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 order-1 order-md-0">
-							<input type="text" class="form-control" placeholder="Location">
+							<input type="text" name="location" class="form-control" placeholder="Location">
 						</div>
 						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
 							<div class="input-group w-100 justify-content-stretch">
@@ -43,42 +48,33 @@
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<div class="dropdown flex-grow-1" id="dateSelect">
-									<button class="btn w-100 custom-select text-left" type="button"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Date
-									</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">TBD</a>
-										<a class="dropdown-item" href="#">Free</a>
-										<a class="dropdown-item" href="#">Insert value</a>
-									</div>
-								</div>
+								<input type="datetime-local" name="date" class="custom-select border-blue">
 							</div>
 						</div>
 					</div>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 mb-3 mb-md-0">
-							<input class="form-control form-control" type="text" placeholder="Address">
+							<input name="address" class="form-control form-control" type="text" placeholder="Address">
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="Visibility">
+									<label class="input-group-text" for="type">
 										<i class="fas fa-music"></i>
 									</label>
 								</div>
-								<select class="custom-select border-blue" id="Visibility">
+								<select name="type" class="custom-select border-blue" id="type">
 									<option selected disabled>Performance type</option>
-									<option value="1">Concert</option>
-									<option value="2">Festival</option>
+									<option value="Concert">Concert</option>
+									<option value="Festival">Festival</option>
+									<option value="Liveset">Liveset</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<div class="row mb-3 justify-content-between">
 						<div class="col-12 col-md-8 order-1 order-md-0">
-							<textarea class="form-control" rows="3" placeholder="Brief description"
+							<textarea class="form-control" rows="3" name="brief" placeholder="Brief description"
 								style="resize:none"></textarea>
 						</div>
 						<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
@@ -87,10 +83,10 @@
 									<label class="input-group-text" for="Visibility"><i
 											class="fas fa-eye"></i></label>
 								</div>
-								<select class="custom-select border-blue" id="Visibility">
+								<select name="private" class="custom-select border-blue" id="Visibility">
 									<option selected disabled>Visibility</option>
-									<option value="1">Public</option>
-									<option value="2">Private</option>
+									<option value="0">Public</option>
+									<option value="1">Private</option>
 								</select>
 							</div>
 						</div>
@@ -122,22 +118,12 @@
 									<label class="input-group-text" for="priceSelect"><i
 											class="fas fa-ticket-alt"></i></label>
 								</div>
-								<div class="dropdown flex-grow-1" id="priceSelect">
-									<button class="btn w-100 custom-select text-left" type="button"
-										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Price
-									</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="#">TBD</a>
-										<a class="dropdown-item" href="#">Free</a>
-										<a class="dropdown-item" href="#">Insert value</a>
-									</div>
-								</div>
+								<input type="number" name="price" min="0" placeholder="Free" id="priceSelect" class="custom-select">
 								<div class="input-group-append">
-									<select class="custom-select currency">
-										<option selected>€</option>
-										<option value="1">$</option>
-										<option value="2">£</option>
+									<select class="custom-select currency" name="currency">
+										@foreach ($currencies as $curr)
+											<option value="{{ $curr->id }}">{{ $curr->symbol }}</option>
+										@endforeach
 									</select>
 								</div>
 							</div>

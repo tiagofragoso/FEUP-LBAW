@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App;
 use App\Event;
+use App\Category;
+use App\Currency;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -29,7 +31,18 @@ class EventController extends Controller
     public function create()
     {
         $this->authorize('create', Event::class);
-        return view('pages.event_form', ['title' => 'Create event']);
+
+        $currencies = Currency::all();
+        $locale = App::getLocale();
+        foreach($currencies as $c) {
+            $c->symbol = $c->getSymbol($locale);
+        }
+
+        return view('pages.event_form', 
+            ['title' => 'Create event',
+            'categories' => Category::all(),
+            'currencies' => $currencies]
+        );
 
     }
 
