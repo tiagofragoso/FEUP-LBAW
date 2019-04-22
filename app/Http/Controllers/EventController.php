@@ -58,10 +58,16 @@ class EventController extends Controller
         $this->authorize('create', Event::class);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:60|',
-            'location' => 'string|max:50',
-            'address' => 'string|max:100',
-            'brief' => 'string|max:140'
+            'title' => 'required|string|max:60',
+            'location' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'brief' => 'nullable|string|max:140',
+            'category' => 'required',
+            'type' => 'required',
+            'private' => 'required',
+            'status' => 'required',
+            'price' => 'nullable|numeric|min:0',
+            'start_date' => 'nullable|date|after:now'
         ])->validate();
 
         return Event::create($request->except('photo'));
