@@ -18,7 +18,7 @@
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-center">
 						<div class="col-12 col-md-8 mb-2 mb-md-0">
-							<input type="text" name="title" class="form-control form-control-lg" placeholder="Event title">
+							<input type="text" name="title" class="form-control form-control-lg" placeholder="Event title" required>
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group categoryInput">
@@ -27,8 +27,8 @@
 											class="fas fa-tag"></i></label>
 								</div>
 								<select id="category" name="category" type="text" class="custom-select border-blue"
-									placeholder="Category" aria-label="category">
-									<option selected disabled>Category</option>
+									placeholder="Category" aria-label="category" required>
+									<option selected disabled value="">Category</option>
 									@foreach ($categories as $cat)
 										<option value="{{ $cat->id }}">{{ $cat->name }}</option>
 									@endforeach
@@ -48,7 +48,7 @@
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<input type="datetime-local" name="date" class="custom-select border-blue">
+								<input type="datetime-local" name="start_date" class="custom-select border-blue">
 							</div>
 						</div>
 					</div>
@@ -63,8 +63,8 @@
 										<i class="fas fa-music"></i>
 									</label>
 								</div>
-								<select name="type" class="custom-select border-blue" id="type">
-									<option selected disabled>Performance type</option>
+								<select name="type" class="custom-select border-blue" id="type" required>
+									<option selected disabled value="">Performance type</option>
 									<option value="Concert">Concert</option>
 									<option value="Festival">Festival</option>
 									<option value="Liveset">Liveset</option>
@@ -83,8 +83,8 @@
 									<label class="input-group-text" for="Visibility"><i
 											class="fas fa-eye"></i></label>
 								</div>
-								<select name="private" class="custom-select border-blue" id="Visibility">
-									<option selected disabled>Visibility</option>
+								<select name="private" class="custom-select border-blue" id="Visibility" required>
+									<option selected disabled value="">Visibility</option>
 									<option value="0">Public</option>
 									<option value="1">Private</option>
 								</select>
@@ -95,19 +95,20 @@
 					<div class="row justify-content-between">
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
 							<div class="d-flex flex-row justify-content-between position-relative">
-								<div class="progress progress-3 position-absolute"></div>
-								<input id="step-1" name="status" value="Planning" style="display: none;" checked>
+								<input type="radio" id="step-1" name="status" value="Planning" style="display: none;" checked>
+								<div class="progress progress-1 position-absolute"></div>
 								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-1"
-										class="step complete rounded-circle d-flex align-items-center justify-content-center">
+										class="step rounded-circle d-flex align-items-center justify-content-center">
 										1
-								</label>
+									</label>
 									<span>Planning</span>
 								</div>
-								<input id="step-2" name="status" value="Buy a ticket" style="display: none;">
+								<input type="radio" id="step-2" name="status" value="Tickets" style="display: none;">
+								<div class="progress progress-3 position-absolute"></div>
 								<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-2"
-										class="step complete rounded-circle d-flex align-items-center justify-content-center">
+										class="step rounded-circle d-flex align-items-center justify-content-center">
 										2
 									</label>
 									<span>Buy a ticket</span>

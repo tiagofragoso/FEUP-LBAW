@@ -43,4 +43,4 @@ Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('about', function () {
     return view('pages.about');
-    });
+});
