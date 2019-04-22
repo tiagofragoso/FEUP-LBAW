@@ -45,4 +45,26 @@ class SettingsController extends Controller
 
         return response(200);
     }
+
+    /**
+     * Updates the information of a user.
+     *
+     * @param  Request request containing the new state
+     * @return Response
+     */
+    public function updatePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required',
+            'password' => 'same'
+        ]);
+
+        $user->password = $request->input('new_password');
+        $user->save();
+
+        return response(200);
+    }
 }
