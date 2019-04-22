@@ -39,7 +39,6 @@ class Event extends Model
 
     public function questions(){
         $questions = $this->hasMany('App\Question','event_id')->get();
-        
         return $questions;
     }
 

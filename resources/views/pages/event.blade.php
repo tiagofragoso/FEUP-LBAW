@@ -69,7 +69,7 @@
 						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
 								<p class="card-text">
-                                {{ $event->brief}}
+                                {{$event->brief}}
 								</p>
 							</div>
 							<div class="col-4">
@@ -84,25 +84,26 @@
 						</div>
 						<div class="row justify-content-between">
 							<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
+							
 								<div class="d-flex flex-row justify-content-between position-relative">
 									<div class="progress progress-2 position-absolute"></div>
 									<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
 										<div
-											class="step complete rounded-circle d-flex align-items-center justify-content-center">
+											class="step rounded-circle d-flex align-items-center justify-content-center {{ ($event->status == 'Planning' || $event->status == 'Tickets'|| $event->status == 'Live')? 'complete' : '' }}">
 											1
 										</div>
 										<span>Planning</span>
 									</div>
 									<div class="step-wrapper d-flex flex-column align-items-center">
 										<div
-											class="step complete rounded-circle d-flex align-items-center justify-content-center">
+											class="step rounded-circle d-flex align-items-center justify-content-center {{ ($event->status == 'Tickets' || $event->status == 'Live' )? 'complete' : '' }}">
 											2
 										</div>
 										<span>Buy a ticket</span>
 									</div>
 									<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
 										<div
-											class="step rounded-circle d-flex align-items-center justify-content-center">
+											class="step rounded-circle d-flex align-items-center justify-content-center {{ ($event->status == 'Live')? 'complete' : '' }}" id ="live">
 											3
 										</div>
 										<span>Live</span>
@@ -115,7 +116,6 @@
 									{{$event->price}} {{$event->currency}}
 								</button>
 							</div>
-
 						</div>
 						<div class="row">
 							<div class="col-12">
@@ -192,7 +192,7 @@
 																	<div class="d-flex flex-column">
 																		<p class="card-text mb-0">
 																			<a href="user-profile.html" class="badge badge-secondary">
-																				{{$post->author}}
+																				{{$post->author->username}}
 																			</a>
 																			created a
 																			<strong>post</strong>.
@@ -520,12 +520,12 @@
 										</div>
 										<div class="row justify-content-center">
 											<ul class="col-12 col-md-9 list-group list-group-flush">
-												@foreach($questions as $question1)
+												@foreach($questions as $question)
 												<li class="list-group-item">
 													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
 														data-toggle="collapse" href="#collapse1" role="button"
 														aria-expanded="false" aria-controls="collapseExample">
-														{{$question1->content}}
+														{{$question->content}}
 													</a>
 													<div class="collapse" id="collapse1">
 														<p class="text-muted">

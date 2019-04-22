@@ -94,20 +94,22 @@ class EventController extends Controller
         $owner = $allHosts['Owner']->first();
         $hosts = $allHosts['Host'];
         $artists = $event->artists()->take(6);
-       
-        
         $posts = $event->posts()->get();
+        $questions = $event->questions();
+
         
-        //dd($posts); -> Usar para testar o retorno
+        //dd($posts); //-> Usar para testar o retorno
 
         // foreach ($posts as $post) {
         //     dd($post->comments()->get());
-        // }
+        
+    //}
+        //dd($questions);
 
         return view('pages.event', 
             ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts,'questions'=>$questions]);  
-
-    }
+            
+        }
 
     /**
      * Show the form for editing the specified resource.
