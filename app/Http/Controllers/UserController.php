@@ -51,7 +51,20 @@ class UserController extends Controller
             return redirect('profile');
         }
 
-        $data['user'] = User::find($id);
+        $user = User::findOrFail($id);
+        $data['user'] = $user;
+
+        if ($user->is_admin) {
+            abort(404); 
+        }
+
+        $data['joined'] = $user->participations('Participant')->get();
+        $data['joined'] = $data['joined']->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $data['hosting']  = $user->participations('Host')->get();
+        $data['hosting'] = $data['hosting']->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $data['performing']  = $user->participations('Artist')->get();
+        $data['performing'] = $data['performing']->map(function ($item, $key) { return $item->event()->get()[0]; });
+
         return view('pages.user_profile', $data);
     }
 

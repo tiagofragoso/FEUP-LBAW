@@ -14,7 +14,7 @@
                                     </div>
                             </div>
 					<div class="card-body">
-                        
+                            @include('partials.profile_event_tabs', ['data' => [$joined, $hosting, $performing]])
 					</div>
 				</div>
 			</div>
