@@ -36,12 +36,13 @@ class Event extends Model
     public function posts($id){
         $posts = $this->hasMany('App\Posts', 'event_id')->get()->where('event_id',$id);
 
-        foreach($posts as $post)
-        {   
-
-            
-            $post['allComments'] = $this->hasMany('App\Comments','post_id')->get()->where('post_id', $post->id);
-        }
      return $posts;
     }
+
+    public function questions(){
+        $questions = $this->hasMany('App\Question','event_id')->get();
+        
+        return $questions;
+    }
+
 }

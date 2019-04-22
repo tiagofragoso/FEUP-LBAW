@@ -520,11 +520,12 @@
 										</div>
 										<div class="row justify-content-center">
 											<ul class="col-12 col-md-9 list-group list-group-flush">
+												@foreach($questions as $question1)
 												<li class="list-group-item">
 													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
 														data-toggle="collapse" href="#collapse1" role="button"
 														aria-expanded="false" aria-controls="collapseExample">
-														Can I bring my dog to the exhibit?
+														{{$question1->content}}
 													</a>
 													<div class="collapse" id="collapse1">
 														<p class="text-muted">
@@ -532,18 +533,7 @@
 														</p>
 													</div>
 												</li>
-												<li class="list-group-item">
-													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
-														data-toggle="collapse" href="#collapse2" role="button"
-														aria-expanded="false" aria-controls="collapseExample">
-														Can I buy something?
-													</a>
-													<div class="collapse" id="collapse2">
-														<p class="text-muted">
-															If you bring the cash, yes.
-														</p>
-													</div>
-												</li>
+												@endforeach
 											</ul>
 										</div>
 									</div>

@@ -94,11 +94,11 @@ class EventController extends Controller
         $owner = $allHosts['Owner']->first();
         $hosts = $allHosts['Host'];
         $artists = $event->artists()->take(6);
-       
-        
+
         $posts =$event->posts($id);
+        $questions = $event->questions();
         return view('pages.event', 
-            ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts]);  
+            ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts,'questions'=>$questions]);  
 
     }
 
