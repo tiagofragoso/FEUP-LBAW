@@ -5,11 +5,11 @@ use App;
 use App\Event;
 use App\Category;
 use App\Currency;
+use App\Participation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use App\Participation;
 
 class EventController extends Controller
 {
@@ -75,6 +75,8 @@ class EventController extends Controller
 
         $event = Event::create($request->except('photo'));
 
+        Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
+
         return $this->show($event->id);
     }
 
@@ -88,11 +90,11 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        //$this->authorize('view', [Auth::user(), $event]);
+        $this->authorize('view', $event);
 
         $allHosts = $event->hosts();
         $owner = $allHosts['Owner']->first();
-        $hosts = $allHosts['Host'];
+        $hosts = $allHosts->get('Host', collect());
         $artists = $event->artists()->take(6);
        
         
@@ -118,7 +120,7 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
-        $this->authorize('update', [Auth::user(), $event]);
+        $this->authorize('update', $event);
     }
 
     /**

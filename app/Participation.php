@@ -10,6 +10,8 @@ class Participation extends Model
 
     protected $table = 'participations';
 
+    protected $guarded = ['date'];
+
     public function event() {
         return $this->belongsTo('App\Event');
     }
