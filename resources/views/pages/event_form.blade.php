@@ -96,18 +96,20 @@
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
 							<div class="d-flex flex-row justify-content-between position-relative">
 								<div class="progress progress-3 position-absolute"></div>
+								<input id="step-1" name="status" value="Planning" style="display: none;" checked>
 								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
-									<div
+									<label for="step-1"
 										class="step complete rounded-circle d-flex align-items-center justify-content-center">
 										1
-									</div>
+								</label>
 									<span>Planning</span>
 								</div>
+								<input id="step-2" name="status" value="Buy a ticket" style="display: none;">
 								<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
-									<div
+									<label for="step-2"
 										class="step complete rounded-circle d-flex align-items-center justify-content-center">
 										2
-									</div>
+									</label>
 									<span>Buy a ticket</span>
 								</div>
 							</div>
@@ -137,16 +139,16 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col-12">
-							<textarea rows="5" class="form-control"
+							<textarea rows="5" class="form-control" name="description"
 								placeholder="Comprehensive event description"></textarea>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<div class="col-6">
-							<button class="btn btn-info w-100">Cancel</button>
+							<a href="{{ url('/') }}" class="btn btn-info w-100">Cancel</a>
 						</div>
 						<div class="col-6">
-							<a href="event-host.html" class="btn btn-primary w-100">Submit</a>
+							<button type="submit" class="btn btn-primary w-100">Submit</button>
 						</div>
 					</div>
 				</div>
