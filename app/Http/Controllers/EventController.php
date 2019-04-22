@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -52,11 +53,47 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $event = Event::find($id);
-       // $this->authorize('show', $event);
+        $event =collect(DB::select('SELECT title, "category", "start_date", 
+        end_date, "location", "address", participants, 
+        price, brief, "description", "type", "private",
+        "status", currencies.code AS currency, 
+        categories.name AS "category"
+         FROM events 
+        LEFT JOIN currencies ON (events.currency = currencies.id)
+        LEFT JOIN categories ON (events.category = categories.id)
+         WHERE events.id = ?;', [$id]))->first();
 
-      return view('pages.event', ['event' => $event]);
+        $hosts = DB::select('SELECT users.id AS id, users.name, users.username FROM participations, users
+    WHERE participations.event_id = ?
+        AND participations.type = ? 
+        AND participations.user_id = users.id',[$id,"Host"]);    
         
+        $numberHosts = count($hosts) - 1;
+        $firstHost = collect($hosts)->first();
+        $hostsInformation = array('firstHost'=> $firstHost,'numberHosts'=> $numberHosts);
+        
+        $artists = DB::select('SELECT users.id AS id, users.name, users.username FROM participations, users
+        WHERE participations.event_id = ?
+            AND participations.type = ? 
+            AND participations.user_id = users.id',[$id,"Artist"]);
+      
+        
+        $posts = DB::select('SELECT posts.*, users.name AS author 
+        FROM posts LEFT JOIN users ON (posts.author_id = users.id)
+        WHERE posts.event_id = ?
+        ORDER BY posts.date DESC',[$id]);
+       
+        foreach($posts as $post)
+        {
+            $comments =  DB::select('SELECT * 
+            FROM comments
+            WHERE post_id = ?
+            ORDER BY date DESC',[$post->id]);
+            $post->allComents = $comments;
+        }
+     
+    return view('pages.event', ['event' => $event,'host'=>$hostsInformation,'artists'=>$artists,'posts'=>$posts]);  
+
     }
 
     /**

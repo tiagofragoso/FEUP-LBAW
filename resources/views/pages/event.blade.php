@@ -30,8 +30,13 @@
 								<h5 class="card-title">
 									<strong>{{ $event->title }}</strong>
 								</h5>
-								<p class="text-muted mb-0">Hosted by <strong><a href="user-profile.html"
-											class="host-name text-muted">John Smith</a></strong> and 3 others</p>
+								<p class="text-muted mb-0">Hosted by <strong><a href="" //add route
+                                            class="host-name text-muted">{{$host['firstHost']->name}}</a></strong> 
+                                             
+                                            @if ($host['numberHosts'] > 1)
+                                            and {{$host['numberHosts']}}   others
+                                            @elseif ($host['numberHosts'] == 1)  and {{$host['numberHosts']}} other
+                                        @endif</p>
 							</div>
 							<div class="col-12 col-sm-3">
 								<button type="submit" class="btn btn-primary w-100">Join</button>
@@ -43,7 +48,7 @@
 								<p class="card-subtitle text-muted"><span>{{ $event->start_date}}</span> - <span>{{ $event->end_date}}</span></p>
 							</div>
 							<div class="col-3">
-								<p class="card-subtitle text-muted text-right">445 <i class="mr-1 fas fa-users"></i></p>
+								<p class="card-subtitle text-muted text-right">{{$event->participants}} <i class="mr-1 fas fa-users"></i></p>
 							</div>
 						</div>
 						<div class="row mb-3 justify-content-between">
@@ -108,7 +113,7 @@
 							<div class="col-12 col-lg-3">
 								<button type="submit" class="btn btn-secondary w-100">
 									<i class="fas fa-ticket-alt mr-1"></i>
-									{{$event->price}} 
+									{{$event->price}} {{$event->currency}}
 								</button>
 							</div>
 
@@ -124,47 +129,22 @@
 							</div>
 							<div class="col-4 text-right">
 								<a href="#" class="view-all">
-									View all
+                                    @if (sizeof($artists) > 8)
+                                    View all
+                                    @endif
 								</a>
 							</div>
 						</div>
 						<div class="row artists-wrapper">
-							<a href="user-profile.html"
+                            @foreach($artists as $artist)
+                            <a href="#" //route
 								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
 								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
 									width="40" />
-								<span class="text-center">John Smith</span>
+								<span class="text-center">{{$artist->name}}</span>
 							</a>
-							<a href="user-profile.html"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">John Smith</span>
-							</a>
-							<a href="user-profile.html"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">John Smith</span>
-							</a>
-							<a href="user-profile.html"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">John Smith</span>
-							</a>
-							<a href="user-profile.html"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">John Smith</span>
-							</a>
-							<a href="user-profile.html"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">John Smith</span>
-							</a>
+                            @endforeach
+                          
 						</div>
 						<div class="row">
 							<div class="col-12">
@@ -201,6 +181,7 @@
 								</div>
 								<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
 									<div class="posts">
+                                        @foreach($posts as $post)
 										<div class="row justify-content-center">
 											<div class="card col-12 col-lg-9 mb-4 hover-shadow">
 												<div class="row">
@@ -214,21 +195,19 @@
 																	<div class="d-flex flex-column">
 																		<p class="card-text mb-0">
 																			<a href="user-profile.html" class="badge badge-secondary">
-																				Rosalìa
+																				{{$post->author}}
 																			</a>
 																			created a
 																			<strong>post</strong>.
 																		</p>
 																		<span class="post-date text-muted">
-																			MAR 4 | 15:58
+																			{{$post->date}}
 																		</span>
 																	</div>
 																</div>
 															</div>
 															<p class="card-text mt-3">
-																With supporting text below as a natural lead-in to
-																additional
-																content.
+																{{$post->content}}
 															</p>
 														</div>
 													</div>
@@ -239,7 +218,7 @@
 															<div
 																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
 																<i class="far fa-thumbs-up"></i>
-																<span>312</span>
+																<span>{{$post->likes}}</span>
 															</div>
 														</button>
 														<button type="button" data-toggle="collapse"
@@ -249,7 +228,7 @@
 															<div
 																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
 																<i class="far fa-comment-alt"></i>
-																<span>2</span>
+																<span>{{$post->comments}}</span>
 															</div>
 														</button>
 													</div>
@@ -281,7 +260,7 @@
 													<div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
 													<div
 														class="row col-12 comment align-items-start justify-content-center">
-														<div class="col-12 col-md-10 d-flex flex-row">
+                                                        <div class="col-12 col-md-10 d-flex flex-row">
 															<img src="../assets/user.svg"
 																class="rounded-circle rounded-circle border border-light mr-3"
 																width="30" height="30" />
@@ -340,7 +319,8 @@
 													</div>
 												</div>
 											</div>
-										</div>
+                                        </div>
+                                        @endforeach
 										<div class="row justify-content-center">
 											<div class="card col-12 col-lg-9 mb-4 hover-shadow">
 												<div class="row">
