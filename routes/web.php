@@ -38,6 +38,7 @@ Route::post('register', 'Auth\RegisterController@register');
 //Profile
 
 Route::get('profile', 'ProfileController@show');
+Route::get('users/{id}', 'UserController@show');
 //About
 
 Route::get('about', function () {
