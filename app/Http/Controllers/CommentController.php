@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Posts;
+use App\Comment;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Posts $posts)
+    public function show(Comment $comment)
     {
         //
     }
@@ -52,10 +52,10 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Posts $posts)
+    public function edit(Comment $comment)
     {
         //
     }
@@ -64,10 +64,10 @@ class PostsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Posts  $posts
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Posts $posts)
+    public function update(Request $request, Comment $comment)
     {
         //
     }
@@ -75,10 +75,10 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Posts  $posts
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Posts $posts)
+    public function destroy(Comment $comment)
     {
         //
     }

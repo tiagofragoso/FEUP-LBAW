@@ -33,10 +33,8 @@ class Event extends Model
         return $this->participations()->get()->where('type', 'Artist')->map(function($part) { return $part->user()->first(); });
     }
 
-    public function posts($id){
-        $posts = $this->hasMany('App\Posts', 'event_id')->get()->where('event_id',$id);
-
-     return $posts;
+    public function posts(){
+        return $this->hasMany('App\Post');
     }
 
     public function questions(){
