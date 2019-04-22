@@ -10,7 +10,7 @@ class Participation extends Model
     public $table = 'participations';
 
     public function event() {
-        return $this->hasOne('App/Event', 'event_id');
+        return $this->belongsTo('App\Event');
     }
 }
 

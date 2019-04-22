@@ -9,13 +9,13 @@
                     <div class="row align-items-center">
                         <a href="event.html" class="col-12 event-link">
                             <h5 class="event-title">
-                                NOS Primavera Sound 2019
+                               {{$event->title}}
                             </h5>
                         </a>
 
                         <div class="col-7 col-md-9 mt-4">
-                            <div class="text-muted event-date">6 JUN 2019</div>
-                            <div class="text-muted event-location">Parque da Cidade, Porto</div>
+                            <div class="text-muted event-date">{{(new DateTime($event->start_date))->format('d M Y')}}</div>
+                            <div class="text-muted event-location">{{$event->location}}</div>
                         </div>
 
                         <div class="col-5 col-md-3 mt-4">

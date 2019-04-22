@@ -59,17 +59,17 @@
 							<div class="tab-pane fade show active" id="joined" role="tabpanel"
 								aria-labelledby="joined-tab">
 								<div class="row">
-									@each('partials.activity_event_card', $joined, 'joinedEvent')
+									@each('partials.activity_event_card', $joined, 'event')
 								</div>
 							</div>
 							<div class="tab-pane fade" id="hosting" role="tabpanel" aria-labelledby="performing-tab">
 								<div class="row">
-                                        @each('partials.activity_event_card', $hosting, 'hostingEvent')
+                                        @each('partials.activity_event_card', $hosting, 'event')
 								</div>
 							</div>
 							<div class="tab-pane fade" id="performing" role="tabpanel" aria-labelledby="performing-tab">
 								<div class="row">
-                                        @each('partials.activity_event_card', $performing, 'performingEvent')
+                                        @each('partials.activity_event_card', $performing, 'event')
 								</div>
 							</div>
 						</div>
