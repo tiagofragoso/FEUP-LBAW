@@ -26,9 +26,10 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         $this->authorize('create', Event::class);
+        return view('pages.event_form', ['title' => 'Create event']);
 
     }
 
