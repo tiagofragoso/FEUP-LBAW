@@ -32,4 +32,8 @@ class Event extends Model
     public function artists() {
         return $this->participations()->get()->where('type', 'Artist')->map(function($part) { return $part->user()->first(); });
     }
+
+    public function posts(){
+        return $this->hasMany('App\Post');
+    }
 }

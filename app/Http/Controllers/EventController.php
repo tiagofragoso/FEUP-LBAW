@@ -94,21 +94,16 @@ class EventController extends Controller
         $owner = $allHosts['Owner']->first();
         $hosts = $allHosts['Host'];
         $artists = $event->artists()->take(6);
-        
-        $posts = DB::select('SELECT posts.*, users.name AS author 
-        FROM posts LEFT JOIN users ON (posts.author_id = users.id)
-        WHERE posts.event_id = ?
-        ORDER BY posts.date DESC',[$id]);
        
-        foreach($posts as $post)
-        {
-            $comments =  DB::select('SELECT * 
-            FROM comments
-            WHERE post_id = ?
-            ORDER BY date DESC',[$post->id]);
-            $post->allComents = $comments;
-        }
-     
+        
+        $posts = $event->posts()->get();
+        
+        //dd($posts); -> Usar para testar o retorno
+
+        // foreach ($posts as $post) {
+        //     dd($post->comments()->get());
+        // }
+
         return view('pages.event', 
             ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts]);  
 
