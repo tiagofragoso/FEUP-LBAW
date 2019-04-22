@@ -1,12 +1,12 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-navbar">
-        <a class="navbar-brand" href="home.html"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
+        <a class="navbar-brand" href="{{ url('/') }}"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline mr-auto d-none d-lg-block" action="search.html">
+            <form class="form-inline mr-auto d-none d-lg-block" method="POST" action="{{ url('/search') }}">
                 <div class="input-group mb-3 my-2 my-lg-0">
                     <input type="text" class="form-control" placeholder="Search" aria-label="Search"
                         aria-describedby="button-addon2">
@@ -18,17 +18,17 @@
             <ul class="navbar-nav">
                 @if (Auth::check())
                 <li class="nav-item mr-2 my-auto d-none d-lg-block">
-                    <a href="create-event.html">
+                <a href="{{ url('/events/create') }}">
                         <button type="button" class="btn btn-primary">Create event</button>
                     </a>
                 </li>
                 @endif
                 <li class="nav-item my-lg-auto d-lg-none mt-3">
-                    <a class="nav-link text-muted" href="search.html">Search page</a>
+                    <a class="nav-link text-muted" href="{{ url('/search') }}">Search page</a>
                 </li>
                 @if (Auth::check())
                 <li class="nav-item my-auto d-lg-none">
-                    <a class="nav-link text-muted" href="create-event.html">Create event</a>
+                    <a class="nav-link text-muted" href="{{ url('/events/create') }}">Create event</a>
                 </li>
                 @endif
                 <li class="nav-item my-auto">
