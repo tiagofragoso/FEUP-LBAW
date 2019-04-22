@@ -50,9 +50,13 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        //
+        $event = Event::find($id);
+       // $this->authorize('show', $event);
+
+      return view('pages.event', ['event' => $event]);
+        
     }
 
     /**

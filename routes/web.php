@@ -21,6 +21,7 @@ Route::get('cards/{id}', 'CardController@show');
 
 // Events
 Route::get('events/create', 'EventController@create');
+Route::get('events/{id}', 'EventController@show');
 
 // API
 Route::put('api/cards', 'CardController@create');
