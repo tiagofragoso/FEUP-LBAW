@@ -50,34 +50,39 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="form-group-name">
+                    <div class="form-group-name mb-3">
                         <label for="nameInput">Name</label>
-                        <input type="email" class="form-control mb-3" id="nameInput"
-                            placeholder="John Smith" value="{{ $user->name }}">
+                        <input type="email" class="form-control" id="nameInput" placeholder="John Smith" value="{{ $user->name }}">
+                        <span id="name-errors"></span>
                     </div>
-                    <div class="form-group-email">
+                    <div class="form-group-email mb-3">
                         <label for="emailInput">Email address</label>
-                        <input type="email" class="form-control mb-3" id="emailInput"
-                            placeholder="name@example.com" value="{{ $user->email }}">
+                        <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" value="{{ $user->email }}">
+                        <span id="email-errors"></span>
                     </div>
-                    <div class="form-group-username">
+                    <div class="form-group-username mb-3">
                         <label for="emailInput">Username</label>
-                        <input type="username" class="form-control mb-3" id="usernameInput" placeholder="username" value="{{ $user->username }}">
+                        <input type="username" class="form-control" id="usernameInput" placeholder="username" value="{{ $user->username }}">
+                        <span id="username-errors"></span>
                     </div>
                     <div class="form-group-date">
                         <label for="dateofbirthInput">Date of birth</label>
                         <input type="date" class="form-control" id="dateofbirthInput" placeholder="dd/mm/yyyy" value="{{ $user->birthdate }}">
-                        <button type="submit" class="btn btn-primary mt-3">Submit </button>
+                        <span id="birthdate-errors"></span>
+                        <button type="submit" class="btn btn-primary mt-3" id="profile-submit">Submit</button>
                     </div>
 
                     <div class="form-group-pass">
                         <h4 class="change-password-title mt-5">Change password</h4>
                         <label for="passwordInput">Old password</label>
                         <input type="password" class="form-control mb-3" id="passwordInput" placeholder="Old password">
+                        <span id="old-password-errors"></span>
                         <label for="newpasswordInput">New password</label>
                         <input type="password" class="form-control mb-3" id="newpasswordInput" placeholder="New password">
+                        <span id="new-password-errors"></span>
                         <label for="newpasswordInput">Repeat new password</label>
                         <input type="password" class="form-control" id="repeatpasswordInput" placeholder="Repeat password">
+                        <span id="repeat-password-errors"></span>
                         <button type="submit" class="btn btn-primary mt-3">Submit</button>
                     </div>
                 </div>
@@ -85,5 +90,7 @@
         </div>
     </div>
 </div>
+
+<script src="js/settings.js"></script>
 
 @endsection

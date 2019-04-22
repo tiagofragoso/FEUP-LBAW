@@ -15,14 +15,15 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-// Settings
-Route::get('/settings', 'SettingsController@show');
+// User
+Route::get('settings', 'SettingsController@show');
 
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
 // API
+Route::put('api/profile', 'SettingsController@update');
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');
