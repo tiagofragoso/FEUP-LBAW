@@ -28,7 +28,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
   @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
   @include('partials.navbar')
   @endunless
@@ -38,10 +37,6 @@
   @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
   @include('partials.footer')
   @endunless
-
-=======
-    @yield('content')
->>>>>>> Settings display
 </body>
 
 </html>
