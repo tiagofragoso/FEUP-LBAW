@@ -43,7 +43,9 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        //
+        $canEdit = $event->hosts->flatten();
+        dd($canEdit);
+        return true;
     }
 
     /**

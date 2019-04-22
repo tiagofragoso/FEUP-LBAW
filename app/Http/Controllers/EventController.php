@@ -117,12 +117,13 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $this->authorize('update', [Auth::user(), $event]);
     }
 
     /**
