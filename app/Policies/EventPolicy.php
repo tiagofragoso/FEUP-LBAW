@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\User;
 use App\Event;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class EventPolicy
 {

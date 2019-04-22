@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +28,8 @@ class EventController extends Controller
      */
     public function create(Request $request)
     {
-        $event = new Event();
-        $this->authorize('create', $event);
+        $this->authorize('create', Event::class);
+
     }
 
     /**
