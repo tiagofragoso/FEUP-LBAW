@@ -38,3 +38,8 @@ Route::post('register', 'Auth\RegisterController@register');
 //Profile
 
 Route::get('profile', 'ProfileController@show');
+//About
+
+Route::get('about', function () {
+    return view('pages.about');
+    });
