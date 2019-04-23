@@ -29,27 +29,20 @@ class User extends Authenticatable
         'name', 'username', 'email', 'birthdate', 'followers', 'following'
     ];
 
-    /**
-     * The cards this user owns.
-     */
 
-    /* 
-    public function cards() {
-      return $this->hasMany('App\Card');
-    }
-    */
-
-    public function participations($type) {
-        return $this->hasMany('App\Participation')->where('type', $type);
+    public function events($type) {
+        if (!is_array($type))
+            $type = [$type];
+        return $this->belongsToMany('App\Event', 'participations')->withPivot('type')->wherePivotIn('type', $type);
     }
 
-    public function participation($event) {
-        return $this->hasOne('App\Participation')->where('event_id', $event);
+    public function event($id) {
+        return $this->belongsToMany('App\Event', 'participations')->wherePivot('event_id', $id);
     }
 
     public function eventsParticipation($events) {
         foreach ($events as $key => $value) {
-            if ($this->participation($value->id)->get()->isEmpty())  {
+            if ($this->event($value->id)->get()->isEmpty()) {
                 $value['joined'] = false;
             } else {
                 $value['joined'] = true;
@@ -59,17 +52,4 @@ class User extends Authenticatable
         return $events;
     } 
 
-    public function events() {
-        $data['joined'] = $this->participations('Participant')->get();
-        $data['joined'] = $data['joined']->map(function ($item, $key) { return $item->event()->get()[0]; });
-        $data['hosting']  = $this->participations('Host')->get();
-        $data['hosting'] = $data['hosting']->map(function ($item, $key) { return $item->event()->get()[0]; });
-        $owner = $this->participations('Owner')->get();
-        $owner = $owner->map(function ($item, $key) { return $item->event()->get()[0]; });
-        $data['hosting'] = $data['hosting']->merge($owner);
-        $data['performing']  = $this->participations('Artist')->get();
-        $data['performing'] = $data['performing']->map(function ($item, $key) { return $item->event()->get()[0]; });
-
-        return $data;
-    }
 }
