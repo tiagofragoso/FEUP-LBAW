@@ -13,7 +13,7 @@
 						<i class="fas fa-camera mr-1"></i> Upload a photo
 					</label>
 					<input type="file" id="photo" name="photo" style="display:none;" accept="image/png, image/jpeg" >
-					<img class="d-block w-100" src="../assets/event-placeholder.png" alt="First slide">
+					<img class="d-block w-100" src="{{ asset('assets/event-placeholder.png')}}" alt="First slide">
 				</div>
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-start">

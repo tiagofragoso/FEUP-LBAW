@@ -36,17 +36,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $currencies = Currency::all();
-        $locale = App::getLocale();
-        foreach($currencies as $c) {
-            $c->symbol = $c->getSymbol($locale);
-        }
-
-        return view('pages.event_form', 
-            ['title' => 'Create event',
-            'categories' => Category::all(),
-            'currencies' => $currencies]
-        );
+        return view('pages.event_form', ['title' => 'Create event']);
 
     }
 
@@ -121,6 +111,7 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $this->authorize('update', $event);
+        return view('pages.event_form', ['title' => 'Edit event', 'event' => $event]);
     }
 
     /**
