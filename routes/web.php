@@ -15,6 +15,7 @@ Route::get('/', function () {
     return redirect('login');
 });
 
+
 // Cards
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
@@ -27,6 +28,8 @@ Route::get('events/{id}/edit', 'EventController@edit');
 Route::put('events/{id}', 'EventController@update');
 
 // API
+Route::put('api/profile', 'ProfileController@update');
+Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::put('api/cards', 'CardController@create');
 Route::delete('api/cards/{card_id}', 'CardController@delete');
 Route::put('api/cards/{card_id}/', 'ItemController@create');
@@ -44,10 +47,9 @@ Route::post('register', 'Auth\RegisterController@register');
 
 //Profile
 
-Route::get('profile', 'ProfileController@show');
-Route::get('users/{id}', 'UserController@show');
+Route::get('profile', 'ProfileController@showProfile');
+Route::get('users/{id}', 'ProfileController@show');
+Route::get('settings', 'ProfileController@edit');
 //About
 
-Route::get('about', function () {
-    return view('pages.about');
-});
+Route::view('about', 'pages.about');

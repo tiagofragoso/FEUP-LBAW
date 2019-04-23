@@ -87,21 +87,21 @@ class EventController extends Controller
 
         $this->authorize('view', $event);
 
-        $allHosts = $event->hosts();
-        $owner = $allHosts['Owner']->first();
-        $hosts = $allHosts->get('Host', collect());
-        $artists = $event->artists()->take(6);
+        $owner = $event->participatesAs('Owner')->first();
+        $hosts = $event->participatesAs('Host')->get();
+        $artists = $event->participatesAs('Artist')->get()->take(6);
+        
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
 
         return view('pages.event', 
-            ['event' => $event,
+            [ 'title' => $event->name,
+            'event' => $event,
             'owner' => $owner,
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=>$questions]);  
-            
+            'questions'=> $questions]);  
         }
 
     /**
