@@ -22,6 +22,10 @@ Route::get('settings', 'SettingsController@show');
 Route::get('cards', 'CardController@list');
 Route::get('cards/{id}', 'CardController@show');
 
+// Events
+Route::get('events/create', 'EventController@create');
+Route::post('events', 'EventController@store');
+
 // API
 Route::put('api/profile', 'SettingsController@update');
 Route::put('api/profile/password', 'SettingsController@updatePassword');
@@ -40,8 +44,12 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 
+//Profile
+
+Route::get('profile', 'ProfileController@show');
+Route::get('users/{id}', 'UserController@show');
 //About
 
 Route::get('about', function () {
     return view('pages.about');
-    });
+});

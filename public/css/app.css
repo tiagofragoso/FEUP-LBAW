@@ -273,6 +273,37 @@ input:focus {
 	text-overflow: ellipsis;
 }
 
+@media screen and (max-width: 767px) {
+	.activity-event-card {
+			height: 110px;
+	}
+
+	.activity-event-card .event-title {
+			font-size: 0.9em;
+	}
+
+	.activity-event-card .event-date {
+			font-size: 0.6em;
+	}
+
+	.activity-event-card .event-location {
+			font-size: 0.6em;
+	}
+
+	.activity-event-card .join-btn {
+			font-size: 0.6em;
+	}
+}
+
+.activity-event-card .event-link {
+	color: var(--blue);
+}
+
+.activity-event-card .event-link:hover {
+	text-decoration: underline;
+	color: var(--darkblue);
+}
+
 
 /*event post*/
 
@@ -357,7 +388,7 @@ a.badge-secondary:hover {
 	padding: 0;
 }
 
-.card-header {
+.event-page .card-header {
 	font-weight: bold;
 	font-size: 1rem;
 }
@@ -382,16 +413,7 @@ a.badge-secondary:hover {
 	z-index: 5;
 	border: 1px solid var(--green);
 	font-weight: bold;
-}
-
-.step.complete {
-	background-color: var(--green);
-	color: var(--white);
-	border-color: var(--green);
-}
-
-.step.complete + span {
-	color: var(--green);
+	cursor: pointer;
 }
 
 .step-wrapper {
@@ -401,9 +423,24 @@ a.badge-secondary:hover {
 }
 
 .progress {
+	display: none;
 	top: calc(1rem - 2px);
 	height: 4px;
 	width: 100%;
+}
+
+input[type="radio"]:checked + .progress {
+	display: block;
+}
+
+input[type="radio"]:checked + .progress + .step-wrapper > label {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+input[type="radio"]:checked + .progress + .step-wrapper > label + span {
+	color: var(--green);
 }
 
 .progress-1 {
@@ -486,6 +523,8 @@ a.badge-secondary:hover {
 	background-color: var(--grey);
 }
 
+/** event form **/
+
 .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
@@ -511,15 +550,15 @@ select.currency {
 	border-color: var(--green);
 }
 
-#dateSelect .btn {
-	border-color: var(--blue);
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-}
 
-#priceSelect .btn {
+input#priceSelect {
 	border-color: var(--green);
 	border-radius: 0;
+}
+
+input[type="datetime-local"].custom-select, input[type="number"].custom-select {
+	background: none;
+	padding-right: .75rem;
 }
 
 /* home */
@@ -543,7 +582,7 @@ select.currency {
 max-width: 720px;
 }
 
-.card-header {
+.home-page .card-header {
 font-weight: bold;
 font-size: 1rem;
 }
@@ -596,6 +635,10 @@ font-size: 1rem;
 	.profile-container {
 			min-height: calc(100vh - 131.23px);
 	}
+}
+
+.profile-container .card-subtitle::before {
+	content: '@';
 }
 
 .card-wrapper {
