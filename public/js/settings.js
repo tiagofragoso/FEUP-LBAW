@@ -13,15 +13,10 @@ function createErrors(errors, container) {
     });
 }
 
-function request(url, request, handler) {
-    fetch(url, request)
-    .then(response => {
-        return response.json();
-    })
-    .then(handler)
-    .catch(error => {
-        console.log(error);
-    });
+async function request(url, request, handler) {
+    const response = await fetch(url, request);
+    const data = await response.json();
+    handler(data);
 }
 
 document.getElementById('profile-submit').addEventListener('click', () => {
