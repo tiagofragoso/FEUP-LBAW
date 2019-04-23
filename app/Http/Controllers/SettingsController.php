@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SettingsController extends Controller
 {
@@ -47,7 +48,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * Updates the information of a user.
+     * Updates the user's password.
      *
      * @param  Request request containing the new state
      * @return Response
@@ -56,12 +57,19 @@ class SettingsController extends Controller
     {
         $user = Auth::user();
 
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'errors' => [
+                    'password' => ['Current password doesn\'t match.']
+                ]
+            ]);
+        }
+
         $request->validate([
-            'password' => 'required|string|same:password',
             'new_password' => 'required|string|min:6|confirmed'
         ]);
 
-        $user->password = $request->input('new_password');
+        $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
         return response(200);
