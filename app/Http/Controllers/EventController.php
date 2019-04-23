@@ -95,13 +95,13 @@ class EventController extends Controller
         $questions = $event->questions()->get();
 
         return view('pages.event', 
-            ['event' => $event,
+            [ 'title' => $event->name,
+            'event' => $event,
             'owner' => $owner,
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=>$questions]);  
-            
+            'questions'=> $questions]);  
         }
 
     /**
