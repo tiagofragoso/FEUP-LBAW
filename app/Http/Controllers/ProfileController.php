@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -58,24 +59,66 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        if (!Auth::check()) return redirect('/login');
+
+        return view('pages.settings', ['user' => Auth::user()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if (!Auth::check()) return redirect('/login');
+
+        $user = Auth::user();
+
+        $request->validate([
+            'name' => 'nullable|string|max:30',
+            'email' => 'required|unique:users,email,'.$user->id.'|email|max:255',
+            'username' => 'required|string|unique:users,username,'.$user->id.'|max:15',
+            'birthdate' => 'nullable|date'
+        ]);
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->username = strtolower($request->input('username'));
+        $user->birthdate = $request->input('birthdate');
+        $user->save();
+
+        return response(200);
+    }
+
+    public function updatePassword(Request $request) {
+
+        if (!Auth::check()) return redirect('/login');
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'errors' => [
+                    'password' => ['Current password doesn\'t match.']
+                ]
+            ]);
+        }
+
+        $request->validate([
+            'new_password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        return response(200);
+
     }
 
     /**
