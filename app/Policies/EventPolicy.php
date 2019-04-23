@@ -20,7 +20,7 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        return $event->private == false;
+        return true;
     }
 
     /**
