@@ -95,17 +95,17 @@ class EventController extends Controller
         $hosts = $allHosts['Host'];
         $artists = $event->artists()->take(6);
         $posts = $event->posts()->get();
-        $questions = $event->questions();
-       // return $date;
-
-        
+        $questions = $event->questions()->get();
+        $currencies = Currency::all();
+        $locale = App::getLocale();
+        $event->currency = $event->currency()->get()->first();
+        $event->currency->symbol = $event->currency->getSymbol(App::getLocale());
         //dd($posts); //-> Usar para testar o retorno
 
         // foreach ($posts as $post) {
         //     dd($post->comments()->get());
         
     //}
-        //dd($questions);
 
         return view('pages.event', 
             ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts,'questions'=>$questions]);  

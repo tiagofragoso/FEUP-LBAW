@@ -38,8 +38,12 @@ class Event extends Model
     }
 
     public function questions(){
-        $questions = $this->hasMany('App\Question','event_id')->get();
-        return $questions;
+        
+        return $this->hasMany('App\Question');
+    }
+
+    public function currency(){
+        return $this->hasOne('App\Currency','id','currency');
     }
 
 }
