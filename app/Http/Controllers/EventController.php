@@ -84,7 +84,7 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-        
+
         if ($event->private)
             $this->authorize('view', $event);
 

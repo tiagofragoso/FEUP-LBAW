@@ -12,9 +12,11 @@ class Currency extends Model
     protected $table = 'currencies';
 
     public function getSymbol() {
-        $locale = App::getLocale();
-        $fmt = new \NumberFormatter( $locale."@currency=$this->code", \NumberFormatter::CURRENCY );
-        return $fmt->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
+        return $this->code;
+        // Ask for access to this method
+        // $locale = App::getLocale();
+        // $fmt = new \NumberFormatter( $locale."@currency=$this->code", \NumberFormatter::CURRENCY );
+        // return $fmt->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
     }
 
 }
