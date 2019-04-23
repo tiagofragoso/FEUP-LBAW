@@ -43,7 +43,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        $canEdit = $event->hosts()->flatten();
+        $canEdit = $event->participatesAs(['Owner', 'Host'])->get();
         return $canEdit->contains($user);
     }
 

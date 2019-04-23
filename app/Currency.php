@@ -16,4 +16,5 @@ class Currency extends Model
         $fmt = new \NumberFormatter( $locale."@currency=$this->code", \NumberFormatter::CURRENCY );
         return $fmt->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
     }
+
 }
