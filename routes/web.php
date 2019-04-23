@@ -14,10 +14,6 @@
 Route::redirect('/', 'login');
 
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
-
 // Events
 Route::get('events/create', 'EventController@create');
 Route::post('events', 'EventController@store');

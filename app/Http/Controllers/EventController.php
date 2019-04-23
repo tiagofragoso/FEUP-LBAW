@@ -14,7 +14,7 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => 'show']);
+        $this->middleware('auth')->except(['show']);
     }
 
     public function validateEvent($data) {
@@ -84,8 +84,9 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-
-        $this->authorize('view', $event);
+        
+        if ($event->private)
+            $this->authorize('view', $event);
 
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
