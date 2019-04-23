@@ -115,7 +115,7 @@
 					<div class="row mb-3 justify-content-between">
 						<div class="col-12 col-md-8 order-1 order-md-0">
 							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="3" name="brief" placeholder="Brief description"
-								style="resize:none">{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
+								style="resize:none" required>{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
 							@if ($errors->has('brief'))
 								<span class="invalid-feedback">
 									{{ $errors->first('brief') }}
@@ -197,7 +197,7 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col-12">
-							<textarea rows="5" class="form-control" name="description"
+							<textarea rows="5" class="form-control" name="description" required
 								placeholder="Comprehensive event description">{{ old('description', !empty($event->description)? $event->description : '') }}</textarea>
 						</div>
 					</div>
