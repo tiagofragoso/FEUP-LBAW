@@ -57,7 +57,11 @@ class UserController extends Controller
             abort(404); 
         }
 
-        $data = $user->events();
+
+        $data['joined'] = $user->events('Participant')->get();
+        $data['performing'] = $user->events('Artist')->get();
+        $data['hosting'] = $user->events('Host')->get()->merge($user->events('Owner')->get());
+
         $data['user'] = $user;
 
         if (Auth::check()) {

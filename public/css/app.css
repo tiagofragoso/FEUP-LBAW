@@ -149,7 +149,7 @@ nav {
     }
 }
 
-input:focus {
+input:focus, textarea:focus {
     color: var(--blue) !important;
     border-color: var(--green) !important;
     outline: none !important;

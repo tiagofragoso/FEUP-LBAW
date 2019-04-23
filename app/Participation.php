@@ -2,16 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Participation extends Model
+class Participation extends Pivot
 {
 
     public $table = 'participations';
 
-    public function event() {
-        return $this->belongsTo('App\Event');
-    }
+
 }
 
 
