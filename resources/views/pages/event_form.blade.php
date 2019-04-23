@@ -39,7 +39,7 @@
 									placeholder="Category" aria-label="category" required>
 									<option {{ !empty(old('category', !empty($event->category)? $event->category : '')) ? '' : 'selected' }} disabled value="">Category</option>
 									@foreach ($categories as $cat)
-										<option value="{{ $cat->id }}" {{ (old('category')) == $cat->id ? 'selected' : '' }}>
+										<option value="{{ $cat->id }}" {{ (old('category', !empty($event->category)? $event->category : '')) == $cat->id ? 'selected' : '' }}>
 											{{ $cat->name }}
 										</option>
 									@endforeach
@@ -100,9 +100,9 @@
 								</div>
 								<select name="type" class="custom-select border-blue {{$errors->has('type')? 'is-invalid' : '' }}" id="type" required>
 									<option {{ !empty(old('type', !empty($event->type)? $event->type : '')) ? '' : 'selected' }} disabled value="">Performance type</option>
-									<option value="Concert" {{ (old('type') == 'Concert')? 'selected' : ''}}>Concert</option>
-									<option value="Festival" {{ (old('type') == 'Festival')? 'selected' : ''}}>Festival</option>
-									<option value="Liveset" {{ (old('type') == 'Liveset')? 'selected' : ''}}>Liveset</option>
+									<option value="Concert" {{ (old('type', !empty($event->type)? $event->type : '') == 'Concert')? 'selected' : ''}}>Concert</option>
+									<option value="Festival" {{ (old('type', !empty($event->type)? $event->type : '') == 'Festival')? 'selected' : ''}}>Festival</option>
+									<option value="Liveset" {{ (old('type', !empty($event->type)? $event->type : '') == 'Liveset')? 'selected' : ''}}>Liveset</option>
 								</select>
 								@if ($errors->has('type'))
 									<span class="invalid-feedback">
@@ -199,6 +199,11 @@
 						<div class="col-12">
 							<textarea rows="5" class="form-control" name="description" required
 								placeholder="Comprehensive event description">{{ old('description', !empty($event->description)? $event->description : '') }}</textarea>
+							@if ($errors->has('description'))
+								<span class="invalid-feedback">
+									{{ $errors->first('description') }}
+								</span>
+							@endif
 						</div>
 					</div>
 					<div class="row mb-3">
