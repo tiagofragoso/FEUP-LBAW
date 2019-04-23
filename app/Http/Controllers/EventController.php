@@ -96,6 +96,7 @@ class EventController extends Controller
         $artists = $event->artists()->take(6);
         $posts = $event->posts()->get();
         $questions = $event->questions();
+       // return $date;
 
         
         //dd($posts); //-> Usar para testar o retorno

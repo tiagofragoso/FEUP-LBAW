@@ -44,7 +44,7 @@
 						<hr>
 						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
-								<p class="card-subtitle text-muted"><span>{{ $event->start_date}}</span> - <span>{{ $event->end_date}}</span></p>
+								<p class="card-subtitle text-muted"><span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y')}}</span> - <span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('D, d M Y')}}</span></p>
 							</div>
 							<div class="col-3">
 								<p class="card-subtitle text-muted text-right">{{$event->participants}} <i class="mr-1 fas fa-users"></i></p>
