@@ -50,6 +50,4 @@ Route::get('profile', 'ProfileController@show');
 Route::get('users/{id}', 'UserController@show');
 //About
 
-Route::get('about', function () {
-    return view('pages.about');
-});
+Route::view('about', 'pages.about');
