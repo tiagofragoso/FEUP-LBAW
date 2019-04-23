@@ -26,19 +26,16 @@ Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
 
 // Auth
-
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-
 //Profile
-
 Route::get('profile', 'ProfileController@showProfile');
 Route::get('users/{id}', 'ProfileController@show');
 Route::get('settings', 'ProfileController@edit');
-//About
 
+//About
 Route::view('about', 'pages.about');
