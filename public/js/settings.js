@@ -13,13 +13,13 @@ function createErrors(errors, container) {
     });
 }
 
-async function request(url, request, handler) {
+async function request(url, request) {
     const response = await fetch(url, request);
     const data = await response.json();
-    handler(data);
+    return data;
 }
 
-document.getElementById('profile-submit').addEventListener('click', () => {
+document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors(['name-errors', 'email-errors', 'username-errors', 'birthdate-errors']);
 
     let requestBody = {
@@ -29,7 +29,7 @@ document.getElementById('profile-submit').addEventListener('click', () => {
         birthdate: document.getElementById('dateofbirthInput').value
     }
 
-    request(
+    const response = await request(
         '/api/profile',
         {
             method: 'PUT',
@@ -39,23 +39,22 @@ document.getElementById('profile-submit').addEventListener('click', () => {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(requestBody)
-        },
-        response => {
-            if (response.errors) {
-                if (response.errors.name) createErrors(response.errors.name, 'name-errors');
-                if (response.errors.email) createErrors(response.errors.email, 'email-errors');
-                if (response.errors.username) createErrors(response.errors.username, 'username-errors');
-                if (response.errors.birthdate) createErrors(response.errors.birthdate, 'birthdate-errors');
-                return;
-            }
-
-            document.querySelector('.user-name').textContent = requestBody.name;
-            document.querySelector('.username').textContent = requestBody.username;
         }
     );
+
+    if (response.errors) {
+        if (response.errors.name) createErrors(response.errors.name, 'name-errors');
+        if (response.errors.email) createErrors(response.errors.email, 'email-errors');
+        if (response.errors.username) createErrors(response.errors.username, 'username-errors');
+        if (response.errors.birthdate) createErrors(response.errors.birthdate, 'birthdate-errors');
+        return;
+    }
+
+    document.querySelector('.user-name').textContent = requestBody.name;
+    document.querySelector('.username').textContent = requestBody.username;
 });
 
-document.getElementById('password-submit').addEventListener('click', () => {
+document.getElementById('password-submit').addEventListener('click', async () => {
     clearErrors(['password-errors', 'new-password-errors']);
 
     let requestBody = {
@@ -64,7 +63,7 @@ document.getElementById('password-submit').addEventListener('click', () => {
         new_password_confirmation: document.getElementById('repeatpasswordInput').value
     }
 
-    request(
+    const response = await request(
         '/api/profile/password',
         {
             method: 'PUT',
@@ -74,17 +73,16 @@ document.getElementById('password-submit').addEventListener('click', () => {
                 'Accept': 'application/json'
             },
             body: JSON.stringify(requestBody)
-        },
-        response => {
-            if (response.errors) {
-                if (response.errors.password) createErrors(response.errors.password, 'password-errors');
-                if (response.errors.new_password) createErrors(response.errors.new_password, 'new-password-errors');
-                return;
-            }
-
-            document.getElementById('passwordInput').value = "";
-            document.getElementById('newpasswordInput').value = "";
-            document.getElementById('repeatpasswordInput').value = "";
         }
     );
+
+    if (response.errors) {
+        if (response.errors.password) createErrors(response.errors.password, 'password-errors');
+        if (response.errors.new_password) createErrors(response.errors.new_password, 'new-password-errors');
+        return;
+    }
+
+    document.getElementById('passwordInput').value = "";
+    document.getElementById('newpasswordInput').value = "";
+    document.getElementById('repeatpasswordInput').value = "";
 });
