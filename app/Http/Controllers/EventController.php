@@ -9,7 +9,6 @@ use App\Participation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -17,6 +16,23 @@ class EventController extends Controller
     {
         $this->middleware('auth', ['except' => 'show']);
     }
+
+    public function validateEvent($data) {
+        return Validator::make($data->all(), [
+            'title' => 'required|string|max:60',
+            'location' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'brief' => 'nullable|string|max:140',
+            'category' => 'required',
+            'type' => 'required',
+            'private' => 'required',
+            'status' => 'required',
+            'price' => 'nullable|numeric|min:0',
+            'start_date' => 'nullable|date|after:now'
+        ])->validate();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -50,18 +66,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        Validator::make($request->all(), [
-            'title' => 'required|string|max:60',
-            'location' => 'nullable|string|max:50',
-            'address' => 'nullable|string|max:100',
-            'brief' => 'nullable|string|max:140',
-            'category' => 'required',
-            'type' => 'required',
-            'private' => 'required',
-            'status' => 'required',
-            'price' => 'nullable|numeric|min:0',
-            'start_date' => 'nullable|date|after:now'
-        ])->validate();
+        $this->validateEvent($request);
 
         $event = Event::create($request->except('photo'));
 
@@ -121,9 +126,13 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $this->authorize('update', $event);
+        $this->validateEvent($request);
+        $event->update($request->except(['photo']));
+        return $this->show($id);
     }
 
     /**

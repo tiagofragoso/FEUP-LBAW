@@ -24,6 +24,7 @@ Route::get('events/create', 'EventController@create');
 Route::post('events', 'EventController@store');
 Route::get('events/{id}', 'EventController@show');
 Route::get('events/{id}/edit', 'EventController@edit');
+Route::put('events/{id}', 'EventController@update');
 
 // API
 Route::put('api/cards', 'CardController@create');
