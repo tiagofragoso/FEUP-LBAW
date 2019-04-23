@@ -231,7 +231,7 @@ input:focus, textarea:focus {
     color: var(--darkblue);
 }
 
-form input + span.error {
+.error {
 	padding-left: 0.8em;
 	font-size: 0.8em;
 	color: var(--orange);
