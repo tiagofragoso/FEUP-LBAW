@@ -149,7 +149,7 @@ nav {
     }
 }
 
-input:focus {
+input:focus, textarea:focus {
     color: var(--blue) !important;
     border-color: var(--green) !important;
     outline: none !important;
@@ -231,7 +231,7 @@ input:focus {
     color: var(--darkblue);
 }
 
-form input + span.error {
+.error {
 	padding-left: 0.8em;
 	font-size: 0.8em;
 	color: var(--orange);

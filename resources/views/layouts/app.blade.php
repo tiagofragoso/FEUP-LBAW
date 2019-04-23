@@ -12,6 +12,7 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Styles -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('libs/bootstrap/bootstrap.min.css') }}">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
@@ -38,7 +39,6 @@
   @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
   @include('partials.footer')
   @endunless
-
 </body>
 
 </html>
