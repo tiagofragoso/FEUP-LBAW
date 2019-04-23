@@ -36,6 +36,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Event', 'participations')->withPivot('type')->wherePivotIn('type', $type);
     }
 
+    public function displayName() {
+        return (empty($this->name)? '@'.$this->username : $this->name);
+    }
+
     public function event($id) {
         return $this->belongsToMany('App\Event', 'participations')->wherePivot('event_id', $id);
     }

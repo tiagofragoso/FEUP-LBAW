@@ -18,11 +18,42 @@ class Event extends Model
         'participants', 'banned', 'search'
     ];
 
-    public function users() {
-        return $this->belongsToMany('App\User', 'participations')->withPivot('type');
+    // public function participations() {
+    //     return $this->hasMany('App\Participation', 'event_id');
+    // }
+
+    // public function hosts() {
+    //     return $this->participations()->get()->whereIn('type', ['Host', 'Owner'])
+    //         ->mapToGroups(function($part) {
+    //             return [$part['type'] => $part->user()->first()];
+    //         });
+    // }
+
+    // public function artists() {
+    //     return $this->participations()->get()->where('type', 'Artist')->map(function($part) { return $part->user()->first(); });
+    // }
+
+    public function posts(){
+        return $this->hasMany('App\Post');
     }
 
-    public function user($id) {
-        return $this->belongsToMany('App\User', 'participations')->wherePivot('user_id', $user);
+    public function participatesAs($type) {
+        if (!is_array($type))
+            $type = [$type];
+        return $this->belongsToMany('App\User', 'participations')->using('App\Participation')->wherePivotIn('type', $type);
     }
+
+    public function questions(){
+        
+        return $this->hasMany('App\Question');
+    }
+
+    public function currency(){
+        return $this->belongsTo('App\Currency', 'currency');
+    }
+
+    public function category() {
+        return $this->belongsTo('App\Category', 'category');
+    }
+
 }

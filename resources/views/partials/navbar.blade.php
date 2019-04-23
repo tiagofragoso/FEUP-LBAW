@@ -1,5 +1,5 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-navbar">
-        <a class="navbar-brand" href="{{ url('/') }}"><img src="../assets/logo-horizontal.svg" height="30" alt="logo" /></a>
+        <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('assets/logo-horizontal.svg')}}" height="30" alt="logo" /></a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="../assets/user.svg" class="rounded-circle border border-light" />
+                        <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-muted" href="{{ url('/profile') }}">My profile</a>
