@@ -107,7 +107,7 @@ class ProfileController extends Controller
                 'errors' => [
                     'password' => ['Current password doesn\'t match.']
                 ]
-            ]);
+            ], 422);
         }
 
         $request->validate([
