@@ -48,6 +48,9 @@ document.getElementById('profile-submit').addEventListener('click', () => {
                 if (response.errors.birthdate) createErrors(response.errors.birthdate, 'birthdate-errors');
                 return;
             }
+
+            document.querySelector('.user-name').textContent = requestBody.name;
+            document.querySelector('.username').textContent = requestBody.username;
         }
     );
 });
@@ -78,6 +81,10 @@ document.getElementById('password-submit').addEventListener('click', () => {
                 if (response.errors.new_password) createErrors(response.errors.new_password, 'new-password-errors');
                 return;
             }
+
+            document.getElementById('passwordInput').value = "";
+            document.getElementById('newpasswordInput').value = "";
+            document.getElementById('repeatpasswordInput').value = "";
         }
     );
 });

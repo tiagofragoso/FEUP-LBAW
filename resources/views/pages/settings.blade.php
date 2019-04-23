@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container-fluid my-0 my-sm-5">
+<div class="container-fluid my-0 my-sm-5 profile-container">
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">
@@ -18,33 +18,10 @@
                             <a class="dropdown-item" href="#">Delete account</a>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-6 mb-3 mt-3 text-center position-relative">
-                            <img src="../assets/user.svg" alt="..." class="rounded-circle border border-green"
-                                width="120" height="120">                                
-                        </div>
-                    </div>
-                    <div class="row justify-content-center position-relative">
-                        <div class="col-10 text-center">
-                        <h3 class="card-title user-name">{{ $user->name }}</h3>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mb-2">
-                        <div class="col-10 text-center">
-                            <p class="card-subtitle text-muted">@<span>{{ $user->username }}</span></p>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mb-4">
-                        <div class="col-4 text-right border-right pr-2">
-                            <p class="card-text">{{ $user->followers }} followers</p>
-                        </div>
-                        <div class="col-4 text-left pl-0 ml-2">
-                            <p class="card-text">{{ $user->following }} following</p>
-                        </div>
-                    </div>
+                    @include('partials.profile_header', ['user' => $user])
                     <div class="row justify-content-center mb-3">
                         <div class="col text-center">
-                            <a href="profile.html" class="card-link border-bottom">View profile</a>
+                            <a href="/profile" class="card-link border-bottom">View profile</a>
                         </div>
                     </div>
                 </div>
