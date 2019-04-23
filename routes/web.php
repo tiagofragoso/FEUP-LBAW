@@ -23,6 +23,8 @@ Route::get('cards/{id}', 'CardController@show');
 Route::get('events/create', 'EventController@create');
 Route::post('events', 'EventController@store');
 Route::get('events/{id}', 'EventController@show');
+Route::get('events/{id}/edit', 'EventController@edit');
+Route::put('events/{id}', 'EventController@update');
 
 // API
 Route::put('api/cards', 'CardController@create');
@@ -43,6 +45,7 @@ Route::post('register', 'Auth\RegisterController@register');
 //Profile
 
 Route::get('profile', 'ProfileController@show');
+Route::get('users/{id}', 'UserController@show');
 //About
 
 Route::get('about', function () {

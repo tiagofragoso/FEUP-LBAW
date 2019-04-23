@@ -43,7 +43,11 @@ class Event extends Model
     }
 
     public function currency(){
-        return $this->hasOne('App\Currency','id','currency');
+        return $this->belongsTo('App\Currency', 'currency');
+    }
+
+    public function category() {
+        return $this->belongsTo('App\Category', 'category');
     }
 
 }

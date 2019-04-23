@@ -5,11 +5,10 @@ use App;
 use App\Event;
 use App\Category;
 use App\Currency;
+use App\Participation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use App\Participation;
 
 class EventController extends Controller
 {
@@ -17,6 +16,23 @@ class EventController extends Controller
     {
         $this->middleware('auth', ['except' => 'show']);
     }
+
+    public function validateEvent($data) {
+        return Validator::make($data->all(), [
+            'title' => 'required|string|max:60',
+            'location' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'brief' => 'nullable|string|max:140',
+            'category' => 'required',
+            'type' => 'required',
+            'private' => 'required',
+            'status' => 'required',
+            'price' => 'nullable|numeric|min:0',
+            'start_date' => 'nullable|date|after:now'
+        ])->validate();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -36,17 +52,7 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $currencies = Currency::all();
-        $locale = App::getLocale();
-        foreach($currencies as $c) {
-            $c->symbol = $c->getSymbol($locale);
-        }
-
-        return view('pages.event_form', 
-            ['title' => 'Create event',
-            'categories' => Category::all(),
-            'currencies' => $currencies]
-        );
+        return view('pages.event_form', ['title' => 'Create event']);
 
     }
 
@@ -60,20 +66,11 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        Validator::make($request->all(), [
-            'title' => 'required|string|max:60',
-            'location' => 'nullable|string|max:50',
-            'address' => 'nullable|string|max:100',
-            'brief' => 'nullable|string|max:140',
-            'category' => 'required',
-            'type' => 'required',
-            'private' => 'required',
-            'status' => 'required',
-            'price' => 'nullable|numeric|min:0',
-            'start_date' => 'nullable|date|after:now'
-        ])->validate();
+        $this->validateEvent($request);
 
         $event = Event::create($request->except('photo'));
+
+        Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
 
         return $this->show($event->id);
     }
@@ -88,39 +85,36 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        //$this->authorize('view', [Auth::user(), $event]);
+        $this->authorize('view', $event);
 
         $allHosts = $event->hosts();
         $owner = $allHosts['Owner']->first();
-        $hosts = $allHosts['Host'];
+        $hosts = $allHosts->get('Host', collect());
         $artists = $event->artists()->take(6);
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
-        $currencies = Currency::all();
-        $locale = App::getLocale();
-        $event->currency = $event->currency()->get()->first();
-        $event->currency->symbol = $event->currency->getSymbol(App::getLocale());
-        //dd($posts); //-> Usar para testar o retorno
-
-        // foreach ($posts as $post) {
-        //     dd($post->comments()->get());
-        
-    //}
 
         return view('pages.event', 
-            ['event' => $event, 'owner' => $owner, 'hosts' => $hosts, 'artists' => $artists, 'posts' => $posts,'questions'=>$questions]);  
+            ['event' => $event,
+            'owner' => $owner,
+            'hosts' => $hosts,
+            'artists' => $artists,
+            'posts' => $posts,
+            'questions'=>$questions]);  
             
         }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Event  $event
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $this->authorize('update', $event);
+        return view('pages.event_form', ['title' => 'Edit event', 'event' => $event]);
     }
 
     /**
@@ -130,9 +124,13 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $this->authorize('update', $event);
+        $this->validateEvent($request);
+        $event->update($request->except(['photo']));
+        return $this->show($id);
     }
 
     /**

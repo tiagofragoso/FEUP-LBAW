@@ -46,4 +46,34 @@ class User extends Authenticatable
     public function displayName() {
         return (empty($this->name)? '@'.$this->username : $this->name);
     }
+
+    public function participation($event) {
+        return $this->hasOne('App\Participation')->where('event_id', $event);
+    }
+
+    public function eventsParticipation($events) {
+        foreach ($events as $key => $value) {
+            if ($this->participation($value->id)->get()->isEmpty())  {
+                $value['joined'] = false;
+            } else {
+                $value['joined'] = true;
+            }
+        }
+
+        return $events;
+    } 
+
+    public function events() {
+        $data['joined'] = $this->participations('Participant')->get();
+        $data['joined'] = $data['joined']->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $data['hosting']  = $this->participations('Host')->get();
+        $data['hosting'] = $data['hosting']->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $owner = $this->participations('Owner')->get();
+        $owner = $owner->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $data['hosting'] = $data['hosting']->merge($owner);
+        $data['performing']  = $this->participations('Artist')->get();
+        $data['performing'] = $data['performing']->map(function ($item, $key) { return $item->event()->get()[0]; });
+
+        return $data;
+    }
 }

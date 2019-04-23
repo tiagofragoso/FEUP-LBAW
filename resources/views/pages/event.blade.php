@@ -21,6 +21,7 @@
 						</div>
 						<button class="btn btn-light border-light position-absolute tag-button" type="button">
 							<i class="fas fa-tag mr-1"></i> 
+							{{ $event->category()->first()->name }}
 						</button>
 						<img class="d-block w-100" src="../assets/event-placeholder.png" alt="First slide">
 					</div>
@@ -44,7 +45,19 @@
 						<hr>
 						<div class="row mb-3 justify-content-between">
 							<div class="col-8">
-								<p class="card-subtitle text-muted"><span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y')}}</span> - <span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('D, d M Y')}}</span></p>
+								<p class="card-subtitle text-muted">
+									@if (!empty($event->start_date))
+										<span>
+											{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
+										</span>
+									@endif
+									@if (!empty($event->end_date))
+										- 
+										<span>
+											{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('D, d M Y') }}
+										</span>
+									@endif
+								</p>
 							</div>
 							<div class="col-3">
 								<p class="card-subtitle text-muted text-right">{{$event->participants}} <i class="mr-1 fas fa-users"></i></p>
@@ -56,7 +69,7 @@
 									<p class="mb-0">
                                     {{ $event->location}}
 									</p>
-									<a href="https://www.google.com/maps/search/R.+Nova+da+Alf%C3%A2ndega,+4050-430+Porto"
+									<a href="{{ 'https://www.google.com/maps/search/'.urlencode($event->address)}}"
 										target="_blank" class="mb-0 event-addr">
                                         {{ $event->address}}
 									</a>
@@ -75,7 +88,7 @@
 							<div class="col-4">
 								<p class="card-subtitle text-muted text-right">
                                     @if($event->private)
-                                    Private
+									Private
                                     @else Public
                                     @endif
                                 </p>
@@ -113,7 +126,10 @@
 							<div class="col-12 col-lg-3">
 								<button type="submit" class="btn btn-secondary w-100">
 									<i class="fas fa-ticket-alt mr-1"></i>
-									{{$event->price}} {{$event->currency->symbol}}
+									@if (!(empty($event->price)) && $event->price > 0)
+									{{$event->price}} {{$event->currency()->first()->getSymbol()}}
+									@else FREE 
+									@endif
 								</button>
 							</div>
 						</div>
@@ -127,20 +143,25 @@
 								<h5>Artists</h5>
 							</div>
 							<div class="col-4 text-right">
-								<a href="#" class="view-all">
-                                    View all
-								</a>
+								@unless(count($artists) == 0)
+									<a href="#" class="view-all">
+										View all
+									</a>
+								@endunless
 							</div>
 						</div>
 						<div class="row artists-wrapper">
-                            @foreach($artists as $artist)
-						<a href="{{ url('/users/'.$artist->id) }}"
-								class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-								<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light"
-									width="40" />
-								<span class="text-center">{{$artist->displayName()}}</span>
-							</a>
-                            @endforeach
+							@if (count($artists) > 0)
+								@foreach($artists as $artist)
+								<a href="{{ url('/users/'.$artist->id) }}"
+									class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+									<img src="{{asset('assets/user.svg')}}" class="rounded-circle rounded-circle border border-light"
+										width="40" />
+									<span class="text-center">{{$artist->displayName()}}</span>
+								</a>
+								@endforeach
+							@else <span class="col-10 mx-auto text-center">No artists confirmed yet.</span>
+							@endif
                           
 						</div>
 						<div class="row">
