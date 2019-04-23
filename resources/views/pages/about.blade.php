@@ -1,5 +1,7 @@
     @extends('layouts.app')
 
+    @section('title', 'About')
+
     @section('content')
     <dl mt-5>
         <div class="p-5">

@@ -935,3 +935,14 @@ opacity: 0.8;
 	opacity: 1;
 }
 
+/** error pages */
+
+.error-container {
+	width: 100vw;
+	height: calc(100vh - 117px);
+}
+
+.error-container > h1 {
+	font-size: 52px;
+}
+
