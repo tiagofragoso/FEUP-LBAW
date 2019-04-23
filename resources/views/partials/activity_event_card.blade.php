@@ -7,7 +7,7 @@
             <div class="d-flex align-items-center w-75">
                 <div class="container-fluid">
                     <div class="row align-items-center">
-                        <a href="event.html" class="col-12 event-link">
+                        <a href="{{ url('events/' . $event->id)}}" class="col-12 event-link">
                             <h5 class="event-title">
                                {{$event->title}}
                             </h5>
