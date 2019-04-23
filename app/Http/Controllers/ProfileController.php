@@ -11,14 +11,17 @@ class ProfileController extends Controller
     public function show() {
         if (!Auth::check()) return redirect('/login');
 
-        $events['joined'] = Auth::user()->participations('Participant')->get();
-        $events['joined'] = $events['joined']->map(function ($item, $key) { return $item->event()->get()[0]; });
-        $events['hosting']  = Auth::user()->participations('Host')->get();
-        $events['hosting'] = $events['hosting']->map(function ($item, $key) { return $item->event()->get()[0]; });
-        $events['performing']  = Auth::user()->participations('Artist')->get();
-        $events['performing'] = $events['performing']->map(function ($item, $key) { return $item->event()->get()[0]; });
+        $data = Auth::user()->events();
+        $data['user'] = Auth::user();
 
-        return view('pages.profile',  $events);
+        if (Auth::check()) {
+            $data['joined'] = Auth::user()->eventsParticipation($data['joined']);
+            $data['hosting'] = Auth::user()->eventsParticipation($data['hosting']);
+            $data['performing'] = Auth::user()->eventsParticipation($data['performing']);
+            
+        }
+    
+        return view('pages.profile',  $data);
     }
 
 }
