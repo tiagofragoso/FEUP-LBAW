@@ -3,6 +3,13 @@
 @section('title', $title)
 
 @section('content')
+	@unless(empty($errors))
+		@foreach($errors->all() as $error)
+		<div>
+		{{$error}}
+		</div>
+		@endforeach
+	@endunless
 <div id="content" class="container my-0 my-sm-5">
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
@@ -146,7 +153,7 @@
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
 							<div class="d-flex flex-row justify-content-between position-relative">
 								<input type="radio" id="step-1" name="status" value="Planning" style="display: none;" 
-									{{ (old('status', !empty($event->title)? $event->title : '') == 'Planning' || empty(old('status', !empty($event->title)? $event->title : '')))? 'checked' : ''}}>
+									{{ (old('status', !empty($event->status)? $event->status : '') == 'Planning' || empty(old('status', !empty($event->status)? $event->status : '')))? 'checked' : ''}}>
 								<div class="progress progress-1 position-absolute"></div>
 								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-1"
