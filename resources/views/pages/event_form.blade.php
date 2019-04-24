@@ -3,13 +3,6 @@
 @section('title', $title)
 
 @section('content')
-	@unless(empty($errors))
-		@foreach($errors->all() as $error)
-		<div>
-		{{$error}}
-		</div>
-		@endforeach
-	@endunless
 <div id="content" class="container my-0 my-sm-5">
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
