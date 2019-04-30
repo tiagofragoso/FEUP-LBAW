@@ -2,15 +2,14 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
     // Don't add create and update timestamps in database.
     public $timestamps  = false;
+
+    public $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -18,22 +17,43 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate'
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be visible for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
+    protected $visible = [
+        'name', 'username', 'email', 'birthdate', 'followers', 'following'
     ];
 
-    /**
-     * The cards this user owns.
-     */
-     public function cards() {
-      return $this->hasMany('App\Card');
+
+    public function events($type) {
+        if (!is_array($type))
+            $type = [$type];
+        return $this->belongsToMany('App\Event', 'participations')->withPivot('type')->wherePivotIn('type', $type);
     }
+
+    public function displayName() {
+        return (empty($this->name)? '@'.$this->username : $this->name);
+    }
+
+    public function event($id) {
+        return $this->belongsToMany('App\Event', 'participations')->wherePivot('event_id', $id);
+    }
+
+    public function eventsParticipation($events) {
+        foreach ($events as $key => $value) {
+            if ($this->event($value->id)->get()->isEmpty()) {
+                $value['joined'] = false;
+            } else {
+                $value['joined'] = true;
+            }
+        }
+
+        return $events;
+    } 
+
 }

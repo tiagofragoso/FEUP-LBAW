@@ -45,7 +45,8 @@ CREATE TABLE users (
     followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
     "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     banned boolean NOT NULL DEFAULT FALSE,
-    isAdmin boolean NOT NULL DEFAULT FALSE
+    remember_token text,
+    is_admin boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE currencies (
@@ -68,8 +69,8 @@ CREATE TABLE events (
     "address" varchar(100),
     participants integer NOT NULL DEFAULT 0 CONSTRAINT positive_participants CHECK (participants >= 0),
     price numeric DEFAULT 0 CONSTRAINT positive_price CHECK (price >= 0),
-    brief varchar(140),
-    "description" text,
+    brief varchar(140) NOT NULL,
+    "description" text NOT NULL,
     ticket_sale_start_date timestamp CONSTRAINT future_ticket_sale_date CHECK ("ticket_sale_start_date" > CURRENT_TIMESTAMP),
     banned boolean NOT NULL DEFAULT FALSE,
     "type" event_type NOT NULL,
@@ -598,10 +599,10 @@ CREATE INDEX invite_requests_idx ON invite_requests ("user_id", "status");
 
 -- Users
 
-INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Bryan Tremblay','btremblay','bTremblay@gmail.com','btremblayy', 'true');
-INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Salvador Tyler','styler','styler@gmail.com','stylerr', 'true');
-INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Salma Strong','sstrong','sstrong@gmail.com','sstrongg', 'true');
-INSERT INTO users ("name",username,email,"password", isAdmin) VALUES ('Soren Chase','schase','schase@gmail.com','schasee', 'true');
+INSERT INTO users ("name",username,email,"password", is_admin) VALUES ('Bryan Tremblay','btremblay','bTremblay@gmail.com','btremblayy', 'true');
+INSERT INTO users ("name",username,email,"password", is_admin) VALUES ('Salvador Tyler','styler','styler@gmail.com','stylerr', 'true');
+INSERT INTO users ("name",username,email,"password", is_admin) VALUES ('Salma Strong','sstrong','sstrong@gmail.com','sstrongg', 'true');
+INSERT INTO users ("name",username,email,"password", is_admin) VALUES ('Soren Chase','schase','schase@gmail.com','schasee', 'true');
 INSERT INTO users ("name",username,email,"password") VALUES ('Lola Cline','lcline','lcline@gmail.com','lclinee');
 INSERT INTO users ("name",username,email,"password") VALUES ('Leia Oconnor','loconnor','loconnor@gmail.com','loconnorr');
 INSERT INTO users ("name",username,email,"password") VALUES ('Evan Tran','etran','etran@gmail.com','etrann');

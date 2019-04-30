@@ -11,25 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
+Route::redirect('/', 'login');
 
-// Cards
-Route::get('cards', 'CardController@list');
-Route::get('cards/{id}', 'CardController@show');
+
+// Events
+Route::get('events/create', 'EventController@create');
+Route::post('events', 'EventController@store');
+Route::get('events/{id}', 'EventController@show');
+Route::get('events/{id}/edit', 'EventController@edit');
+Route::put('events/{id}', 'EventController@update');
 
 // API
-Route::put('api/cards', 'CardController@create');
-Route::delete('api/cards/{card_id}', 'CardController@delete');
-Route::put('api/cards/{card_id}/', 'ItemController@create');
-Route::post('api/item/{id}', 'ItemController@update');
-Route::delete('api/item/{id}', 'ItemController@delete');
+Route::put('api/profile', 'ProfileController@update');
+Route::put('api/profile/password', 'ProfileController@updatePassword');
 
-// Authentication
-
+// Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
+
+//Profile
+Route::get('profile', 'ProfileController@showProfile');
+Route::get('users/{id}', 'ProfileController@show');
+Route::get('settings', 'ProfileController@edit');
+
+//About
+Route::view('about', 'pages.about');
