@@ -237,6 +237,12 @@ input:focus, textarea:focus {
 	color: var(--orange);
 }
 
+.success {
+    padding-left: 0.8em;
+	font-size: 0.8em;
+	color: var(--green);
+}
+
 
 /* event card */
 

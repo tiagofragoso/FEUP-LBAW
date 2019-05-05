@@ -21,6 +21,7 @@ async function request(url, request) {
 
 document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors(['name-errors', 'email-errors', 'username-errors', 'birthdate-errors']);
+    document.getElementById('general-message').classList.add('d-none');
 
     let requestBody = {
         name: document.getElementById('nameInput').value,
@@ -50,12 +51,14 @@ document.getElementById('profile-submit').addEventListener('click', async () => 
         return;
     }
 
+    document.getElementById('general-message').classList.remove('d-none');
     document.querySelector('.user-name').textContent = requestBody.name;
     document.querySelector('.username').textContent = requestBody.username;
 });
 
 document.getElementById('password-submit').addEventListener('click', async () => {
     clearErrors(['password-errors', 'new-password-errors']);
+    document.getElementById('password-message').classList.add('d-none');
 
     let requestBody = {
         password: document.getElementById('passwordInput').value,
@@ -82,6 +85,7 @@ document.getElementById('password-submit').addEventListener('click', async () =>
         return;
     }
 
+    document.getElementById('password-message').classList.remove('d-none');
     document.getElementById('passwordInput').value = "";
     document.getElementById('newpasswordInput').value = "";
     document.getElementById('repeatpasswordInput').value = "";
