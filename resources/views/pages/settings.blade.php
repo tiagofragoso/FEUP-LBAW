@@ -31,25 +31,25 @@
                         <div class="form-group-name mb-3">
                             <label for="nameInput">Name</label>
                             <input type="email" class="form-control" id="nameInput" placeholder="John Smith" value="{{ $user->name }}">
-                            <span id="name-errors"></span>
+                            <span class="errors-container" id="name-errors"></span>
                         </div>
 
                         <div class="form-group-email mb-3">
                             <label for="emailInput">Email address</label>
                             <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" value="{{ $user->email }}">
-                            <span id="email-errors"></span>
+                            <span class="errors-container" id="email-errors"></span>
                         </div>
 
                         <div class="form-group-username mb-3">
                             <label for="emailInput">Username</label>
                             <input type="username" class="form-control" id="usernameInput" placeholder="username" value="{{ $user->username }}">
-                            <span id="username-errors"></span>
+                            <span class="errors-container" id="username-errors"></span>
                         </div>
 
                         <div class="form-group-date">
                             <label for="dateofbirthInput">Date of birth</label>
                             <input type="date" class="form-control" id="dateofbirthInput" placeholder="dd/mm/yyyy" value="{{ $user->birthdate }}">
-                            <span id="birthdate-errors"></span>
+                            <span class="errors-container" id="birthdate-errors"></span>
                         </div>
 
                         <div class="d-flex align-items-center mt-3">
@@ -65,13 +65,13 @@
                         <div>
                             <label for="passwordInput">Old password</label>
                             <input type="password" class="form-control" id="passwordInput" placeholder="Old password">
-                            <span id="password-errors"></span>
+                            <span class="errors-container" id="password-errors"></span>
                         </div>
 
                         <div class="mt-3">
                             <label for="newpasswordInput">New password</label>
                             <input type="password" class="form-control" id="newpasswordInput" placeholder="New password">
-                            <span id="new-password-errors"></span>
+                            <span class="errors-container" id="new-password-errors"></span>
                         </div>
 
                         <div class="mt-3">

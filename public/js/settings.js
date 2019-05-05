@@ -1,13 +1,17 @@
-function clearErrors(errors) {
-    errors.forEach(id => {
-        document.getElementById(id).innerHTML = "";
+function clearErrors(formId) {
+    let form = document.querySelector(formId);
+    form.querySelectorAll('.errors-container').forEach(errorContainer => {
+        errorContainer.innerHTML = "";
+    });
+    form.querySelectorAll('input').forEach(input => {
+        input.classList.remove('is-invalid');
     });
 }
 
 function createErrors(errors, container) {
     errors.forEach(element => {
         let error = document.createElement('div');
-        error.className = "error";
+        error.className = 'error';
         error.textContent = element;
         document.getElementById(container).appendChild(error);
     });
@@ -20,7 +24,7 @@ async function request(url, request) {
 }
 
 document.getElementById('profile-submit').addEventListener('click', async () => {
-    clearErrors(['name-errors', 'email-errors', 'username-errors', 'birthdate-errors']);
+    clearErrors('.form-group-general');
     document.getElementById('general-message').classList.add('d-none');
 
     let requestBody = {
@@ -44,10 +48,22 @@ document.getElementById('profile-submit').addEventListener('click', async () => 
     );
 
     if (response.errors) {
-        if (response.errors.name) createErrors(response.errors.name, 'name-errors');
-        if (response.errors.email) createErrors(response.errors.email, 'email-errors');
-        if (response.errors.username) createErrors(response.errors.username, 'username-errors');
-        if (response.errors.birthdate) createErrors(response.errors.birthdate, 'birthdate-errors');
+        if (response.errors.name) {
+            document.getElementById('nameInput').classList.add('is-invalid');
+            createErrors(response.errors.name, 'name-errors');
+        }
+        if (response.errors.email) {
+            document.getElementById('emailInput').classList.add('is-invalid');
+            createErrors(response.errors.email, 'email-errors');
+        }
+        if (response.errors.username) {
+            document.getElementById('usernameInput').classList.add('is-invalid');
+            createErrors(response.errors.username, 'username-errors');
+        }
+        if (response.errors.birthdate) {
+            document.getElementById('dateofbirthInput').classList.add('is-invalid');
+            createErrors(response.errors.birthdate, 'birthdate-errors');
+        }
         return;
     }
 
@@ -57,7 +73,7 @@ document.getElementById('profile-submit').addEventListener('click', async () => 
 });
 
 document.getElementById('password-submit').addEventListener('click', async () => {
-    clearErrors(['password-errors', 'new-password-errors']);
+    clearErrors('.form-group-pass');
     document.getElementById('password-message').classList.add('d-none');
 
     let requestBody = {
@@ -80,8 +96,14 @@ document.getElementById('password-submit').addEventListener('click', async () =>
     );
 
     if (response.errors) {
-        if (response.errors.password) createErrors(response.errors.password, 'password-errors');
-        if (response.errors.new_password) createErrors(response.errors.new_password, 'new-password-errors');
+        if (response.errors.password) {
+            document.getElementById('passwordInput').classList.add('is-invalid');
+            createErrors(response.errors.password, 'password-errors');
+        }
+        if (response.errors.new_password) {
+            document.getElementById('newpasswordInput').classList.add('is-invalid');
+            createErrors(response.errors.new_password, 'new-password-errors');
+        }
         return;
     }
 
