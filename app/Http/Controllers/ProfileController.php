@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -131,4 +132,17 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function updateFollowers($id){
+        if (!Auth::check()) return response(403);
+        $userId = Auth::user()->id;
+        $alreadyFollow = Follow::where('follower_id','=',$userId)->where('followed_id','=',$id)->get();
+        
+        if(sizeof($alreadyFollow) == 0){
+            //Follow::create(['follower_id' => $userId,'followed_id' => $id]);
+            //inserir
+        } 
+        
+        return response(sizeof($alreadyFollow));
+        }
 }

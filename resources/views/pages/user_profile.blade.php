@@ -9,7 +9,7 @@
                         @include('partials.profile_header', ['user' => $user])
                         <div class="row justify-content-center mb-4">
                             <div class="col-6 col-sm-3 text-center">                    
-                                <button class="btn btn-secondary w-100">Follow</button>
+                                <button class="btn btn-secondary w-100" id ="follow-button">Follow</button>
                             </div>
                         </div>
                     </div>
@@ -20,4 +20,6 @@
         </div>
     </div>
 </div>
+
+<script src="/js/user_profile.js"></script>
 @endsection

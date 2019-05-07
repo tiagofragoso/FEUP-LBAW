@@ -6,7 +6,7 @@
 </div>
 <div class="row justify-content-center position-relative">
     <div class="col-10 text-center">
-    <h3 class="card-title user-name">{{$user->name}}</h3>
+    <h3 class="card-title user-name" >{{$user->name}}</h3>
     </div>
 </div>
 <div class="row justify-content-center mb-2">
@@ -16,7 +16,7 @@
 </div>
 <div class="row justify-content-center mb-4">
     <div class="col-5 col-sm-4 text-right border-right pr-2">
-        <p class="card-text">{{$user->followers}} followers</p>
+        <p class="card-text" id="number-followers">{{$user->followers}} followers</p>
     </div>
     <div class="col-5 col-sm-4 text-left pl-0 ml-2">
         <p class="card-text">{{$user->following}} following</p>

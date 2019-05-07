@@ -24,6 +24,7 @@ Route::put('events/{id}', 'EventController@update');
 // API
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
+Route::put('api/users/{id}/follows','ProfileController@updateFollowers');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
