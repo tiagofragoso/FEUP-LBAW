@@ -52,8 +52,9 @@ class User extends Authenticatable
                 $value['joined'] = true;
             }
         }
-
         return $events;
-    } 
+    }
+    
+    
 
 }

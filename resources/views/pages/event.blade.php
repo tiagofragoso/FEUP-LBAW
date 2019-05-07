@@ -39,7 +39,12 @@
 							</p>
 							</div>
 							<div class="col-12 col-sm-3">
-								<button type="submit" class="btn btn-primary w-100">Join</button>
+								<button type="submit" class="btn btn-primary w-100" id ="join-button">
+								@if($joined == false) Join
+								@else Joined
+								@endif
+								
+								</button>
 							</div>
 						</div>
 						<hr>
@@ -60,7 +65,7 @@
 								</p>
 							</div>
 							<div class="col-3">
-								<p class="card-subtitle text-muted text-right">{{$event->participants}} <i class="mr-1 fas fa-users"></i></p>
+								<p class="card-subtitle text-muted text-right" id ="participants">{{$event->participants}} <i class="mr-1 fas fa-users"></i></p>
 							</div>
 						</div>
 						<div class="row mb-3 justify-content-between">
@@ -303,5 +308,5 @@
 			</div>
 		</div>
     </div>
-    
+    <script src="/js/event.js"></script>
     @endsection

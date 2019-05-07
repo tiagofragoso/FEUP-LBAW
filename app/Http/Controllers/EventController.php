@@ -85,6 +85,19 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
+        $joined = 'false';
+        if (Auth::check()){
+         $user = Auth::user();
+         $participants = $event->participatesAs('Participant')->where('user_id','=',$user->id)->get();
+        
+         if (sizeof($participants)==0){
+            $joined = 'false';  
+         }
+         else{
+            $joined = 'true';
+         }
+
+        }
 
         if ($event->private)
             $this->authorize('view', $event);
@@ -96,6 +109,7 @@ class EventController extends Controller
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
 
+       
         return view('pages.event', 
             [ 'title' => $event->name,
             'event' => $event,
@@ -103,7 +117,8 @@ class EventController extends Controller
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=> $questions]);  
+            'questions'=> $questions,
+            'joined'=> $joined]);  
         }
 
     /**
@@ -144,5 +159,22 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    public function joinEvent($id){
+        if (!Auth::check()) return response(403);
+        
+        $event = Event::findOrFail($id);
+        $user = Auth::user();
+        $participants = $event->participatesAs('Participant')->where('user_id','=',$user->id)->get();
+        if (sizeof($participants) == 0){
+            Participation::create(['event_id' => $event->id, 'user_id' => $user->id, 'type' => 'Participant']);
+            return response(200);
+        } else {
+            Participation::where(['event_id' => $event->id, 'user_id' => $user->id, 'type' => 'Participant'])->delete();
+            return response(0);
+        }
+       
+        
     }
 }
