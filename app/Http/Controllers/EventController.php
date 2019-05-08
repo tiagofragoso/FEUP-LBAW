@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App;
+
 use App\Event;
-use App\Category;
-use App\Currency;
 use App\Participation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -17,7 +16,8 @@ class EventController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validateEvent($data) {
+    public function validateEvent($data)
+    {
         return Validator::make($data->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
@@ -54,7 +54,6 @@ class EventController extends Controller
         $this->authorize('create', Event::class);
 
         return view('pages.event_form', ['title' => 'Create event']);
-
     }
 
     /**
@@ -69,7 +68,12 @@ class EventController extends Controller
 
         $this->validateEvent($request);
 
-        $event = Event::create($request->except('photo'));
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('events', 'public');
+            $event = Event::create(array_merge($request->except('photo'), ['photo' => $path]));
+        } else {
+            $event = Event::create($request->except('photo'));
+        }
 
         Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
 
@@ -92,19 +96,22 @@ class EventController extends Controller
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
         $artists = $event->participatesAs('Artist')->get()->take(6);
-        
+
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
 
-        return view('pages.event', 
-            [ 'title' => $event->name,
-            'event' => $event,
-            'owner' => $owner,
-            'hosts' => $hosts,
-            'artists' => $artists,
-            'posts' => $posts,
-            'questions'=> $questions]);  
-        }
+        return view(
+            'pages.event',
+            [
+                'event' => $event,
+                'owner' => $owner,
+                'hosts' => $hosts,
+                'artists' => $artists,
+                'posts' => $posts,
+                'questions' => $questions
+            ]
+        );
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -131,7 +138,20 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $this->authorize('update', $event);
         $this->validateEvent($request);
-        $event->update($request->except(['photo']));
+
+        if ($request->hasFile('photo')) {
+            try {
+                $old = Storage::disk('public')->get($event->photo);
+            } catch (Exception $e) {}
+            if (isset($old)) {
+                Storage::disk('public')->delete($event->photo);
+            }
+            $path = $request->file('photo')->store('events', 'public');
+            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+        } else {
+            $event = $event->update($request->except('photo'));
+        }
+
         return $this->show($id);
     }
 
