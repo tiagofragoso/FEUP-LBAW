@@ -40,7 +40,9 @@ if (button != null) {
                     }
                 }
             );
-            updateVisual(false);
+            if (response.ok) {
+                updateVisual(false);
+            }
         } else if (button.classList.contains('following')) {
             const response = await request(
                 url,
@@ -53,7 +55,9 @@ if (button != null) {
                     }
                 }
             );
-            updateVisual(true);
+            if (response.ok) {
+                updateVisual(true);
+            }
         }
     });
 
