@@ -1,25 +1,60 @@
 async function request(url, request) {
     const response = await fetch(url, request);
     const data = await response.json();
-    console.log(data);
     return data;
 }
-function getIDfromURL(){
-    return window.location.pathname.split('/')[2];
+
+let user_id = document.querySelector(".username").dataset.id;
+let followers = document.querySelector(".number-followers");
+
+let button = document.getElementById('follow-button');
+
+function updateVisual(follow) {
+    if (button != null) {
+        if (follow) {
+            button.classList.replace('following', 'follow');
+            button.textContent = 'Follow';
+            button.classList.replace('btn-outline-secondary', 'btn-secondary');
+            followers.textContent--;
+        } else {
+            button.classList.replace('follow', 'following');
+            button.textContent = 'Following';
+            button.classList.replace('btn-secondary', 'btn-outline-secondary');
+            followers.textContent++;
+        } 
+    }
 }
 
-
-document.getElementById('follow-button').addEventListener('click', async () => {
-    let url = '/api/users/'+ getIDfromURL()+'/follows';
-    const response = await request(
-        url,
-        {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json'
-            }
+if (button != null) {
+    button.addEventListener('click', async () => {
+        let url = '/api/users/'+ user_id + '/follows';
+        if (button.classList.contains('follow')) {
+            const response = await request(
+                url,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            updateVisual(false);
+        } else if (button.classList.contains('following')) {
+            const response = await request(
+                url,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            updateVisual(true);
         }
-    );
-});
+    });
+}
+

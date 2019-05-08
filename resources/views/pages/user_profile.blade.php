@@ -8,8 +8,12 @@
                     <div class="card-header">
                         @include('partials.profile_header', ['user' => $user])
                         <div class="row justify-content-center mb-4">
-                            <div class="col-6 col-sm-3 text-center">                    
-                                <button class="btn btn-secondary w-100" id ="follow-button">Follow</button>
+                            <div class="col-6 col-sm-3 text-center"> 
+                                @if ($follow)
+                                <button class="btn btn-outline-secondary w-100 following" id="follow-button">Following</button>    
+                                @else
+                                <button class="btn btn-secondary w-100 follow" id="follow-button">Follow</button>
+                                @endif                   
                             </div>
                         </div>
                     </div>

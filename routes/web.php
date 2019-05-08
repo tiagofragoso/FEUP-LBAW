@@ -26,6 +26,7 @@ Route::put('events/{id}', 'EventController@update');
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
+Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 
