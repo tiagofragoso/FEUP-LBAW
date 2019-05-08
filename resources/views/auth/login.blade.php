@@ -13,18 +13,18 @@
                 <form class="row mb-5 justify-content-center" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
                     <div class="col-12 col-md-10 form-group">
-                        <input name="email" type="email" class="form-control w-100" placeholder="email" value="{{ old('email') }}" required autofocus>
+                        <input name="email" type="email" class="form-control w-100 {{$errors->has('email')? 'is-invalid' : '' }}" placeholder="email" value="{{ old('email') }}" required autofocus>
                         @if ($errors->has('email'))
-                            <span class="error">
+                            <span class="invalid-feedback">
                                 {{ $errors->first('email') }}
                             </span>
                         @endif
                     </div>
                     
                     <div class="col-12 col-md-10 form-group">
-                        <input name="password" type="password" class="form-control w-100" placeholder="password" required>
+                        <input name="password" type="password" class="form-control w-100 {{$errors->has('password')? 'is-invalid' : '' }}" placeholder="password" required>
                         @if ($errors->has('password'))
-                            <span class="error">
+                            <span class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </span>
                         @endif
