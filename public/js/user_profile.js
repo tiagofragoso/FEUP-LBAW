@@ -9,7 +9,7 @@ let followers = document.querySelector(".number-followers");
 
 let button = document.getElementById('follow-button');
 
-function updateVisual(follow) {
+function updateVisualFollow(follow) {
     if (button != null) {
         if (follow) {
             button.classList.replace('following', 'follow');
@@ -40,8 +40,8 @@ if (button != null) {
                     }
                 }
             );
-            if (response.ok) {
-                updateVisual(false);
+            if (response === 200) {
+                updateVisualFollow(false);
             }
         } else if (button.classList.contains('following')) {
             const response = await request(
@@ -55,8 +55,8 @@ if (button != null) {
                     }
                 }
             );
-            if (response.ok) {
-                updateVisual(true);
+            if (response === 200) {
+                updateVisualFollow(true);
             }
         }
     });
@@ -66,7 +66,6 @@ if (button != null) {
             button.classList.replace('btn-outline-secondary', 'btn-danger');
             button.textContent = 'Unfollow';
         }
-        console.log("cenas")
     });
 
 

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('scripts')
+	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+@endsection
+
 @section('title', $event->title)
 
 @section('content')
@@ -39,12 +43,11 @@
 							</p>
 							</div>
 							<div class="col-12 col-sm-3">
-								<button type="submit" class="btn btn-primary w-100" id ="join-button">
-								@if($joined == false) Join
-								@else Joined
-								@endif
-								
-								</button>
+								@if($joined === false) 
+									<button type="submit" class="btn btn-primary w-100 join-btn join" data-id="{{$event->id}}"> Join </button>
+								@else 
+									<button type="submit" class="btn btn-outline-primary w-100 join-btn joined" data-id="{{$event->id}}"> Joined </button>
+								@endif						
 							</div>
 						</div>
 						<hr>
@@ -308,5 +311,4 @@
 			</div>
 		</div>
     </div>
-    <script src="/js/event.js"></script>
     @endsection

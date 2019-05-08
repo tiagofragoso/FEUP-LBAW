@@ -71,8 +71,8 @@ class EventController extends Controller
 
         $event = Event::create($request->except('photo'));
 
-        Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
-
+        Auth::user()->joinEvent($event->id, 'Owner');
+        
         return $this->show($event->id);
     }
 
@@ -85,18 +85,9 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-        $joined = 'false';
+        $joined = false;
         if (Auth::check()){
-         $user = Auth::user();
-         $participants = $event->participatesAs('Participant')->where('user_id','=',$user->id)->get();
-        
-         if (sizeof($participants)==0){
-            $joined = 'false';  
-         }
-         else{
-            $joined = 'true';
-         }
-
+            $joined = Auth::user()->hasParticipation($id, 'Participant');
         }
 
         if ($event->private)
