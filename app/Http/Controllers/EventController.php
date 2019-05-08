@@ -163,18 +163,22 @@ class EventController extends Controller
 
     public function joinEvent($id){
         if (!Auth::check()) return response(403);
+        if (Event::find($id) == null) return response(404);
         
-        $event = Event::findOrFail($id);
-        $user = Auth::user();
-        $participants = $event->participatesAs('Participant')->where('user_id','=',$user->id)->get();
-        if (sizeof($participants) == 0){
-            Participation::create(['event_id' => $event->id, 'user_id' => $user->id, 'type' => 'Participant']);
-            return response(200);
-        } else {
-            Participation::where(['event_id' => $event->id, 'user_id' => $user->id, 'type' => 'Participant'])->delete();
-            return response(0);
-        }
-       
-        
+        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
+
+        Auth::user()->joinEvent($id, 'Participant');
+        return response(200);
+    }
+
+    public function leaveEvent($id) {
+        if (!Auth::check()) return response(403);
+        if (Event::find($id) == null) return response(404);
+
+        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response(403);
+        if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
+
+        Auth::user()->leaveEvent($id, 'Participant');
+        return response(200);
     }
 }

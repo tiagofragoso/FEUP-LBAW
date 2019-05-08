@@ -70,6 +70,20 @@ class User extends Authenticatable
     public function hasFollow($user_id) {
         return $this->following()->wherePivot('followed_id', $user_id)->exists();
     }
+
+    public function joinEvent($event_id, $type) {
+        return $this->events($type)->attach($event_id, ['type' => $type]);
+    }
+
+    public function hasParticipation($event_id, $type) {
+        if (!is_array($type))
+            $type = [$type];
+        return $this->events($type)->wherePivot('event_id', $event_id)->wherePivotIn('type', $type)->exists();
+    }
+
+    public function leaveEvent($event_id, $type) {
+        return $this->events($type)->detach($event_id);
+    }
     
     
 
