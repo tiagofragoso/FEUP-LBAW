@@ -188,35 +188,35 @@ input:focus, textarea:focus {
 }
 
 /* about */
-.faq-wrapper {
-	background-color: #f9f9f9;
-  }
-  
-  .list-group-item {
-	background-color: inherit;
-  }
-  
-  .faq-wrapper a{
-	color: var(--blue);
-  }
-  .faq-wrapper a:hover{
-	color:var(--darkblue);
-  }
-  
-  #logo-card {
-	width: 18em;
-  }
-  
-  #faq-card {
-	width: 20em;
-  }
-  
-  .contact-title {
-	text-transform: uppercase;
-	}
-	
-	/* auth */
-	.formContent {
+.about-page .faq-wrapper {
+    background-color: #f9f9f9;
+}
+
+.about-page .list-group-item {
+    background-color: inherit;
+}
+
+.about-page .faq-wrapper a{
+    color: var(--blue);
+}
+.about-page .faq-wrapper a:hover{
+    color:var(--darkblue);
+}
+
+.about-page #logo-card {
+    width: 18em;
+}
+
+.about-page #faq-card {
+    width: 20em;
+}
+
+.about-page .contact-title {
+    text-transform: uppercase;
+}
+
+/* auth */
+.formContent {
     max-width: 500px;
     border-radius: 4px;
     border: 1px solid var(--grey);
