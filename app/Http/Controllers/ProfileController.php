@@ -133,16 +133,13 @@ class ProfileController extends Controller
         //
     }
 
-    public function updateFollowers($id){
+    public function followUser($id){
         if (!Auth::check()) return response(403);
-        $userId = Auth::user()->id;
-        $alreadyFollow = Follow::where('follower_id','=',$userId)->where('followed_id','=',$id)->get();
-        
-        if(sizeof($alreadyFollow) == 0){
-            //Follow::create(['follower_id' => $userId,'followed_id' => $id]);
-            //inserir
-        } 
-        
-        return response(sizeof($alreadyFollow));
-        }
+        if (User::find($id) == null) return reponse(404);
+
+        if (Auth::user()->following()->wherePivot('followed_id', $id)->exists()) return response(200);
+
+        Auth::user()->follow($id);
+        return response(200);
+    }
 }
