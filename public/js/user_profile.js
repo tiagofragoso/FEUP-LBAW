@@ -14,12 +14,12 @@ function updateVisual(follow) {
         if (follow) {
             button.classList.replace('following', 'follow');
             button.textContent = 'Follow';
-            button.classList.replace('btn-outline-secondary', 'btn-secondary');
+            button.classList.replace('btn-danger', 'btn-secondary');
             followers.textContent--;
         } else {
             button.classList.replace('follow', 'following');
-            button.textContent = 'Following';
-            button.classList.replace('btn-secondary', 'btn-outline-secondary');
+            button.textContent = 'Unfollow';
+            button.classList.replace('btn-secondary', 'btn-danger');
             followers.textContent++;
         } 
     }
@@ -56,5 +56,21 @@ if (button != null) {
             updateVisual(true);
         }
     });
+
+    button.addEventListener('mouseover', () => {
+        if (button.classList.contains('following')) {
+            button.classList.replace('btn-outline-secondary', 'btn-danger');
+            button.textContent = 'Unfollow';
+        }
+        console.log("cenas")
+    });
+
+
+    button.addEventListener('mouseout', () => {
+        if (button.classList.contains('following')) {
+            button.classList.replace('btn-danger', 'btn-outline-secondary');
+            button.textContent = 'Following';
+        }
+    })
 }
 
