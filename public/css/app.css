@@ -638,106 +638,106 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 /* profile */
 
-.profile-container {
+.profile-page .profile-container {
 	min-height: calc(100vh - 213px);
 }
 
 @media screen and (max-width: 576px) {
-	.profile-container {
+	.profile-page .profile-container {
 			min-height: calc(100vh - 131.23px);
 	}
 }
 
-.profile-container .card-subtitle::before {
+.profile-page .profile-container .card-subtitle::before {
 	content: '@';
 }
 
-.card-wrapper {
+.profile-page .card-wrapper {
 	max-width: 960px;
 }
 
-.card-link {
-color: var(--darkgrey);
+.profile-page .card-link {
+    color: var(--darkgrey);
 }
 
-.card-link:hover {
-color: var(--green);
+.profile-page .card-link:hover {
+    color: var(--green);
 }
 
-.card-title {
+.profile-page .card-title {
 	color: var(--blue);
 }
 
-.border-green {
+.profile-page .border-green {
 border: 3px solid var(--green)!important;
 }
 
-.card-fade {
+.profile-page .card-fade {
 	opacity: 0.3;
 }
 
-.mytickets > .row{
+.profile-page .mytickets > .row{
 	overflow-x: auto; 
-flex-wrap: nowrap;
+    flex-wrap: nowrap;
 }
 
-#profile-picture-btn {
+.profile-page #profile-picture-btn {
 	top: 5%;
 	right: 35%;
 }
 
-.icon-btn {
+.profile-page .icon-btn {
 	color: var(--darkgrey);
 }
 
-.icon-btn:hover {
-color: var(--blue);
-cursor: pointer;
+.profile-page .icon-btn:hover {
+    color: var(--blue);
+    cursor: pointer;
 }
 
-#name-btn {
-right: 25%;
-top: 20%;
+.profile-page #name-btn {
+    right: 25%;
+    top: 20%;
 }
 
-.author {
-font-weight: bold;
+.profile-page .author {
+    font-weight: bold;
 }
 
-.ban-btn, .diss-btn{
-color: var(--darkgrey);
+.profile-page .ban-btn, .diss-btn{
+    color: var(--darkgrey);
 }
 
-.ban-btn:hover {
-color: var(--orange);
-cursor: pointer;
+.profile-page .ban-btn:hover {
+    color: var(--orange);
+    cursor: pointer;
 }
 
-.diss-btn:hover {
-color: var(--green);
-cursor: pointer;
+.profile-page .diss-btn:hover {
+    color: var(--green);
+    cursor: pointer;
 }
 
-.dissed-btn {
-color: var(--green);
+.profile-page .dissed-btn {
+    color: var(--green);
 }
 
-.baned-btn {
-color: var(--orange);
+.profile-page .baned-btn {
+    color: var(--orange);
 }
 
-a:hover {
-text-decoration: none;
+.profile-page a:hover {
+    text-decoration: none;
 }
 
-.more-button {
-z-index: 1;
-right: 1rem;
-top: 1rem;
+.profile-page .more-button {
+    z-index: 1;
+    right: 1rem;
+    top: 1rem;
 }
 
-.more-button > .btn {
-opacity: 0.8;
+.profile-page .more-button > .btn {
+    opacity: 0.8;
 }
 
 /*search*/
