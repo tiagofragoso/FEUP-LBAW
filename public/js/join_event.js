@@ -10,11 +10,11 @@ function updateVisual(join) {
     if (join) {
         this.classList.replace('joined', 'join');
         this.textContent = 'Join';
-        this.classList.replace('btn-info', 'btn-primary');
+        this.classList.replace('btn-outline-primary', 'btn-primary');
     } else {
         this.classList.replace('join', 'joined');
-        this.textContent = 'Leave';
-        this.classList.replace('btn-primary', 'btn-info');
+        this.textContent = 'Joined';
+        this.classList.replace('btn-primary', 'btn-outline-primary');
     }
 }
 
@@ -55,19 +55,4 @@ buttons.forEach(button => {
             } 
         }
     });
-
-    button.addEventListener('mouseover', () => {
-        if (button.classList.contains('joined')) {
-            button.classList.replace('btn-outline-primary', 'btn-info');
-            button.textContent = 'Leave';
-        }
-    });
-
-
-    button.addEventListener('mouseout', () => {
-        if (button.classList.contains('joined')) {
-            button.classList.replace('btn-info', 'btn-outline-primary');
-            button.textContent = 'Joined';
-        }
-    })
 });

@@ -43,7 +43,7 @@
 							</p>
 							</div>
 							<div class="col-12 col-sm-3">
-								@if($joined === false) 
+								@if($joined === null) 
 									<button type="submit" class="btn btn-primary w-100 join-btn join" data-id="{{$event->id}}"> Join </button>
 								@else 
 									<button type="submit" class="btn btn-outline-primary w-100 join-btn joined" data-id="{{$event->id}}"> Joined </button>

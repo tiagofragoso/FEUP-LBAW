@@ -14,12 +14,12 @@ function updateVisualFollow(follow) {
         if (follow) {
             button.classList.replace('following', 'follow');
             button.textContent = 'Follow';
-            button.classList.replace('btn-danger', 'btn-secondary');
+            button.classList.replace('btn-oultine-secondary', 'btn-secondary');
             followers.textContent--;
         } else {
             button.classList.replace('follow', 'following');
-            button.textContent = 'Unfollow';
-            button.classList.replace('btn-secondary', 'btn-danger');
+            button.textContent = 'Following';
+            button.classList.replace('btn-secondary', 'btn-outline-secondary');
             followers.textContent++;
         } 
     }
@@ -60,20 +60,5 @@ if (button != null) {
             }
         }
     });
-
-    button.addEventListener('mouseover', () => {
-        if (button.classList.contains('following')) {
-            button.classList.replace('btn-outline-secondary', 'btn-danger');
-            button.textContent = 'Unfollow';
-        }
-    });
-
-
-    button.addEventListener('mouseout', () => {
-        if (button.classList.contains('following')) {
-            button.classList.replace('btn-danger', 'btn-outline-secondary');
-            button.textContent = 'Following';
-        }
-    })
 }
 

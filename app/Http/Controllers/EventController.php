@@ -85,9 +85,15 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
-        $joined = false;
+        $joined = null;
         if (Auth::check()){
-            $joined = Auth::user()->hasParticipation($id, ['Participant', 'Owner', 'Artist', 'Host']);
+            if (Auth::user()->hasParticipation($id, 'Participant')) {
+                $joined = 'Participant';
+            } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
+                $joined = 'Host';
+            } else if (Auth::user()->hasParticipation($id, 'Artist')) {
+                $joined = 'Artist';
+            }
         }
 
         if ($event->private)
