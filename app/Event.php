@@ -41,4 +41,8 @@ class Event extends Model
         return $this->belongsTo('App\Category', 'category');
     }
 
+    public function image() {
+        return !empty($this->photo)? asset('storage/'.$this->photo) : asset('assets/event-placeholder.png');
+    }
+
 }

@@ -23,7 +23,7 @@
 							<i class="fas fa-tag mr-1"></i> 
 							{{ $event->category()->first()->name }}
 						</button>
-						<img class="d-block w-100" src="{{ !empty($event->photo)? asset('storage/'.$event->photo) : asset('assets/event-placeholder.png')}}" alt="First slide">
+						<img class="d-block w-100" src="{{ $event->image() }}" alt="First slide">
 					</div>
 					<div class="container-fluid mt-3">
 						<div class="row justify-content-between">
