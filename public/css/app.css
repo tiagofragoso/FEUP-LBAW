@@ -384,15 +384,15 @@ a.badge-secondary:hover {
 
 
 /* event */
-.event-page #content {
+#content {
 	max-width: 960px!important;
 }
 
-.event-page .card {
+.card {
 	overflow: hidden;
 }
 
-.event-page .card-wrapper {
+.card-wrapper {
 	padding: 0;
 }
 
@@ -477,7 +477,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	opacity: 0.8;
 }
 
-.event-page .tag-button {
+.tag-button {
 	z-index: 1;
 	right: 1rem;
 	bottom: 1rem;
@@ -509,7 +509,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	color: var(--hoverblue);
 }
 
-.event-page .img-container {
+.img-container {
 	max-height: 360px;
 }
 
@@ -536,25 +536,25 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 /** event form **/
 
-.input-group-text {
+.event-form-page .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
 	color: white;
 	font-size: 1em;
 }
 
-.border-blue {
+.event-form-page .border-blue {
 	border-color: var(--blue);
 }
 
-.priceSelect .input-group-text{
+.event-form-page .priceSelect .input-group-text{
 	background-color: var(--green);
 	border-color: var(--green);
 	color: white;
 	font-size: 1em;
 }
 
-select.currency {
+.event-form-page select.currency {
 	/* background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px; */
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
@@ -562,12 +562,12 @@ select.currency {
 }
 
 
-input#priceSelect {
+.event-form-page input#priceSelect {
 	border-color: var(--green);
 	border-radius: 0;
 }
 
-input[type="datetime-local"].custom-select, input[type="number"].custom-select {
+.event-form-page input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	background: none;
 	padding-right: .75rem;
 }
