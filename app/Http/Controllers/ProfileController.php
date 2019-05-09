@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,7 @@ class ProfileController extends Controller
         }
 
         $data = $this->getEventsData($user);
+        $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
 
         return view('pages.user_profile', $data);
     }
@@ -130,5 +132,25 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function followUser($id){
+        if (!Auth::check()) return response(403);
+        if (User::find($id) == null) return reponse(404);
+
+        if (Auth::user()->hasFollow($id)) return response(200);
+
+        Auth::user()->follow($id);
+        return response(200);
+    }
+
+    public function unfollowUser($id){
+        if (!Auth::check()) return response(403);
+        if (User::find($id) == null) return reponse(404);
+
+        if (!Auth::user()->hasFollow($id)) return response(200);
+
+        Auth::user()->unfollow($id);
+        return response(200);
     }
 }

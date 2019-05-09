@@ -21,12 +21,12 @@
                         <div class="col-5 col-md-3 mt-4">
                             @if (isset($event->joined) && $event->joined)
                                <button type="button"
-                               class="btn btn-outline-primary joined-btn w-100">
+                               class="btn btn-outline-primary join-btn joined w-100" data-id="{{$event->id}}">
                                Joined
                            </button>
                             @else
                             <button type="button"
-                                class="btn btn-primary joined-btn w-100">
+                                class="btn btn-primary join-btn join w-100" data-id="{{$event->id}}">
                                 Join
                             </button>
                             @endif

@@ -650,6 +650,14 @@ font-size: 1rem;
 	content: '@';
 }
 
+.number-following::after {
+	content : ' following';
+}
+
+.number-followers::after {
+	content : ' followers';
+}
+
 .card-wrapper {
 	max-width: 960px;
 }

@@ -52,8 +52,39 @@ class User extends Authenticatable
                 $value['joined'] = true;
             }
         }
-
         return $events;
-    } 
+    }
+
+    public function following() {
+        return $this->belongsToMany('App\User', 'follows', 'follower_id', 'followed_id');
+    }
+
+    public function follow($user_id) {
+        return $this->following()->attach($user_id);
+    }
+
+    public function unfollow($user_id) {
+        return $this->following()->detach($user_id);
+    }
+
+    public function hasFollow($user_id) {
+        return $this->following()->wherePivot('followed_id', $user_id)->exists();
+    }
+
+    public function joinEvent($event_id, $type) {
+        return $this->events($type)->attach($event_id, ['type' => $type]);
+    }
+
+    public function hasParticipation($event_id, $type) {
+        if (!is_array($type))
+            $type = [$type];
+        return $this->events($type)->wherePivot('event_id', $event_id)->wherePivotIn('type', $type)->exists();
+    }
+
+    public function leaveEvent($event_id, $type) {
+        return $this->events($type)->detach($event_id);
+    }
+    
+    
 
 }
