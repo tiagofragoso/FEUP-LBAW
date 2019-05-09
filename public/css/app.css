@@ -652,11 +652,11 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	content: '@';
 }
 
-.number-following::after {
+.profile-page .number-following::after {
 	content : ' following';
 }
 
-.number-followers::after {
+.profile-page .number-followers::after {
 	content : ' followers';
 }
 
