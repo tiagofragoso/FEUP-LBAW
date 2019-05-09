@@ -45,6 +45,8 @@
 							<div class="col-12 col-sm-3">
 								@if($joined === null) 
 									<button type="submit" class="btn btn-primary w-100 join-btn join" data-id="{{$event->id}}"> Join </button>
+								@elseif($joined === 'Host')
+									<a href="{{ url('/events/' . $event->id . '/edit') }}" class="btn btn-info w-100"> Edit </a>
 								@else 
 									<button type="submit" class="btn btn-outline-primary w-100 join-btn joined" data-id="{{$event->id}}"> Joined </button>
 								@endif						
