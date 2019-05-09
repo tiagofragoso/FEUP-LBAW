@@ -384,15 +384,15 @@ a.badge-secondary:hover {
 
 
 /* event */
-#content {
+.event-page #content {
 	max-width: 960px!important;
 }
 
-.card {
+.event-page .card {
 	overflow: hidden;
 }
 
-.card-wrapper {
+.event-page .card-wrapper {
 	padding: 0;
 }
 
@@ -401,16 +401,17 @@ a.badge-secondary:hover {
 	font-size: 1rem;
 }
 
-.artists-wrapper {
+.event-page .artists-wrapper {
 	overflow-x: hidden; 
 	flex-wrap: nowrap;
 }
-.event-addr {
+
+.event-page .event-addr {
 	color: var(--hyperlinkblue);
 	font-size: 85%;
 }
 
-.event-addr:hover {
+.event-page .event-addr:hover {
 	color: var(--hoverblue);
 }
 
@@ -466,54 +467,53 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	background: linear-gradient(to right, var(--green) calc(100% - 1rem), var(--grey) calc(100% - 1rem) );
 }
 
-.more-button {
+.event-page .more-button {
 	z-index: 1;
 	right: 1rem;
 	top: 1rem;
 }
 
-.more-button > .btn {
+.event-page .more-button > .btn {
 	opacity: 0.8;
 }
 
-
-.tag-button {
+.event-page .tag-button {
 	z-index: 1;
 	right: 1rem;
 	bottom: 1rem;
 	opacity: 0.8;
 }
 
-.artists-wrapper a {
+.event-page .artists-wrapper a {
 	color: var(--blue);
 }
 
-.artists-wrapper a:hover {
+.event-page .artists-wrapper a:hover {
 	color: var(--darkblue);
 }
 
-.qa-question {
+.event-page .qa-question {
 	color: var(--darkblue);
 	white-space: normal;
 }
 
-.qa-question:hover {
+.event-page .qa-question:hover {
 	color: var(--hoverblue);
 }
 
-.view-all {
+.event-page .view-all {
 	color: var(--hyperlinkblue);
 }
 
-.view-all:hover {
+.event-page .view-all:hover {
 	color: var(--hoverblue);
 }
 
-.img-container {
+.event-page .img-container {
 	max-height: 360px;
 }
 
-.invite-btn {
+.event-page .invite-btn {
 	width: 40px;
 	height: 40px;
 	font-weight: bold;
@@ -521,16 +521,16 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	text-decoration: none;
 }
 
-.post-type input[type="radio"] + label {
+.event-page .post-type input[type="radio"] + label {
 	padding: 0.2em 0.3em;
 	border-radius: 4px;
 }
 
-.post-type input[type="radio"] + label:hover {
+.event-page .post-type input[type="radio"] + label:hover {
 	background-color: var(--grey);
 }
 
-.post-type input[type="radio"]:checked + label {
+.event-page .post-type input[type="radio"]:checked + label {
 	background-color: var(--grey);
 }
 
