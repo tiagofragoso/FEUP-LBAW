@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('container', 'profile-page')
+@section('scripts')
+	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+@endsection
 
 @section('content')
 <div class="container-fluid my-0 my-sm-5 profile-container">

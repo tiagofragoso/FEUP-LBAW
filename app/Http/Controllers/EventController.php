@@ -71,8 +71,8 @@ class EventController extends Controller
 
         $event = Event::create($request->except('photo'));
 
-        Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
-
+        Auth::user()->joinEvent($event->id, 'Owner');
+        
         return $this->show($event->id);
     }
 
@@ -85,6 +85,16 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::findOrFail($id);
+        $joined = null;
+        if (Auth::check()){
+            if (Auth::user()->hasParticipation($id, 'Participant')) {
+                $joined = 'Participant';
+            } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
+                $joined = 'Host';
+            } else if (Auth::user()->hasParticipation($id, 'Artist')) {
+                $joined = 'Artist';
+            }
+        }
 
         if ($event->private)
             $this->authorize('view', $event);
@@ -96,6 +106,7 @@ class EventController extends Controller
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
 
+       
         return view('pages.event', 
             [ 'title' => $event->name,
             'event' => $event,
@@ -103,7 +114,8 @@ class EventController extends Controller
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=> $questions]);  
+            'questions'=> $questions,
+            'joined'=> $joined]);  
         }
 
     /**
@@ -144,5 +156,26 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    public function joinEvent($id){
+        if (!Auth::check()) return response(403);
+        if (Event::find($id) == null) return response(404);
+        
+        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
+
+        Auth::user()->joinEvent($id, 'Participant');
+        return response(200);
+    }
+
+    public function leaveEvent($id) {
+        if (!Auth::check()) return response(403);
+        if (Event::find($id) == null) return response(404);
+
+        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response(403);
+        if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
+
+        Auth::user()->leaveEvent($id, 'Participant');
+        return response(200);
     }
 }

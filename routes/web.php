@@ -21,9 +21,15 @@ Route::get('events/{id}', 'EventController@show');
 Route::get('events/{id}/edit', 'EventController@edit');
 Route::put('events/{id}', 'EventController@update');
 
+
 // API
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
+Route::put('api/users/{id}/follows','ProfileController@followUser');
+Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
+
+Route::put('api/events/{id}/join','EventController@joinEvent');
+Route::delete('api/events/{id}/join','EventController@leaveEvent');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

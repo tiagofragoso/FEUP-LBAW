@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('scripts')
+	<script defer type="text/javascript" src="/js/settings.js"> </script>
+@endsection
+
 @section('title', 'Settings')
 @section('container', 'profile-page')
 
@@ -90,7 +94,5 @@
         </div>
     </div>
 </div>
-
-<script src="js/settings.js"></script>
 
 @endsection

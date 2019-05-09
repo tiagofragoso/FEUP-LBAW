@@ -15,27 +15,27 @@
                 <form class="row mb-5 justify-content-center" method="POST" action="{{ route('register') }}">
                 {{ csrf_field() }}
                     <div class="col-12 col-md-10 form-group">
-                        <input name="email" type="email" class="form-control w-100" value="{{ old('email') }}" placeholder="email" required autofocus>
+                        <input name="email" type="email" class="form-control w-100 {{$errors->has('email')? 'is-invalid' : '' }}" value="{{ old('email') }}" placeholder="email" required autofocus>
                         @if ($errors->has('email'))
-                          <span class="error">
+                          <span class="invalid-feedback">
                               {{ $errors->first('email') }}
                           </span>
                         @endif
                     </div>
 
                     <div class="col-12 col-md-10 form-group">
-                        <input name="username" type="text" class="form-control w-100" value="{{ old('username') }}" placeholder="username" required>
+                        <input name="username" type="text" class="form-control w-100 {{$errors->has('username')? 'is-invalid' : '' }}" value="{{ old('username') }}" placeholder="username" required>
                         @if ($errors->has('username'))
-                          <span class="error">
+                          <span class="invalid-feedback">
                               {{ $errors->first('username') }}
                           </span>
                         @endif
                     </div>
                     
                     <div class="col-12 col-md-10 form-group">
-                        <input name="password" type="password" class="form-control w-100" placeholder="password" required>
+                        <input name="password" type="password" class="form-control w-100 {{$errors->has('password')? 'is-invalid' : '' }}" placeholder="password" required>
                         @if ($errors->has('password'))
-                          <span class="error">
+                          <span class="invalid-feedback">
                               {{ $errors->first('password') }}
                           </span>
                         @endif

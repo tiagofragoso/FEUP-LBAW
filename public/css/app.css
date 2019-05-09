@@ -652,6 +652,14 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	content: '@';
 }
 
+.number-following::after {
+	content : ' following';
+}
+
+.number-followers::after {
+	content : ' followers';
+}
+
 .profile-page .card-wrapper {
 	max-width: 960px;
 }
