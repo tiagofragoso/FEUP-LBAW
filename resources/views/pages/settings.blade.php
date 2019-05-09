@@ -5,6 +5,7 @@
 @endsection
 
 @section('title', 'Settings')
+@section('container', 'profile-page')
 
 @section('content')
 

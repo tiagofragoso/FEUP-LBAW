@@ -31,15 +31,17 @@
 </head>
 
 <body>
-  @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
-  @include('partials.navbar')
-  @endunless
- 
-  @yield('content')
-
-  @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
-  @include('partials.footer')
-  @endunless
+    <div class="@yield('container')">
+        @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
+        @include('partials.navbar')
+        @endunless
+        
+        @yield('content')
+        
+        @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
+        @include('partials.footer')
+        @endunless
+    </div>
 </body>
 
 </html>

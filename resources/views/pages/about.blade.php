@@ -1,6 +1,7 @@
     @extends('layouts.app')
 
     @section('title', 'About')
+    @section('container', 'about-page')
 
     @section('content')
     <dl mt-5>
