@@ -153,7 +153,7 @@
 								<h5>Artists</h5>
 							</div>
 							<div class="col-4 text-right">
-								@unless(count($artists) == 0)
+								@unless(count($artists) === 0)
 									<a href="#" class="view-all">
 										View all
 									</a>
@@ -161,6 +161,14 @@
 							</div>
 						</div>
 						<div class="row artists-wrapper">
+							@if ($joined === 'Host')
+								<a href="#"
+									class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
+									<button class="btn btn-primary rounded-circle invite-btn"
+										width="40">+</button>
+									<span class="text-center">Invite</span>
+								</a>
+							@endif
 							@if (count($artists) > 0)
 								@foreach($artists as $artist)
 								<a href="{{ url('/users/'.$artist->id) }}"
@@ -170,7 +178,7 @@
 									<span class="text-center">{{$artist->displayName()}}</span>
 								</a>
 								@endforeach
-							@else <span class="col-10 mx-auto text-center">No artists confirmed yet.</span>
+							@elseif ($joined !== 'Host') <span class="col-10 mx-auto text-center">No artists confirmed yet.</span>
 							@endif
                           
 						</div>
@@ -209,61 +217,7 @@
 								</div>
 								<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
 									<div class="posts">
-                                        @foreach($posts as $post)
-										<div class="row justify-content-center">
-											<div class="card col-12 col-lg-9 mb-4 hover-shadow">
-												<div class="row">
-													<div class="col-12 col-md-10">
-														<div class="py-3 px-0 px-md-3 w-100">
-															<div class="row">
-																<div class="col-12 d-flex flex-row">
-																	<img src="../assets/user.svg"
-																		class="rounded-circle rounded-circle border border-light mr-2"
-																		width="30" height="30" />
-																	<div class="d-flex flex-column">
-																		<p class="card-text mb-0">
-																			<a href="{{ url('/users/'.$post->author->id) }}" class="badge badge-secondary">
-																				{{$post->author->username}}
-																			</a>
-																			created a
-																			<strong>post</strong>.
-																		</p>
-																		<span class="post-date text-muted">
-																		{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i')}}
-																		</span>
-																	</div>
-																</div>
-															</div>
-															<p class="card-text mt-3">
-																{{$post->content}}
-															</p>
-														</div>
-													</div>
-													<div
-														class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto">
-														<button type="button"
-															class="btn btn-light w-100 h-100 flex-grow-2">
-															<div
-																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-																<i class="far fa-thumbs-up"></i>
-																<span>{{$post->likes}}</span>
-															</div>
-														</button>
-														<button type="button" data-toggle="collapse"
-															data-target="#comments1" aria-expanded="false"
-															aria-controls="collapseExample"
-															class="side-button btn btn-light w-100 h-100 flex-grow-2">
-															<div
-																class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-																<i class="far fa-comment-alt"></i>
-																<span>{{$post->comments}}</span>
-															</div>
-														</button>
-													</div>
-												</div>
-											</div>
-                                        </div>
-                                        @endforeach
+                                        @each('partials.post', $posts, 'post')
 									</div>
 								</div>
 								<div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
