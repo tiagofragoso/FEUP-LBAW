@@ -47,4 +47,4 @@ Route::get('settings', 'ProfileController@edit');
 Route::view('about', 'pages.about');
 
 //Search
-Route::view('search', 'pages.search')->name('search');
+Route::get('search', 'SearchController@show')->name('search');
