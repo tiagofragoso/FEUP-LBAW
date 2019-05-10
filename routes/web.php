@@ -45,3 +45,6 @@ Route::get('settings', 'ProfileController@edit');
 
 //About
 Route::view('about', 'pages.about');
+
+//Search
+Route::view('search', 'pages.search')->name('search');
