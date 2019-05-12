@@ -11,7 +11,7 @@
 |
 */
 
-Route::redirect('/', 'login');
+Route::redirect('/', 'search');
 
 
 // Events

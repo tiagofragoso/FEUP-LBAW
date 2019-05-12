@@ -49,9 +49,9 @@
     </div>
 
     <div class="row">
-        @for ($i = 0; $i < 6; $i++)
-            @include('partials.event_card')
-        @endfor
+        @foreach ($events as $event)
+            @include('partials.event_card', ['event', $event])
+        @endforeach
     </div>
 </div>
 @endsection
