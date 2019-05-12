@@ -570,6 +570,10 @@ input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	padding-right: .75rem;
 }
 
+label[for="photo"].tag-button {
+	cursor: pointer;
+}
+
 /* home */
 
 .link {

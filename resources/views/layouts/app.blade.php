@@ -17,10 +17,12 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ asset('libs/cropper/cropper.min.css') }}">
   <script defer src="{{ asset('libs/jQuery/jquery-3.0.0.slim.min.js') }}"></script>
   <script defer src="{{ asset('libs/popper/popper.min.js') }}"></script>
   <script defer src="{{ asset('libs/bootstrap/bootstrap.min.js') }}"></script>
+  <script defer src="{{ asset('libs/cropper/cropper.min.js') }}"></script>
   <script type="text/javascript">
     // Fix for Firefox autofocus CSS bug
     // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
