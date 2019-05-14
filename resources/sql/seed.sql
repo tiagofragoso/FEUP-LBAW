@@ -806,14 +806,14 @@ INSERT INTO post_likes("user_id",post_id) VALUES (7,9);
 
 -- Comments
 
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('Contrary to popular belief, Lorem Ipsum is not simply random text.',1,10,NULL);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',1,12,1);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',5,12,NULL);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',8,15,NULL);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',8,17,4);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,6,NULL);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',7,8,6);
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',9,12,7);
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('Contrary to popular belief, Lorem Ipsum is not simply random text.',1,10,NULL); --1
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',1,12,1); --2
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',5,12,NULL); --3
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',8,15,NULL); --4
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',8,17,4); --5
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,6,NULL); --6
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,8,6); --7
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,12,7); --8
 
 -- Comment likes
 
