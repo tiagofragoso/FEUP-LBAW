@@ -813,7 +813,7 @@ INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in 
 INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',8,17,4); --5
 INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,6,NULL); --6
 INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,8,6); --7
-INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,12,7); --8
+INSERT INTO comments(content,post_id,"user_id",parent) VALUES ('It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',6,12,6); --8
 
 -- Comment likes
 
