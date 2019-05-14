@@ -16,4 +16,8 @@ class Comment extends Model
         return $this->hasMany('App\Comment', 'parent');
     }
 
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
 }
