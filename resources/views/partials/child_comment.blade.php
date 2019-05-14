@@ -16,7 +16,7 @@
             •
             <a href="#">More</a>
             •
-            <span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i')}}</span>
+            <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i')}}</span>
         </div>
     </div>
 </div>

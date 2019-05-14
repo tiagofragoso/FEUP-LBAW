@@ -25,6 +25,9 @@
                         <p class="card-text mt-3">
                             {{$post->content}}
                         </p>
+                        @if ($post->type == 'Poll')
+                        @include('partials.poll', $post->poll)
+                        @endif
                     </div>
                 </div>
                 <div

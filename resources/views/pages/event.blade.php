@@ -252,7 +252,6 @@
 														aria-expanded="false" aria-controls="collapseExample">
 														{{$question->content}}
 													</a>
-							
 												</li>
 												@endforeach
 											</ul>

@@ -22,4 +22,12 @@ class Post extends Model
         return $this->hasMany('App\Comment')->where('parent', NULL);
     }
 
+    public function poll() {
+        return $this->hasOne('App\Poll');
+    }
+
+    public function file() {
+        return $this->hasOne('App\File');
+    }
+
 }
