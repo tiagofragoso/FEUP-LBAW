@@ -104,6 +104,8 @@ class EventController extends Controller
         $artists = $event->participatesAs('Artist')->get()->take(6);
         
         $posts = $event->posts()->get();
+        $posts = $event->postComments($posts);
+        
         $questions = $event->questions()->get();
 
        

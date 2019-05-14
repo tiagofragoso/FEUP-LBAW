@@ -40,4 +40,17 @@ class Event extends Model
         return $this->belongsTo('App\Category', 'category');
     }
 
+    public function postComments($posts) {
+        foreach ($posts as $key => $value) {
+            $value['commentsContent'] = Post::find($value->id)->comments()->get();
+
+            foreach ($value['commentsContent'] as $key1 => $comment) {
+                $comment['comments'] = Comment::find($comment->id)->comments()->get();
+            }
+
+        }
+
+        return $posts;
+    }
+
 }
