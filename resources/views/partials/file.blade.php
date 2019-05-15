@@ -1,3 +1,5 @@
-<a href="#" lass="card-text mt-3 title-link">
+<a href="#" class="card-text mt-3 title-link">
+    <strong>
         {{ $post->file->file }}
-    </a>
+    </strong>
+</a>
