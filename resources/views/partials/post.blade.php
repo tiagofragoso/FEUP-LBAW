@@ -26,7 +26,11 @@
                             {{$post->content}}
                         </p>
                         @if ($post->type == 'Poll')
-                        @include('partials.poll', $post->poll)
+                            @include('partials.poll', $post->poll)
+                        @else
+                        @if ($post->type == 'File')
+                            @include('partials.file', $post->file)
+                        @endif
                         @endif
                     </div>
                 </div>

@@ -131,6 +131,16 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: var(--shadow);
 }
 
+.title-link {
+	color: var(--blue);
+	text-decoration: none;
+}
+
+.title-link:hover {
+	text-decoration: underline;
+	color: var(--darkblue);
+}
+
 nav .navbar-toggler {
     border-color: transparent !important;
 }
