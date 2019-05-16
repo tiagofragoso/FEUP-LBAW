@@ -8,16 +8,29 @@ use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
-        $events = Event::where([
-                ['private', 'false'],
-                ['banned', 'false'],
-                ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
-            ])
-            ->orderBy('participants', 'desc')
-            ->take(6)
-            ->get();
+        if ($request->has('search')) {
+            $events = Event::where([
+                    ['private', 'false'],
+                    ['banned', 'false'],
+                    ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
+                ])
+                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
+                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'))
+                ->take(6)
+                ->get();
+        }
+        else {
+            $events = Event::where([
+                    ['private', 'false'],
+                    ['banned', 'false'],
+                    ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
+                ])
+                ->orderBy('participants', 'desc')
+                ->take(6)
+                ->get();
+        }
 
         return view('pages.search', ['events' => $events]);
     }

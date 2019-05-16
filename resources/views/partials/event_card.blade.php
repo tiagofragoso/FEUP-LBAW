@@ -1,5 +1,5 @@
 <div class="col-12 col-md-6 col-lg-4">
-    <a href="event.html" class="event-card mb-5 hover-shadow link" tabindex="-1">
+    <a href="{{ url('events/'.$event->id) }}" class="event-card mb-5 hover-shadow link" tabindex="-1">
         <header class="w-100 position-relative event-header d-flex align-items-center">
             <img src="../assets/event-placeholder.png" class="w-100" alt="">
             <div class="position-absolute w-100 h-100 gradient-overlay"></div>

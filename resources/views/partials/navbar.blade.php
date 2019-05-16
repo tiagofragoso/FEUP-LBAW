@@ -6,10 +6,10 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline mr-auto d-none d-lg-block" method="POST" action="{{ url('/search') }}">
+            <form class="form-inline mr-auto d-none d-lg-block" method="GET" action="{{ url('/search') }}">
                 <div class="input-group mb-3 my-2 my-lg-0">
                     <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                        aria-describedby="button-addon2">
+                        aria-describedby="button-addon2" name="search">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
                     </div>
