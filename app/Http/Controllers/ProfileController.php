@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Follow;
+use App\EventReport;
+use App\UserReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,8 +40,23 @@ class ProfileController extends Controller
         if (!Auth::check()) return redirect('/login');
 
         $data = $this->getEventsData(Auth::user());
-
-        return view('pages.profile',  $data);
+        
+        if (Auth::user()->is_admin){
+            $pendingEventReports = EventReport::all()->where('status','Pending');
+            $pendingUserReports = UserReport::all()->where('status','Pending');
+            $acceptedEventReports = EventReport::all()->where('status','Accepted');
+            $acceptedUserReports = UserReport::all()->where('status','Pending');
+            $pendingReports['user'] = $pendingUserReports;
+            $pendingReports['event'] = $pendingEventReports;
+            $acceptedReports['user'] = $acceptedUserReports;
+            $acceptedReports['event'] = $acceptedEventReports;
+            $data['pendingReports'] = $pendingReports;
+            $data['acceptedReports'] = $acceptedReports;
+            $data['user'] = Auth::user();
+            return view('pages.admin_profile',$data);
+        }
+        else 
+            return view('pages.profile',  $data);
     }
 
     public function getEventsData($user) {
@@ -57,6 +74,7 @@ class ProfileController extends Controller
         
         return $data;
     }
+
 
     /**
      * Show the form for editing the specified resource.
