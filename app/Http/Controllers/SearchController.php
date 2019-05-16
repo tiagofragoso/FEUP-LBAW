@@ -17,9 +17,7 @@ class SearchController extends Controller
                     ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
                 ])
                 ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
-                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'))
-                ->take(6)
-                ->get();
+                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
         }
         else {
             $events = Event::where([
@@ -27,11 +25,10 @@ class SearchController extends Controller
                     ['banned', 'false'],
                     ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
                 ])
-                ->orderBy('participants', 'desc')
-                ->take(6)
-                ->get();
+                ->orderBy('participants', 'desc');
         }
 
+        $events = $events->take(6)->get();
         return view('pages.search', ['events' => $events]);
     }
 }
