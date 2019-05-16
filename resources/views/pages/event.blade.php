@@ -248,10 +248,15 @@
 												@foreach($questions as $question)
 												<li class="list-group-item">
 													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
-														data-toggle="collapse" href="#" role="button"
+													data-toggle="collapse" href="#" role="button" data-target="#question{{$question->id}}"
 														aria-expanded="false" aria-controls="collapseExample">
 														{{$question->content}}
 													</a>
+												<div class="collapse" id="question{{ $question->id }}">
+														<p class="text-muted">
+															{{$question->answer->content}}
+														</p>
+													</div>
 												</li>
 												@endforeach
 											</ul>

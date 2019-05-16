@@ -13,8 +13,16 @@
                                         <a href="{{ url('/users/'.$post->author->id) }}" class="badge badge-secondary">
                                             {{$post->author->displayName()}}
                                         </a>
-                                        created a
-                                        <strong>post</strong>.
+                                        @if ($post->type == 'Poll')
+                                            created a
+                                            <strong>poll</strong>.
+                                        @elseif ($post->type == 'File')
+                                            uploaded a
+                                            <strong>file</strong>.
+                                        @else 
+                                            created a
+                                            <strong>post</strong>.
+                                        @endif
                                     </p>
                                     <span class="post-date text-muted">
                                     {{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i')}}

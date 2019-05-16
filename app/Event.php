@@ -19,7 +19,7 @@ class Event extends Model
     ];
 
     public function posts(){
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post')->orderBy('date', 'desc');
     }
 
     public function participatesAs($type) {
