@@ -11,4 +11,11 @@ class UserReport extends Model
 
      protected $table = 'user_reports';
 
+     public function reportedUser(){
+        return $this->hasOne('App\User','id','reported_user');
+    }
+    public function user(){
+        return $this->hasMany('App\User','id','user_id');
+    }
+
 }

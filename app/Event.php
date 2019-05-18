@@ -41,4 +41,7 @@ class Event extends Model
         return $this->belongsTo('App\Category', 'category');
     }
 
+    public function reports(){
+        return $this->hasMany('App\EventReport');
+    }
 }

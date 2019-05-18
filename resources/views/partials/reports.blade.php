@@ -26,8 +26,9 @@
                     <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                         <div class="container">
                             <div class="row justify-content-center">
-                                @each('partials.reported_user_card', $pendingReports, 'event')
-
+                                @each('partials.reported_user_card', $pendingReports['user'], 'user') 
+                                @each('partials.reported_event_card',  $pendingReports['event'], 'event')
+                                
                                 @endif
                             </div>
                         </div>

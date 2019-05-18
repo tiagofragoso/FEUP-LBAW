@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-12">
-                <p class="mb-0"><strong>John Smith</strong> and <strong>3
+                <p class="mb-0"><strong>{{$event['user']->name}}</strong> and {{$event['numberReports']-1}} <strong> 
                         others</strong> reported an event.</p>
             </div>
         </div>
@@ -17,13 +17,13 @@
                     <div class="container-fluid">
                         <div class="row align-items-center">
                             <a href="event.html" class="col-12 event-link">
-                                <h5 class="event-title">NOS Primavera Sound</h5>
+                                <h5 class="event-title">{{$event['event']->title}}</h5>
                             </a>
 
                             <div class="col-7 col-md-9 mt-4">
-                                <div class="text-muted event-date">6 JUN 2019
+                                <div class="text-muted event-date">{{ \DateTime::createFromFormat('Y-m-d H:i:s',$event['event']->start_date)->format('d M Y') }}
                                 </div>
-                                <div class="text-muted event-location">Parque da Cidade, Porto
+                                <div class="text-muted event-location">{{$event['event']->location}}
                                 </div>
                             </div>
                         </div>

@@ -5,6 +5,7 @@ use App\User;
 use App\Follow;
 use App\EventReport;
 use App\UserReport;
+use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,16 +43,33 @@ class ProfileController extends Controller
         $data = $this->getEventsData(Auth::user());
         
         if (Auth::user()->is_admin){
-            $pendingEventReports = EventReport::all()->where('status','Pending');
-            $pendingUserReports = UserReport::all()->where('status','Pending');
-            $acceptedEventReports = EventReport::all()->where('status','Accepted');
-            $acceptedUserReports = UserReport::all()->where('status','Pending');
+            $pendingEventReports = EventReport::all()->where('status','Pending')->groupBy('event_id');
+            foreach($pendingEventReports as $eventReport){
+
+                $eventReport['numberReports'] = count($eventReport);
+                $eventReport['event'] = $eventReport->first()->event()->get()->first();
+                $eventReport['user'] =  $eventReport->first()->user()->get()->first();
+            }
+            $pendingUserReports = UserReport::all()->where('status','Pending')->groupBy('reported_user');
+
+            foreach($pendingUserReports as $userReport){
+                
+                $userReport['numberReports'] = count($userReport);
+                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
+                $userReport['user'] = $userReport->first()->user()->get()->first();
+               
+            }
+            
+            $acceptedEventReports = EventReport::all()->whereNotIn('status','Pending')->groupBy('event_id');
+            $acceptedUserReports = UserReport::all()->whereNotIn('status','Pending')->groupBy('reported_user');
+        
             $pendingReports['user'] = $pendingUserReports;
             $pendingReports['event'] = $pendingEventReports;
             $acceptedReports['user'] = $acceptedUserReports;
             $acceptedReports['event'] = $acceptedEventReports;
             $data['pendingReports'] = $pendingReports;
             $data['acceptedReports'] = $acceptedReports;
+
             $data['user'] = Auth::user();
             return view('pages.admin_profile',$data);
         }
@@ -73,6 +91,11 @@ class ProfileController extends Controller
         }
         
         return $data;
+    }
+
+    public function getEventsReports(){
+
+
     }
 
 

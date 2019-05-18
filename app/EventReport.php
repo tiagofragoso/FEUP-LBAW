@@ -11,5 +11,11 @@ class EventReport extends Model
 
      protected $table = 'event_reports';
  
-
+     public function event(){
+        return $this->hasOne('App\Event','id','event_id');
+    }
+    public function user(){
+        return $this->hasMany('App\User','id','user_id');
+    }
 }
+
