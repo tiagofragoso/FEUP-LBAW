@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body py-4">
-        <a href="profile.html" class="row col-12 align-items-center justify-content-center">
+        <a href="{{ url('users/' . $user['reportedUser']->id)}}" class="row col-12 align-items-center justify-content-center">
             <div class="col-1 mr-4">
                 <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light" width="40" />
             </div>
