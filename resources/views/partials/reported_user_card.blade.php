@@ -19,6 +19,7 @@
             </div>
         </a>
     </div>
+    @if($user['status'] == 'Pending')
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-right">
@@ -29,4 +30,13 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="card-footer">
+        <div class="row justify-content-center">
+            <div class="col-6 text-center">
+                <p class="my-0 baned-btn text-uppercase">{{$user['status']}}</p>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
