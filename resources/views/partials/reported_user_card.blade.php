@@ -34,7 +34,7 @@
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-center">
-                <p class="my-0 baned-btn text-uppercase">{{$user['status']}}</p>
+                <p class="my-0 {{ ($user['status'] == 'Declined')? 'baned-btn' : 'dissed-btn' }} text-uppercase">{{$user['status']}}</p>
             </div>
         </div>
     </div>
