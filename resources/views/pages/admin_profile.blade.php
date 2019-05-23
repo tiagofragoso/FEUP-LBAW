@@ -2,7 +2,7 @@
 
 @section('container', 'profile-page')
 @section('scripts')
-	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+    <script defer type="text/javascript" src="/js/admin.js"> </script>
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('partials.reports', ['events' => [$joined, $hosting, $performing, $user]])
+                    @include('partials.reports')
                 </div>
             </div>
         </div>

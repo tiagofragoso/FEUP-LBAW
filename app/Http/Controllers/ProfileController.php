@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\User;
-use App\Follow;
 use App\EventReport;
 use App\UserReport;
-use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -44,19 +42,20 @@ class ProfileController extends Controller
         
         if (Auth::user()->is_admin){
             $pendingEventReports = EventReport::all()->where('status','Pending')->groupBy('event_id');
-            foreach($pendingEventReports as $eventReport){
 
-                $eventReport['numberReports'] = count($eventReport);
+            foreach($pendingEventReports as $eventReport){
+                
+                $eventReport['reports'] = $eventReport->toArray();
                 $eventReport['status'] = $eventReport->first()->status;
-                $eventReport['event'] = $eventReport->first()->event()->get()->first();
-                $eventReport['user'] =  $eventReport->first()->user()->get()->first();
+                $eventReport['event'] = $eventReport->first()->first()->event()->get()->first();
+                $eventReport['user'] =  $eventReport->first()->first()->user()->get()->first();
             }
     
             $pendingUserReports = UserReport::all()->where('status','Pending')->groupBy('reported_user');
 
             foreach($pendingUserReports as $userReport){
-                
-                $userReport['numberReports'] = count($userReport);
+
+                $userReport['reports'] = $userReport->toArray();
                 $userReport['status'] = $userReport->first()->status;
                 $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
                 $userReport['user'] = $userReport->first()->user()->get()->first();
@@ -65,7 +64,7 @@ class ProfileController extends Controller
             $allEventReports = EventReport::all()->whereNotIn('status','Pending')->groupBy('event_id');
             foreach($allEventReports as $eventReport){
 
-                $eventReport['numberReports'] = count($eventReport);
+                $eventReport['reports'] = $eventReport->toArray();
                 $eventReport['status'] = $eventReport->first()->status;
                 $eventReport['event'] = $eventReport->first()->event()->get()->first();
                 $eventReport['user'] =  $eventReport->first()->user()->get()->first();
@@ -75,11 +74,10 @@ class ProfileController extends Controller
         
             foreach($allUserReports as $userReport){
                 
-                $userReport['numberReports'] = count($userReport);
+                $userReport['reports'] = $userReport->toArray();
                 $userReport['status'] = $userReport->first()->status;
                 $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
                 $userReport['user'] = $userReport->first()->user()->get()->first();
-               
             }
             $pendingReports['user'] = $pendingUserReports;
             $pendingReports['event'] = $pendingEventReports;
@@ -109,11 +107,6 @@ class ProfileController extends Controller
         }
         
         return $data;
-    }
-
-    public function getEventsReports(){
-
-
     }
 
 

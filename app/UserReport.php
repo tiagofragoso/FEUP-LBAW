@@ -10,6 +10,7 @@ class UserReport extends Model
         public $timestamps = false;
 
      protected $table = 'user_reports';
+     protected $fillable = ['status'];
 
      public function reportedUser(){
         return $this->hasOne('App\User','id','reported_user');

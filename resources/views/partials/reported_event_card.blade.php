@@ -1,8 +1,8 @@
-<div class="card col-12 col-lg-9 report-card px-0 mt-5">
+<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id ="{{json_encode($event['reports'])}}" >
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-12">
-                <p class="mb-0"><strong>{{$event['user']->name}}</strong> and {{$event['numberReports']-1}} <strong> 
+                <p class="mb-0"><strong>{{$event['user']->name}}</strong> and {{count($event['reports'])-1}} <strong> 
                         others</strong> reported an event.</p>
             </div>
         </div>
@@ -36,10 +36,10 @@
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-right">
-                <p class="my-0 ban-btn text-uppercase">delete</p>
+                <p class="my-0 ban-btn text-uppercase" id ="delete-report-btn">delete</p>
             </div>
             <div class="col-6 text-left">
-                <p class="my-0 diss-btn text-uppercase">dismiss</p>
+                <p class="my-0 diss-btn text-uppercase" id ="dismiss-report-btn">dismiss</p>
             </div>
         </div>
     </div>
