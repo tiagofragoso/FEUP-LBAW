@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-	<script defer type="text/javascript" src="/js/settings.js"> </script>
+	<script defer type="module" src="/js/settings.js"> </script>
 @endsection
 
 @section('title', 'Settings')
