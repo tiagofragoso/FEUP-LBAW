@@ -1,3 +1,6 @@
+import {request} from "./requests.js";
+import {getEventCard} from './event_card.js';
+
 /**
  * Navbar scroll transition.
  */
@@ -61,4 +64,29 @@ document.querySelector('.navbar-toggler').addEventListener('click', () => {
         document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal.svg';
     else
         document.querySelector('.navbar-brand img').src = '../assets/logo-horizontal-white.svg';
+});
+
+let requesting = false;
+let page = 2;
+document.addEventListener('scroll', async () => {
+    if ((($(document).height()-$(window).height())-$(window).scrollTop() < 0) && !requesting) {
+        requesting = true;
+        const data = await request('/api/search?page='+page, {
+            method: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        });
+
+        data.data.forEach((event) => {
+            let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
+            document.getElementById('card-container').appendChild(card);
+        });
+
+        requesting = false;
+
+        if (data.data.length > 0)
+            page++;
+    }
 });

@@ -31,6 +31,8 @@ Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
 
+Route::get('api/search', 'SearchController@getEvents');
+
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

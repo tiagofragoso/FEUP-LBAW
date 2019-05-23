@@ -21,6 +21,7 @@
   <script defer src="{{ asset('libs/jQuery/jquery-3.0.0.slim.min.js') }}"></script>
   <script defer src="{{ asset('libs/popper/popper.min.js') }}"></script>
   <script defer src="{{ asset('libs/bootstrap/bootstrap.min.js') }}"></script>
+  <script defer src="{{ asset('libs/moment/moment.min.js') }}"></script>
   <script type="text/javascript">
     // Fix for Firefox autofocus CSS bug
     // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951

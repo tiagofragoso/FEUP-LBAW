@@ -10,14 +10,21 @@ class SearchController extends Controller
 {
     public function show(Request $request)
     {
-        if ($request->has('search')) {
-            $events = Event::where([
-                    ['private', 'false'],
-                    ['banned', 'false'],
-                    ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
-                ])
-                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
-                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
+        $events = $this->getEvents($request);
+        return view('pages.search', ['events' => $events]);
+    }
+
+    public function getEvents(Request $request) {
+        if (!empty($request->except('page'))) {
+            if ($request->has('search')) {
+                $events = Event::where([
+                        ['private', 'false'],
+                        ['banned', 'false'],
+                        ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
+                    ])
+                    ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
+                    ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
+            }
         }
         else {
             $events = Event::where([
@@ -28,7 +35,7 @@ class SearchController extends Controller
                 ->orderBy('participants', 'desc');
         }
 
-        $events = $events->take(6)->get();
-        return view('pages.search', ['events' => $events]);
+        $events = $events->paginate(6);
+        return $events;
     }
 }

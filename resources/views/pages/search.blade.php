@@ -4,7 +4,7 @@
 @section('container', 'search-page')
 
 @section('scripts')
-	<script defer type="text/javascript" src="/js/search.js"> </script>
+	<script defer type="module" src="/js/search.js"> </script>
 @endsection
 
 @section('content')
@@ -48,7 +48,7 @@
         @include('partials.search_filters')
     </div>
 
-    <div class="row">
+    <div class="row" id="card-container">
         @foreach ($events as $event)
             @include('partials.event_card', ['event', $event])
         @endforeach
