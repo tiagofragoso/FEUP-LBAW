@@ -67,11 +67,11 @@ document.querySelector('.navbar-toggler').addEventListener('click', () => {
 });
 
 let requesting = false;
-let page = 2;
 document.addEventListener('scroll', async () => {
     if ((($(document).height()-$(window).height())-$(window).scrollTop() < 0) && !requesting) {
         requesting = true;
-        const data = await request('/api/search?page='+page, {
+
+        const data = await request(getQueryString(), {
             method: 'GET',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -84,9 +84,19 @@ document.addEventListener('scroll', async () => {
             document.getElementById('card-container').appendChild(card);
         });
 
-        requesting = false;
-
         if (data.data.length > 0)
-            page++;
+            requestObj.page++;
+
+        requesting = false;
     }
 });
+
+function getQueryString() {
+    let query = '/api/search?page='+requestObj.page;
+    
+    console.log(requestObj.search);
+    if (requestObj.search != null) {
+        query += '&search=' + requestObj.search;
+    }
+    return query;
+}

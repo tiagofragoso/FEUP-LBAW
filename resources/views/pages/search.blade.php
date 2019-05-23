@@ -4,7 +4,14 @@
 @section('container', 'search-page')
 
 @section('scripts')
-	<script defer type="module" src="/js/search.js"> </script>
+    <script type="text/javascript">
+        let requestObj = {};
+        requestObj.page = 2;
+        @if (app('request')->has('search'))
+        requestObj.search = "{{ app('request')->input('search') }}";
+        @endif
+    </script>
+    <script defer type="module" src="/js/search.js"></script>
 @endsection
 
 @section('content')
