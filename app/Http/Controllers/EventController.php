@@ -106,7 +106,8 @@ class EventController extends Controller
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
         
-        $questions = $event->questions()->get();
+        
+        $questions = $event->getQuestions($joined);
 
        
         return view('pages.event', 
@@ -116,7 +117,7 @@ class EventController extends Controller
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=> $questions,
+            'questions' => $questions,
             'joined'=> $joined]);  
         }
 

@@ -217,6 +217,48 @@
 								</div>
 								<div class="tab-pane fade" id="posts" role="tabpanel" aria-labelledby="posts-tab">
 									<div class="posts">
+										@if ($joined == 'Host')
+											<div class="row justify-content-center">
+												<div class="card col-12 col-lg-9 mb-4 py-2 hover-shadow"">
+													<div class=" container">
+													<div class="row">
+														<div class="col-12">
+															<p class="card-title"><strong>Create a post</strong></p>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-12">
+															<textarea class="form-control" id="exampleFormControlTextarea1"
+																rows="3"></textarea>
+														</div>
+													</div>
+													<hr class="mb-1">
+													<div class="row">
+														<div class="col-6 post-type">
+															<input class="form-check-input d-none" type="radio" id="text"
+																value="option1" name="post-type" checked>
+															<label class="form-check-label mr-2" for="text"><i
+																	class="fas fa-font"></i></label>
+	
+															<input class="form-check-input d-none" type="radio" id="poll"
+																value="option2" name="post-type">
+															<label class="form-check-label mr-2" for="poll"><i
+																	class="fas fa-poll-h"></i></label>
+	
+															<input class="form-check-input d-none" type="radio" id="file"
+																value="option3" name="post-type">
+															<label class="form-check-label" for="file"><i
+																	class="fas fa-paperclip"></i></label>
+														</div>
+														<div class="col-6 text-right">
+															<button class="submit-btn" type="submit">
+																<i class="fas fa-angle-double-right"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										@endif
                                         @each('partials.post', $posts, 'post')
 									</div>
 								</div>
@@ -245,7 +287,7 @@
 										</div>
 										<div class="row justify-content-center">
 											<ul class="col-12 col-md-9 list-group list-group-flush">
-												@foreach($questions as $question)
+												@foreach($questions['answered'] as $question)
 												<li class="list-group-item">
 													<a class="pl-0 text-decoration-none qa-question dropdown-toggle"
 													data-toggle="collapse" href="#" role="button" data-target="#question{{$question->id}}"
