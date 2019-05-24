@@ -889,6 +889,8 @@ INSERT INTO questions(content,event_id) VALUES ('What is Lorem Ipsum?',1);
 INSERT INTO questions(content,event_id) VALUES ('Where does it come from?',1);
 INSERT INTO questions(content,event_id) VALUES ('Why do we use it?',1);
 INSERT INTO questions(content,event_id) VALUES ('Where can I get some?',1);
+INSERT INTO questions(content,event_id) VALUES ('Pergunta sem resposta 1?',1);
+INSERT INTO questions(content,event_id) VALUES ('Pergunta sem resposta 2?',1);
 
 -- Answers
 
