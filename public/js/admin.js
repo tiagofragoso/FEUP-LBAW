@@ -14,6 +14,10 @@ delete_buttons.forEach(button => {
         let reports = JSON.parse(button.closest('.report-card').dataset.id);
 
         for (let report of reports) {
+
+
+
+
             let url = 'api/reports/' + report['id'];
             let type;
             let id;
@@ -45,7 +49,11 @@ delete_buttons.forEach(button => {
                 }
             );
             if (response == 200) {
-                button.closest('.report-card').classList.add('d-none');
+                button.closest('.col-6').classList.add('text-center');
+                button.closest('.col-6').nextElementSibling.classList.add('d-none');
+                button.removeAttribute('id');
+                button.classList.remove('ban-btn');
+                button.classList.add('baned-btn');
             }
         }
     });
@@ -59,6 +67,7 @@ dismiss_buttons.forEach(button => {
         let reports = JSON.parse(button.closest('.report-card').dataset.id);
 
         for (let report of reports) {
+
             let url = 'api/reports/' + report['id'];
             let type;
             let id;
@@ -91,7 +100,12 @@ dismiss_buttons.forEach(button => {
                 }
             );
             if (response == 200) {
-                button.closest('.report-card').classList.add('d-none');
+                button.closest('.col-6').classList.add('text-center');
+                button.closest('.col-6').previousElementSibling.classList.add('d-none');
+                button.removeAttribute('id');
+                button.classList.remove('diss-btn');
+                button.classList.add('dissed-btn');
+
             }
         }
     });
