@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\EventReport;
 use App\UserReport;
+use App\User;
+use App\Event;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,10 +14,12 @@ class ReportController extends Controller
         if($request->status == 'delete'){
             if ($request->type == 'event'){
                 EventReport::find($id)->update(['status'=>'Accepted']);
+                Event::find($request->id)->update(['banned'=>true]);
             }
                
             else {
                 UserReport::find($id)->update(['status'=>'Accepted']);
+                User::find($request->id)->update(['banned'=>true]);
 
             }
         }

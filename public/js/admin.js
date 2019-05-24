@@ -16,13 +16,20 @@ delete_buttons.forEach(button => {
         for (let report of reports) {
             let url = 'api/reports/' + report['id'];
             let type;
-            if (report.hasOwnProperty('event_id'))
+            let id;
+            if (report.hasOwnProperty('event_id')) {
                 type = 'event';
-            else type = 'user';
+                id = report['event_id'];
+            }
+            else {
+                type = 'user';
+                id = report['reported_user'];
+            }
 
             let requestBody = {
                 status: button.textContent,
-                type: type
+                type: type,
+                id: id
             };
 
             const response = await request(
@@ -37,7 +44,7 @@ delete_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200){
+            if (response == 200) {
                 button.closest('.report-card').classList.add('d-none');
             }
         }
@@ -54,13 +61,21 @@ dismiss_buttons.forEach(button => {
         for (let report of reports) {
             let url = 'api/reports/' + report['id'];
             let type;
-            if (report.hasOwnProperty('event_id'))
+            let id;
+            if (report.hasOwnProperty('event_id')) {
                 type = 'event';
-            else type = 'user';
+                id = report['event_id'];
+            }
+            else {
+                type = 'user';
+                id = report['reported_user'];
+            }
+
 
             let requestBody = {
                 status: button.textContent,
-                type: type
+                type: type,
+                id: id
             };
 
             const response = await request(
@@ -75,7 +90,7 @@ dismiss_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200){
+            if (response == 200) {
                 button.closest('.report-card').classList.add('d-none');
             }
         }
