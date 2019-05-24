@@ -203,6 +203,12 @@
 								<a class="nav-link" id="qa-tab" data-toggle="tab" href="#qa" role="tab"
 									aria-controls="qa" aria-selected="false">Q&A</a>
 							</li>
+							@if ($joined == 'Host' || $joined == 'Artist')
+							<li class="nav-item">
+								<a class="nav-link" id="forum-tab" data-toggle="tab" href="#forum" role="tab"
+									aria-controls="forum" aria-selected="false">Forum</a>
+							</li>
+							@endif
 						</ul>
 						<div class="tab-content my-3 mx-3" id="myTabContent">
 							<div class="tab-pane fade show active" id="about" role="tabpanel"
@@ -221,7 +227,7 @@
 								<div class="posts">
 									@if ($joined === 'Host')
 									<div class="row justify-content-center">
-										<div class="card col-12 col-lg-9 mb-4 py-2 hover-shadow"">
+										<div class="card col-12 col-lg-9 mb-4 py-2 hover-shadow">
 													<div class=" container">
 											<div class="row">
 												<div class="col-12">
@@ -296,7 +302,7 @@
 												{{"(" . count($questions['unanswered']) . ")"}}</strong></p>
 									</div>
 								</div>
-								<div class="row justify-content-center">
+								<div class="row justify-content-center mb-4">
 									<ul class="col-12 col-md-9 list-group list-group-flush">
 										@foreach ($questions['unanswered'] as $question)
 										<li class="list-group-item">
@@ -360,6 +366,47 @@
 									</ul>
 								</div>
 							</div>
+						</div>
+						<div class="tab-pane fade" id="forum" role="tabpanel" aria-labelledby="forum-tab">
+							<div class="row justify-content-center">
+								<div class="col-12 col-lg-9">
+									<p class="text-muted">
+										This is only visible to hosts and artists.
+									</p>
+								</div>
+								<div class="card col-12 col-lg-9 mb-4 py-2 hover-shadow">
+									<div class="container">
+										<div class="row">
+											<div class="col-12">
+												<p class="card-title"><strong>Start a thread</strong></p>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12">
+												<textarea class="form-control" id="exampleFormControlTextarea1"
+													rows="3"></textarea>
+											</div>
+										</div>
+										<hr class="mb-1">
+										<div class="row">
+											<div class="col-6 post-type">
+												<input class="form-check-input d-none" type="radio" id="text"
+													value="option1" name="post-type" checked>
+												<label class="form-check-label mr-2" for="text"><i
+														class="fas fa-font"></i></label>
+											</div>
+											<div class="col-6 text-right">
+												<button class="submit-btn" type="submit">
+													<i class="fas fa-angle-double-right"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							@if ($joined === 'Host' || $joined === 'Artist')
+							@each('partials.thread', $threads, 'thread')
+							@endif
 						</div>
 					</div>
 				</div>

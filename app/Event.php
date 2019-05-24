@@ -22,6 +22,10 @@ class Event extends Model
         return $this->hasMany('App\Post')->orderBy('date', 'desc');
     }
 
+    public function threads(){
+        return $this->hasMany('App\Thread')->orderBy('date', 'desc');
+    }
+
     public function participatesAs($type) {
         if (!is_array($type))
             $type = [$type];

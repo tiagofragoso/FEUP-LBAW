@@ -106,6 +106,11 @@ class EventController extends Controller
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
         
+        if ($joined === 'Host' || $joined === 'Artist') {
+            $threads = $event->threads()->get();
+        } else {
+            $threads = null;
+        }
         
         $questions = $event->getQuestions($joined);
 
@@ -118,6 +123,7 @@ class EventController extends Controller
             'artists' => $artists,
             'posts' => $posts,
             'questions' => $questions,
+            'threads' => $threads,
             'joined'=> $joined]);  
         }
 
