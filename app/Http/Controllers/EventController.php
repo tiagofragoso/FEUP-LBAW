@@ -105,8 +105,6 @@ class EventController extends Controller
         
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
-
-        $joined = 'Host';
         
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();
