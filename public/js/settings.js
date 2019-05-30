@@ -1,27 +1,4 @@
-function clearErrors(formId) {
-    let form = document.querySelector(formId);
-    form.querySelectorAll('.errors-container').forEach(errorContainer => {
-        errorContainer.innerHTML = "";
-    });
-    form.querySelectorAll('input').forEach(input => {
-        input.classList.remove('is-invalid');
-    });
-}
-
-function createErrors(errors, container) {
-    errors.forEach(element => {
-        let error = document.createElement('div');
-        error.className = 'error';
-        error.textContent = element;
-        document.getElementById(container).appendChild(error);
-    });
-}
-
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+import { clearErrors, createErrors, request } from "./requests.js";
 
 document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors('.form-group-general');
