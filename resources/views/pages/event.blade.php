@@ -23,6 +23,14 @@
 							<a class="dropdown-item text-danger" href="#">Report event</a>
 						</div>
 					</div>
+					@if ($joined == 'Host')
+					<a href="#" class="position-absolute invite-button">
+						<button class="btn btn-light border-light">
+							<i class="fas fa-envelope mr-1"></i>
+							Invite
+						</button>
+					</a>					
+					@endif
 					<button class="btn btn-light border-light position-absolute tag-button" type="button">
 						<i class="fas fa-tag mr-1"></i>
 						{{ $event->category()->first()->name }}
@@ -164,12 +172,6 @@
 						</div>
 					</div>
 					<div class="row artists-wrapper">
-						@if ($joined === 'Host')
-						<a href="#" class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-							<button class="btn btn-primary rounded-circle invite-btn" width="40">+</button>
-							<span class="text-center">Invite</span>
-						</a>
-						@endif
 						@if (count($artists) > 0)
 						@foreach($artists as $artist)
 						<a href="{{ url('/users/'.$artist->id) }}"

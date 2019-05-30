@@ -492,6 +492,13 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	opacity: 0.8;
 }
 
+.invite-button {
+	z-index: 1;
+	left: 1rem;
+	bottom: 1rem;
+	opacity: 0.8;
+}
+
 .artists-wrapper a {
 	color: var(--blue);
 }
