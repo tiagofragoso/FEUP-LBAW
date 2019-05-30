@@ -427,13 +427,15 @@ a.badge-secondary:hover {
 	height: 2rem;
 	background-color: var(--white);
 	z-index: 5;
-	border: 1px solid var(--grey);
+	border: 1px solid var(--green);
 	font-weight: bold;
 	cursor: pointer;
 }
 
 .complete {
-	border: 1px solid var(--green);
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
 }
 
 .step-wrapper {
