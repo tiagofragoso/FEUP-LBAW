@@ -13,6 +13,7 @@
         </div>
         <div class="comment-footer ml-3">
             <span> {{$comment->likes}} </span>
+            <span> likes </span>
             •
             <a href="#">Like</a>
             •
