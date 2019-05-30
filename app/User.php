@@ -84,7 +84,10 @@ class User extends Authenticatable
     public function leaveEvent($event_id, $type) {
         return $this->events($type)->detach($event_id);
     }
-    
-    
+
+    public function reports(){
+        return $this->hasMany('App\UserReport','reported_user');
+    }
+
 
 }
