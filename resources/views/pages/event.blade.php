@@ -120,7 +120,17 @@
 						<div class="col-12 col-lg-9 mb-2 mb-lg-0 ">
 
 							<div class="d-flex flex-row justify-content-between position-relative">
-								<div class="progress progress-2 position-absolute"></div>
+								<div class="progress 
+									@if ($event->status == 'Planning') 
+										progress-1
+									@elseif ($event->status == 'Tickets')
+										progress-2
+									@elseif ($event->status == 'Live')
+										progress-3
+									@else
+										progress-4
+									@endif
+									position-absolute"></div>
 								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
 									<div
 										class="step rounded-circle d-flex align-items-center justify-content-center {{ ($event->status == 'Planning' || $event->status == 'Tickets'|| $event->status == 'Live')? 'complete' : '' }}">
@@ -144,8 +154,13 @@
 								</div>
 							</div>
 						</div>
+						@if ($event->status == 'Planning' || $event->status == 'Tickets')
 						<div class="col-12 col-lg-3">
+							@if ($event->status == 'Tickets')
 							<button type="submit" class="btn btn-secondary w-100">
+							@elseif ($event->status == 'Planning')
+							<button type="submit" class="btn btn-info w-100">
+							@endif
 								<i class="fas fa-ticket-alt mr-1"></i>
 								@if (!(empty($event->price)) && $event->price > 0)
 								{{$event->price}} {{$event->currency()->first()->getSymbol()}}
@@ -153,6 +168,7 @@
 								@endif
 							</button>
 						</div>
+						@endif
 					</div>
 					<div class="row">
 						<div class="col-12">

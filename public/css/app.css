@@ -427,9 +427,13 @@ a.badge-secondary:hover {
 	height: 2rem;
 	background-color: var(--white);
 	z-index: 5;
-	border: 1px solid var(--green);
+	border: 1px solid var(--grey);
 	font-weight: bold;
 	cursor: pointer;
+}
+
+.complete {
+	border: 1px solid var(--green);
 }
 
 .step-wrapper {
@@ -472,6 +476,11 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 .progress-3 {
 	display: block;
 	background: linear-gradient(to right, var(--green) calc(100% - 1rem), var(--grey) calc(100% - 1rem) );
+}
+
+.progress-4 {
+	display: block;
+	background: linear-gradient(to right, var(--green) calc(100%), var(--grey) calc(100%) );
 }
 
 .more-button {
