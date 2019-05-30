@@ -211,5 +211,13 @@ class ProfileController extends Controller
     }
 
     public function banUser($id)
-    { }
+    {
+        if (!Auth::user()->is_admin) return response(403);
+
+        if (User::find($id) == null) return response(404);
+
+        User::find($id)->update(['banned' => true]);
+
+        return response(200);
+    }
 }

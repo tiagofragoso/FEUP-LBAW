@@ -3,11 +3,13 @@
 @section('container', 'profile-page')
 @section('scripts')
 	<script defer type="text/javascript" src="/js/user_profile.js"> </script>
-	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+    <script defer type="text/javascript" src="/js/join_event.js"> </script>
+    <script defer type="text/javascript" src="/js/admin.js"> </script>
 @endsection
 
 @section('content')
-<div class="container-fluid my-0 my-sm-5 profile-container">
+<div id ="content" class="container-fluid my-0 my-sm-5 profile-container" data-id = "{{$user->id}}">
+@include('partials.banned_card',['object' => $user])
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">

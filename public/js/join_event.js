@@ -5,7 +5,6 @@ async function request(url, request) {
 }
 
 let buttons = document.querySelectorAll('.join-btn');
-
 function updateVisual(join) {
     if (join) {
         this.classList.replace('joined', 'join');
