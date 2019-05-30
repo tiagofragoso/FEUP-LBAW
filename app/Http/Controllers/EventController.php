@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App;
 use App\Event;
 use App\Category;
@@ -17,7 +18,8 @@ class EventController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validateEvent($data) {
+    public function validateEvent($data)
+    {
         return Validator::make($data->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
@@ -54,7 +56,6 @@ class EventController extends Controller
         $this->authorize('create', Event::class);
 
         return view('pages.event_form', ['title' => 'Create event']);
-
     }
 
     /**
@@ -72,7 +73,7 @@ class EventController extends Controller
         $event = Event::create($request->except('photo'));
 
         Auth::user()->joinEvent($event->id, 'Owner');
-        
+
         return $this->show($event->id);
     }
 
@@ -86,7 +87,8 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (Auth::check()){
+        if (!(!(Auth::user()->is_admin) && $event->banned)){
+        if (Auth::check()) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
             } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
@@ -102,21 +104,27 @@ class EventController extends Controller
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
         $artists = $event->participatesAs('Artist')->get()->take(6);
-        
+
         $posts = $event->posts()->get();
         $questions = $event->questions()->get();
 
-       
-        return view('pages.event', 
-            [ 'title' => $event->name,
-            'event' => $event,
-            'owner' => $owner,
-            'hosts' => $hosts,
-            'artists' => $artists,
-            'posts' => $posts,
-            'questions'=> $questions,
-            'joined'=> $joined]);  
-        }
+
+        return view(
+            'pages.event',
+            [
+                'title' => $event->name,
+                'event' => $event,
+                'owner' => $owner,
+                'hosts' => $hosts,
+                'artists' => $artists,
+                'posts' => $posts,
+                'questions' => $questions,
+                'joined' => $joined
+            ]
+        );
+    }
+    abort(403);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -158,17 +166,19 @@ class EventController extends Controller
         //
     }
 
-    public function joinEvent($id){
+    public function joinEvent($id)
+    {
         if (!Auth::check()) return response(403);
         if (Event::find($id) == null) return response(404);
-        
+
         if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
 
         Auth::user()->joinEvent($id, 'Participant');
         return response(200);
     }
 
-    public function leaveEvent($id) {
+    public function leaveEvent($id)
+    {
         if (!Auth::check()) return response(403);
         if (Event::find($id) == null) return response(404);
 
@@ -176,6 +186,17 @@ class EventController extends Controller
         if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
 
         Auth::user()->leaveEvent($id, 'Participant');
+        return response(200);
+    }
+
+    public function banEvent($id)
+    {
+        if (!Auth::user()->is_admin) return response(403);
+       
+        if (Event::find($id) == null) return response(404);
+
+        Event::find($id)->update(['banned'=>true]);
+        
         return response(200);
     }
 }

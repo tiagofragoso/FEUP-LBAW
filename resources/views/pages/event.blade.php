@@ -2,14 +2,17 @@
 
 @section('scripts')
 	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+	<script defer type="text/javascript" src="/js/admin.js"> </script>
 @endsection
 
 @section('title', $event->title)
 @section('container', 'event-page')
 
 @section('content')
-    
-    <div id="content" class="container my-0 my-sm-5">
+	
+	
+    <div id="content" class="container my-0 my-sm-5" data-id ="{{$event->id}}">
+		@include('partials.banned_card',['object' => $event])
 		<div class="row">
 			<div class="card-wrapper col-12 mx-auto">
 				<div class="card mb-5">
@@ -21,7 +24,15 @@
 							</button>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 								<a class="dropdown-item" href="#">Share event</a>
-								<a class="dropdown-item text-danger" href="#">Report event</a>
+								@if(!$event->banned)
+								@if(Auth::user()->is_admin)	
+								<a class="dropdown-item text-danger" id="ban-event-btn" href="#">Ban event</a>
+								@else
+								<a class="dropdown-item text-danger" id="report-event-btn" href="#">
+									Report event </a>
+								
+								@endif
+								@endif
 							</div>
 						</div>
 						<button class="btn btn-light border-light position-absolute tag-button" type="button">
@@ -311,5 +322,5 @@
 				</div>
 			</div>
 		</div>
-    </div>
+	</div>
     @endsection

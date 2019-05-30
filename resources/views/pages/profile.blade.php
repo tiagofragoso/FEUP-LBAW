@@ -2,16 +2,18 @@
 
 @section('container', 'profile-page')
 @section('scripts')
-	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+    <script defer type="text/javascript" src="/js/join_event.js"> </script>
 @endsection
 
 @section('content')
 <div class="container-fluid my-0 my-sm-5 profile-container">
+@include('partials.banned_card',['object' => $user])
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">
-                <div class="card-header">
-                    @include('partials.profile_header', ['user' => $user])
+                <div class="card-header" >
+               
+                @include('partials.profile_header', ['user' => $user])
                     <div class="row justify-content-center mb-3">
                         <div class="col text-right">
                             <a class="card-link border-bottom" data-toggle="collapse" href="#mytickets"

@@ -8,15 +8,64 @@ let delete_buttons = document.querySelectorAll('#delete-report-btn');
 
 let dismiss_buttons = document.querySelectorAll('#dismiss-report-btn');
 
+let ban_user_buttons = document.querySelectorAll('#ban-user-btn');
+let ban_event_buttons = document.querySelectorAll('#ban-event-btn');
+
+
+ban_user_buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+        let user_id = button.closest('#content').dataset.id;
+        let url = '/api/users/'+user_id+'/ban';
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if(response == 200){
+            button.closest('#content').firstChild.nextElementSibling.classList.remove('d-none');
+        }
+
+})});
+
+
+
+ban_event_buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+        let event_id = button.closest('#content').dataset.id;
+        let url = '/api/events/'+event_id+'/ban';
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        console.log(response);
+        if(response == 200){
+            button.closest('#content').firstChild.nextElementSibling.classList.remove('d-none');
+        }
+
+       
+
+   
+})});
+
 
 delete_buttons.forEach(button => {
     button.addEventListener('click', async () => {
         let reports = JSON.parse(button.closest('.report-card').dataset.id);
 
         for (let report of reports) {
-
-
-
 
             let url = 'api/reports/' + report['id'];
             let type;
