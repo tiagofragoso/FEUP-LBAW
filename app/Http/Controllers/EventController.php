@@ -192,9 +192,11 @@ class EventController extends Controller
     public function banEvent($id)
     {
         if (!Auth::user()->is_admin) return response(403);
-        $event = Event::find($id);
-        if ($event == null) return response(404);
-        $event->banned = true;
+       
+        if (Event::find($id) == null) return response(404);
+
+        Event::find($id)->update(['banned'=>true]);
+        
         return response(200);
     }
 }

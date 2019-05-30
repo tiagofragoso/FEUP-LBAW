@@ -26,6 +26,7 @@ delete_event.forEach(button => {
                 }
             }
         );
+        console.log(response);
         if(response == 200){
             button.closest('#content').firstChild.nextElementSibling.classList.remove('d-none');
         }
