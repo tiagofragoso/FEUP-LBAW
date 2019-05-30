@@ -13,9 +13,9 @@
                     </span>
                 </div>
                 <div class="comment-footer ml-3">
-                    <a href="#">Like</a>
+                    <span> {{$comment->likes}} </span>
                     •
-                    <a href="#">More</a>
+                    <a href="#">Like</a>
                     •
                     <span>{{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i')}}</span>
                 </div>
