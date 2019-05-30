@@ -9,6 +9,10 @@ class Post extends Model
     //
     public $timestamps = false;
 
+    protected $guarded = [
+        'likes', 'comments'
+    ];
+
 
     public function event() {
         return $this->belongsTo('App\Event');

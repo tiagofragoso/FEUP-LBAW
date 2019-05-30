@@ -262,7 +262,7 @@
 											<div class="row">
 												<div class="col-6 post-type">
 													<input class="form-check-input d-none" type="radio" id="text"
-														value="option1" name="post-type" checked>
+													value="option1" name="post-type" checked>
 													<label class="form-check-label mr-2" for="text"><i
 															class="fas fa-font"></i></label>
 
@@ -408,9 +408,9 @@
 										<hr class="mb-1">
 										<div class="row">
 											<div class="col-6 post-type">
-												<input class="form-check-input d-none" type="radio" id="text"
-													value="option1" name="post-type" checked>
-												<label class="form-check-label mr-2" for="text"><i
+												<input class="form-check-input d-none" type="radio" id="thread"
+													value="option4" name="thread" checked>
+												<label class="form-check-label mr-2" for="thread"><i
 														class="fas fa-font"></i></label>
 											</div>
 											<div class="col-6 text-right">
