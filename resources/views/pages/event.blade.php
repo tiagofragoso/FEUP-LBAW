@@ -3,6 +3,7 @@
 @section('scripts')
 	<script defer type="text/javascript" src="/js/join_event.js"> </script>
 	<script defer type="text/javascript" src="/js/admin.js"> </script>
+	<script defer type="text/javascript" src="/js/reports.js"> </script>
 @endsection
 
 @section('title', $event->title)

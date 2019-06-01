@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Event;
-use App\Category;
-use App\Currency;
-use App\Participation;
+use App\EventReport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -197,6 +195,19 @@ class EventController extends Controller
 
         Event::find($id)->update(['banned'=>true]);
         
+        return response(200);
+    }
+
+    public function reportEvent($id)
+    {
+        if (Auth::user()->is_admin) return response(403);
+
+        if (Event::find($id) == null) return response(404);
+
+        $user_id = Auth::user()->id;
+
+        EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);
+
         return response(200);
     }
 }

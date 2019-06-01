@@ -33,7 +33,7 @@ Route::post('api/users/{id}/report','ProfileController@reportUser');
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
 Route::put('api/events/{id}/ban','EventController@banEvent');
-
+Route::post('api/events/{id}/report','EventController@reportEvent');
 Route::put('api/reports/{id}','ReportController@report');
 
 Route::get('api/search', 'SearchController@getEvents');
