@@ -28,6 +28,7 @@ Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 Route::put('api/users/{id}/ban','ProfileController@banUser');
+Route::post('api/users/{id}/report','ProfileController@reportUser');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');

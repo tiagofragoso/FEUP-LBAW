@@ -220,4 +220,17 @@ class ProfileController extends Controller
 
         return response(200);
     }
+
+    public function reportUser($id)
+    {
+        if (Auth::user()->is_admin) return response(403);
+
+        if (User::find($id) == null) return response(404);
+
+        $user_id = Auth::user()->id;
+
+        UserReport::create(['user_id'=>$user_id,'reported_user'=>$id]);
+
+        return response(200);
+    }
 }

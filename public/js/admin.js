@@ -13,7 +13,7 @@ let ban_event_buttons = document.querySelectorAll('#ban-event-btn');
 
 
 ban_user_buttons.forEach(button => {
-    button.addEventListener('click', async () => {
+    button.addEventListener('click', async () => {  
         let user_id = button.closest('#content').dataset.id;
         let url = '/api/users/'+user_id+'/ban';
         const response = await request(
