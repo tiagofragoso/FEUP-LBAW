@@ -63,19 +63,20 @@
 								</span>
 							@endif
 						</div>
-						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
-							<div class="input-group w-100 justify-content-stretch">
+						<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
+							<div class="input-group">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="dateSelect">
-										<i class="mr-1 far fa-calendar-alt"></i>
-									</label>
+									<label class="input-group-text" for="Visibility"><i
+											class="fas fa-eye"></i></label>
 								</div>
-								<input type="datetime-local" name="start_date" 
-									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
-									class="custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}">
-								@if ($errors->has('start_date'))
+								<select name="private" class="custom-select border-blue {{$errors->has('private')? 'is-invalid' : '' }}" id="Visibility" required>
+									<option {{ !empty(old('private', !empty($event->private)? $event->private : '')) ? '' : 'selected' }} disabled value="">Visibility</option>
+									<option value="0" {{ (old('private') == 0)? 'selected' : ''}}>Public</option>
+									<option value="1" {{ (old('private') == 1)? 'selected' : ''}}>Private</option>
+								</select>
+								@if ($errors->has('private'))
 									<span class="invalid-feedback">
-										{{ $errors->first('start_date') }}
+										{{ $errors->first('private') }}
 									</span>
 								@endif
 							</div>
@@ -122,25 +123,23 @@
 								</span>
 							@endif
 						</div>
-						<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
-							<div class="input-group">
+						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
+							<div class="input-group w-100 justify-content-stretch">
 								<div class="input-group-prepend">
-									<label class="input-group-text" for="Visibility"><i
-											class="fas fa-eye"></i></label>
+									<label class="input-group-text" for="dateSelect">
+										<i class="mr-1 far fa-calendar-alt"></i>
+									</label>
 								</div>
-								<select name="private" class="custom-select border-blue {{$errors->has('private')? 'is-invalid' : '' }}" id="Visibility" required>
-									<option {{ !empty(old('private', !empty($event->private)? $event->private : '')) ? '' : 'selected' }} disabled value="">Visibility</option>
-									<option value="0" {{ (old('private') == 0)? 'selected' : ''}}>Public</option>
-									<option value="1" {{ (old('private') == 1)? 'selected' : ''}}>Private</option>
-								</select>
-								@if ($errors->has('private'))
+								<input id="date" type="text" name="start_date" 
+									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
+									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="Date">
+								@if ($errors->has('start_date'))
 									<span class="invalid-feedback">
-										{{ $errors->first('private') }}
+										{{ $errors->first('start_date') }}
 									</span>
 								@endif
 							</div>
 						</div>
-
 					</div>
 					<div class="row justify-content-between">
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
@@ -219,7 +218,4 @@
 		</div>
 	</div>
 </div>
-
-<script src="{{ asset('js/event_form.js') }}"></script>
-
 @endsection

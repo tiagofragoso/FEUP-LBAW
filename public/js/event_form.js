@@ -1,3 +1,18 @@
+$('#date').datepicker({
+	language: 'en',
+	minDate: new Date(),
+	range: true,
+	timepicker: true,
+	dateFormat: 'dd-mm-yy',
+	timeFormat: 'hh:ii',
+	multipleDatesSeparator: ' - ',
+	dateTimeSeparator: ' at ',
+	toggleSelected: false,
+	onSelect: (formattedDate, date, inst) => {
+		console.log(formattedDate, date, inst);
+	}
+});
+
 document.querySelector('#photo').addEventListener('change', (event) => {
 	const input = event.target;
 	if (input.files && input.files[0]) {
