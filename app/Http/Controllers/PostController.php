@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -47,17 +50,17 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        /*if(!Auth::check()) return response(403);
+        if(!Auth::check()) return response(403);
         $event = Event::find($id);
         if (is_null($event)) return response(404);
-        $this->authorize('create', [Post::class, $event]);
-        $request['author_id'] = Auth::user()->id;
-        $request['event_id'] = $id;
+        //$this->authorize('create', [Post::class, $event]);
+        $request->request->add(['author_id' => Auth::user()->id]);
+        $request->request->add(['event_id' => $id]);
         $this->validatePost($request);
-        Event::create($request);*/
-        return response()->json(['content' => 'coiso']);
+        $post = Post::create($request->all());
+        return response()->json($post);
     }
 
     /**
