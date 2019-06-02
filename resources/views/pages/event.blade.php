@@ -8,12 +8,12 @@
 
 @section('title', $event->title)
 @section('container', 'event-page')
-
 @section('content')
 	
 	
     <div id="content" class="container my-0 my-sm-5" data-id ="{{$event->id}}">
 		@include('partials.banned_card',['object' => $event])
+		@include('partials.report_modal')
 		<div class="row">
 			<div class="card-wrapper col-12 mx-auto">
 				<div class="card mb-5">
@@ -29,8 +29,9 @@
 								@if(Auth::user()->is_admin)	
 								<a class="dropdown-item text-danger" id="ban-event-btn" href="#">Ban event</a>
 								@else
-								<a class="dropdown-item text-danger" id="report-event-btn" href="#">
-									Report event </a>
+								<a class="dropdown-item text-danger" id="report-event-btn"  data-toggle="modal" data-target="#exampleModal">
+									Report event</a>
+									
 								
 								@endif
 								@endif

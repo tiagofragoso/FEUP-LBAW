@@ -206,8 +206,17 @@ class EventController extends Controller
 
         $user_id = Auth::user()->id;
 
-        EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);
+        $event = EventReport::all()->where('event_id',$id)
+                                   ->where('user_id',$user_id)
+                                   ->where('status','Pending');
 
-        return response(200);
+        if (empty($event)){
+            EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);
+            return response(200); 
+        }
+        
+        return response(422);        
+
+       
     }
 }
