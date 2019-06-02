@@ -35,7 +35,12 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!Auth::check()) return response(403);
+        $event = Event::find($request->event_id);
+        if (is_null($event)) return response(404);
+        $this->authorize('create', $event);
+        Event::create($request);
+        return response(200);
     }
 
     /**

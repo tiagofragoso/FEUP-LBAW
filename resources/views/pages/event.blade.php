@@ -254,7 +254,7 @@
 											</div>
 											<div class="row">
 												<div class="col-12">
-													<textarea class="form-control" id="exampleFormControlTextarea1"
+													<textarea class="form-control" id="postFormTextarea"
 														rows="3"></textarea>
 												</div>
 											</div>
