@@ -2,8 +2,8 @@
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-12">
-                <p class="mb-0"><strong>{{$event['user']->name}}</strong> and {{count($event['reports'])-1}} <strong> 
-                        others</strong> reported an event.</p>
+                <p class="mb-0"><strong>{{count($event['reports'])}} 
+                        users</strong> reported an event.</p>
             </div>
         </div>
     </div>

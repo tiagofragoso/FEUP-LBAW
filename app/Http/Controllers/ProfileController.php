@@ -50,8 +50,7 @@ class ProfileController extends Controller
 
                 $eventReport['reports'] = $eventReport->toArray();
                 $eventReport['status'] = $eventReport->first()->status;
-                $eventReport['event'] = $eventReport->first()->first()->event()->get()->first();
-                $eventReport['user'] =  $eventReport->first()->first()->user()->get()->first();
+                $eventReport['event'] = $eventReport->first()->event()->get()->first();
             }
 
             $pendingUserReports = UserReport::all()->where('status', 'Pending')->groupBy('reported_user');
@@ -61,7 +60,6 @@ class ProfileController extends Controller
                 $userReport['reports'] = $userReport->toArray();
                 $userReport['status'] = $userReport->first()->status;
                 $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-                $userReport['user'] = $userReport->first()->user()->get()->first();
             }
             $allEventReports = EventReport::all()->whereNotIn('status', 'Pending')->groupBy('event_id');
             foreach ($allEventReports as $eventReport) {
@@ -69,9 +67,7 @@ class ProfileController extends Controller
                 $eventReport['reports'] = $eventReport->toArray();
                 $eventReport['status'] = $eventReport->first()->status;
                 $eventReport['event'] = $eventReport->first()->event()->get()->first();
-                $eventReport['user'] =  $eventReport->first()->user()->get()->first();
             }
-
             $allUserReports = UserReport::all()->whereNotIn('status', 'Pending')->groupBy('reported_user');
 
             foreach ($allUserReports as $userReport) {
@@ -79,7 +75,6 @@ class ProfileController extends Controller
                 $userReport['reports'] = $userReport->toArray();
                 $userReport['status'] = $userReport->first()->status;
                 $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-                $userReport['user'] = $userReport->first()->user()->get()->first();
             }
             $pendingReports['user'] = $pendingUserReports;
             $pendingReports['event'] = $pendingEventReports;
