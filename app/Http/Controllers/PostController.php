@@ -59,8 +59,12 @@ class PostController extends Controller
         $request->request->add(['author_id' => Auth::user()->id]);
         $request->request->add(['event_id' => $id]);
         $this->validatePost($request);
-        $post = Post::create($request->all());
-        return response()->json($post);
+        if ($request->type == 'Post') {
+            $post = Post::create($request->all());
+            return response()->json($post);
+        } else {
+            return response(404);
+        }
     }
 
     /**

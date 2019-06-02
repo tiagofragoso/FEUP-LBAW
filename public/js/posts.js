@@ -44,5 +44,6 @@ async function postPost(event) {
         }
     );
 
-    console.log(response);
+        console.log(response);
+
 }
