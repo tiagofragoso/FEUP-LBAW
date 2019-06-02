@@ -28,7 +28,7 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user, Event $event)
+    public function create(User $user, Post $post, Event $event)
     {
         $canCreate = $event->participateAs(['Owner', 'Host', 'Artist'])->get();
         return $canCreate->contains($user);

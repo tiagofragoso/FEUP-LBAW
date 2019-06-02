@@ -5,8 +5,22 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show']);
+    }
+
+    public function validatePost($data) {
+        return Validator::make($data->all(), [
+            'content' => 'required|string|max:5000',
+            'event_id' => 'required',
+            'author_id' => 'required',
+            'type' => 'required'
+        ])->validate();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,12 +49,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::check()) return response(403);
-        $event = Event::find($request->event_id);
+        /*if(!Auth::check()) return response(403);
+        $event = Event::find($id);
         if (is_null($event)) return response(404);
-        $this->authorize('create', $event);
-        Event::create($request);
-        return response(200);
+        $this->authorize('create', [Post::class, $event]);
+        $request['author_id'] = Auth::user()->id;
+        $request['event_id'] = $id;
+        $this->validatePost($request);
+        Event::create($request);*/
+        return response()->json(['content' => 'coiso']);
     }
 
     /**
