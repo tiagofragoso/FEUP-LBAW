@@ -287,7 +287,9 @@
 									</div>
 								</div>
 								@endif
+								<div class="posts-list">
 								@each('partials.post', $posts, 'post')
+								</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">

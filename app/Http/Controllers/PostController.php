@@ -61,7 +61,15 @@ class PostController extends Controller
         $this->validatePost($request);
         if ($request->type == 'Post') {
             $post = Post::create($request->all());
-            return response()->json($post);
+            $post = Post::find($post->id);
+            return response()->json([
+                'id' => $post->id,
+                'content' => $post->content,
+                'author_id' => $post->author_id,
+                'type' => $post->type,
+                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
+                'author' => $post->author->displayName()
+            ]);
         } else {
             return response(404);
         }
