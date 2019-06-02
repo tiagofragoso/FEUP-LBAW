@@ -55,7 +55,7 @@ class PostController extends Controller
         if(!Auth::check()) return response(403);
         $event = Event::find($id);
         if (is_null($event)) return response(404);
-        //$this->authorize('create', [Post::class, $event]);
+        $this->authorize('create', [$event, Post::class]);
         $request->request->add(['author_id' => Auth::user()->id]);
         $request->request->add(['event_id' => $id]);
         $this->validatePost($request);
