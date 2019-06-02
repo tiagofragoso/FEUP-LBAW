@@ -208,7 +208,7 @@ class EventController extends Controller
 
         $event = EventReport::all()->where('event_id',$id)
                                    ->where('user_id',$user_id)
-                                   ->where('status','Pending');
+                                   ->where('status','Pending')->first();
 
         if (empty($event)){
             EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);

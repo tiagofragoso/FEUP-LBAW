@@ -11,6 +11,7 @@
 @section('content')
 <div id ="content" class="container-fluid my-0 my-sm-5 profile-container" data-id = "{{$user->id}}">
 @include('partials.banned_card',['object' => $user])
+@include('partials.report_modal')
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">

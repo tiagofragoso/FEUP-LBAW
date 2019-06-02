@@ -7,7 +7,7 @@
         @if(Auth::user()->is_admin)
         <a class="dropdown-item text-danger" id="ban-user-btn" href="#"> Ban user</a>
         @else
-        <a class="dropdown-item text-danger" id="report-user-btn" href="#">
+        <a class="dropdown-item text-danger" id="report-user-btn" href="#"  data-toggle="modal" data-target="#exampleModal">
             Report user</a>
 
         @endif

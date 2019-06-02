@@ -228,9 +228,15 @@ class ProfileController extends Controller
         if (User::find($id) == null) return response(404);
 
         $user_id = Auth::user()->id;
+        $user = UserReport::all()->where('reported_user', $id)
+            ->where('user_id', $user_id)
+            ->where('status', 'Pending')->first();
 
-        UserReport::create(['user_id'=>$user_id,'reported_user'=>$id]);
+        if (empty($user)) {
+            UserReport::create(['user_id' => $user_id, 'reported_user' => $id]);
+            return response(200);
+        }
 
-        return response(200);
+        return response(422);
     }
 }
