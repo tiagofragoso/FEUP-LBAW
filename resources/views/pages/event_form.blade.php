@@ -123,16 +123,31 @@
 								</span>
 							@endif
 						</div>
-						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
+						<div class="col-12 col-md-4 order-0 order-md-1 mb-3 mb-md-0 d-flex flex-column justify-content-between">
+							<div class="input-group w-100 mb-3 mb-md-0 justify-content-stretch">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="dateSelect">
+										<i class="mr-1 far fa-calendar-alt"></i>
+									</label>
+								</div>
+								<input id="start_date" type="text" name="start_date" 
+									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
+									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="Start date">
+								@if ($errors->has('start_date'))
+									<span class="invalid-feedback">
+										{{ $errors->first('start_date') }}
+									</span>
+								@endif
+							</div>
 							<div class="input-group w-100 justify-content-stretch">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="dateSelect">
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<input id="date" type="text" name="start_date" 
+								<input id="end_date" type="text" name="start_date" 
 									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
-									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="Date">
+									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="End date">
 								@if ($errors->has('start_date'))
 									<span class="invalid-feedback">
 										{{ $errors->first('start_date') }}

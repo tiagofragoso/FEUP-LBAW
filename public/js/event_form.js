@@ -1,17 +1,29 @@
-$('#date').datepicker({
+$('#start_date').datepicker({
 	language: 'en',
 	minDate: new Date(),
-	range: true,
 	timepicker: true,
 	dateFormat: 'dd-mm-yy',
 	timeFormat: 'hh:ii',
-	multipleDatesSeparator: ' - ',
 	dateTimeSeparator: ' at ',
-	toggleSelected: false,
-	onSelect: (formattedDate, date, inst) => {
-		console.log(formattedDate, date, inst);
+	clearButton: true,
+	onSelect: (_x, date, _y) => {
+		if (endDatepicker.date < date) {
+			endDatepicker.selectDate(date);
+		}
+		endDatepicker.update('minDate', date);
 	}
 });
+
+const endDatepicker = $('#end_date').datepicker({
+	language: 'en',
+	minDate: new Date(),
+	timepicker: true,
+	dateFormat: 'dd-mm-yy',
+	timeFormat: 'hh:ii',
+	dateTimeSeparator: ' at ',
+	clearButton: true
+}).data('datepicker');
+
 
 document.querySelector('#photo').addEventListener('change', (event) => {
 	const input = event.target;
