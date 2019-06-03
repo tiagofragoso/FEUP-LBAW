@@ -9,7 +9,7 @@ class Answer extends Model
     //
         public $timestamps = false;
 
-     protected $table = 'answer';
+     protected $table = 'answers';
  
      public function event() {
          return $this->belongsTo('App\Question');

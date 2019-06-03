@@ -104,7 +104,15 @@ class EventController extends Controller
         $artists = $event->participatesAs('Artist')->get()->take(6);
         
         $posts = $event->posts()->get();
-        $questions = $event->questions()->get();
+        $posts = $event->postComments($posts);
+        
+        if ($joined === 'Host' || $joined === 'Artist') {
+            $threads = $event->threads()->get();
+        } else {
+            $threads = null;
+        }
+        
+        $questions = $event->getQuestions($joined);
 
        
         return view('pages.event', 
@@ -114,7 +122,8 @@ class EventController extends Controller
             'hosts' => $hosts,
             'artists' => $artists,
             'posts' => $posts,
-            'questions'=> $questions,
+            'questions' => $questions,
+            'threads' => $threads,
             'joined'=> $joined]);  
         }
 

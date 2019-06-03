@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Thread extends Model
 {
     //
     public $timestamps = false;
-
 
     public function event() {
         return $this->belongsTo('App\Event');
@@ -19,15 +18,6 @@ class Post extends Model
     }
 
     public function comments() {
-        return $this->hasMany('App\Comment')->where('parent', NULL)->orderBy('date', 'asc');
+        return $this->hasMany('App\ThreadComment')->orderBy('date', 'asc');
     }
-
-    public function poll() {
-        return $this->hasOne('App\Poll');
-    }
-
-    public function file() {
-        return $this->hasOne('App\File');
-    }
-
 }
