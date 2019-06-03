@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('container', 'auth-page')
+
 @section('content')
 <div class="w-100 min-vh-100 d-flex justify-content-center align-items-center">
         <div class="container">

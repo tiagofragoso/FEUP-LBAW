@@ -203,19 +203,19 @@ CREATE TABLE answers (
 );
 
 CREATE TABLE user_reports (
+    id serial PRIMARY KEY,
     "user_id" integer REFERENCES users ON DELETE CASCADE,
     reported_user integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
-    PRIMARY KEY("user_id", reported_user)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 CREATE TABLE event_reports (
+    id serial PRIMARY KEY,
     event_id integer REFERENCES events ON DELETE CASCADE,
     "user_id" integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
-    PRIMARY KEY("user_id", event_id)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 -- Triggers

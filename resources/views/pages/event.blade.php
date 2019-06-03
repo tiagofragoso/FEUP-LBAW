@@ -6,6 +6,7 @@
 @endsection
 
 @section('title', $event->title)
+@section('container', 'event-page')
 
 @section('content')
 
