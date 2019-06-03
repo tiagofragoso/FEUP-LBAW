@@ -15,6 +15,10 @@
 					<label for="photo" class="btn btn-light border-light position-absolute tag-button">
 						<i class="fas fa-camera mr-1"></i> Upload a photo
 					</label>
+					<button type="button" class="btn btn-light border-light position-absolute help-btn" data-toggle="modal" data-target="#helpModal">
+							<div class="help-text"></div>
+							<i class="fas fa-question mr-1"></i>
+					</button>
 					<input type="file" id="photo" name="photo" style="display:none;" accept="image/png, image/jpeg" >
 					<img id="img" class="d-block w-100" src="{{ asset('assets/event-placeholder.png')}}" alt="Event photo">
 				</div>

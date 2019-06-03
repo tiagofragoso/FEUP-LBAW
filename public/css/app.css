@@ -578,6 +578,21 @@ label[for="photo"].tag-button {
 	cursor: pointer;
 }
 
+.help-btn {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+	opacity: 0.8;
+}
+
+.help-text {
+	display: inline-block;
+}
+
+.help-btn:hover .help-text {
+	display: inline-block;
+}
+
 /* home */
 
 .link {
