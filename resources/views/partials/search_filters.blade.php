@@ -7,7 +7,7 @@
     <div class="dropdown-menu p-4" aria-labelledby="dropdownDate">
         <h6 class="dropdown-title">Dates</h6>
         <p>
-            This will be a date picker...
+            <div class="datepicker"></div>
         </p>
     </div>
 </div>

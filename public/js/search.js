@@ -23,6 +23,16 @@ let stuck = true;
 })).observe(document.querySelector('.trigger'));
 
 /**
+ * Search filters
+ */
+// $('.datepicker').each((i, dt) => {
+//     $(dt).datepicker({
+//         inline: true,
+//         range: true
+//     });
+// });
+
+/**
  * Search fields onchange events.
  */
 document.querySelectorAll('.dropdownField').forEach(element => {
@@ -93,10 +103,10 @@ document.addEventListener('scroll', async () => {
 
 function getQueryString() {
     let query = '/api/search?page='+requestObj.page;
-    
-    console.log(requestObj.search);
+
     if (requestObj.search != null) {
         query += '&search=' + requestObj.search;
     }
+
     return query;
 }
