@@ -89,5 +89,16 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
+    public function likePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->attach($post_id);
+       
+    }
+
+    public function dislikePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->detach($post_id);
+       
+    }
 
 }

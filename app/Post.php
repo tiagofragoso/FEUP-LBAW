@@ -34,4 +34,10 @@ class Post extends Model
         return $this->hasOne('App\File');
     }
 
+    public function likes($user_id){
+        return $this->belongsToMany('App\User','post_likes','post_id','user_id')
+        ->wherePivot('user_id',$user_id)->exists();
+    }
+
+
 }

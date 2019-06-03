@@ -79,4 +79,5 @@ class Event extends Model
     public function reports(){
         return $this->hasMany('App\EventReport');
     }
+
 }

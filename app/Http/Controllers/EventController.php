@@ -6,6 +6,7 @@ use App\Event;
 use App\Category;
 use App\Currency;
 use App\Participation;
+use App\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -104,6 +105,12 @@ class EventController extends Controller
         $artists = $event->participatesAs('Artist')->get()->take(6);
         
         $posts = $event->posts()->get();
+
+        foreach($posts as $post){
+            
+            $post['hasLike'] = $post->likes(Auth::user()->id);
+
+        }
         $posts = $event->postComments($posts);
         
         if ($joined === 'Host' || $joined === 'Artist') {

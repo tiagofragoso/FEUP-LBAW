@@ -5,6 +5,7 @@ async function request(url, request) {
 }
 
 let postContent = document.querySelector('#postFormTextarea');
+let postLikeBtns = document.querySelectorAll('#like-post-btn');
 
 
 if (postContent !== null) {
@@ -14,8 +15,8 @@ if (postContent !== null) {
 function createPost(response) {
     const post = document.createElement('div');
     post.className = 'post-wrapper';
-    post.innerHTML = 
-    ` <div class="row justify-content-center">
+    post.innerHTML =
+        ` <div class="row justify-content-center">
         <div class="card col-12 col-lg-9 mb-4 hover-shadow">
             <div class="row">
                 <div class="col-12 col-md-10">
@@ -108,7 +109,7 @@ async function postPost(event) {
 
     let event_id = document.querySelector('.submit-post').dataset.id;
 
-    const response = await request (
+    const response = await request(
         '/api/events/' + event_id + '/posts',
         {
             method: 'POST',
@@ -127,3 +128,50 @@ async function postPost(event) {
         insertPost(createPost(response));
     }
 }
+
+
+postLikeBtns.forEach(button => {
+
+    button.addEventListener('click', async () => {
+        let i = button.getElementsByTagName('i')[0];
+        let post_id = button.closest('.post-wrapper').dataset.id;
+        let numberLikes = button.getElementsByTagName('span')[0].textContent;
+        let url = '/api/posts/' + post_id + '/like';
+        if (i.classList.contains('far')) {
+            const response = await request(
+                url,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            if (response === 200) {
+                i.classList.replace('far', 'fas');
+                button.getElementsByTagName('span')[0].textContent++;
+            }
+        } else {
+            const response = await request(
+                url,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            if (response === 200) {
+                i.classList.replace('fas', 'far');
+                button.getElementsByTagName('span')[0].textContent = numberLikes-1;
+            }
+        }
+
+
+
+    })
+});

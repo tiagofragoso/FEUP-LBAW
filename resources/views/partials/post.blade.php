@@ -1,4 +1,4 @@
-<div class="post-wrapper">
+<div class="post-wrapper" data-id="{{$post->id}}">
 <div class="row justify-content-center">
     <div class="card col-12 col-lg-9 mb-4 hover-shadow">
         <div class="row">
@@ -44,9 +44,9 @@
             </div>
             <div
                 class="col-12 col-md-2 h-auto h-md-100 d-flex flex-row flex-md-column justify-content-center align-items-center pr-0 pl-0 pl-md-auto">
-                <button type="button" class="btn btn-light w-100 h-100 flex-grow-2">
+                <button type="button" class="btn btn-light w-100 h-100 flex-grow-2" id="like-post-btn">
                     <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
-                        <i class="far fa-thumbs-up"></i>
+                        <i class=" {{$post['hasLike']== true ? 'fas': 'far'}} fa-thumbs-up"></i>
                         <span>{{$post->likes}}</span>
                     </div>
                 </button>
@@ -70,7 +70,7 @@
                         <div
                             class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
                             <button class="submit-btn" type="submit">
-                                <i class="fas fa-angle-double-right"></i>
+                                <i class="far fa-angle-double-right"></i>
                             </button>
                         </div>
                     </form>

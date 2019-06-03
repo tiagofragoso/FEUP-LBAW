@@ -36,6 +36,8 @@ Route::put('api/reports/{id}','ReportController@report');
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
+Route::put('api/posts/{id}/like','PostController@likePost');
+Route::delete('api/posts/{id}/like','PostController@dislikePost');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
