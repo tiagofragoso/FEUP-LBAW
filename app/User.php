@@ -89,5 +89,4 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
-
 }

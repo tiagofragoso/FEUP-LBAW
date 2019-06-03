@@ -1,7 +1,9 @@
+@if(Auth::user()->id != $user->id)
 <div class="dropdown position-absolute more-button">
     <button class="btn btn-light border-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-h"></i>
     </button>
+   
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
         @if(!$user->banned)
         @if(Auth::user()->is_admin)
@@ -9,11 +11,11 @@
         @else
         <a class="dropdown-item text-danger" id="report-user-btn" href="#"  data-toggle="modal" data-target="#exampleModal">
             Report user</a>
-
         @endif
         @endif
     </div>
 </div>
+@endif
 <div class="row justify-content-center">
     <div class="col-6 mb-3 mt-3 text-center position-relative">
         <img src="../assets/user.svg" alt="..." class="rounded-circle border border-green" width="120" height="120">
