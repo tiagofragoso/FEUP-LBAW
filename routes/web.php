@@ -37,6 +37,7 @@ Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
 
+Route::post('api/posts/{id}/comments','CommentController@store');
 Route::put('api/posts/{id}/like','PostController@likePost');
 Route::delete('api/posts/{id}/like','PostController@dislikePost');
 

@@ -1,4 +1,37 @@
+
+let commentContent = document.querySelector('#commentFormTextArea');
 let commentLikeBtns = document.querySelectorAll('#like-comment-btn');
+
+
+if (commentContent !== null) {
+    console.log(commentContent);
+    document.querySelector('.submit-comment').addEventListener('click', postComment);
+}
+
+async function postComment(event){
+    event.preventDefault();
+    
+    let requestBody = {
+        content: commentContent.value,
+        parent: null
+    }
+
+    let post_id = document.querySelector('.submit-comment').dataset.id;
+
+    const response = await request(
+        '/api/posts/' + post_id + '/comments',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        }
+    );
+    console.log(response);
+}
 
 commentLikeBtns.forEach(button => {
 

@@ -37,6 +37,15 @@ class CommentController extends Controller
         //
     }
 
+    public function validateComment($data) {
+        return Validator::make($data->all(), [
+            'content' => 'required|string|max:5000',
+            'post_id' => 'required',
+            'author_id' => 'required',
+            'parent' => 'required'
+        ])->validate();
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -45,15 +54,34 @@ class CommentController extends Controller
      */
     public function store(Request $request, $id)
     {
+        if (!Auth::check()) return response(403);
+        $post = Post::find($id);
+        if (is_null($post)) return response(404);
+        $this->authorize('create', [$post, Comment::class]);
+        $request->request->add(['author_id' => Auth::user()->id]);
+        $request->request->add(['post_id' => $id]);
+        $this->validateComment($request);
+        $comment = Comment::create($request->all());
+        $comment = Comment::find($comment->id);
+        return response()->json([
+            'id' => $comment->id,
+            'content' => $comment->content,
+            'author_id' => $comment->author_id,
+            'parent' => $comment->parent,
+            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
+            'author' => $comment->author->displayName()
+        ]);
+        return response(200);
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Comment $comment)
     {
         //
     }
@@ -61,7 +89,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Comment  $post
+     * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function edit(Comment $comment)
@@ -91,21 +119,21 @@ class CommentController extends Controller
     {
         //
     }
-    public function likeComment($id){
-       
+    public function likeComment($id)
+    {
+
         if (!Auth::check()) return response(403);
-        
+
         if (is_null(Comment::find($id))) return response(404);
         Auth::user()->likeComment($id);
         return response(200);
-        
     }
-    public function dislikeComment($id){
-        
+    public function dislikeComment($id)
+    {
+
         if (!Auth::check()) return response(403);
         if (is_null(Comment::find($id))) return response(404);
         Auth::user()->dislikeComment($id);
         return response(200);
-
     }
 }
