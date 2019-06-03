@@ -3,6 +3,7 @@
 @section('scripts')
 <script defer type="text/javascript" src="/js/join_event.js"> </script>
 <script defer type="text/javascript" src="/js/posts.js"> </script>
+<script defer type="text/javascript" src="/js/questions.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -304,11 +305,11 @@
 												width="30" height="30" />
 											<form class="position-relative w-100" action="#">
 												<textarea class="form-control position-relative w-100 pr-5"
-													id="exampleFormControlTextarea1" rows="1"
+													id="questionFormTextarea" rows="1"
 													placeholder="Ask a question" style="resize: none"></textarea>
 												<div
 													class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
-													<button class="submit-btn" type="submit">
+													<button class="submit-btn submit-question" data-id="{{$event->id}}" type="submit">
 														<i class="fas fa-angle-double-right"></i>
 													</button>
 												</div>

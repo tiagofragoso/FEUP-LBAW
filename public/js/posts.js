@@ -109,7 +109,7 @@ async function postPost(event) {
     let event_id = document.querySelector('.submit-post').dataset.id;
 
     const response = await request (
-        '/api/events/' + '10' + '/posts',
+        '/api/events/' + event_id + '/posts',
         {
             method: 'POST',
             headers: {
@@ -121,7 +121,7 @@ async function postPost(event) {
         }
     );
 
-    if (response) { // if (response.status === 201) {
+    if (response) { // if (reponse.status === 201) {
         console.log(response);
         postContent.value = "";
         insertPost(createPost(response));

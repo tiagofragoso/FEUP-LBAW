@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
