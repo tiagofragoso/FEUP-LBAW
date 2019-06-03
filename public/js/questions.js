@@ -1,6 +1,6 @@
 async function request(url, request) {
     const response = await fetch(url, request);
-    const data = await response.json();
+    const data = await response;
     return data;
 }
 
@@ -33,8 +33,7 @@ async function postQuestion(event) {
         }
     );
 
-    if (response) { // if (response.status === 201) {
-        console.log(response); 
+    if (response.status === 201) { 
         questionContent.value = "";
         document.querySelector('#question-confirmation-message').classList.remove('d-none');
     }
