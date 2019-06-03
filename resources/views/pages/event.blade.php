@@ -2,6 +2,7 @@
 
 @section('scripts')
 <script defer type="text/javascript" src="/js/join_event.js"> </script>
+<script defer type="text/javascript" src="/js/posts.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -255,30 +256,30 @@
 											</div>
 											<div class="row">
 												<div class="col-12">
-													<textarea class="form-control" id="exampleFormControlTextarea1"
+													<textarea class="form-control" id="postFormTextarea"
 														rows="3"></textarea>
 												</div>
 											</div>
 											<hr class="mb-1">
 											<div class="row">
 												<div class="col-6 post-type">
-													<input class="form-check-input d-none" type="radio" id="text"
-														value="option1" name="post-type" checked>
+													<input class="form-check-input d-none form-post-type" type="radio" id="text"
+													value="option1" name="post-type" checked>
 													<label class="form-check-label mr-2" for="text"><i
 															class="fas fa-font"></i></label>
 
-													<input class="form-check-input d-none" type="radio" id="poll"
+													<input class="form-check-input d-none form-post-type" type="radio" id="poll"
 														value="option2" name="post-type">
 													<label class="form-check-label mr-2" for="poll"><i
 															class="fas fa-poll-h"></i></label>
 
-													<input class="form-check-input d-none" type="radio" id="file"
+													<input class="form-check-input d-none form-post-type" type="radio" id="file"
 														value="option3" name="post-type">
 													<label class="form-check-label" for="file"><i
 															class="fas fa-paperclip"></i></label>
 												</div>
 												<div class="col-6 text-right">
-													<button class="submit-btn" type="submit">
+													<button class="submit-btn submit-post" data-id="{{$event->id}}" type="submit">
 														<i class="fas fa-angle-double-right"></i>
 													</button>
 												</div>
@@ -287,7 +288,9 @@
 									</div>
 								</div>
 								@endif
+								<div class="posts-list">
 								@each('partials.post', $posts, 'post')
+								</div>
 							</div>
 						</div>
 						<div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
@@ -409,9 +412,9 @@
 										<hr class="mb-1">
 										<div class="row">
 											<div class="col-6 post-type">
-												<input class="form-check-input d-none" type="radio" id="text"
-													value="option1" name="post-type" checked>
-												<label class="form-check-label mr-2" for="text"><i
+												<input class="form-check-input d-none" type="radio" id="thread"
+													value="option4" name="thread" checked>
+												<label class="form-check-label mr-2" for="thread"><i
 														class="fas fa-font"></i></label>
 											</div>
 											<div class="col-6 text-right">

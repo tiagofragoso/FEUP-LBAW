@@ -169,7 +169,7 @@ class EventController extends Controller
 
     public function joinEvent($id){
         if (!Auth::check()) return response(403);
-        if (Event::find($id) == null) return response(404);
+        if (is_null(Event::find($id))) return response(404);
         
         if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
 
@@ -179,7 +179,7 @@ class EventController extends Controller
 
     public function leaveEvent($id) {
         if (!Auth::check()) return response(403);
-        if (Event::find($id) == null) return response(404);
+        if (is_null(Event::find($id))) return response(404);
 
         if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response(403);
         if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
