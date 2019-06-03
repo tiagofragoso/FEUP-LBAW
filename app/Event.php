@@ -43,6 +43,9 @@ class Event extends Model
         return $this->belongsTo('App\Category', 'category');
     }
 
+    public function reports(){
+        return $this->hasMany('App\EventReport');
+    }
     public function postComments($posts) {
         foreach ($posts as $key => $value) {
             $value['commentsContent'] = Post::find($value->id)->comments()->get();
@@ -74,10 +77,6 @@ class Event extends Model
         $questions['unanswered'] = $unanswered;
      
         return $questions;
-    }
-
-    public function reports(){
-        return $this->hasMany('App\EventReport');
     }
 
 }

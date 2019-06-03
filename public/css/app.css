@@ -485,7 +485,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	background: linear-gradient(to right, var(--green) calc(100%), var(--grey) calc(100%) );
 }
 
-.more-button {
+.event-page .more-button {
 	z-index: 1;
 	right: 1rem;
 	top: 1rem;
@@ -503,14 +503,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	opacity: 0.8;
 }
 
-.invite-button {
-	z-index: 1;
-	left: 1rem;
-	bottom: 1rem;
-	opacity: 0.8;
-}
-
-.artists-wrapper a {
+.event-page .artists-wrapper a {
 	color: var(--blue);
 }
 
