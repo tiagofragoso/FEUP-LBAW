@@ -105,14 +105,20 @@ class EventController extends Controller
         $artists = $event->participatesAs('Artist')->get()->take(6);
         
         $posts = $event->posts()->get();
+        $posts = $event->postComments($posts);
 
         foreach($posts as $post){
             
             $post['hasLike'] = $post->likes(Auth::user()->id);
-
+           foreach($post->commentsContent as $comment){
+           $comment['hasLike'] = $comment->likes(Auth::user()->id);
+           foreach($comment->comments as $commentComment){
+            $commentComment['hasLike'] = $commentComment->likes(Auth::user()->id);
+           }
         }
-        $posts = $event->postComments($posts);
-        
+    }
+    
+
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();
         } else {

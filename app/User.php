@@ -101,4 +101,16 @@ class User extends Authenticatable
        
     }
 
+    public function likeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->attach($comment_id);
+       
+    }
+
+    public function dislikeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->detach($comment_id);
+       
+    }
+
 }

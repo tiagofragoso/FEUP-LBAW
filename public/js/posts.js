@@ -134,9 +134,9 @@ postLikeBtns.forEach(button => {
 
     button.addEventListener('click', async () => {
         let i = button.getElementsByTagName('i')[0];
-        let post_id = button.closest('.post-wrapper').dataset.id;
+        let comment_id = button.closest('.comment-wrapper').dataset.id;
         let numberLikes = button.getElementsByTagName('span')[0].textContent;
-        let url = '/api/posts/' + post_id + '/like';
+        let url = '/api/comments/' + comment_id + '/like';
         if (i.classList.contains('far')) {
             const response = await request(
                 url,
