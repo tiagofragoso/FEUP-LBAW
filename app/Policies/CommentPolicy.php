@@ -20,7 +20,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment)
     {
-        //
+         return true;
     }
 
     /**
@@ -29,9 +29,9 @@ class CommentPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user, Post $post,Comment $comment)
+    public function create(User $user, Comment $comment, Post $post)
     {
-        return Auth::user();
+        return true;
     }
 
     /**

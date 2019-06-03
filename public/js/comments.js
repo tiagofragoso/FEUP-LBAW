@@ -30,7 +30,51 @@ async function postComment(event){
             body: JSON.stringify(requestBody)
         }
     );
-    console.log(response);
+    if (!response.errors) {
+        //console.log(response);
+        commentContent.value = "";
+        insertComment(createComment(response));
+    }
+}
+function createComment(response){
+        const comment = document.createElement('div');
+        comment.className = 'row col-12 comment align-items-start justify-content-center';
+        comment.innerHTML = `
+    <div class="col-12 col-md-10 d-flex flex-row">
+        <a href="url('/users/${response.user_id}')}">
+            <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
+        </a>
+        <div class="w-100 d-flex flex-column">
+            <div class="comment-wrapper d-flex flex-column w-100" data-id="${response.id}">
+                <div class="comment-text px-3 py-2">
+                    <span>
+                        <a class="title-link mr-2" href="{{ url('/users/'.${response.user_id})}}">
+                            <span class=" author">${response.user}</span>
+                        </a>
+                        ${response.content}
+                    </span>
+                </div>
+                <div class="comment-footer ml-3">
+                    <span id="numberLikes">0</span>
+                    <span> likes </span>
+                    •
+                    <button class="bg-transparent border-0" id="like-comment-btn">
+                       Like
+                    </button>
+                    •
+                    <span>${response.date}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`;
+return comment;
+}
+
+function insertComment(comment){
+    
+    let comments = document.querySelector('.comments-list');
+    comments.insertBefore(comment, comments.childNodes[0]);
 }
 
 commentLikeBtns.forEach(button => {

@@ -41,8 +41,7 @@ class CommentController extends Controller
         return Validator::make($data->all(), [
             'content' => 'required|string|max:5000',
             'post_id' => 'required',
-            'author_id' => 'required',
-            'parent' => 'required'
+            'user_id' => 'required'
         ])->validate();
     }
 
@@ -57,8 +56,8 @@ class CommentController extends Controller
         if (!Auth::check()) return response(403);
         $post = Post::find($id);
         if (is_null($post)) return response(404);
-        $this->authorize('create', [$post, Comment::class]);
-        $request->request->add(['author_id' => Auth::user()->id]);
+        //$this->authorize('create', [App\Comment::class,$post]);
+        $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['post_id' => $id]);
         $this->validateComment($request);
         $comment = Comment::create($request->all());
@@ -66,10 +65,9 @@ class CommentController extends Controller
         return response()->json([
             'id' => $comment->id,
             'content' => $comment->content,
-            'author_id' => $comment->author_id,
-            'parent' => $comment->parent,
+            'user_id' => $comment->user_id,
             'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
-            'author' => $comment->author->displayName()
+            'user' => $comment->user->displayName()
         ]);
         return response(200);
     }
