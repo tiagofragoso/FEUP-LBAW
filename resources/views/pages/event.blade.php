@@ -10,7 +10,6 @@
 @section('container', 'event-page')
 @section('content')
 
-
 <div id="content" class="container my-0 my-sm-5" data-id="{{$event->id}}">
 	@include('partials.banned_card',['object' => $event])
 	@include('partials.report_modal')
@@ -30,13 +29,10 @@
 							@else
 							<a class="dropdown-item text-danger" id="report-event-btn" data-toggle="modal" data-target="#exampleModal">
 								Report event</a>
-
-
 							@endif
 							@endif
 						</div>
 					</div>
-				</div>
 				@if ($joined == 'Host')
 				<a href="#" class="position-absolute invite-button">
 					<button class="btn btn-light border-light">
@@ -406,5 +402,6 @@
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 	@endsection
