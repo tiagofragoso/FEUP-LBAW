@@ -152,7 +152,7 @@
 									</label>
 								</div>
 								<input id="start_date" type="text" name="start_date" 
-									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
+									data-oldValue="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
 									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="Start date">
 								@if ($errors->has('start_date'))
 									<span class="invalid-feedback">
@@ -166,12 +166,12 @@
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<input id="end_date" type="text" name="start_date" 
-									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
-									class="datepicker-here custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}" placeholder="End date">
-								@if ($errors->has('start_date'))
+								<input id="end_date" type="text" name="end_date" 
+									data-oldValue="{{ old('end_date', !empty($event->end_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('Y-m-d\TH:i') : '') }}" 
+									class="datepicker-here custom-select border-blue {{$errors->has('end_date')? 'is-invalid' : '' }}" placeholder="End date">
+								@if ($errors->has('end_date'))
 									<span class="invalid-feedback">
-										{{ $errors->first('start_date') }}
+										{{ $errors->first('end_date') }}
 									</span>
 								@endif
 							</div>

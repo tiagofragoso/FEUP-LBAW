@@ -1,10 +1,11 @@
-$('#start_date').datepicker({
+console.error('Reloaded');
+
+const startDatepicker = $('#start_date').datepicker({
 	language: 'en',
 	minDate: new Date(),
 	timepicker: true,
 	dateFormat: 'dd-mm-yy',
 	timeFormat: 'hh:ii',
-	dateTimeSeparator: ' at ',
 	clearButton: true,
 	onSelect: (_x, date, _y) => {
 		if (endDatepicker.date < date) {
@@ -12,7 +13,7 @@ $('#start_date').datepicker({
 		}
 		endDatepicker.update('minDate', date);
 	}
-});
+}).data('datepicker');
 
 const endDatepicker = $('#end_date').datepicker({
 	language: 'en',
@@ -20,10 +21,21 @@ const endDatepicker = $('#end_date').datepicker({
 	timepicker: true,
 	dateFormat: 'dd-mm-yy',
 	timeFormat: 'hh:ii',
-	dateTimeSeparator: ' at ',
 	clearButton: true
 }).data('datepicker');
 
+const oldStartdate = document.querySelector('#start_date').dataset.oldValue;
+const oldEnddate = document.querySelector('#end_date').dataset.oldValue;
+
+console.log(oldStartdate, oldEnddate);
+
+if (oldStartdate) {
+	startDatepicker.selectDate(new Date(oldStartdate));
+}
+
+if (oldEnddate) {
+	endDatepicker.selectDate(new Date(oldEnddate));
+}
 
 document.querySelector('#photo').addEventListener('change', (event) => {
 	const input = event.target;

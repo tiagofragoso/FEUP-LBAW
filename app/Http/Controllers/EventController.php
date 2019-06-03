@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Faker\Provider\zh_TW\DateTime;
 
 class EventController extends Controller
 {
@@ -29,7 +30,8 @@ class EventController extends Controller
             'private' => 'required',
             'status' => 'required',
             'price' => 'nullable|numeric|min:0',
-            'start_date' => 'nullable|date|after:now'
+            'start_date' => 'nullable|date_format:d-m-y H:i|after:now',
+            'end_date' => 'nullable|date_format:d-m-y H:i|after:start_date'
         ])->validate();
     }
 
@@ -66,13 +68,22 @@ class EventController extends Controller
     {
         $this->authorize('create', Event::class);
 
-        $this->validateEvent($request);
+        $this->validateEvent($request); //TODO: Add other constrains
+
+        if (!empty($request->start_date)) {
+            $start_date = \DateTime::createFromFormat('d-m-y H:i', $request->start_date)->format('Y-m-d\TH:i');
+        }
+
+        if (!empty($request->end_date)) {
+            $end_date = \DateTime::createFromFormat('d-m-y H:i', $request->end_date)->format('Y-m-d\TH:i');
+        }
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('events', 'public');
-            $event = Event::create(array_merge($request->except('photo'), ['photo' => $path]));
+            $event = Event::create(array_merge($request->except(['photo', 'start_date', 'end_date']), 
+                ['photo' => $path, 'start_date' => $start_date, 'end_date' => $end_date]));
         } else {
-            $event = Event::create($request->except('photo'));
+            $event = Event::create(array_merge($request->except(['photo', 'start_date', 'end_date']), ['start_date' => $start_date, 'end_date' => $end_date]));
         }
 
         Participation::create(['event_id' => $event->id, 'user_id' => Auth::user()->id, 'type' => 'Owner']);
@@ -142,7 +153,7 @@ class EventController extends Controller
         if ($request->hasFile('photo')) {
             try {
                 $old = Storage::disk('public')->get($event->photo);
-            } catch (Exception $e) {}
+            } catch (Exception $e) { }
             if (isset($old)) {
                 Storage::disk('public')->delete($event->photo);
             }
