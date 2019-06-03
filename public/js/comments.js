@@ -7,7 +7,6 @@ commentLikeBtns.forEach(button => {
         let comment_id = button.closest('.comment-wrapper').dataset.id;
         let numberLikes = button.closest('.comment-footer').getElementsByTagName('span')[0].textContent;
         let url = '/api/comments/' + comment_id + '/like';
-        console.log(textBtn.trim().localeCompare("Like"));
         if (textBtn.trim().localeCompare("Like") == 0) {
             const response = await request(
                 url,
