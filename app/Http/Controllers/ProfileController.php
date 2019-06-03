@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\User;
-use App\Follow;
+use App\EventReport;
+use App\UserReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -38,8 +39,58 @@ class ProfileController extends Controller
         if (!Auth::check()) return redirect('/login');
 
         $data = $this->getEventsData(Auth::user());
+        
+        if (Auth::user()->is_admin){
+            $pendingEventReports = EventReport::all()->where('status','Pending')->groupBy('event_id');
 
-        return view('pages.profile',  $data);
+            foreach($pendingEventReports as $eventReport){
+                
+                $eventReport['reports'] = $eventReport->toArray();
+                $eventReport['status'] = $eventReport->first()->status;
+                $eventReport['event'] = $eventReport->first()->first()->event()->get()->first();
+                $eventReport['user'] =  $eventReport->first()->first()->user()->get()->first();
+            }
+    
+            $pendingUserReports = UserReport::all()->where('status','Pending')->groupBy('reported_user');
+
+            foreach($pendingUserReports as $userReport){
+
+                $userReport['reports'] = $userReport->toArray();
+                $userReport['status'] = $userReport->first()->status;
+                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
+                $userReport['user'] = $userReport->first()->user()->get()->first();
+               
+            }
+            $allEventReports = EventReport::all()->whereNotIn('status','Pending')->groupBy('event_id');
+            foreach($allEventReports as $eventReport){
+
+                $eventReport['reports'] = $eventReport->toArray();
+                $eventReport['status'] = $eventReport->first()->status;
+                $eventReport['event'] = $eventReport->first()->event()->get()->first();
+                $eventReport['user'] =  $eventReport->first()->user()->get()->first();
+            }
+            
+            $allUserReports = UserReport::all()->whereNotIn('status','Pending')->groupBy('reported_user');
+        
+            foreach($allUserReports as $userReport){
+                
+                $userReport['reports'] = $userReport->toArray();
+                $userReport['status'] = $userReport->first()->status;
+                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
+                $userReport['user'] = $userReport->first()->user()->get()->first();
+            }
+            $pendingReports['user'] = $pendingUserReports;
+            $pendingReports['event'] = $pendingEventReports;
+            $allReports['user'] = $allUserReports;
+            $allReports['event'] = $allEventReports;
+            $data['pendingReports'] = $pendingReports;
+            $data['allReports'] = $allReports;
+
+            $data['user'] = Auth::user();
+            return view('pages.admin_profile',$data);
+        }
+        else 
+            return view('pages.profile',  $data);
     }
 
     public function getEventsData($user) {
@@ -57,6 +108,7 @@ class ProfileController extends Controller
         
         return $data;
     }
+
 
     /**
      * Show the form for editing the specified resource.

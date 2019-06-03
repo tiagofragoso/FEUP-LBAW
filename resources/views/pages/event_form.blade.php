@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $title)
+@section('container', 'event-form-page')
 
 @section('content')
 <div id="content" class="container my-0 my-sm-5">

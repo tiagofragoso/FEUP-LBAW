@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('container', 'profile-page')
 @section('scripts')
 	<script defer type="text/javascript" src="/js/user_profile.js"> </script>
 	<script defer type="text/javascript" src="/js/join_event.js"> </script>
@@ -22,6 +23,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="card-body">
                     @include('partials.profile_event_tabs', ['data' => [$joined, $hosting, $performing, $user]])
                 </div>
