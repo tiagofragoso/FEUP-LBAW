@@ -131,6 +131,16 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: var(--shadow);
 }
 
+.title-link {
+	color: var(--blue);
+	text-decoration: none;
+}
+
+.title-link:hover {
+	text-decoration: underline;
+	color: var(--darkblue);
+}
+
 nav .navbar-toggler {
     border-color: transparent !important;
 }
@@ -425,6 +435,12 @@ a.badge-secondary:hover {
 	cursor: pointer;
 }
 
+.complete {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
 .step-wrapper {
 	width: 2rem;
 	overflow: visible;
@@ -467,6 +483,12 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	background: linear-gradient(to right, var(--green) calc(100% - 1rem), var(--grey) calc(100% - 1rem) );
 }
 
+.progress-4 {
+	display: block;
+	background: linear-gradient(to right, var(--green) calc(100%), var(--grey) calc(100%) );
+}
+
+.more-button {
 .event-page .more-button {
 	z-index: 1;
 	right: 1rem;
@@ -485,6 +507,14 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 }
 
 .event-page .artists-wrapper a {
+.invite-button {
+	z-index: 1;
+	left: 1rem;
+	bottom: 1rem;
+	opacity: 0.8;
+}
+
+.artists-wrapper a {
 	color: var(--blue);
 }
 
