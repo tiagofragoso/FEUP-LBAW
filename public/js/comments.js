@@ -3,7 +3,7 @@ let commentLikeBtns = document.querySelectorAll('#like-comment-btn');
 commentLikeBtns.forEach(button => {
 
     button.addEventListener('click', async () => {
-        let textBtn = button.closest('.comment-footer').getElementsByTagName('a')[0].innerText;
+        let textBtn = button.closest('.comment-footer').getElementsByTagName('button')[0].innerText;
         let comment_id = button.closest('.comment-wrapper').dataset.id;
         let numberLikes = button.closest('.comment-footer').getElementsByTagName('span')[0].textContent;
         let url = '/api/comments/' + comment_id + '/like';
@@ -20,7 +20,7 @@ commentLikeBtns.forEach(button => {
                 }
             );
             if (response === 200) {
-                button.closest('.comment-footer').getElementsByTagName('a')[0].innerText= 'Liked';
+                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText= 'Liked';
                 button.closest('.comment-footer').getElementsByTagName('span')[0].textContent++;
             }
         } else {
@@ -37,7 +37,7 @@ commentLikeBtns.forEach(button => {
             );
             if (response === 200) {
 
-                button.closest('.comment-footer').getElementsByTagName('a')[0].innerText= 'Like';
+                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText= 'Like';
                 button.closest('.comment-footer').getElementsByTagName('span')[0].textContent--;
                 
             }

@@ -15,11 +15,11 @@
             <span id="numberLikes"> {{$comment->likes}} </span>
             <span> likes </span>
             •
-            <a id="like-comment-btn" href="#">
+            <button class="bg-transparent border-0"id="like-comment-btn" >
                 @if(!$comment['hasLike'])Like
                 @else Liked
                 @endif
-            </a>
+           </button>
             •
             <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i')}}</span>
         </div>
