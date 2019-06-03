@@ -380,7 +380,6 @@ a.badge-secondary:hover {
 	color: var(--hoverblue);
 }
 
-
 /* event */
 #content {
 	max-width: 960px!important;
@@ -435,33 +434,49 @@ a.badge-secondary:hover {
 	width: 100%;
 }
 
-input[type="radio"]:checked + .progress {
+input[type="radio"]:checked + .progress + .step-wrapper > label {
+	transform: scale(1.15);
+	transition: transform 0.3s ease-in-out;
+}
+
+#step-1 + .progress {
 	display: block;
 }
 
-input[type="radio"]:checked + .progress + .step-wrapper > label {
+#step-1 + .progress + .step-wrapper > label {
 	background-color: var(--green);
 	color: var(--white);
 	border-color: var(--green);
 }
 
-input[type="radio"]:checked + .progress + .step-wrapper > label + span {
+#step-1 + .progress + .step-wrapper > label + span {
+	color: var(--green);
+}
+
+#step-2:checked + .progress {
+	display: block;
+}
+
+#step-2:checked + .progress + .step-wrapper > label {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+#step-2:checked + .progress + .step-wrapper > label + span {
 	color: var(--green);
 }
 
 .progress-1 {
-	display: block;
-	background: linear-gradient(to right, var(--green) 1rem, var(--grey) 1rem);
+	background: linear-gradient(to right, var(--green) 5rem, var(--grey) 5rem);
 }
 
 .progress-2 {
-	display: block;
 	background: linear-gradient(to right, var(--green) 50%, var(--grey) 50%);
 }
 
 .progress-3 {
-	display: block;
-	background: linear-gradient(to right, var(--green) calc(100% - 1rem), var(--grey) calc(100% - 1rem) );
+	background: linear-gradient(to right, var(--green) calc(100% - 5rem), var(--grey) calc(100% - 5rem) );
 }
 
 .more-button {
@@ -565,14 +580,11 @@ input#priceSelect {
 	border-radius: 0;
 }
 
-input[type="datetime-local"].custom-select, input[type="number"].custom-select {
+input[type="number"].custom-select {
 	background: none;
 	padding-right: .75rem;
 }
 
-textarea#date {
-	resize: none;
-}
 
 label[for="photo"].tag-button {
 	cursor: pointer;
@@ -586,11 +598,13 @@ label[for="photo"].tag-button {
 }
 
 .help-text {
-	display: inline-block;
+	display: none;
+	max-width: 0px;
 }
 
 .help-btn:hover .help-text {
 	display: inline-block;
+	max-width: none;
 }
 
 /* home */

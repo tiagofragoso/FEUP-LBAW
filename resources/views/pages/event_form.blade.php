@@ -15,12 +15,29 @@
 					<label for="photo" class="btn btn-light border-light position-absolute tag-button">
 						<i class="fas fa-camera mr-1"></i> Upload a photo
 					</label>
-					<button type="button" class="btn btn-light border-light position-absolute help-btn" data-toggle="modal" data-target="#helpModal">
-							<div class="help-text"></div>
+					<button type="button" class="btn btn-light border-light position-absolute help-btn" data-toggle="modal" data-target="#help-modal">
+							<div class="help-text mr-3 ">Having trouble filling out the form? Click here.</div>
 							<i class="fas fa-question mr-1"></i>
 					</button>
 					<input type="file" id="photo" name="photo" style="display:none;" accept="image/png, image/jpeg" >
 					<img id="img" class="d-block w-100" src="{{ asset('assets/event-placeholder.png')}}" alt="Event photo">
+				</div>
+				<div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-title" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="help-modal-title">How to create an event</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-start">
@@ -166,7 +183,7 @@
 								<input type="radio" id="step-1" name="status" value="Planning" style="display: none;" 
 									{{ (old('status', !empty($event->status)? $event->status : '') == 'Planning' || empty(old('status', !empty($event->status)? $event->status : '')))? 'checked' : ''}}>
 								<div class="progress progress-1 position-absolute"></div>
-								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
+								<div class="ml-5 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-1"
 										class="step rounded-circle d-flex align-items-center justify-content-center">
 										1
@@ -175,7 +192,7 @@
 								</div>
 								<input type="radio" id="step-2" name="status" value="Tickets" style="display: none;" {{ (old('status', !empty($event->status)? $event->status : '') == 'Tickets')? 'checked' : ''}}>
 								<div class="progress progress-3 position-absolute"></div>
-								<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
+								<div class="mr-5 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-2"
 										class="step rounded-circle d-flex align-items-center justify-content-center">
 										2
