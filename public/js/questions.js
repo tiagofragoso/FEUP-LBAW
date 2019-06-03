@@ -8,6 +8,7 @@ let questionContent = document.querySelector('#questionFormTextarea');
 
 if (questionContent !== null) {
     document.querySelector('.submit-question').addEventListener('click', postQuestion);
+    document.querySelector('#question-confirmation-message').classList.add('d-none');
 }
 
 async function postQuestion(event) {
@@ -32,8 +33,9 @@ async function postQuestion(event) {
         }
     );
 
-    if (response) {
-        console.log(response);
+    if (response) { // if (response.status === 201) {
+        console.log(response); 
         questionContent.value = "";
+        document.querySelector('#question-confirmation-message').classList.remove('d-none');
     }
 }

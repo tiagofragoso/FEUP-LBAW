@@ -315,6 +315,7 @@
 												</div>
 											</form>
 										</div>
+										<div class="success d-none" id="question-confirmation-message">Information saved with success.</div>
 									</div>
 								</div>
 								@endif
