@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +12,8 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $events = $this->getEvents($request);
-        return view('pages.search', ['events' => $events]);
+        $categories = Category::all();
+        return view('pages.search', ['events' => $events, 'categories' => $categories]);
     }
 
     public function getEvents(Request $request) {

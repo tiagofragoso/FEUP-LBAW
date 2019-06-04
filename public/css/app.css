@@ -876,6 +876,15 @@ border: 3px solid var(--green)!important;
 	}
 }
 
+.search-page .dropdown-menu {
+    max-height: 380px;
+    overflow: auto;
+}
+
+.search-page .dropdown-menu .dropdown-item.active {
+    background-color: var(--blue);
+}
+
 .search-page #results-container {
 	min-height: calc(100vh - 164px);
 }

@@ -23,26 +23,90 @@ let stuck = true;
 })).observe(document.querySelector('.trigger'));
 
 /**
- * Search filters
+ * Search filters hide event
  */
-// $('.datepicker').each((i, dt) => {
-//     $(dt).datepicker({
-//         inline: true,
-//         range: true
-//     });
-// });
+
+document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+    dropdown.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+});
 
 /**
  * Search fields onchange events.
  */
-document.querySelectorAll('.dropdownField').forEach(element => {
-    element.addEventListener('click', () => {
-        document.querySelectorAll('*[data-field="'+element.dataset.field+'"]').forEach(element2 => {
-            element2.classList.toggle('btn-outline-primary');
-            element2.classList.toggle('btn-primary');
-        });
-    });
+// document.querySelectorAll('.dropdownField').forEach(element => {
+//     element.addEventListener('click', () => {
+//         document.querySelectorAll('*[data-field="'+element.dataset.field+'"]').forEach(element2 => {
+//             element2.classList.toggle('btn-outline-primary');
+//             element2.classList.toggle('btn-primary');
+//         });
+//     });
+// });
+
+document.getElementById('location-input').addEventListener('change', function () {
+    updateButtons('dropdownLocation', 'Location', this.value);
 });
+
+document.querySelectorAll('*[aria-labelledby="dropdownCategory"] .dropdown-item').forEach(item => {
+    updateList(item, 'dropdownCategory', 'Category', item.dataset.value, item.textContent, 'category');
+});
+
+document.querySelectorAll('*[aria-labelledby="dropdownStatus"] .dropdown-item').forEach(item => {
+    updateList(item, 'dropdownStatus', 'Status', item.dataset.value, item.textContent, 'status');
+});
+
+document.querySelectorAll('*[aria-labelledby="dropdownSort"] .dropdown-item').forEach(item => {
+    updateList(item, 'dropdownSort', 'Sort by', item.dataset.value, item.textContent, 'sort_by');
+});
+
+function updateList(item, ariaLabel, title, value, placeholder, field) {
+    item.addEventListener('click', () => {
+        if (item.classList.contains('active')) {
+            removeActive('*[aria-labelledby="' + ariaLabel + '"]');
+            updateButtons(ariaLabel, title, '');
+            requestObj[field] = '';
+            return;
+        }
+        
+        removeActive('*[aria-labelledby="' + ariaLabel + '"]');
+        setActive('*[aria-labelledby="' + ariaLabel + '"]', value)
+        updateButtons(ariaLabel, title, placeholder);
+        requestObj[field] = value;
+    });
+}
+
+function updateButtons(fieldName, title, value) {
+    if (value === '') {
+        document.querySelectorAll('*[data-field="' + fieldName + '"]').forEach(element => {
+            element.classList.add('btn-outline-primary');
+            element.classList.remove('btn-primary');
+            element.querySelector('span').textContent = title;
+        });
+        return;
+    }
+
+    document.querySelectorAll('*[data-field="' + fieldName + '"]').forEach(element => {
+        element.classList.remove('btn-outline-primary');
+        element.classList.add('btn-primary');
+        element.querySelector('span').textContent = value;
+    });
+}
+
+function setActive(container, value) {
+    document.querySelectorAll(container).forEach(list => {
+        list.querySelector('*[data-value="' + value + '"').classList.add('active')
+    });
+}
+
+function removeActive(container) {
+    document.querySelectorAll(container).forEach(list => {
+        let item;
+        if ((item = list.querySelector('.active')) !== null) {
+            item.classList.remove('active');
+        }
+    });
+}
 
 /**
  * Search submit button event.
@@ -78,7 +142,7 @@ document.querySelector('.navbar-toggler').addEventListener('click', () => {
 
 let requesting = false;
 document.addEventListener('scroll', async () => {
-    if ((($(document).height()-$(window).height())-$(window).scrollTop() < 0) && !requesting) {
+    if ((($(document).height()-$(window).height())-$(window).scrollTop() < 5) && !requesting) {
         requesting = true;
 
         const data = await request(getQueryString(), {
