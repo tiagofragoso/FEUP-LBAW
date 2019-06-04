@@ -24,7 +24,7 @@
     <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
         <h6 class="dropdown-title">Location</h6>
         <div class="form-group">
-            <input type="text" class="form-control" id="location-input" placeholder="Enter location">
+            <input type="text" class="form-control location-input" placeholder="Enter location">
         </div>
     </div>
 </div>
@@ -40,9 +40,9 @@
         <h6 class="dropdown-title">Price</h6>
         <div class="form-group">
             <label for="start-price-input">Start price:</label>
-            <input type="number" class="form-control mb-2" id="start-price-input" placeholder="Enter start price">
+            <input type="number" class="form-control mb-2 start-price-input" placeholder="Enter start price">
             <label for="end-price-input">End price:</label>
-            <input type="number" class="form-control" id="end-price-input" placeholder="Enter end price">
+            <input type="number" class="form-control end-price-input" placeholder="Enter end price">
         </div>
     </div>
 </div>

@@ -35,29 +35,49 @@ document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
 /**
  * Search fields onchange events.
  */
-// document.querySelectorAll('.dropdownField').forEach(element => {
-//     element.addEventListener('click', () => {
-//         document.querySelectorAll('*[data-field="'+element.dataset.field+'"]').forEach(element2 => {
-//             element2.classList.toggle('btn-outline-primary');
-//             element2.classList.toggle('btn-primary');
-//         });
-//     });
-// });
-
-document.getElementById('location-input').addEventListener('change', function () {
-    updateButtons('dropdownLocation', 'Location', this.value);
-    requestObj.location = this.value;
+document.querySelectorAll('.location-input').forEach(input => {
+    input.addEventListener('change', function () {
+        updateInputs('dropdownLocation', 'Location', this.value, this.value, 'location', '.location-input');
+    });
 });
 
-document.getElementById('start-price-input').addEventListener('change', function () {
-    requestObj.start_price = this.value;
-    updateButtons('dropdownPrice', 'Price', getPrice());
+document.querySelectorAll('.start-price-input').forEach(input => {
+    input.addEventListener('change', function () {
+        updateInputs('dropdownPrice', 'Price', this.value, getPrice(), 'start_price', '.start-price-input');
+    });
 });
 
-document.getElementById('end-price-input').addEventListener('change', function () {
-    requestObj.end_price = this.value;
-    updateButtons('dropdownPrice', 'Price', getPrice());
+document.querySelectorAll('.end-price-input').forEach(input => {
+    input.addEventListener('change', function () {
+        updateInputs('dropdownPrice', 'Price', this.value, getPrice(), 'end_price', '.end-price-input');
+    });
 });
+
+document.querySelectorAll('*[aria-labelledby="dropdownCategory"] .dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+        updateList(item, 'dropdownCategory', 'Category', item.dataset.value, item.textContent, 'category');
+    });
+});
+
+document.querySelectorAll('*[aria-labelledby="dropdownStatus"] .dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+        updateList(item, 'dropdownStatus', 'Status', item.dataset.value, item.textContent, 'status');
+    });
+});
+
+document.querySelectorAll('*[aria-labelledby="dropdownSort"] .dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+        updateList(item, 'dropdownSort', 'Sort by', item.dataset.value, item.textContent, 'sort_by');
+    });
+});
+
+function updateInputs(ariaLabel, title, value, placeholder, field, className) {
+    updateButtons(ariaLabel, title, value);
+    requestObj[field] = value;
+    document.querySelectorAll(className).forEach(input => {
+        input.value = value;
+    });
+}
 
 function getPrice() {
     let placeholder = '';
@@ -72,35 +92,22 @@ function getPrice() {
         placeholder += 'any';
     else 
         placeholder += requestObj.end_price + '€';
+
     return placeholder === 'any - any' ? '' : placeholder;
 }
 
-document.querySelectorAll('*[aria-labelledby="dropdownCategory"] .dropdown-item').forEach(item => {
-    updateList(item, 'dropdownCategory', 'Category', item.dataset.value, item.textContent, 'category');
-});
-
-document.querySelectorAll('*[aria-labelledby="dropdownStatus"] .dropdown-item').forEach(item => {
-    updateList(item, 'dropdownStatus', 'Status', item.dataset.value, item.textContent, 'status');
-});
-
-document.querySelectorAll('*[aria-labelledby="dropdownSort"] .dropdown-item').forEach(item => {
-    updateList(item, 'dropdownSort', 'Sort by', item.dataset.value, item.textContent, 'sort_by');
-});
-
 function updateList(item, ariaLabel, title, value, placeholder, field) {
-    item.addEventListener('click', () => {
-        if (item.classList.contains('active')) {
-            removeActive('*[aria-labelledby="' + ariaLabel + '"]');
-            updateButtons(ariaLabel, title, '');
-            requestObj[field] = '';
-            return;
-        }
-        
+    if (item.classList.contains('active')) {
         removeActive('*[aria-labelledby="' + ariaLabel + '"]');
-        setActive('*[aria-labelledby="' + ariaLabel + '"]', value)
-        updateButtons(ariaLabel, title, placeholder);
-        requestObj[field] = value;
-    });
+        updateButtons(ariaLabel, title, '');
+        requestObj[field] = '';
+        return;
+    }
+    
+    removeActive('*[aria-labelledby="' + ariaLabel + '"]');
+    setActive('*[aria-labelledby="' + ariaLabel + '"]', value)
+    updateButtons(ariaLabel, title, placeholder);
+    requestObj[field] = value;
 }
 
 function updateButtons(fieldName, title, value) {
