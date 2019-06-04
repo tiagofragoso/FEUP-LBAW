@@ -21,9 +21,12 @@ class Comment extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function likes($user_id){
-        return $this->belongsToMany('App\User','comment_likes','comment_id','user_id')
-        ->wherePivot('user_id',$user_id)->exists();
+    public function likes(){
+        return $this->belongsToMany('App\User','comment_likes','comment_id','user_id');
+    }
+
+    public function hasLike($user) {
+        return $this->likes()->wherePivot('user_id', $user)->exists();
     }
 
 

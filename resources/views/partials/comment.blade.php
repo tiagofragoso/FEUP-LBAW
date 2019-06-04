@@ -18,7 +18,7 @@
                     <span> likes </span>
                     •
                     <button class="bg-transparent border-0 like-comment-btn">
-                        @if(!$comment['hasLike'])Like
+                        @if(!$comment['hasLike']) Like
                         @else Liked
                         @endif
                     </button>

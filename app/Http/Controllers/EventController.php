@@ -115,9 +115,9 @@ class EventController extends Controller
             if (Auth::check()) {
                 $post['hasLike'] = $post->hasLike(Auth::user()->id);
                 foreach($post->commentsContent as $comment) {
-                    $comment['hasLike'] = $comment->likes(Auth::user()->id);
+                    $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
                     foreach($comment->comments as $commentComment) {
-                        $commentComment['hasLike'] = $commentComment->likes(Auth::user()->id);
+                        $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
                     }
             
                 }
@@ -131,7 +131,7 @@ class EventController extends Controller
             
                 }
             }
-    }
+        }
     
 
         if ($joined === 'Host' || $joined === 'Artist') {
