@@ -25,18 +25,18 @@
 							<a class="dropdown-item text-danger" href="#">Report event</a>
 						</div>
 					</div>
-					@if ($joined == 'Host')
-					<a href="#" class="position-absolute invite-button">
-						<button class="btn btn-light border-light">
-							<i class="fas fa-envelope mr-1"></i>
-							Invite
-						</button>
-					</a>					
-					@endif
-					<button class="btn btn-light border-light position-absolute tag-button" type="button">
-						<i class="fas fa-tag mr-1"></i>
-						{{ $event->category()->first()->name }}
-					</button>
+					<div class="event-btns d-flex flex-row position-absolute">
+							@if ($joined == 'Host')
+							<button id="invite-btn" class="btn btn-light border-light mr-2">
+								<i class="fas fa-envelope mr-1"></i>
+								Invite
+							</button>
+							@endif
+							<button class="btn btn-light border-light" type="button">
+								<i class="fas fa-tag mr-1"></i>
+								{{ $event->category()->first()->name }}
+							</button>
+					</div>
 					<img class="d-block w-100" src="{{asset('assets/event-placeholder.png')}}" alt="First slide">
 				</div>
 				<div class="container-fluid mt-3">

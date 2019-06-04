@@ -498,13 +498,6 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	opacity: 0.8;
 }
 
-.tag-button {
-	z-index: 1;
-	right: 1rem;
-	bottom: 1rem;
-	opacity: 0.8;
-}
-
 .event-page .artists-wrapper a {
 	color: var(--blue);
 }
@@ -534,12 +527,16 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	max-height: 360px;
 }
 
-.event-page .invite-btn {
-	width: 40px;
-	height: 40px;
-	font-weight: bold;
+.event-page .event-btns > button {
+	opacity: 0.8;
 	vertical-align: middle;
 	text-decoration: none;
+}
+
+.event-page .event-btns {
+	z-index: 1;
+	right: 1rem;
+	bottom: 1rem;
 }
 
 .event-page .post-type input[type="radio"] + label {
