@@ -111,14 +111,26 @@ class EventController extends Controller
         $posts = $event->postComments($posts);
 
         foreach($posts as $post){
+
+            if (Auth::check()) {
+                $post['hasLike'] = $post->hasLike(Auth::user()->id);
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = $comment->likes(Auth::user()->id);
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = $commentComment->likes(Auth::user()->id);
+                    }
             
-            $post['hasLike'] = $post->likes(Auth::user()->id);
-           foreach($post->commentsContent as $comment){
-           $comment['hasLike'] = $comment->likes(Auth::user()->id);
-           foreach($comment->comments as $commentComment){
-            $commentComment['hasLike'] = $commentComment->likes(Auth::user()->id);
-           }
-        }
+                }
+            } else {
+                $post['hasLike'] = false;
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = false;
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = false;
+                    }
+            
+                }
+            }
     }
     
 

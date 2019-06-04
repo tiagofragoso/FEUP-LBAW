@@ -26,7 +26,7 @@
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="#">Share event</a>
 							@if(!$event->banned)
-							@if(Auth::user()->is_admin)
+							@if(Auth::check() && Auth::user()->is_admin)
 							<a class="dropdown-item text-danger" id="ban-event-btn" href="#">Ban event</a>
 							@else
 							<a class="dropdown-item text-danger" id="report-event-btn" data-toggle="modal" data-target="#exampleModal">

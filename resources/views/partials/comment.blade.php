@@ -14,10 +14,10 @@
                     </span>
                 </div>
                 <div class="comment-footer ml-3">
-                    <span id="numberLikes"> {{$comment->likes}} </span>
+                    <span class="numberLikes"> {{$comment->likes}} </span>
                     <span> likes </span>
                     •
-                    <button class="bg-transparent border-0" id="like-comment-btn">
+                    <button class="bg-transparent border-0 like-comment-btn">
                         @if(!$comment['hasLike'])Like
                         @else Liked
                         @endif

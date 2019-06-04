@@ -1,7 +1,7 @@
 import {request} from "./requests.js";
 
 let postContent = document.querySelector('#postFormTextarea');
-let postLikeBtns = document.querySelectorAll('#like-post-btn');
+let postLikeBtns = document.querySelectorAll('.like-post-btn');
 
 
 if (postContent !== null) {
@@ -128,10 +128,10 @@ async function postPost(event) {
 postLikeBtns.forEach(button => {
 
     button.addEventListener('click', async () => {
-        let i = button.getElementsByTagName('i')[0];
-        let comment_id = button.closest('.comment-wrapper').dataset.id;
-        let numberLikes = button.getElementsByTagName('span')[0].textContent;
-        let url = '/api/comments/' + comment_id + '/like';
+        let i = button.querySelector('i');
+        let postId = button.dataset.id;
+        let numberLikes = button.querySelector('span').textContent;
+        let url = '/api/posts/' + postId + '/like';
         if (i.classList.contains('far')) {
             const response = await request(
                 url,
@@ -144,9 +144,9 @@ postLikeBtns.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 i.classList.replace('far', 'fas');
-                button.getElementsByTagName('span')[0].textContent++;
+                button.querySelector('span').textContent++;
             }
         } else {
             const response = await request(
@@ -160,13 +160,10 @@ postLikeBtns.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 i.classList.replace('fas', 'far');
-                button.getElementsByTagName('span')[0].textContent = numberLikes-1;
+                button.querySelector('span').textContent--;
             }
         }
-
-
-
     })
 });
