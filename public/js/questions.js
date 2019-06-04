@@ -1,8 +1,4 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response;
-    return data;
-}
+import {request} from "./requests.js";
 
 let questionContent = document.querySelector('#questionFormTextarea');
 

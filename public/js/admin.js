@@ -1,8 +1,4 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+import {request} from "./requests.js";
 
 let delete_buttons = document.querySelectorAll('#delete-report-btn');
 
@@ -48,7 +44,7 @@ delete_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200) {
+            if (response.status == 200) {
                 button.closest('.col-6').classList.add('text-center');
                 button.closest('.col-6').nextElementSibling.classList.add('d-none');
                 button.removeAttribute('id');
@@ -99,7 +95,7 @@ dismiss_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200) {
+            if (response.status == 200) {
                 button.closest('.col-6').classList.add('text-center');
                 button.closest('.col-6').previousElementSibling.classList.add('d-none');
                 button.removeAttribute('id');

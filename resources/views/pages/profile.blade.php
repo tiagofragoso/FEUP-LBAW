@@ -2,7 +2,7 @@
 
 @section('container', 'profile-page')
 @section('scripts')
-	<script defer type="text/javascript" src="/js/join_event.js"> </script>
+	<script defer type="module" src="/js/join_event.js"> </script>
 @endsection
 
 @section('content')
