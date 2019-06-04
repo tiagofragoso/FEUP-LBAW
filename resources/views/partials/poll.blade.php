@@ -3,7 +3,7 @@
     {{ $post->poll->title }}
     </strong>
 </p>
-<div class="container">
+<div class="container" data-id="{{$post->id}}">
     @foreach ($post->poll->pollOptions as $option)
     <div class="row align-items-center mb-2" data-id= "{{$option->id}}">
         <div class="input-group col-12 col-sm-8">

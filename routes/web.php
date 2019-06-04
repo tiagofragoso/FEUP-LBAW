@@ -36,6 +36,7 @@ Route::put('api/reports/{id}','ReportController@report');
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
+Route::put('api/polls/{poll_id}/votes/{poll_option_id}','PostController@pollVote');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

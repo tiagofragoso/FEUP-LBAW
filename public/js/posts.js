@@ -6,6 +6,29 @@ async function request(url, request) {
 
 let postContent = document.querySelector('#postFormTextarea');
 
+let pollOptions = document.querySelectorAll("input[type=radio][name=poll]");
+
+pollOptions.forEach(option => {
+    let option_id = option.closest('.row').dataset.id;
+    let post_id = option.closest('.container').dataset.id;
+    option.addEventListener('click', async () => {
+        let url = '/api/polls/'+post_id+'/votes/'+option_id;
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        console.log("response "+response);
+       
+
+    })});
+
 
 if (postContent !== null) {
     document.querySelector('.submit-post').addEventListener('click', postPost);
@@ -126,4 +149,6 @@ async function postPost(event) {
         postContent.value = "";
         insertPost(createPost(response));
     }
+
+   
 }
