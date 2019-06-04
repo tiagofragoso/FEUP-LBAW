@@ -17,16 +17,14 @@ class SearchController extends Controller
     }
 
     public function getEvents(Request $request) {
-        if (!empty($request->except('page'))) {
-            if ($request->has('search')) {
-                $events = Event::where([
-                        ['private', 'false'],
-                        ['banned', 'false'],
-                        ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
-                    ])
-                    ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
-                    ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
-            }
+        if ($request->has('search')) {
+            $events = Event::where([
+                    ['private', 'false'],
+                    ['banned', 'false'],
+                    ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
+                ])
+                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
+                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
         }
         else {
             $events = Event::where([
