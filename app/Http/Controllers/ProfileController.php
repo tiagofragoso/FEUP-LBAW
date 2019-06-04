@@ -205,4 +205,17 @@ class ProfileController extends Controller
         Auth::user()->unfollow($id);
         return response(200);
     }
+
+    public function getFollowing() {
+        if (!Auth::check()) return response(403);
+
+        $user = Auth::user();
+
+        $following = $user->following()->get()->map(function ($u) {
+            return $u->makeHidden(['email', 'followers', 'following', 'birthdate']);
+        })->toArray();
+        
+        return response()->json($following, 200);
+
+    }
 }

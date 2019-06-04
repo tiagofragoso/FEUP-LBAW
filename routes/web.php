@@ -25,8 +25,10 @@ Route::put('events/{id}', 'EventController@update');
 // API
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
+Route::get('api/profile/following', 'ProfileController@getFollowing');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
+Route::get('api/users/searc', 'SearchController@getUsers');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');

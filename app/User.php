@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $visible = [
-        'name', 'username', 'email', 'birthdate', 'followers', 'following'
+        'id', 'name', 'username', 'email', 'birthdate', 'followers', 'following'
     ];
 
 
@@ -88,6 +88,5 @@ class User extends Authenticatable
     public function reports(){
         return $this->hasMany('App\UserReport','reported_user');
     }
-
 
 }

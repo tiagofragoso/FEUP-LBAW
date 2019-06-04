@@ -3,6 +3,7 @@
 @section('scripts')
 <script defer type="module" src="/js/join_event.js"> </script>
 <script defer type="module" src="/js/posts.js"> </script>
+<script defer type="module" src="/js/event_invites.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -27,7 +28,8 @@
 					</div>
 					<div class="event-btns d-flex flex-row position-absolute">
 							@if ($joined == 'Host')
-							<button id="invite-btn" class="btn btn-light border-light mr-2">
+							<button id="invite-btn" class="btn btn-light border-light mr-2"
+								data-toggle="modal" data-target="#inviteRequestsModal">
 								<i class="fas fa-envelope mr-1"></i>
 								Invite
 							</button>
@@ -38,6 +40,42 @@
 							</button>
 					</div>
 					<img class="d-block w-100" src="{{asset('assets/event-placeholder.png')}}" alt="First slide">
+				</div>
+				<!-- Invite requests modal -->
+				<div class="modal fade" id="inviteRequestsModal" tabindex="-1" role="dialog" aria-labelledby="inviteRequestsTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="inviteRequestsTitle">Invite users</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<form class="form-inline mx-auto col-11" method="GET" action="{{ url('/api/users/search') }}">
+											<div class="input-group w-100">
+												<input type="text" class="form-control" placeholder="Search for name or username" aria-label="Search"
+													aria-describedby="button-addon2" name="query">
+												<div class="input-group-append">
+													<button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<hr>
+										</div>
+									</div>
+									<div id="invite-list" class="d-flex flex-column">
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between">
