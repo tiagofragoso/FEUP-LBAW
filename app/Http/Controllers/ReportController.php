@@ -60,10 +60,10 @@ class ReportController extends Controller
 
         if ($event < 1){
             EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);
-            return response(200); 
+            return response()->json(null, 200);
         }
         
-        return response(422);        
+        return response()->json(null, 422);
 
        
     }
@@ -84,10 +84,10 @@ class ReportController extends Controller
         
         if ($user < 1) {
             UserReport::create(['user_id' => $user_id, 'reported_user' => $id]);
-            return response(200);
+            return response()->json(null, 200);
         } 
             
-        return response(422);
+        return response()->json(null, 422);
     }
 
 }
