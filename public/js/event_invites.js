@@ -1,6 +1,9 @@
 import { request } from './requests.js';
 
 const FOLLOWING_URL = '/api/profile/following';
+const INVITE_URL = '/api/invites';
+
+const EVENT_ID = document.querySelector('#content').dataset.id;
 
 document.querySelector('#invite-btn').addEventListener('click', async () => {
 	const data = await request(FOLLOWING_URL, {
@@ -11,7 +14,6 @@ document.querySelector('#invite-btn').addEventListener('click', async () => {
 			'Accept': 'application/json'
 		}
 	});
-	console.log(data);
 	populateModal(data.data);
 });
 
@@ -95,12 +97,31 @@ function updateInviteType(target, wrapper) {
 	wrapper.querySelector('.invite-type').textContent = label;
 }
 
-function sendInvite(wrapper) {
-	const id = wrapper.querySelector('.user-row').dataset.id;
-	wrapper.querySelector('form').remove();
-	const invited = document.createElement('span');
-	invited.textContent = 'INVITED';
-	invited.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
-	wrapper.querySelector('.right-wrapper > div').insertBefore(invited, wrapper.querySelector('.invite-type'));
-	wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
+async function sendInvite(wrapper) {
+	const invited_id = wrapper.querySelector('.user-row').dataset.id;
+	const form = wrapper.querySelector('form');
+	const type = form.querySelector('input[type="radio"]:checked').getAttribute('value');
+	const response = await request(INVITE_URL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+			'Accept': 'application/json'
+		},
+		body: JSON.stringify({'event_id': EVENT_ID, 'invited_id': invited_id, 'type': type})
+	});
+
+	console.log(response);
+
+	if (response.status === 201) {
+		form.remove();
+		const invited = document.createElement('span');
+		invited.textContent = 'INVITED';
+		invited.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
+		wrapper.querySelector('.right-wrapper > div').insertBefore(invited, wrapper.querySelector('.invite-type'));
+		wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
+	} else {
+		console.error("Oops");
+	}
+
 }

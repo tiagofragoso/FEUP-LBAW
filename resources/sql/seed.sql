@@ -108,7 +108,8 @@ CREATE TABLE invite_requests (
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    UNIQUE(invited_user_id, event_id)
 );
 
 CREATE TABLE follows (

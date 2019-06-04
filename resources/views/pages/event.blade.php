@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div id="content" class="container my-0 my-sm-5">
+<div id="content" class="container my-0 my-sm-5" data-id="{{$event->id}}">
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
 			<div class="card mb-5">

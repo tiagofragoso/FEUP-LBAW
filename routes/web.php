@@ -28,7 +28,7 @@ Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::get('api/profile/following', 'ProfileController@getFollowing');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
-Route::get('api/users/searc', 'SearchController@getUsers');
+Route::get('api/users/search', 'SearchController@getUsers');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
@@ -38,6 +38,8 @@ Route::put('api/reports/{id}','ReportController@report');
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
+
+Route::post('api/invites', 'InvitesController@store');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
