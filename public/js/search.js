@@ -58,9 +58,19 @@ document.getElementById('search-input').addEventListener('change', function () {
 });
 
 $('.datepicker-here').each((i, dt) => {
+    dt.modified = false;
     $(dt).datepicker({
         onSelect: function (formattedDate, date, inst) {
-            console.log(date);
+            if (date.length === 2) {
+                updateButtons('dropdownDate', 'Date', moment(date[0]).format('DD-MM-YYYY') + ' - ' + moment(date[1]).format('DD-MM-YYYY'));
+                requestObj.start_date = moment(date[0]).format('DD-MM-YYYY');
+                requestObj.end_date = moment(date[1]).format('DD-MM-YYYY');
+                resetRequest();
+                search();
+            }
+            else {
+                updateButtons('dropdownDate', 'Date', '');
+            }
         }
     });
 });

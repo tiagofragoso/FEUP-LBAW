@@ -876,6 +876,12 @@ border: 3px solid var(--green)!important;
 	}
 }
 
+.search-page .dropdownField {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .search-page .dropdown-menu {
     max-height: 380px;
     overflow: auto;
