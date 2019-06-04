@@ -105,6 +105,13 @@ class EventController extends Controller
         
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
+
+        foreach($posts as $post){
+            if (!(empty($post->poll()->get()->first())))
+            $post->type = 'Poll';
+            else if (!(empty($post->file()->get()->first())))
+            $post->type = 'File';
+        }
         
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();

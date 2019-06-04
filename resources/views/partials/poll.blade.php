@@ -5,7 +5,7 @@
 </p>
 <div class="container">
     @foreach ($post->poll->pollOptions as $option)
-    <div class="row align-items-center mb-2">
+    <div class="row align-items-center mb-2" data-id= "{{$option->id}}">
         <div class="input-group col-12 col-sm-8">
             <div class="input-group-prepend">
                 <div class="input-group-text">
