@@ -32,11 +32,13 @@ class ReportController extends Controller
         if ($request->type == 'event') {
             Event::findOrFail($request->id);
             EventReport::where('event_id', '=', $request->id)->update(['status' => $status]);
+            Event::find($request->id)->update(['banned' => true]);
             return response(200);
 
         } else if ($request->type == 'user') {
             User::findOrFail($request->id);
             UserReport::where('reported_user', '=', $request->id)->update(['status' => $status]);
+            User::find($request->id)->update(['banned' => true]);
             return response(200);
         } 
         
