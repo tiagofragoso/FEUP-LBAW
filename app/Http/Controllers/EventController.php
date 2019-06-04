@@ -171,36 +171,36 @@ class EventController extends Controller
 
     public function joinEvent($id)
     {
-        if (!Auth::check()) return response(403);
-        if (is_null(Event::find($id))) return response(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Event::find($id))) return response()->json(null, 404);
         
-        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
+        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response()->json(null, 200);
 
         Auth::user()->joinEvent($id, 'Participant');
-        return response(200);
+        return response()->json(null, 200);
     }
 
     public function leaveEvent($id)
     {
-        if (!Auth::check()) return response(403);
-        if (is_null(Event::find($id))) return response(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Event::find($id))) return response()->json(null, 404);
 
-        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response(403);
-        if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
+        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response()->json(null, 403);
+        if (!Auth::user()->hasParticipation($id, 'Participant')) return response()->json(null, 200);
 
         Auth::user()->leaveEvent($id, 'Participant');
-        return response(200);
+        return response()->json(null, 200);
     }
 
     public function banEvent($id)
     {
-        if (!Auth::user()->is_admin) return response(403);
+        if (!Auth::user()->is_admin) return response()->json(null, 403);
        
-        if (Event::find($id) == null) return response(404);
+        if (Event::find($id) == null) return response()->json(null, 404);
 
         Event::find($id)->update(['banned'=>true]);
         
-        return response(200);
+        return response()->json(null, 200);
     }
 
     

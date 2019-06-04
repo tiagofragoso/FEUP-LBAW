@@ -144,7 +144,7 @@ class ProfileController extends Controller
         $user->birthdate = $request->input('birthdate');
         $user->save();
 
-        return response(200);
+        return response()->json(null, 200);
     }
 
     public function updatePassword(Request $request)
@@ -169,7 +169,7 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        return response(200);
+        return response()->json(null, 200);
     }
 
     /**
@@ -185,35 +185,35 @@ class ProfileController extends Controller
 
     public function followUser($id)
     {
-        if (!Auth::check()) return response(403);
-        if (User::find($id) == null) return reponse(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (User::find($id) == null) return response()->json(null, 404);
 
-        if (Auth::user()->hasFollow($id)) return response(200);
+        if (Auth::user()->hasFollow($id)) return response()->json(null, 200);
 
         Auth::user()->follow($id);
-        return response(200);
+        return response()->json(null, 200);
     }
 
     public function unfollowUser($id)
     {
-        if (!Auth::check()) return response(403);
-        if (User::find($id) == null) return reponse(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (User::find($id) == null) return response()->json(null, 404);
 
-        if (!Auth::user()->hasFollow($id)) return response(200);
+        if (!Auth::user()->hasFollow($id)) return response()->json(null, 200);
 
         Auth::user()->unfollow($id);
-        return response(200);
+        return response()->json(null, 200);
     }
 
     public function banUser($id)
     {
-        if (!Auth::user()->is_admin) return response(403);
+        if (!Auth::user()->is_admin) return response()->json(null, 403);
 
-        if (User::find($id) == null) return response(404);
+        if (User::find($id) == null) return response()->json(null, 404);
 
         User::find($id)->update(['banned' => true]);
 
-        return response(200);
+        return response()->json(null, 200);
     }
 
     
