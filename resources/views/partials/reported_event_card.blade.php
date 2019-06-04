@@ -1,9 +1,13 @@
-<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id ="{{json_encode($event['reports'])}}" >
+<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id="{{$event['event']->id}}" data-type="event">
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-12">
-                <p class="mb-0"><strong>{{$event['user']->name}}</strong> and {{count($event['reports'])-1}} <strong> 
-                        others</strong> reported an event.</p>
+                    <p class="mb-0"><strong>{{count($event['reports'])}}
+                        @if (count($event['reports']) > 1)users 
+                        @else user
+                        @endif
+                        </strong> reported an event.
+                    </p>   
             </div>
         </div>
     </div>
@@ -21,7 +25,8 @@
                             </a>
 
                             <div class="col-7 col-md-9 mt-4">
-                                <div class="text-muted event-date">{{ \DateTime::createFromFormat('Y-m-d H:i:s',$event['event']->start_date)->format('d M Y') }}
+                                <div class="text-muted event-date">
+                                    {{ \DateTime::createFromFormat('Y-m-d H:i:s',$event['event']->start_date)->format('d M Y') }}
                                 </div>
                                 <div class="text-muted event-location">{{$event['event']->location}}
                                 </div>
@@ -36,10 +41,10 @@
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-right">
-                <p class="my-0 ban-btn text-uppercase" id ="delete-report-btn">delete</p>
+                <p class="my-0 ban-btn text-uppercase" id="delete-report-btn">delete</p>
             </div>
             <div class="col-6 text-left">
-                <p class="my-0 diss-btn text-uppercase" id ="dismiss-report-btn">dismiss</p>
+                <p class="my-0 diss-btn text-uppercase" id="dismiss-report-btn">dismiss</p>
             </div>
         </div>
     </div>
@@ -47,7 +52,8 @@
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-center">
-                <p class="my-0  {{ ($event['status'] == 'Declined')? 'baned-btn' : 'dissed-btn' }} text-uppercase">{{$event['status']}}</p>
+                <p class="my-0  {{ ($event['status'] == 'Declined')? 'baned-btn' : 'dissed-btn' }} text-uppercase">
+                    {{$event['status']}}</p>
             </div>
         </div>
     </div>

@@ -53,9 +53,9 @@ class PostController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if(!Auth::check()) return response(403);
+        if(!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
-        if (is_null($event)) return response(404);
+        if (is_null($event)) return response()->json(null, 404);
         $this->authorize('create', [$event, Post::class]);
         $request->request->add(['author_id' => Auth::user()->id]);
         $request->request->add(['event_id' => $id]);
@@ -70,9 +70,9 @@ class PostController extends Controller
                 'type' => $post->type,
                 'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
                 'author' => $post->author->displayName()
-            ]);
+            ], 201);
         } else {
-            return response(404);
+            return response()->json(null, 404);
         }
     }
 

@@ -19,7 +19,11 @@ export function createErrors(errors, container) {
 
 export async function request(url, request) {
     const response = await fetch(url, request);
+    let status = response.status;
     const data = await response.json();
-    return data;
+    return {
+        'status': status,
+        'data': data
+    };
 }
 

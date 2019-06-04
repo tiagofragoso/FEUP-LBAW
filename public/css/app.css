@@ -102,6 +102,12 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+.banned-alert {
+	background-color: var(--orange);
+	border-color: var(--orange);
+	color: var(--white)
+}
+
 .dropdown-menu-right {
 	background-color: var(--white);
 }
@@ -555,7 +561,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 /** event form **/
 
-.input-group-text {
+.event-form-page .input-group-text, .event-page .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
 	color: white;
@@ -980,4 +986,5 @@ opacity: 0.8;
 .error-container > h1 {
 	font-size: 52px;
 }
+
 
