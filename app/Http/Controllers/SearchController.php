@@ -23,16 +23,57 @@ class SearchController extends Controller
                     ['banned', 'false'],
                     ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
                 ])
-                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'))
-                ->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
+                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'));
         }
         else {
             $events = Event::where([
                     ['private', 'false'],
                     ['banned', 'false'],
                     ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
-                ])
-                ->orderBy('participants', 'desc');
+                ]);
+        }
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $events = $events->whereBetween('start_date', [$request->start_date, $request->end_date]);
+            $events = $events->whereBetween('end_date', [$request->start_date, $request->end_date]);
+        }
+        else if ($request->has('start_date')) {
+            $events = $events->where('start_date', '>', $request->start_date);
+        }
+        else if ($request->has('end_date')) {
+            $events = $events->where('end_date', '<', $request->end_date);
+        }
+
+        if ($request->has('location')) {
+            $events = $events->where('location', 'ILIKE', '%'.$request->location.'%');
+        }
+
+        if ($request->has('start_price') && $request->has('end_price')) {
+            $events = $events->whereBetween('price', [$request->start_price, $request->end_price]);
+        }
+        else if ($request->has('start_price')) {
+            $events = $events->where('price', '>', $request->start_price);
+        }
+        else if ($request->has('end_price')) {
+            $events = $events->where('price', '<', $request->end_price);
+        }
+
+        if ($request->has('category')) {
+            $events = $events->where('category', '=', $request->category);
+        }
+
+        if ($request->has('status')) {
+            $events = $events->where('status', '=', $request->status);
+        }
+
+        if ($request->has('sort_by')) {
+            $events = $events->orderBy($request->sort_by, 'DESC');
+        }
+        else if ($request->has('search')) {
+            $events = $events->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
+        }
+        else {
+            $events = $events->orderBy('participants', 'DESC');
         }
 
         $events = $events->paginate(6);
