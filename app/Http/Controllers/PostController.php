@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Post;
 use App\Event;
 use Illuminate\Http\Request;
@@ -119,4 +120,23 @@ class PostController extends Controller
     {
         //
     }
+
+    public function likePost($id){
+       
+        if (!Auth::check()) return response(403);
+        
+        if (is_null(Post::find($id))) return response(404);
+        Auth::user()->likePost($id);
+        return response(200);
+        
+    }
+    public function dislikePost($id){
+        
+        if (!Auth::check()) return response(403);
+        if (is_null(Post::find($id))) return response(404);
+        Auth::user()->dislikePost($id);
+        return response(200);
+
+    }
+
 }

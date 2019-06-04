@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App;
 use App\Event;
 use App\EventReport;
+use App\Category;
+use App\Currency;
+use App\Participation;
+use App\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -105,7 +109,31 @@ class EventController extends Controller
 
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
-        
+
+        foreach($posts as $post){
+
+            if (Auth::check()) {
+                $post['hasLike'] = $post->hasLike(Auth::user()->id);
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
+                    }
+            
+                }
+            } else {
+                $post['hasLike'] = false;
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = false;
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = false;
+                    }
+            
+                }
+            }
+        }
+    
+
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();
         } else {

@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Event extends Model
 {
     //
@@ -53,6 +52,7 @@ class Event extends Model
 
             foreach ($value['commentsContent'] as $key1 => $comment) {
                 $comment['comments'] = Comment::find($comment->id)->comments()->get();
+
             }
 
         }

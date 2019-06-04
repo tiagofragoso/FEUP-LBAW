@@ -40,6 +40,13 @@ Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
 
+Route::put('api/posts/{id}/like','PostController@likePost');
+Route::delete('api/posts/{id}/like','PostController@dislikePost');
+
+Route::put('api/comments/{id}/like','CommentController@likeComment');
+Route::delete('api/comments/{id}/like','CommentController@dislikeComment');
+
+
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
