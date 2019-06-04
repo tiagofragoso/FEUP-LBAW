@@ -238,7 +238,7 @@ async function search() {
 function getQueryString() {
     let query = '/api/search?page=' + requestObj.page;
 
-    if (requestObj.search != null) {
+    if (requestObj.search != '') {
         query += '&search=' + requestObj.search;
     }
 
