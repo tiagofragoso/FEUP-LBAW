@@ -20,4 +20,8 @@ class Poll extends Model
         ->wherePivot('user_id',$user_id)->exists();
 
     }
+    public function getVote($user_id){
+        return $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
+        ->wherePivot('user_id',$user_id);
+    }
 }

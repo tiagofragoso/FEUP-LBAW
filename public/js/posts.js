@@ -25,14 +25,11 @@ pollOptions.forEach(option => {
                 }
             }
         );
-        console.log("response ",response);
-        /*if (response == 200){
+        if (response == 200){
             let numberVotes = option.closest('.row').childNodes[3].dataset.id++;
             option.closest('.row').childNodes[3].innerText = numberVotes + " votes";
             console.log(option.closest('.row').childNodes[3].textContent);
-           
-
-        }*/
+        }
        
 
     })});

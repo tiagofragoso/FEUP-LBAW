@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App;
 use App\Event;
+use App\PollVote;
+use App\Poll;
 use App\Category;
 use App\Currency;
 use App\Participation;
@@ -107,8 +109,14 @@ class EventController extends Controller
         $posts = $event->postComments($posts);
 
         foreach($posts as $post){
-            if (!(empty($post->poll()->get()->first())))
+            if (!(empty($post->poll()->get()->first()))){
+
             $post->type = 'Poll';
+            
+            $option = PollVote::all()->where('user_id',Auth::user()->id)
+                             ->where('poll_id',$post->id);
+            $post->selected_option = $option->first()->poll_option;  
+            }
             else if (!(empty($post->file()->get()->first())))
             $post->type = 'File';
         }
