@@ -36,20 +36,23 @@ document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
  * Search fields onchange events.
  */
 document.querySelectorAll('.location-input').forEach(input => {
-    input.addEventListener('change', function () {
-        updateInputs('dropdownLocation', 'Location', this.value, this.value, 'location', '.location-input');
+    input.addEventListener('change', () => {
+        requestObj.location = input.value;
+        updateInputs('dropdownLocation', 'Location', input.value, input.value, 'location', '.location-input');
     });
 });
 
 document.querySelectorAll('.start-price-input').forEach(input => {
-    input.addEventListener('change', function () {
-        updateInputs('dropdownPrice', 'Price', this.value, getPrice(), 'start_price', '.start-price-input');
+    input.addEventListener('change', () => {
+        requestObj.start_price = input.value;
+        updateInputs('dropdownPrice', 'Price', input.value, getPrice(), 'start_price', '.start-price-input');
     });
 });
 
 document.querySelectorAll('.end-price-input').forEach(input => {
-    input.addEventListener('change', function () {
-        updateInputs('dropdownPrice', 'Price', this.value, getPrice(), 'end_price', '.end-price-input');
+    input.addEventListener('change', () => {
+        requestObj.end_price = input.value;
+        updateInputs('dropdownPrice', 'Price', input.value, getPrice(), 'end_price', '.end-price-input');
     });
 });
 
@@ -72,8 +75,7 @@ document.querySelectorAll('*[aria-labelledby="dropdownSort"] .dropdown-item').fo
 });
 
 function updateInputs(ariaLabel, title, value, placeholder, field, className) {
-    updateButtons(ariaLabel, title, value);
-    requestObj[field] = value;
+    updateButtons(ariaLabel, title, placeholder);
     document.querySelectorAll(className).forEach(input => {
         input.value = value;
     });
