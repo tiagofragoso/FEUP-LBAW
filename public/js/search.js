@@ -55,7 +55,15 @@ document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
  */
 document.getElementById('search-input').addEventListener('change', function () {
     requestObj.search = this.value;
-})
+});
+
+$('.datepicker-here').each((i, dt) => {
+    $(dt).datepicker({
+        onSelect: function (formattedDate, date, inst) {
+            console.log(date);
+        }
+    });
+});
 
 document.querySelectorAll('.location-input').forEach(input => {
     input.addEventListener('change', () => {
