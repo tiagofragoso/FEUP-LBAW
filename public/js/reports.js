@@ -1,3 +1,4 @@
+import {request} from "./requests.js";
 
 let report_user_btn = document.querySelectorAll("#report-user-btn");
 let report_event_btn = document.querySelectorAll("#report-event-btn");

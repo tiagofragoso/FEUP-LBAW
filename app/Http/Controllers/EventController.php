@@ -203,25 +203,5 @@ class EventController extends Controller
         return response(200);
     }
 
-    public function reportEvent($id)
-    {
-        if (Auth::user()->is_admin) return response(403);
-
-        if (Event::find($id) == null) return response(404);
-
-        $user_id = Auth::user()->id;
-
-        $event = EventReport::all()->where('event_id',$id)
-                                   ->where('user_id',$user_id)
-                                   ->where('status','Pending')->first();
-
-        if (empty($event)){
-            EventReport::create(['event_id'=>$id,'user_id'=>$user_id]);
-            return response(200); 
-        }
-        
-        return response(422);        
-
-       
-    }
+    
 }

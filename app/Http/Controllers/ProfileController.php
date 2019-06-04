@@ -216,23 +216,5 @@ class ProfileController extends Controller
         return response(200);
     }
 
-    public function reportUser($id)
-    {
-        if (!Auth::check()) return response(403);
-        if (Auth::user()->is_admin) return response(403);
-
-        if (User::find($id) == null) return response(404);
-
-        $user_id = Auth::user()->id;
-        $user = UserReport::all()->where('reported_user', $id)
-            ->where('user_id', $user_id)
-            ->where('status', 'Pending')->first();
-
-        if (empty($user)) {
-            UserReport::create(['user_id' => $user_id, 'reported_user' => $id]);
-            return response(200);
-        }
-
-        return response(422);
-    }
+    
 }
