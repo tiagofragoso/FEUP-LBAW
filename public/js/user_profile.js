@@ -1,8 +1,4 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+import {request} from "./requests.js";
 
 let user_id = document.querySelector(".username").dataset.id;
 let followers = document.querySelector(".number-followers");
@@ -40,7 +36,7 @@ if (button != null) {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 updateVisualFollow(false);
             }
         } else if (button.classList.contains('following')) {
@@ -55,7 +51,7 @@ if (button != null) {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 updateVisualFollow(true);
             }
         }

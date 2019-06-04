@@ -1,4 +1,4 @@
-import {request} from "./requests.js";
+import {request} from "/requests.js";
 import {getEventCard} from './event_card.js';
 
 /**
@@ -71,13 +71,15 @@ document.addEventListener('scroll', async () => {
     if ((($(document).height()-$(window).height())-$(window).scrollTop() < 0) && !requesting) {
         requesting = true;
 
-        const data = await request(getQueryString(), {
+        const response = await request(getQueryString(), {
             method: 'GET',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Accept': 'application/json'
             }
         });
+
+        let data = response.data;
 
         data.data.forEach((event) => {
             let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
