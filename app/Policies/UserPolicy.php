@@ -17,8 +17,9 @@ class UserPolicy
      * @return mixed
      */
     public function view(User $user, User $model)
-    {
-        //
+    {   
+        return (!($user->banned && $user->deleted));
+        
     }
 
     /**

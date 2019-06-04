@@ -18,16 +18,20 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check() && Auth::user()-> id == $id) {
-            return redirect('profile');
-        } 
-
+    
         $user = User::findOrFail($id);
+    
+       if(!$user->can('view',$user)) return view('errors.403');
+    
+        
 
         if ($user->is_admin) {
             abort(403); 
         }
-
+        if (Auth::check() && Auth::user()-> id == $id) {
+            return redirect('profile');
+        } 
+       
         $data = $this->getEventsData($user);
         $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
 
