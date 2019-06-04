@@ -85,7 +85,7 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (!(!(Auth::user()->is_admin) && $event->banned)){
+        if (!(!(Auth::check() && Auth::user()->is_admin) && $event->banned)){
         if (Auth::check()) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
@@ -125,7 +125,7 @@ class EventController extends Controller
             'questions' => $questions,
             'threads' => $threads,
             'joined'=> $joined]);  
-        }
+        } else abort(404);
 
     }
 

@@ -1,6 +1,5 @@
-<div class="jumbotron jumbotron-fluid {{ (!($object->banned))? 'd-none' :'' }}" id = "banned_card"> 
-  <div class="container">
-    <h1 class="display-4">Banned!</h1>
-    <p class="lead">This page contains inappropriate content.</p>
+<div class="row">
+<div class="alert banned-alert w-100 {{ (!($object->banned))? 'd-none' :'' }}" role="alert">
+    <strong> Banned. </strong> This page contains inappropriate content.
   </div>
 </div>
