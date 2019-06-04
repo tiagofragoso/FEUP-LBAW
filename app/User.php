@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned'
     ];
 
     /**
@@ -88,6 +88,5 @@ class User extends Authenticatable
     public function reports(){
         return $this->hasMany('App\UserReport','reported_user');
     }
-
 
 }

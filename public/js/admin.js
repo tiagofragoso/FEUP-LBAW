@@ -4,6 +4,58 @@ let delete_buttons = document.querySelectorAll('#delete-report-btn');
 
 let dismiss_buttons = document.querySelectorAll('#dismiss-report-btn');
 
+let ban_user_buttons = document.querySelectorAll('#ban-user-btn');
+let ban_event_buttons = document.querySelectorAll('#ban-event-btn');
+
+
+ban_user_buttons.forEach(button => {
+    button.addEventListener('click', async () => {  
+        let user_id = button.closest('#content').dataset.id;
+        let url = '/api/users/'+user_id+'/ban';
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if(response.status == 200){
+            document.querySelector('.banned-alert').classList.remove('d-none');
+        }
+
+})});
+
+
+
+ban_event_buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+        let event_id = button.closest('#content').dataset.id;
+        let url = '/api/events/'+event_id+'/ban';
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        console.log(response);
+        if(response.status == 200){
+            document.querySelector('.banned-alert').classList.remove('d-none');
+        }
+
+       
+
+   
+})});
+
 
 delete_buttons.forEach(button => {
     button.addEventListener('click', async () => {

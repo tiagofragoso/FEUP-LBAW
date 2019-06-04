@@ -102,6 +102,12 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+.banned-alert {
+	background-color: var(--orange);
+	border-color: var(--orange);
+	color: var(--white)
+}
+
 .dropdown-menu-right {
 	background-color: var(--white);
 }
@@ -982,4 +988,5 @@ border: 3px solid var(--green)!important;
 .error-container > h1 {
 	font-size: 52px;
 }
+
 
