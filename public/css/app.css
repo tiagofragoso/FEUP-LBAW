@@ -20,6 +20,10 @@ body {
 	outline-color: rgba(0, 0, 0, 0.2);
 }
 
+a {
+	color: inherit;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Rubik', sans-serif;
 }
@@ -550,6 +554,10 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 .event-page .post-type input[type="radio"]:checked + label {
 	background-color: var(--grey);
+}
+
+.event-page .user-row {
+	min-height: 50px;
 }
 
 /** event form **/
