@@ -10,7 +10,7 @@
             <div class="input-group-prepend">
                 <div class="input-group-text">
                     <input type="radio"  name="poll"
-                        aria-label="" {{$post->selected_option == $option->id ? 'checked' : 'false'}}>
+                        aria-label="" {{$post->selected_option === $option->id ? 'checked' : 'false'}}>
                 </div>
             </div>
             <span type="text" class="form-control">

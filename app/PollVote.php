@@ -8,6 +8,5 @@ class PollVote extends Model
 {
     //
     protected  $table = 'poll_votes';
-    protected $fillable = ['poll_option'];
 
 }

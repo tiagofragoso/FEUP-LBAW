@@ -13,7 +13,7 @@ pollOptions.forEach(option => {
     let option_id = option.closest('.row').dataset.id;
     let post_id = option.closest('.container').dataset.id;
     option.addEventListener('click', async () => {
-        let url = '/api/polls/'+post_id+'/votes/'+option_id;
+        let url = '/api/polls/' + post_id + '/votes/' + option_id;
         const response = await request(
             url,
             {
@@ -25,19 +25,20 @@ pollOptions.forEach(option => {
                 }
             }
         );
-        console.log(response);
-        if (response == 200){
-            let numberVotes = option.closest('.row').childNodes[3].dataset.id++;
-            option.closest('.row').childNodes[3].innerText = numberVotes + " votes";
-            console.log(option.closest('.row').childNodes[3].textContent);
-            if (selectedOption !== null){
-            selectedOption.removeAttribute('checked');
-            selectedOption.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id-- + " votes";
-            }
-        }
-       
+        if (response == 200) {
+            option.closest('.row').childNodes[3].dataset.id++;
 
-    })});
+            option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
+            if (selectedOption !== null) {
+                selectedOption.closest('.row').childNodes[3].dataset.id--;
+                selectedOption.closest('.row').childNodes[3].textContent = selectedOption.closest('.row').childNodes[3].dataset.id + " votes";
+            }
+            selectedOption = option;
+        }
+
+
+    })
+});
 
 
 if (postContent !== null) {
@@ -47,8 +48,8 @@ if (postContent !== null) {
 function createPost(response) {
     const post = document.createElement('div');
     post.className = 'post-wrapper';
-    post.innerHTML = 
-    ` <div class="row justify-content-center">
+    post.innerHTML =
+        ` <div class="row justify-content-center">
         <div class="card col-12 col-lg-9 mb-4 hover-shadow">
             <div class="row">
                 <div class="col-12 col-md-10">
@@ -141,7 +142,7 @@ async function postPost(event) {
 
     let event_id = document.querySelector('.submit-post').dataset.id;
 
-    const response = await request (
+    const response = await request(
         '/api/events/' + event_id + '/posts',
         {
             method: 'POST',
@@ -160,5 +161,5 @@ async function postPost(event) {
         insertPost(createPost(response));
     }
 
-   
+
 }
