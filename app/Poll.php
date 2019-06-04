@@ -18,10 +18,11 @@ class Poll extends Model
     public function pollVotes($user_id){
         return $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
         ->wherePivot('user_id',$user_id)->exists();
-
     }
-    public function getVote($user_id){
-        return $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
-        ->wherePivot('user_id',$user_id);
+
+    public function updatePollVotes($user_id, $poll_option){
+        
+        $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
+        ->updateExistingPivot($user_id,['poll_option'=> $poll_option]);
     }
 }

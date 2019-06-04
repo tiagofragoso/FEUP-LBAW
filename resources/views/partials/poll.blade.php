@@ -9,8 +9,8 @@
         <div class="input-group col-12 col-sm-8">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="radio" {{$post->selected_option == $option->id ? 'checked' : 'false'}} name="poll"
-                        aria-label="">
+                    <input type="radio"  name="poll"
+                        aria-label="" {{$post->selected_option == $option->id ? 'checked' : 'false'}}>
                 </div>
             </div>
             <span type="text" class="form-control">

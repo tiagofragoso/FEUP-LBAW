@@ -89,11 +89,13 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
-    public function pollVotes($post_id,$pollOption){
+    public function pollVotes($post_id,$poll_option){
         return $this->belongsToMany('App\Poll','poll_votes','user_id','poll_id')
-             ->attach($post_id,['poll_option'=>$pollOption]);
+             ->attach($post_id,['poll_option'=>$poll_option]);
        
     }
+
+    
 
 
 

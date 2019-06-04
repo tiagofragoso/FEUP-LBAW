@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Poll;
 use App\Event;
+use App\PollVote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,8 @@ class PostController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validatePost($data) {
+    public function validatePost($data)
+    {
         return Validator::make($data->all(), [
             'content' => 'required|string|max:5000',
             'event_id' => 'required',
@@ -53,7 +55,7 @@ class PostController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if(!Auth::check()) return response(403);
+        if (!Auth::check()) return response(403);
         $event = Event::find($id);
         if (is_null($event)) return response(404);
         $this->authorize('create', [$event, Post::class]);
@@ -121,15 +123,18 @@ class PostController extends Controller
         //
     }
 
-    public function pollVote($postId, $pollOption){
+    public function pollVote($postId, $pollOption)
+    {
         if (!Auth::check()) return response(403);
-        if(is_null(Poll::where('post_id',$postId)->get()->first())) return response(404);
-        $post = Poll::where('post_id',$postId)->get()->first();
-        if(!($post->pollVotes(Auth::user()->id))){
-        Auth::user()->pollVotes($postId,$pollOption);
-        return response(200);
-    }
-        return response(422);
-
+        if (is_null(Poll::where('post_id', $postId)->get()->first())) return response(404);
+        $post = Poll::where('post_id', $postId)->get()->first();
+        if (!($post->pollVotes(Auth::user()->id))) {
+            Auth::user()->pollVotes($postId, $pollOption);
+            return response(200);
+        } else{
+          $post->updatePollVotes(Auth::user()->id,$pollOption);
+            return response(200);
+        }
+        
     }
 }
