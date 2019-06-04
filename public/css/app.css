@@ -557,7 +557,7 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 /** event form **/
 
-.event-form-page .input-group-text {
+.event-form-page .input-group-text, .event-page .input-group-text {
 	background-color: var(--blue);
 	border-color: var(--blue);
 	color: white;
