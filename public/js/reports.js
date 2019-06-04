@@ -19,11 +19,11 @@ report_user_btn.forEach(button => {
                 }
             }
         );
-        if(response == 200){
+        if(response.status == 200){
             let modal = button.closest("#content").getElementsByClassName("modal-body")[0];
             modal.innerText = "Report successfully!";
         }
-       else  if(response == 422){
+       else  if(response.status == 422){
             let modal = button.closest("#content").getElementsByClassName("modal-body")[0];
             modal.innerText = "You have already reported this user and will be evaluated as soon as possible.";
         }
@@ -51,11 +51,11 @@ report_event_btn.forEach(button => {
             }
         );
         console.log(response);
-        if(response == 200){
+        if(response.status == 200){
             let modal = button.closest("#content").getElementsByClassName("modal-body")[0];
             modal.innerText = "Report successfully!";
         }
-       else  if(response == 422){
+       else  if(response.status == 422){
             let modal = button.closest("#content").getElementsByClassName("modal-body")[0];
             modal.innerText = "You have already reported this event and will be evaluated as soon as possible.";
         }

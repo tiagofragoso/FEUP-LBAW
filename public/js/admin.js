@@ -23,8 +23,8 @@ ban_user_buttons.forEach(button => {
                 }
             }
         );
-        if(response == 200){
-            button.closest('#content').firstChild.nextElementSibling.classList.remove('d-none');
+        if(response.status == 200){
+            document.querySelector('.banned-alert').classList.remove('d-none');
         }
 
 })});
@@ -47,8 +47,8 @@ ban_event_buttons.forEach(button => {
             }
         );
         console.log(response);
-        if(response == 200){
-            button.closest('#content').firstChild.nextElementSibling.classList.remove('d-none');
+        if(response.status == 200){
+            document.querySelector('.banned-alert').classList.remove('d-none');
         }
 
        

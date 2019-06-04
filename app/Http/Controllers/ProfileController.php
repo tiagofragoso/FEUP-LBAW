@@ -218,6 +218,7 @@ class ProfileController extends Controller
 
     public function reportUser($id)
     {
+        if (!Auth::check()) return response(403);
         if (Auth::user()->is_admin) return response(403);
 
         if (User::find($id) == null) return response(404);
