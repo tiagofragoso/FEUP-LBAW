@@ -18,6 +18,8 @@
         };
         @if (app('request')->has('search'))
         requestObj.search = "{{ app('request')->input('search') }}";
+        @else 
+        requestObj.search = "";
         @endif
     </script>
     <script defer type="module" src="/js/search.js"></script>

@@ -53,6 +53,10 @@ document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
 /**
  * Search fields onchange events.
  */
+document.getElementById('search-input').addEventListener('change', function () {
+    requestObj.search = this.value;
+})
+
 document.querySelectorAll('.location-input').forEach(input => {
     input.addEventListener('change', () => {
         requestObj.location = input.value;
@@ -180,12 +184,16 @@ function removeActive(container) {
 document.getElementById('button-go').addEventListener('click', () => {
     let query = document.getElementById('search-input').value;
 
-    if (query === "") {
+    if (query === "")
         document.getElementById('search-query').textContent = "Trending event";
-        return;
-    }
+    else
+        document.getElementById('search-query').textContent = query;
 
-    document.getElementById('search-query').textContent = query;
+    resetRequest();
+    search();
+    document.getElementById('card-container').scrollIntoView({
+        behavior: 'smooth'
+    });
 });
 
 /**
