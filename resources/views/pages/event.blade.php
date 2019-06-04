@@ -43,7 +43,7 @@
 				</div>
 				<!-- Invite requests modal -->
 				<div class="modal fade" id="inviteRequestsModal" tabindex="-1" role="dialog" aria-labelledby="inviteRequestsTitle" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+					<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="inviteRequestsTitle">Invite users</h5>

@@ -560,6 +560,27 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	min-height: 50px;
 }
 
+.event-page .user-row input[type="radio"] + label {
+	color: var(--grey);
+	cursor: pointer;
+	display: inline-flex;
+	margin-bottom: 0;
+}
+
+.event-page .user-row input[type="radio"]:checked + label {
+	font-weight: bold;
+	color: var(--green);
+	border: 1px solid var(--grey);
+	border-bottom: 0px;
+}
+
+.event-page .user-row form label {
+	border-radius: 5px 5px 0px 0px;
+	border-color: var(--grey);
+	border-bottom: 1px solid;
+}
+
+
 /** event form **/
 
 .event-form-page .input-group-text, .event-page .input-group-text {

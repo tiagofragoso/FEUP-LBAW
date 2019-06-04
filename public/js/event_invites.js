@@ -39,18 +39,36 @@ function createEl(user) {
 	const wrapper = document.createElement('div');
 	wrapper.className = 'row';
 	wrapper.innerHTML = `
-		<div class="user-row col-11 mx-auto d-flex flex-row justify-content-between align-items-center">
+		<div class="user-row col-11 mx-auto d-flex flex-row justify-content-between align-items-center position-relative">
 			<div class="leftWrapper d-flex flex-row align-items-center">
-				<img class="rounded-circle rounded-circle border border-light mr-3" width="35" height="35"></img>
+				<a>
+					<img class="rounded-circle rounded-circle border border-light mr-3" width="35" height="35"></img>
+				</a>
 				<div class="d-flex flex-column">
 					<a class="name font-weight-bold"></a>
 					<a class="username text-muted"></a>
 				</div>
 			</div>
-			<button>Invite</button>
+			<div class="d-flex flex-column align-items-center">
+				<form>
+					<input id="p${user['id']}" type="radio" name="type" style="display: none" value="Participant" checked>
+					<label class="invite-label p-2" for="p${user['id']}">
+						<i class="fas fa-user"></i>
+					</label>
+					<input id="a${user['id']}" type="radio" name="type" style="display: none" value="Artist">
+					<label class="invite-label p-2" for="a${user['id']}">
+						<i class="fas fa-guitar"></i>
+					</label>
+					<input id="h${user['id']}" type="radio" name="type" style="display: none" value="Host">
+					<label class="invite-label p-2" for="h${user['id']}">
+						<i class="fas fa-star"></i>
+					</label>
+				</form>
+				<span class="invite-type">PARTICIPANT</span>
+			</div>
 		</div>`;
 
-	const pic = wrapper.querySelector('.leftWrapper > img');
+	const pic = wrapper.querySelector('.leftWrapper img');
 	pic.setAttribute('src', '/assets/user.svg'); //change this?
 	pic.setAttribute('href', href);
 
@@ -62,5 +80,12 @@ function createEl(user) {
 	}
 	wrapper.querySelector('.username').textContent = user['username']? '@' + user['username']: '';
 	wrapper.querySelector('.username').setAttribute('href', href);
+	wrapper.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener('change', (e) => updateInviteType(e.target, wrapper)));
 	return wrapper;
+}
+
+function updateInviteType(target, wrapper) {
+	console.log('called');
+	const label = target.getAttribute('value').toUpperCase();
+	wrapper.querySelector('.invite-type').textContent = label;
 }
