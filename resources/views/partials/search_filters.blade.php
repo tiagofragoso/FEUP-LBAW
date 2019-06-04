@@ -17,7 +17,9 @@
     <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownLocation"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false">
         <i class="mr-1 fas fa-map-marker-alt"></i>
-        Location
+        <span>
+            Location
+        </span>
     </button>
     <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
         <h6 class="dropdown-title">Location</h6>
@@ -38,9 +40,9 @@
         <h6 class="dropdown-title">Price</h6>
         <div class="form-group">
             <label for="start-price-input">Start price:</label>
-            <input type="text" class="form-control mb-2" id="start-price-input" placeholder="Enter start price">
+            <input type="number" class="form-control mb-2" id="start-price-input" placeholder="Enter start price">
             <label for="end-price-input">End price:</label>
-            <input type="text" class="form-control" id="end-price-input" placeholder="Enter end price">
+            <input type="number" class="form-control" id="end-price-input" placeholder="Enter end price">
         </div>
     </div>
 </div>

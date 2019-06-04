@@ -51,13 +51,29 @@ document.getElementById('location-input').addEventListener('change', function ()
 
 document.getElementById('start-price-input').addEventListener('change', function () {
     requestObj.start_price = this.value;
-    updateButtons('dropdownPrice', 'Location', requestObj.start_price + '€ - ' + requestObj.end_price + '€');
+    updateButtons('dropdownPrice', 'Price', getPrice());
 });
 
 document.getElementById('end-price-input').addEventListener('change', function () {
     requestObj.end_price = this.value;
-    updateButtons('dropdownPrice', 'Location', requestObj.start_price + '€ - ' + requestObj.end_price + '€');
+    updateButtons('dropdownPrice', 'Price', getPrice());
 });
+
+function getPrice() {
+    let placeholder = '';
+    if (requestObj.start_price === '') 
+        placeholder += 'any';
+    else 
+        placeholder += requestObj.start_price + '€';
+
+    placeholder += ' - ';
+
+    if (requestObj.end_price === '') 
+        placeholder += 'any';
+    else 
+        placeholder += requestObj.end_price + '€';
+    return placeholder === 'any - any' ? '' : placeholder;
+}
 
 document.querySelectorAll('*[aria-labelledby="dropdownCategory"] .dropdown-item').forEach(item => {
     updateList(item, 'dropdownCategory', 'Category', item.dataset.value, item.textContent, 'category');
