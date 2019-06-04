@@ -879,6 +879,11 @@ border: 3px solid var(--green)!important;
 .search-page .dropdown-menu {
     max-height: 380px;
     overflow: auto;
+    width: 200px;
+}
+
+.search-page .dropdown-menu .dropdown-item {
+    cursor: pointer;
 }
 
 .search-page .dropdown-menu .dropdown-item.active {

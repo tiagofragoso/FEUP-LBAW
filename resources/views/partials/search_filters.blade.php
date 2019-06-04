@@ -17,17 +17,13 @@
     <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownLocation"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false">
         <i class="mr-1 fas fa-map-marker-alt"></i>
-        <span>
-            Location
-        </span>
+        Location
     </button>
     <div class="dropdown-menu p-4" aria-labelledby="dropdownLocation">
         <h6 class="dropdown-title">Location</h6>
-        <p>
-            <div class="form-group">
-                <input type="text" class="form-control" id="location-input" placeholder="Enter location">
-            </div>
-        </p>
+        <div class="form-group">
+            <input type="text" class="form-control" id="location-input" placeholder="Enter location">
+        </div>
     </div>
 </div>
 <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
@@ -40,9 +36,12 @@
     </button>
     <div class="dropdown-menu p-4" aria-labelledby="dropdownPrice">
         <h6 class="dropdown-title">Price</h6>
-        <p>
-            This will be a price input...
-        </p>
+        <div class="form-group">
+            <label for="start-price-input">Start price:</label>
+            <input type="text" class="form-control mb-2" id="start-price-input" placeholder="Enter start price">
+            <label for="end-price-input">End price:</label>
+            <input type="text" class="form-control" id="end-price-input" placeholder="Enter end price">
+        </div>
     </div>
 </div>
 <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">

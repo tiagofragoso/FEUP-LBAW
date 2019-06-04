@@ -46,6 +46,17 @@ document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
 
 document.getElementById('location-input').addEventListener('change', function () {
     updateButtons('dropdownLocation', 'Location', this.value);
+    requestObj.location = this.value;
+});
+
+document.getElementById('start-price-input').addEventListener('change', function () {
+    requestObj.start_price = this.value;
+    updateButtons('dropdownPrice', 'Location', requestObj.start_price + '€ - ' + requestObj.end_price + '€');
+});
+
+document.getElementById('end-price-input').addEventListener('change', function () {
+    requestObj.end_price = this.value;
+    updateButtons('dropdownPrice', 'Location', requestObj.start_price + '€ - ' + requestObj.end_price + '€');
 });
 
 document.querySelectorAll('*[aria-labelledby="dropdownCategory"] .dropdown-item').forEach(item => {
