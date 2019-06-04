@@ -6,6 +6,7 @@
 <script defer type="module" src="/js/admin.js"> </script>
 <script defer type="module" src="/js/reports.js"> </script>
 <script defer type="module" src="/js/comments.js"> </script>
+<script defer type="module" src="/js/questions.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -290,14 +291,18 @@
 										<div class="col-12 col-md-10 d-flex flex-row align-items-center">
 											<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
 											<form class="position-relative w-100" action="#">
-												<textarea class="form-control position-relative w-100 pr-5" id="exampleFormControlTextarea1" rows="1" placeholder="Ask a question" style="resize: none"></textarea>
-												<div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
-													<button class="submit-btn" type="submit">
+												<textarea class="form-control position-relative w-100 pr-5"
+													id="questionFormTextarea" rows="1"
+													placeholder="Ask a question" style="resize: none"></textarea>
+												<div
+													class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
+													<button class="submit-btn submit-question" data-id="{{$event->id}}" type="submit">
 														<i class="fas fa-angle-double-right"></i>
 													</button>
 												</div>
 											</form>
 										</div>
+										<div class="success d-none" id="question-confirmation-message">Question submitted with success.</div>
 									</div>
 								</div>
 								@endif
