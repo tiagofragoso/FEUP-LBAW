@@ -11,6 +11,7 @@ let pollOptions = document.querySelectorAll("input[type=radio][name=poll]");
 pollOptions.forEach(option => {
     let option_id = option.closest('.row').dataset.id;
     let post_id = option.closest('.container').dataset.id;
+    console.log("poll options")
     option.addEventListener('click', async () => {
         let url = '/api/polls/'+post_id+'/votes/'+option_id;
         const response = await request(
@@ -24,7 +25,14 @@ pollOptions.forEach(option => {
                 }
             }
         );
-        console.log("response "+response);
+        console.log("response ",response);
+        /*if (response == 200){
+            let numberVotes = option.closest('.row').childNodes[3].dataset.id++;
+            option.closest('.row').childNodes[3].innerText = numberVotes + " votes";
+            console.log(option.closest('.row').childNodes[3].textContent);
+           
+
+        }*/
        
 
     })});

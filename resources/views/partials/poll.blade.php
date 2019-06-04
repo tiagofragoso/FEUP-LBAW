@@ -18,7 +18,7 @@
             </span>
         </div>
         <div
-            class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted">
+            class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted" id ="pollVotes" data-id = "{{$option->votes}}">
             {{$option->votes}} votes
         </div>
     </div> 

@@ -8,6 +8,7 @@ class Poll extends Model
 {
     //
     public $timestamps = false;
+    protected $primaryKey = 'post_id';
     protected $table = 'polls';
 
     public function pollOptions() {
@@ -16,6 +17,7 @@ class Poll extends Model
 
     public function pollVotes($user_id){
         return $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
-                    ->wherePivot('user_id',$user_id)->exists();
+        ->wherePivot('user_id',$user_id)->exists();
+
     }
 }
