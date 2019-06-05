@@ -2,8 +2,6 @@ import {request} from "./requests.js";
 
 let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
 
-console.log(commentLikeBtns);
-
 commentLikeBtns.forEach(button => {
 
     button.addEventListener('click', async () => {
