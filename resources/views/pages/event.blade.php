@@ -7,6 +7,7 @@
 <script defer type="module" src="/js/reports.js"> </script>
 <script defer type="module" src="/js/comments.js"> </script>
 <script defer type="module" src="/js/questions.js"> </script>
+<script defer type="module" src="/js/answers.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -310,13 +311,13 @@
 								<div class="row justify-content-center">
 									<div class="col-12 col-md-9 ">
 										<p><strong>Unanswered questions
-												{{"(" . count($questions['unanswered']) . ")"}}</strong></p>
+												(<span class='nUnanswered'>{{count($questions['unanswered'])}}</span>) </strong></p>
 									</div>
 								</div>
 								<div class="row justify-content-center mb-4">
 									<ul class="col-12 col-md-9 list-group list-group-flush">
 										@foreach ($questions['unanswered'] as $question)
-										<li class="list-group-item">
+										<li class="list-group-item unanswered-question">
 											<a class="pl-0 text-decoration-none qa-question dropdown-toggle" data-toggle="collapse" href="#collapse{{$question->id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
 												{{$question->content}}
 											</a>
@@ -325,10 +326,10 @@
 													<div class="row col-12 mt-3  align-items-center">
 														<div class="col-12 d-flex flex-row align-items-center">
 															<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30">
-															<form class="position-relative w-100" action="#">
-																<textarea class="form-control position-relative w-100 pr-5" id="exampleFormControlTextarea1" rows="1" placeholder="Answer" style="resize: none"></textarea>
+															<form class="position-relative form-answer-question w-100">
+																<textarea class="form-control position-relative w-100 pr-5" rows="1" placeholder="Answer" style="resize: none"></textarea>
 																<div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
-																	<button class="submit-btn" type="submit">
+																	<button class="submit-btn answer-button" data-id = {{$question->id}} type="submit">
 																		<i class="fas fa-angle-double-right"></i>
 																	</button>
 																</div>
@@ -344,12 +345,12 @@
 								<div class="row justify-content-center">
 									<div class="col-12 col-md-9">
 										<p><strong>Answered questions
-												{{"(" . count($questions['answered']) . ")"}}</strong></p>
+												(<span class='nAnswered'>{{count($questions['answered'])}}</span>) </strong></p>
 									</div>
 								</div>
 								@endif
 								<div class="row justify-content-center">
-									<ul class="col-12 col-md-9 list-group list-group-flush">
+									<ul class="col-12 col-md-9 list-group list-group-flush answered-questions-list">
 										@foreach($questions['answered'] as $question)
 										<li class="list-group-item">
 											<a class="pl-0 text-decoration-none qa-question dropdown-toggle" data-toggle="collapse" href="#" role="button" data-target="#question{{$question->id}}" aria-expanded="false" aria-controls="collapseExample">
