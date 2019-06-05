@@ -123,19 +123,19 @@ class PostController extends Controller
 
     public function likePost($id){
        
-        if (!Auth::check()) return response(403);
+        if (!Auth::check()) return response()->json(null, 403);
         
-        if (is_null(Post::find($id))) return response(404);
+        if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->likePost($id);
-        return response(200);
+        return response()->json(null, 200);
         
     }
     public function dislikePost($id){
         
-        if (!Auth::check()) return response(403);
-        if (is_null(Post::find($id))) return response(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->dislikePost($id);
-        return response(200);
+        return response()->json(null, 200);
 
     }
 
