@@ -8,6 +8,7 @@
 <script defer type="module" src="/js/comments.js"> </script>
 <script defer type="module" src="/js/questions.js"> </script>
 <script defer type="module" src="/js/answers.js"> </script>
+<script defer type="module" src="/js/threads.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -383,7 +384,7 @@
 										</div>
 										<div class="row">
 											<div class="col-12">
-												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+												<textarea class="form-control" id="threadTextarea" rows="3"></textarea>
 											</div>
 										</div>
 										<hr class="mb-1">
@@ -393,7 +394,7 @@
 												<label class="form-check-label mr-2" for="thread"><i class="fas fa-font"></i></label>
 											</div>
 											<div class="col-6 text-right">
-												<button class="submit-btn" type="submit">
+												<button class="submit-btn submit-thread-button" data-id = {{$event->id}} type="submit">
 													<i class="fas fa-angle-double-right"></i>
 												</button>
 											</div>
@@ -402,8 +403,11 @@
 								</div>
 							</div>
 							@if ($joined === 'Host' || $joined === 'Artist')
-							@each('partials.thread', $threads, 'thread')
+								<div class="threads-list">
+								@each('partials.thread', $threads, 'thread')
+								</div>
 							@endif
+
 						</div>
 					</div>
 				</div>

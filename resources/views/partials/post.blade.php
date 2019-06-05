@@ -70,7 +70,7 @@
                         <div
                             class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
                             <button class="submit-btn" type="submit">
-                                <i class="far fa-angle-double-right"></i>
+                                <i class="fas fa-angle-double-right"></i>
                             </button>
                         </div>
                     </form>

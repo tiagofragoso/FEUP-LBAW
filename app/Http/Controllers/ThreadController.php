@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
+use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -55,10 +56,17 @@ class ThreadController extends Controller
         if (is_null($event)) return response()->json(null, 404);
         $this->authorize('create', [$event, Thread::class]);
         $request->request->add(['event_id' => $id]);
-        $request->request->add(['author_id' => $id]);
+        $request->request->add(['author_id' => Auth::user()->id]);
         $this->validateThread($request);
         $thread = Thread::create($request->all());
-        return response()->json($thread, 201);
+        $thread = Thread::find($thread->id);
+        return response()->json([
+            'id' => $thread->id,
+            'content' => $thread->content,
+            'author_id' => $thread->author_id,
+            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $thread->date)->format('M d | H:i'),
+            'author' => $thread->author->displayName()
+        ], 201);
     }
 
     /**
