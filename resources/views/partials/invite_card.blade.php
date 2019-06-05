@@ -38,10 +38,10 @@
 		<div class="card-footer">
 			<div class="row justify-content-center">
 				<div class="col-6 text-right">
-					<p class="my-0 ban-btn text-uppercase">decline</p>
+					<button class="my-0 btn ban-btn text-uppercase">decline</button>
 				</div>
 				<div class="col-6 text-left">
-					<p class="my-0 diss-btn text-uppercase">accept</p>
+					<button class="my-0 btn diss-btn text-uppercase">accept</button>
 				</div>
 			</div>
 		</div>

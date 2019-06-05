@@ -33,14 +33,14 @@
             </div>
         </div>
     </div>
-    @if($event['status'] == 'Pending')
+    @if($event['status'] === 'Pending')
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-right">
-                <p class="my-0 ban-btn text-uppercase" id="delete-report-btn">delete</p>
+                <button class="my-0 diss-btn text-uppercase">dismiss</button>
             </div>
             <div class="col-6 text-left">
-                <p class="my-0 diss-btn text-uppercase" id="dismiss-report-btn">dismiss</p>
+                <button class="my-0 ban-btn text-uppercase">delete</button>
             </div>
         </div>
     </div>
