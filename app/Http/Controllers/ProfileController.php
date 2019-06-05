@@ -19,22 +19,17 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-    
-        $user = User::findOrFail($id);
-    
-       if(!$user->can('view',$user)) return view('errors.403');
-    
-        
-
-        if ($user->banned && !Auth::user()->is_admin) {
-            abort(403);
-        }
-        if ($user->is_admin) {
-            abort(403);
-        }
         if (Auth::check() && Auth::user()-> id == $id) {
             return redirect('profile');
         } 
+        
+        $user = User::findOrFail($id);
+       if(!$user->can('view',$user)) return view('errors.403');
+    
+        if ($user->is_admin) {
+            abort(403);
+        }
+      
        
         $data = $this->getEventsData($user);
         $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
@@ -224,9 +219,7 @@ class ProfileController extends Controller
     public function deleteAccount(){
         if (!Auth::check()) return response()->json(null, 403);
         $user = User::find(Auth::user()->id);
-        $username = "soundhub".Auth::user()->id;
-        $email = $username."@sound.hub";
-        $user->update(['name'=>null, 'username'=>$username,'email'=>$email]);
+        $user->update(['name'=>null, 'username'=>null,'email'=>null,'deleted'=>true]);
 
         return response()->json(null,200);
     }
