@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\EventReport;
 use App\UserReport;
+use App\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -204,6 +205,36 @@ class ProfileController extends Controller
 
         Auth::user()->unfollow($id);
         return response(200);
+    }
+
+    public function showInvites() {
+
+        if (!Auth::check()) return redirect('/login');
+
+        $user = Auth::user();
+
+        if ($user->is_admin) {
+            abort(403); 
+        }
+
+        $invites = Invite::where('invited_user_id', $user->id)->get()->map(function ($e) {
+            switch($e->type) {
+                case "Participant":
+                    $e['formattedType'] = "join";
+                    break;
+                case "Artist":
+                    $e['formattedType'] = "perform at";
+                    break;
+                case "Host":
+                    $e['formattedType'] = "co-host";
+                    break;
+            }
+            return $e;
+        });
+
+
+        return view('pages.invites', ['user' => $user, 'invites' => $invites]);
+
     }
 
 }

@@ -51,6 +51,7 @@ Route::post('register', 'Auth\RegisterController@register');
 Route::get('profile', 'ProfileController@showProfile');
 Route::get('users/{id}', 'ProfileController@show');
 Route::get('settings', 'ProfileController@edit');
+Route::get('invites', 'ProfileController@showInvites');
 
 //About
 Route::view('about', 'pages.about');

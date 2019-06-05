@@ -48,7 +48,7 @@
     <div class="card-footer">
         <div class="row justify-content-center">
             <div class="col-6 text-center">
-                <p class="my-0  {{ ($event['status'] == 'Declined')? 'baned-btn' : 'dissed-btn' }} text-uppercase">
+                <p class="my-0 {{ ($event['status'] == 'Declined')? 'baned-btn' : 'dissed-btn' }} text-uppercase">
                     {{$event['status']}}</p>
             </div>
         </div>

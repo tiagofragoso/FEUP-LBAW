@@ -2,7 +2,6 @@
 
 @section('container', 'profile-page')
 @section('scripts')
-	<script defer type="module" src="/js/join_event.js"> </script>
 @endsection
 
 @section('content')
@@ -26,7 +25,11 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('partials.profile_event_tabs', ['events' => [$joined, $hosting, $performing, $user]])
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            @each('partials.invite_card', $invites, 'invite')
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

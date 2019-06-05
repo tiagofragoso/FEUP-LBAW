@@ -766,7 +766,7 @@ border: 3px solid var(--green)!important;
     font-weight: bold;
 }
 
-.profile-page .ban-btn, .diss-btn{
+.profile-page .ban-btn, .diss-btn {
     color: var(--darkgrey);
 }
 
@@ -1015,4 +1015,3 @@ border: 3px solid var(--green)!important;
 .error-container > h1 {
 	font-size: 52px;
 }
-
