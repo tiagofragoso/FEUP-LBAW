@@ -11,8 +11,7 @@
 |
 */
 
-Route::redirect('/', 'search');
-
+Route::get('', 'HomeController@show');
 
 // Events
 Route::get('events/create', 'EventController@create');
