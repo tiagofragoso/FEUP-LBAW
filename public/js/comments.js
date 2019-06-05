@@ -11,7 +11,6 @@ commentContent.forEach(content => {
 async function postComment(event) {
 
     event.preventDefault();
-    console.log(event.target.parentNode.parentNode.previousElementSibling.value);
     let requestBody = {
         content: event.target.parentNode.parentNode.previousElementSibling.value,
         parent: null
@@ -31,7 +30,6 @@ async function postComment(event) {
         }
     );
     if (!response.errors) {
-        //console.log(response);
         event.target.parentNode.parentNode.previousElementSibling.value = "";
         insertComment(createComment(response),post_id);
     }
@@ -72,7 +70,8 @@ function createComment(response) {
 }
 
 function insertComment(comment,post_id) {
-    let comments = document.getElementById(post_id);
+    
+    let comments = document.getElementById("comments-list"+post_id);
     console.log(comments);
     comments.insertBefore(comment, comments.childNodes[0]);
 }

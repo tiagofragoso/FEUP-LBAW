@@ -23,7 +23,7 @@ class Post extends Model
     }
 
     public function comments() {
-        return $this->hasMany('App\Comment')->where('parent', NULL)->orderBy('date', 'asc');
+        return $this->hasMany('App\Comment')->where('parent', NULL)->orderBy('date', 'desc');
     }
 
     public function poll() {

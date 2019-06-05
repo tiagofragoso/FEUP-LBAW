@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
-                <div class="comments-list col-12" id ="{{$post->id}}">
+                <div class="col-12" id ="comments-list{{$post->id}}">
                     @each('partials.comment', $post->commentsContent, 'comment')
                 </div>
             </div>

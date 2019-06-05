@@ -14,7 +14,7 @@ class Comment extends Model
     ];
 
     public function comments() {
-        return $this->hasMany('App\Comment', 'parent')->orderBy('date', 'asc');
+        return $this->hasMany('App\Comment', 'parent')->orderBy('date', 'desc');
     }
 
     public function user() {
