@@ -221,5 +221,15 @@ class ProfileController extends Controller
         return response()->json(null, 200);
     }
 
+    public function deleteAccount(){
+        if (!Auth::check()) return response()->json(null, 403);
+        $user = User::find(Auth::user()->id);
+        $username = "soundhub".Auth::user()->id;
+        $email = $username."@sound.hub";
+        $user->update(['name'=>null, 'username'=>$username,'email'=>$email]);
+
+        return response()->json(null,200);
+    }
+
     
 }

@@ -1,7 +1,23 @@
 import { clearErrors, createErrors, request } from "./requests.js";
 
-let delete_account = document.getElementById('delete-account-btn');
-console.log(delete_account);
+
+
+document.getElementById('delete-account-btn').addEventListener('click',async() =>{
+    const response = await request(
+        '/api/profile/delete',
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        }
+    );
+
+    console.log(response);
+
+});
 document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors('.form-group-general');
     document.getElementById('general-message').classList.add('d-none');
