@@ -11,6 +11,9 @@ commentContent.forEach(content => {
 async function postComment(event) {
 
     event.preventDefault();
+
+    if (event.target.parentNode.parentNode.previousElementSibling.value !== "" &&
+    event.target.parentNode.parentNode.previousElementSibling.value != undefined ){
     let requestBody = {
         content: event.target.parentNode.parentNode.previousElementSibling.value,
         parent: null
@@ -33,6 +36,7 @@ async function postComment(event) {
         event.target.parentNode.parentNode.previousElementSibling.value = "";
         insertComment(createComment(response),post_id);
     }
+}
 }
 function createComment(response) {
     const comment = document.createElement('div');
