@@ -1,12 +1,24 @@
 import { request } from './requests.js';
 
-const FOLLOWING_URL = '/api/profile/following';
 const INVITE_URL = '/api/invites';
+const FOLLOWING_URL = INVITE_URL + '/following';
 
 const EVENT_ID = document.querySelector('#content').dataset.id;
 
-document.querySelector('#invite-btn').addEventListener('click', async () => {
-	const data = await request(FOLLOWING_URL, {
+const searchBox = document.querySelector('#invite-search input[type="text"][name="query"]');
+searchBox.addEventListener('input', () => onQueryChange(searchBox.value));
+
+const searchButton = document.querySelector('#invite-search button');
+searchButton.addEventListener('click', e => { 
+	e.preventDefault();
+	onQueryChange(searchBox.value);
+});
+
+const noResultsEl = document.querySelector('#invite-list #no-results');
+
+async function fetchFollowing() {
+	const url = FOLLOWING_URL + `?event_id=${encodeURIComponent(EVENT_ID)}`;
+	const response = await request(url, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -14,14 +26,41 @@ document.querySelector('#invite-btn').addEventListener('click', async () => {
 			'Accept': 'application/json'
 		}
 	});
-	populateModal(data.data);
+	return response;
+}
+
+document.querySelector('#invite-btn').addEventListener('click', async () => {
+	const response = await fetchFollowing();
+	if (response.status === 200)
+		populateModal(response.data);
+	else 
+		populateModal([]);
 });
 
+async function onQueryChange(query) {
+	console.log('called');
+	query = query.trim();
+	if (query !== '') {
+		document.querySelector('#invite-list #no-results').style.display = 'none';
+		populateModal([]);
+	} else {
+		const response = await fetchFollowing();
+		if (response.status === 200)
+			populateModal(response.data);
+		else 
+			populateModal([]);
+	}
+}
+
 function populateModal(data) {
-	
 	const list = document.querySelector('#invite-list');
-	while (list.firstChild) {
-		list.firstChild.remove();
+	if (data.length === 0)
+		document.querySelector('#invite-list #no-results').style.display = 'block';
+	else
+		document.querySelector('#invite-list #no-results').style.display = 'none';
+
+	while (list.lastChild != noResultsEl) {
+		list.lastChild.remove();
 	}
 	for (let user of data) {
 		list.appendChild(createEl(user));
@@ -53,20 +92,6 @@ function createEl(user) {
 			</div>
 			<div class="right-wrapper d-flex flex-row align-items-center">
 				<div class="d-flex flex-column align-items-center">
-					<form>
-						<input id="p${user['id']}" type="radio" name="type" style="display: none" value="Participant" checked>
-						<label class="invite-label p-2" for="p${user['id']}">
-							<i class="fas fa-user"></i>
-						</label>
-						<input id="a${user['id']}" type="radio" name="type" style="display: none" value="Artist">
-						<label class="invite-label p-2" for="a${user['id']}">
-							<i class="fas fa-guitar"></i>
-						</label>
-						<input id="h${user['id']}" type="radio" name="type" style="display: none" value="Host">
-						<label class="invite-label p-2" for="h${user['id']}">
-							<i class="fas fa-star"></i>
-						</label>
-					</form>
 					<span class="invite-type">PARTICIPANT</span>
 				</div>
 				<button class="btn btn-sm btn-secondary ml-3"><i class="fas fa-envelope"></i></button>
@@ -74,8 +99,49 @@ function createEl(user) {
 		</div>`;
 
 	const pic = wrapper.querySelector('.left-wrapper img');
+	const refEl = wrapper.querySelector('.right-wrapper .invite-type');
+
+	if (!user['invited']) {
+		const form = document.createElement('form');
+		form.innerHTML = `
+			<input id="p${user['id']}" type="radio" name="type" style="display: none" value="Participant" checked>
+			<label class="invite-label p-2" for="p${user['id']}">
+				<i class="fas fa-user"></i>
+			</label>
+			<input id="a${user['id']}" type="radio" name="type" style="display: none" value="Artist">
+			<label class="invite-label p-2" for="a${user['id']}">
+				<i class="fas fa-guitar"></i>
+			</label>
+			<input id="h${user['id']}" type="radio" name="type" style="display: none" value="Host">
+			<label class="invite-label p-2" for="h${user['id']}">
+				<i class="fas fa-star"></i>
+			</label>`;
+
+		form.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener('change', (e) => updateInviteType(e.target, wrapper)));
+		wrapper.querySelector('.right-wrapper > div').insertBefore(form, refEl);
+	} else {
+		const invited = document.createElement('span');
+		let text;
+		switch (user['invite_status']) {
+			case 'Pending':
+				text = 'INVITED';
+				break;
+			case 'Accepted':
+				text = 'ACCEPTED';
+				break;
+			case 'Declined':
+				text = 'DECLINED';
+				break;
+		}
+		wrapper.querySelector('.invite-type').textContent = user['invite_type'].toUpperCase();
+		invited.textContent = text;
+		invited.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
+		wrapper.querySelector('.right-wrapper > div').insertBefore(invited, wrapper.querySelector('.invite-type'));
+		wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
+	}
+
 	pic.setAttribute('src', '/assets/user.svg'); //change this?
-	pic.setAttribute('href', href);
+	pic.parentElement.setAttribute('href', href);
 
 	if (!user['name']) {
 		wrapper.querySelector('.name').remove();
@@ -83,16 +149,14 @@ function createEl(user) {
 		wrapper.querySelector('.name').textContent = user['name'];
 		wrapper.querySelector('.name').setAttribute('href', href);
 	}
-	wrapper.querySelector('.username').textContent = user['username']? '@' + user['username']: '';
+	wrapper.querySelector('.username').textContent = user['username'] ? '@' + user['username'] : '';
 	wrapper.querySelector('.username').setAttribute('href', href);
-	wrapper.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener('change', (e) => updateInviteType(e.target, wrapper)));
 
 	wrapper.querySelector('.right-wrapper button').addEventListener('click', () => sendInvite(wrapper));
 	return wrapper;
 }
 
 function updateInviteType(target, wrapper) {
-	console.log('called');
 	const label = target.getAttribute('value').toUpperCase();
 	wrapper.querySelector('.invite-type').textContent = label;
 }
@@ -108,7 +172,7 @@ async function sendInvite(wrapper) {
 			'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
 			'Accept': 'application/json'
 		},
-		body: JSON.stringify({'event_id': EVENT_ID, 'invited_id': invited_id, 'type': type})
+		body: JSON.stringify({ 'event_id': EVENT_ID, 'invited_id': invited_id, 'type': type })
 	});
 
 	console.log(response);

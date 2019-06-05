@@ -54,12 +54,12 @@
 							<div class="modal-body">
 								<div class="container-fluid">
 									<div class="row">
-										<form class="form-inline mx-auto col-11" method="GET" action="{{ url('/api/users/search') }}">
+										<form id="invite-search" class="form-inline mx-auto col-11">
 											<div class="input-group w-100">
 												<input type="text" class="form-control" placeholder="Search for name or username" aria-label="Search"
 													aria-describedby="button-addon2" name="query">
 												<div class="input-group-append">
-													<button class="btn btn-primary" type="submit" id="button-addon2">Go!</button>
+													<button class="btn btn-primary" id="button-addon2">Go!</button>
 												</div>
 											</div>
 										</form>
@@ -70,7 +70,11 @@
 										</div>
 									</div>
 									<div id="invite-list" class="d-flex flex-column">
-
+										<div id="no-results" class="row mt-3">
+											<div class="col-12">
+												<p class="text-center">No results found.</p>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

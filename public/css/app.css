@@ -584,6 +584,10 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	min-width: 106px;
 }
 
+.event-page #invite-list {
+	min-height: 40vh;
+}
+
 /** event form **/
 
 .event-form-page .input-group-text, .event-page .input-group-text {

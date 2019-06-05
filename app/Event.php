@@ -32,6 +32,10 @@ class Event extends Model
         return $this->belongsToMany('App\User', 'participations')->using('App\Participation')->wherePivotIn('type', $type);
     }
 
+    public function hosts() {
+        return $this->participatesAs(['Owner', 'Host']);
+    }
+
     public function questions(){
         return $this->hasMany('App\Question');
     }

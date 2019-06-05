@@ -21,14 +21,11 @@ Route::get('events/{id}', 'EventController@show');
 Route::get('events/{id}/edit', 'EventController@edit');
 Route::put('events/{id}', 'EventController@update');
 
-
 // API
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
-Route::get('api/profile/following', 'ProfileController@getFollowing');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
-Route::get('api/users/search', 'SearchController@getUsers');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
@@ -39,6 +36,7 @@ Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
 
+Route::get('api/invites/following', 'InvitesController@getFollowing');
 Route::post('api/invites', 'InvitesController@store');
 
 // Auth
