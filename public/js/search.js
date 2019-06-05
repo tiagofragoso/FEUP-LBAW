@@ -204,9 +204,18 @@ function removeActive(container) {
 }
 
 /**
- * Search submit button event.
+ * Search submit events.
  */
-document.getElementById('button-go').addEventListener('click', () => {
+document.getElementById('button-go').addEventListener('click', queryTextRequest);
+
+document.getElementById('search-input').addEventListener('keypress', e => {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+        queryTextRequest();
+    }
+});
+
+function queryTextRequest() {
     let query = document.getElementById('search-input').value;
 
     if (query === "")
@@ -219,7 +228,7 @@ document.getElementById('button-go').addEventListener('click', () => {
     document.getElementById('card-container').scrollIntoView({
         behavior: 'smooth'
     });
-});
+}
 
 /**
  * Infinite scrolling
