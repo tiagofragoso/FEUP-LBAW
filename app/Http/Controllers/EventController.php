@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App;
 use App\Event;
 use App\PollVote;
@@ -19,7 +20,8 @@ class EventController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validateEvent($data) {
+    public function validateEvent($data)
+    {
         return Validator::make($data->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
@@ -56,7 +58,6 @@ class EventController extends Controller
         $this->authorize('create', Event::class);
 
         return view('pages.event_form', ['title' => 'Create event']);
-
     }
 
     /**
@@ -74,7 +75,7 @@ class EventController extends Controller
         $event = Event::create($request->except('photo'));
 
         Auth::user()->joinEvent($event->id, 'Owner');
-        
+
         return $this->show($event->id);
     }
 
@@ -88,7 +89,7 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (Auth::check()){
+        if (Auth::check()) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
             } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
@@ -104,43 +105,49 @@ class EventController extends Controller
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
         $artists = $event->participatesAs('Artist')->get()->take(6);
-        
+
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
 
-        foreach($posts as $post){
-            if (!(empty($post->poll()->get()->first()))){
+        foreach ($posts as $post) {
+            if (!(empty($post->poll()->get()->first()))) {
 
-            $post->type = 'Poll';
-            
-            $option = PollVote::all()->where('user_id',Auth::user()->id)
-                             ->where('poll_id',$post->id);
-            $post->selected_option = $option->first()->poll_option;  
-            }
-            else if (!(empty($post->file()->get()->first())))
-            $post->type = 'File';
+                $post->type = 'Poll';
+
+                $option = PollVote::all()->where('user_id', Auth::user()->id)
+                    ->where('poll_id', $post->id)->first();
+                if (!empty($option))
+                    $post->selected_option = $option->poll_option;
+                else
+                    $post->selected_option = null;
+            } else if (!(empty($post->file()->get()->first())))
+                $post->type = 'File';
         }
-        
+
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();
         } else {
             $threads = null;
         }
-        
+
         $questions = $event->getQuestions($joined);
 
-       
-        return view('pages.event', 
-            [ 'title' => $event->name,
-            'event' => $event,
-            'owner' => $owner,
-            'hosts' => $hosts,
-            'artists' => $artists,
-            'posts' => $posts,
-            'questions' => $questions,
-            'threads' => $threads,
-            'joined'=> $joined]);  
-        }
+
+        return view(
+            'pages.event',
+            [
+                'title' => $event->name,
+                'event' => $event,
+                'owner' => $owner,
+                'hosts' => $hosts,
+                'artists' => $artists,
+                'posts' => $posts,
+                'questions' => $questions,
+                'threads' => $threads,
+                'joined' => $joined
+            ]
+        );
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -182,17 +189,19 @@ class EventController extends Controller
         //
     }
 
-    public function joinEvent($id){
+    public function joinEvent($id)
+    {
         if (!Auth::check()) return response(403);
         if (is_null(Event::find($id))) return response(404);
-        
+
         if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
 
         Auth::user()->joinEvent($id, 'Participant');
         return response(200);
     }
 
-    public function leaveEvent($id) {
+    public function leaveEvent($id)
+    {
         if (!Auth::check()) return response(403);
         if (is_null(Event::find($id))) return response(404);
 

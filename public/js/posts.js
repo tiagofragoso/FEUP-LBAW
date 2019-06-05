@@ -3,8 +3,10 @@ import {request} from "./requests.js";
 let postContent = document.querySelector('#postFormTextarea');
 
 let pollOptions = document.querySelectorAll("input[type=radio][name=poll]");
-let selectedOption = document.querySelector("input[type=radio][name=poll]:checked").closest('.row');
+let selectedOption = null;
 
+if (document.querySelector("input[type=radio][name=poll]:checked") !== null)
+    selectedOption =  document.querySelector("input[type=radio][name=poll]:checked").closest('.row');
 pollOptions.forEach(option => {
     let option_id = option.closest('.row').dataset.id;
     let post_id = option.closest('.container').dataset.id;
@@ -21,9 +23,8 @@ pollOptions.forEach(option => {
                 }
             }
         );
-        if (response == 200) {
+        if (response.status == 200) {
             option.closest('.row').childNodes[3].dataset.id++;
-
             option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
             if (selectedOption !== null) {
                 selectedOption.closest('.row').childNodes[3].dataset.id--;
