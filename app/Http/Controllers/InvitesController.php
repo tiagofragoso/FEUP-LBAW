@@ -35,7 +35,7 @@ class InvitesController extends Controller
         
         $user = Auth::user();
 
-        if ($user->isAdmin) {
+        if ($user->is_admin) {
             return response()->json(null, 403);
         }
 
@@ -70,7 +70,7 @@ class InvitesController extends Controller
 
         $user = Auth::user();
 
-        if ($user->isAdmin) {
+        if ($user->is_admin) {
             return response()->json(null, 403);
         }
 
@@ -133,7 +133,7 @@ class InvitesController extends Controller
 
         $user = Auth::user();
 
-        if ($user->isAdmin) {
+        if ($user->is_admin) {
             return response()->json(null, 403);
         }
 
