@@ -311,7 +311,7 @@
 								<div class="row justify-content-center">
 									<div class="col-12 col-md-9 ">
 										<p><strong>Unanswered questions
-												( <span class='nUnanswered'> {{count($questions['unanswered'])}} </span> ) </strong></p>
+												(<span class='nUnanswered'>{{count($questions['unanswered'])}}</span>) </strong></p>
 									</div>
 								</div>
 								<div class="row justify-content-center mb-4">
@@ -345,7 +345,7 @@
 								<div class="row justify-content-center">
 									<div class="col-12 col-md-9">
 										<p><strong>Answered questions
-												(<span class='nAnswered'> {{count($questions['answered'])}} </span>) </strong></p>
+												(<span class='nAnswered'>{{count($questions['answered'])}}</span>) </strong></p>
 									</div>
 								</div>
 								@endif
