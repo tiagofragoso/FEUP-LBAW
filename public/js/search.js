@@ -1,4 +1,4 @@
-import {request} from "/requests.js";
+import {request} from "./requests.js";
 import {getEventCard} from './event_card.js';
 
 let stuck = true;
@@ -249,7 +249,7 @@ function resetRequest() {
 
 async function search() {
     requesting = true;
-    const data = await request(getQueryString(), {
+    const response = await request(getQueryString(), {
         method: 'GET',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -257,7 +257,7 @@ async function search() {
         }
     });
 
-    if (data.data.length === 0 && requestObj.page === 1 && document.getElementById('no-results') === null) {
+    if (response.data.data.length === 0 && requestObj.page === 1 && document.getElementById('no-results') === null) {
         let noResults = document.createElement('h3');
         noResults.id = 'no-results';
         noResults.className = 'w-100 text-center';
@@ -265,13 +265,13 @@ async function search() {
         document.getElementById('card-container').appendChild(noResults);
     }
     else {
-        data.data.forEach((event) => {
+        response.data.data.forEach((event) => {
             let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
             document.getElementById('card-container').appendChild(card);
         });
     }
 
-    if (data.data.length > 0)
+    if (response.data.data.length > 0)
         requestObj.page++;
 
     requesting = false;
