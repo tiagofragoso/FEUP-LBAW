@@ -2,6 +2,7 @@ import { request } from './requests.js';
 
 const INVITE_URL = '/api/invites';
 const FOLLOWING_URL = INVITE_URL + '/following';
+const SEARCH_URL = INVITE_URL + '/search';
 
 const EVENT_ID = document.querySelector('#content').dataset.id;
 
@@ -16,6 +17,14 @@ searchButton.addEventListener('click', e => {
 
 const noResultsEl = document.querySelector('#invite-list #no-results');
 
+document.querySelector('#invite-btn').addEventListener('click', async () => {
+	const response = await fetchFollowing();
+	if (response.status === 200)
+		populateModal(response.data);
+	else 
+		populateModal([]);
+});
+
 async function fetchFollowing() {
 	const url = FOLLOWING_URL + `?event_id=${encodeURIComponent(EVENT_ID)}`;
 	const response = await request(url, {
@@ -29,27 +38,33 @@ async function fetchFollowing() {
 	return response;
 }
 
-document.querySelector('#invite-btn').addEventListener('click', async () => {
-	const response = await fetchFollowing();
+async function fetchUsers(query) {
+	const url = SEARCH_URL + `?event_id=${encodeURIComponent(EVENT_ID)}&query_term=${encodeURIComponent(query)}`;
+	const response = await request(url, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+			'Accept': 'application/json'
+		}
+	});
+	console.log(response);
+	return response;
+}
+
+
+async function onQueryChange(query) {
+	query = query.trim();
+	let response;
+	if (query !== '') {
+		response = await fetchUsers(query);
+	} else {
+		response = await fetchFollowing();
+	}
 	if (response.status === 200)
 		populateModal(response.data);
 	else 
 		populateModal([]);
-});
-
-async function onQueryChange(query) {
-	console.log('called');
-	query = query.trim();
-	if (query !== '') {
-		document.querySelector('#invite-list #no-results').style.display = 'none';
-		populateModal([]);
-	} else {
-		const response = await fetchFollowing();
-		if (response.status === 200)
-			populateModal(response.data);
-		else 
-			populateModal([]);
-	}
 }
 
 function populateModal(data) {

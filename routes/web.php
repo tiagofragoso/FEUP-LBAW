@@ -37,6 +37,7 @@ Route::get('api/search', 'SearchController@getEvents');
 Route::post('api/events/{id}/posts', 'PostController@store');
 
 Route::get('api/invites/following', 'InvitesController@getFollowing');
+Route::get('api/invites/search', 'InvitesController@search');
 Route::post('api/invites', 'InvitesController@store');
 
 // Auth

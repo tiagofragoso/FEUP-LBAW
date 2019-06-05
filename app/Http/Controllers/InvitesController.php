@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Invite;
 use App\Event;
+use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,9 +73,42 @@ class InvitesController extends Controller
             return response()->json('Event not found', 404);
         }
 
-        $following = $user->following()->get()->map(function ($u) use($request) {
+        $following = $this->mapUsers($user->following()->get(), $request->event_id)->toArray();
+        
+        return response()->json($following, 200);
+    }
+
+    public function search(Request $request) {
+        if (!Auth::check()) return response()->json(null, 403);
+
+        $user = Auth::user();
+
+        Validator::make($request->all(), ['event_id' => 'numeric|required', 'query_term' => 'string|required'])->validate();
+
+        try {
+            Event::findOrFail($request->event_id);
+        } catch(\Exception $e) {
+            return response()->json('Event not found', 404);
+        }
+
+        $formattedQuery = "%".$request->query_term."%";
+
+        try {
+            $users = User::where('name', 'ilike', $formattedQuery)->orWhere('username', 'ilike', $formattedQuery)->limit(10)->get();
+        } catch(\Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+
+        $formatted = $this->mapUsers($users, $request->event_id)->toArray();
+
+        return response()->json($formatted, 200);
+
+    }
+
+    private function mapUsers($users, $event_id) {
+        $mapped = $users->map(function ($u) use($event_id) {
             $ret = $u->makeHidden(['email', 'followers', 'following', 'birthdate'])->toArray();
-            $invite = Invite::where('invited_user_id', $u->id)->where('event_id', $request->event_id)->first();
+            $invite = Invite::where('invited_user_id', $u->id)->where('event_id', $event_id)->first();
             if (empty($invite)) {
                 $ret['invited'] = false;
             } else {
@@ -83,9 +117,7 @@ class InvitesController extends Controller
                 $ret['invite_type'] = $invite->type;
             }
             return $ret;
-        })->toArray();
-        
-        return response()->json($following, 200);
-
+        });
+        return $mapped;
     }
 }
