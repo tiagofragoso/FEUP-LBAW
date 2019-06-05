@@ -17,13 +17,13 @@ class SearchController extends Controller
     }
 
     public function getEvents(Request $request) {
-        if ($request->has('search')) {
+        if ($request->has('search') && $request->search != '') {
             $events = Event::where([
                     ['private', 'false'],
                     ['banned', 'false'],
                     ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
                 ])
-                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->input('search'));
+                ->whereRaw("search @@ plainto_tsquery('english', ?)", $request->search);
         }
         else {
             $events = Event::where([
@@ -69,8 +69,8 @@ class SearchController extends Controller
         if ($request->has('sort_by')) {
             $events = $events->orderBy($request->sort_by, 'DESC');
         }
-        else if ($request->has('search')) {
-            $events = $events->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->input('search'));
+        else if ($request->has('search') && $request->search != '') {
+            $events = $events->orderByRaw("ts_rank(search, plainto_tsquery('english', ?)) DESC", $request->search);
         }
         else {
             $events = $events->orderBy('participants', 'DESC');
