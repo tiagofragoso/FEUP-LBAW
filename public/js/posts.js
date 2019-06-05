@@ -1,8 +1,4 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+import {request} from "./requests.js";
 
 let postContent = document.querySelector('#postFormTextarea');
 
@@ -155,10 +151,9 @@ async function postPost(event) {
         }
     );
 
-    if (!response.errors) {
-        console.log(response);
+    if (response.status === 201) {
         postContent.value = "";
-        insertPost(createPost(response));
+        insertPost(createPost(response.data));
     }
 
 

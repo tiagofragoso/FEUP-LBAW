@@ -1,8 +1,4 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+import {request} from "./requests.js";
 
 let delete_buttons = document.querySelectorAll('#delete-report-btn');
 
@@ -11,24 +7,8 @@ let dismiss_buttons = document.querySelectorAll('#dismiss-report-btn');
 
 delete_buttons.forEach(button => {
     button.addEventListener('click', async () => {
-        let reports = JSON.parse(button.closest('.report-card').dataset.id);
-
-        for (let report of reports) {
-
-
-
-
-            let url = 'api/reports/' + report['id'];
-            let type;
-            let id;
-            if (report.hasOwnProperty('event_id')) {
-                type = 'event';
-                id = report['event_id'];
-            }
-            else {
-                type = 'user';
-                id = report['reported_user'];
-            }
+        let id = button.closest('.report-card').dataset.id;
+        let type = button.closest('.report-card').dataset.type;
 
             let requestBody = {
                 status: button.textContent,
@@ -37,7 +17,7 @@ delete_buttons.forEach(button => {
             };
 
             const response = await request(
-                url,
+                '/api/reports',
                 {
                     method: 'PUT',
                     headers: {
@@ -48,14 +28,14 @@ delete_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200) {
+
+            if (response.status == 200) {
                 button.closest('.col-6').classList.add('text-center');
                 button.closest('.col-6').nextElementSibling.classList.add('d-none');
                 button.removeAttribute('id');
                 button.classList.remove('ban-btn');
                 button.classList.add('baned-btn');
             }
-        }
     });
 });
 
@@ -64,22 +44,8 @@ delete_buttons.forEach(button => {
 
 dismiss_buttons.forEach(button => {
     button.addEventListener('click', async () => {
-        let reports = JSON.parse(button.closest('.report-card').dataset.id);
-
-        for (let report of reports) {
-
-            let url = 'api/reports/' + report['id'];
-            let type;
-            let id;
-            if (report.hasOwnProperty('event_id')) {
-                type = 'event';
-                id = report['event_id'];
-            }
-            else {
-                type = 'user';
-                id = report['reported_user'];
-            }
-
+        let id = button.closest('.report-card').dataset.id;
+        let type = button.closest('.report-card').dataset.type;
 
             let requestBody = {
                 status: button.textContent,
@@ -88,7 +54,7 @@ dismiss_buttons.forEach(button => {
             };
 
             const response = await request(
-                url,
+                '/api/reports',
                 {
                     method: 'PUT',
                     headers: {
@@ -99,7 +65,8 @@ dismiss_buttons.forEach(button => {
                     body: JSON.stringify(requestBody)
                 }
             );
-            if (response == 200) {
+
+            if (response.status == 200) {
                 button.closest('.col-6').classList.add('text-center');
                 button.closest('.col-6').previousElementSibling.classList.add('d-none');
                 button.removeAttribute('id');
@@ -107,6 +74,5 @@ dismiss_buttons.forEach(button => {
                 button.classList.add('dissed-btn');
 
             }
-        }
     });
 });

@@ -72,7 +72,7 @@ class PostController extends Controller
                 'type' => $post->type,
                 'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
                 'author' => $post->author->displayName()
-            ]);
+            ], 201);
         } else {
             return response(404);
         }
