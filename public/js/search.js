@@ -63,13 +63,17 @@ $('.datepicker-here').each((i, dt) => {
         onSelect: function (formattedDate, date, inst) {
             if (date.length === 2) {
                 updateButtons('dropdownDate', 'Date', moment(date[0]).format('DD-MM-YYYY') + ' - ' + moment(date[1]).format('DD-MM-YYYY'));
-                requestObj.start_date = moment(date[0]).format('DD-MM-YYYY');
-                requestObj.end_date = moment(date[1]).format('DD-MM-YYYY');
+                requestObj.start_date = moment(date[0]).toISOString();
+                requestObj.end_date = moment(date[1]).toISOString();
                 resetRequest();
                 search();
             }
             else {
+                requestObj.start_date = '';
+                requestObj.end_date = '';
                 updateButtons('dropdownDate', 'Date', '');
+                resetRequest();
+                search();
             }
         }
     });
@@ -170,6 +174,7 @@ function updateButtons(fieldName, title, value) {
             element.classList.add('btn-outline-primary');
             element.classList.remove('btn-primary');
             element.querySelector('span').textContent = title;
+            element.title = "";
         });
         return;
     }
@@ -178,6 +183,7 @@ function updateButtons(fieldName, title, value) {
         element.classList.remove('btn-outline-primary');
         element.classList.add('btn-primary');
         element.querySelector('span').textContent = value;
+        element.title = value;
     });
 }
 
@@ -291,7 +297,6 @@ function getQueryString() {
     if (requestObj.sort_by !== '') {
         query += '&sort_by=' + requestObj.sort_by;
     }
-    console.log(query);
 
     return query;
 }

@@ -1,6 +1,6 @@
 <div class="dropdown col-6 col-sm-4 col-lg-2 mt-3">
     <button type="button" class="btn btn-outline-primary w-100 h-100 dropdownField text-left" data-field="dropdownDate"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false">
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false" title="">
         <i class="mr-1 far fa-calendar-alt"></i>
         <span>
             Date
