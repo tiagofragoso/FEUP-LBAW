@@ -901,7 +901,27 @@ opacity: 0.8;
 	}
 }
 
-#results-container {
+.search-page .dropdownField {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-page .dropdown-menu {
+    max-height: 380px;
+    overflow: auto;
+    min-width: 200px;
+}
+
+.search-page .dropdown-menu .dropdown-item {
+    cursor: pointer;
+}
+
+.search-page .dropdown-menu .dropdown-item.active {
+    background-color: var(--blue);
+}
+
+.search-page #results-container {
 	min-height: calc(100vh - 164px);
 }
 
