@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Comment;
-use App\Post;
+use App\Event;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CommentPolicy
@@ -20,22 +20,24 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment)
     {
-         return true;
+        //
     }
 
     /**
-     * Determine whether the user can create posts.
+     * Determine whether the user can create comments.
      *
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user, Comment $comment)
+    public function create(User $user,Event $event)
     {
-        return true;
+        $canCreate = $event->participateAs(['Owner', 'Host', 'Artist','Participant'])->get();
+        return $canCreate->contains($user);
+    
     }
 
     /**
-     * Determine whether the user can update the post.
+     * Determine whether the user can update the comment.
      *
      * @param  \App\User  $user
      * @param  \App\Comment  $comment
@@ -47,7 +49,7 @@ class CommentPolicy
     }
 
     /**
-     * Determine whether the user can delete the post.
+     * Determine whether the user can delete the comment.
      *
      * @param  \App\User  $user
      * @param  \App\Comment  $comment

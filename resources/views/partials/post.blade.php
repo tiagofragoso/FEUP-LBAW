@@ -62,7 +62,7 @@
                             <textarea class="form-control position-relative w-100 pr-5 commentFormTextArea" rows="1" placeholder="Write a comment..." style="resize: none"></textarea>
                             <div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
                                 <button class="submit-btn submit-comment" type="submit" data-id="{{$post->id}}">
-                                    <i class="far fa-angle-double-right"></i>
+                                    <i class="far fa-angle-double-right submit-comment-btn"></i>
                                 </button>
                             </div>
                         </form>

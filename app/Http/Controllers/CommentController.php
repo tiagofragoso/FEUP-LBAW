@@ -60,11 +60,11 @@ class CommentController extends Controller
         $request->request->add(['post_id' => $id]);
 
         $comment = new Comment($request->all());
-
-        $this->authorize('create', $comment);
         $this->validateComment($request);
+        $event = Event::find($post->id);
+        $this->authorize('create', $event);
+        
         $comment->save();
-        //$comment = Comment::create($request->all());
         $comment = Comment::find($comment->id);
         return response()->json([
             'id' => $comment->id,
