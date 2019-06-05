@@ -34,10 +34,8 @@
                         </p>
                         @if ($post->type == 'Poll')
                         @include('partials.poll', $post->poll)
-                        @else
-                        @if ($post->type == 'File')
+                        @elseif ($post->type == 'File')
                         @include('partials.file', $post->file)
-                        @endif
                         @endif
                     </div>
                 </div>
@@ -61,7 +59,7 @@
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
                         <form class="position-relative w-100" action="#">
-                            <textarea class="form-control position-relative w-100 pr-5" id="commentFormTextArea" rows="1" placeholder="Write a comment..." style="resize: none"></textarea>
+                            <textarea class="form-control position-relative w-100 pr-5 commentFormTextArea" rows="1" placeholder="Write a comment..." style="resize: none"></textarea>
                             <div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
                                 <button class="submit-btn submit-comment" type="submit" data-id="{{$post->id}}">
                                     <i class="far fa-angle-double-right"></i>
@@ -71,7 +69,7 @@
                     </div>
                 </div>
                 <div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
-                <div class="comments-list col-12">
+                <div class="comments-list col-12" id ="{{$post->id}}">
                     @each('partials.comment', $post->commentsContent, 'comment')
                 </div>
             </div>

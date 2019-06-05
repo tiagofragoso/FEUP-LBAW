@@ -56,17 +56,21 @@ class CommentController extends Controller
         if (!Auth::check()) return response(403);
         $post = Post::find($id);
         if (is_null($post)) return response(404);
-        //$this->authorize('create', [App\Comment::class,$post]);
         $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['post_id' => $id]);
+
+        $comment = new Comment($request->all());
+
+        $this->authorize('create', $comment);
         $this->validateComment($request);
-        $comment = Comment::create($request->all());
+        $comment->save();
+        //$comment = Comment::create($request->all());
         $comment = Comment::find($comment->id);
         return response()->json([
             'id' => $comment->id,
             'content' => $comment->content,
             'user_id' => $comment->user_id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
+            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
             'user' => $comment->user->displayName()
         ]);
         return response(200);

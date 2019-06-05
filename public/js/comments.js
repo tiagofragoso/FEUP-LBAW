@@ -1,23 +1,23 @@
 
-let commentContent = document.querySelector('#commentFormTextArea');
+let commentContent = document.querySelectorAll('.commentFormTextArea');
 let commentLikeBtns = document.querySelectorAll('#like-comment-btn');
 
+commentContent.forEach(content => {
 
-if (commentContent !== null) {
-    console.log(commentContent);
-    document.querySelector('.submit-comment').addEventListener('click', postComment);
-}
+    content.nextElementSibling.querySelector('.submit-comment').addEventListener('click',postComment);
+});
 
-async function postComment(event){
+
+async function postComment(event) {
+
     event.preventDefault();
-    
+    console.log(event.target.parentNode.parentNode.previousElementSibling.value);
     let requestBody = {
-        content: commentContent.value,
+        content: event.target.parentNode.parentNode.previousElementSibling.value,
         parent: null
     }
 
-    let post_id = document.querySelector('.submit-comment').dataset.id;
-
+    let post_id = event.target.parentNode.parentNode.querySelector('.submit-comment').dataset.id;
     const response = await request(
         '/api/posts/' + post_id + '/comments',
         {
@@ -32,14 +32,14 @@ async function postComment(event){
     );
     if (!response.errors) {
         //console.log(response);
-        commentContent.value = "";
-        insertComment(createComment(response));
+        event.target.parentNode.parentNode.previousElementSibling.value = "";
+        insertComment(createComment(response),post_id);
     }
 }
-function createComment(response){
-        const comment = document.createElement('div');
-        comment.className = 'row col-12 comment align-items-start justify-content-center';
-        comment.innerHTML = `
+function createComment(response) {
+    const comment = document.createElement('div');
+    comment.className = 'row col-12 comment align-items-start justify-content-center';
+    comment.innerHTML = `
     <div class="col-12 col-md-10 d-flex flex-row">
         <a href="url('/users/${response.user_id}')}">
             <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
@@ -68,12 +68,12 @@ function createComment(response){
         </div>
     </div>
 </div>`;
-return comment;
+    return comment;
 }
 
-function insertComment(comment){
-    
-    let comments = document.querySelector('.comments-list');
+function insertComment(comment,post_id) {
+    let comments = document.getElementById(post_id);
+    console.log(comments);
     comments.insertBefore(comment, comments.childNodes[0]);
 }
 
@@ -97,7 +97,7 @@ commentLikeBtns.forEach(button => {
                 }
             );
             if (response === 200) {
-                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText= 'Liked';
+                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText = 'Liked';
                 button.closest('.comment-footer').getElementsByTagName('span')[0].textContent++;
             }
         } else {
@@ -114,9 +114,9 @@ commentLikeBtns.forEach(button => {
             );
             if (response === 200) {
 
-                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText= 'Like';
+                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText = 'Like';
                 button.closest('.comment-footer').getElementsByTagName('span')[0].textContent--;
-                
+
             }
         }
 

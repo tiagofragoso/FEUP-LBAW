@@ -12,7 +12,7 @@ class CommentPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the post.
+     * Determine whether the user can view the comment.
      *
      * @param  \App\User  $user
      * @param  \App\Comment  $comment
@@ -29,7 +29,7 @@ class CommentPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user, Comment $comment, Post $post)
+    public function create(User $user, Comment $comment)
     {
         return true;
     }
