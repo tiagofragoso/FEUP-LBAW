@@ -1,30 +1,16 @@
 import {request} from "./requests.js";
 
-let user_id = document.querySelector(".username").dataset.id;
-let followers = document.querySelector(".number-followers");
+let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
 
-let button = document.getElementById('follow-button');
+console.log(commentLikeBtns);
 
-function updateVisualFollow(follow) {
-    if (button != null) {
-        if (follow) {
-            button.classList.replace('following', 'follow');
-            button.textContent = 'Follow';
-            button.classList.replace('btn-oultine-secondary', 'btn-secondary');
-            followers.textContent--;
-        } else {
-            button.classList.replace('follow', 'following');
-            button.textContent = 'Following';
-            button.classList.replace('btn-secondary', 'btn-outline-secondary');
-            followers.textContent++;
-        } 
-    }
-}
+commentLikeBtns.forEach(button => {
 
-if (button != null) {
     button.addEventListener('click', async () => {
-        let url = '/api/users/'+ user_id + '/follows';
-        if (button.classList.contains('follow')) {
+        let comment_id = button.closest('.comment-wrapper').dataset.id;
+        let url = '/api/comments/' + comment_id + '/like';
+        console.log(button.textContent);
+        if (button.textContent.trim() === 'Like') {
             const response = await request(
                 url,
                 {
@@ -37,9 +23,10 @@ if (button != null) {
                 }
             );
             if (response.status === 200) {
-                updateVisualFollow(false);
+                button.textContent = 'Liked';
+                button.closest('.comment-footer').querySelector('span').textContent++;
             }
-        } else if (button.classList.contains('following')) {
+        } else {
             const response = await request(
                 url,
                 {
@@ -52,9 +39,12 @@ if (button != null) {
                 }
             );
             if (response.status === 200) {
-                updateVisualFollow(true);
+                button.textContent = 'Like';
+                button.closest('.comment-footer').querySelector('span').textContent--;
+                
             }
         }
-    });
-}
 
+
+    })
+});

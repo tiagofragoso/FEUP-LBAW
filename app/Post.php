@@ -9,6 +9,10 @@ class Post extends Model
     //
     public $timestamps = false;
 
+    protected $guarded = [
+        'likes', 'comments'
+    ];
+
 
     public function event() {
         return $this->belongsTo('App\Event');
@@ -19,7 +23,24 @@ class Post extends Model
     }
 
     public function comments() {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment')->where('parent', NULL)->orderBy('date', 'asc');
     }
+
+    public function poll() {
+        return $this->hasOne('App\Poll');
+    }
+
+    public function file() {
+        return $this->hasOne('App\File');
+    }
+
+    public function likes(){
+        return $this->belongsToMany('App\User','post_likes','post_id','user_id');
+    }
+
+    public function hasLike($user) {
+        return $this->likes()->wherePivot('user_id', $user)->exists();
+    }
+
 
 }

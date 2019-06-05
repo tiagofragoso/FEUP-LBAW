@@ -1,11 +1,7 @@
-async function request(url, request) {
-    const response = await fetch(url, request);
-    const data = await response.json();
-    return data;
-}
+
+import { request } from './requests.js';
 
 let buttons = document.querySelectorAll('.join-btn');
-
 function updateVisual(join) {
     if (join) {
         this.classList.replace('joined', 'join');
@@ -35,7 +31,7 @@ buttons.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 updateVisual.call(button, false);
             }
         } else if (button.classList.contains('joined')) {
@@ -50,7 +46,7 @@ buttons.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
+            if (response.status === 200) {
                 updateVisual.call(button, true);
             } 
         }

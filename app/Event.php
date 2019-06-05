@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Event extends Model
 {
     //
@@ -15,11 +14,15 @@ class Event extends Model
      * @var array
      */
     protected $guarded = [
-        'participants', 'banned', 'search'
+        'participants', 'search'
     ];
 
     public function posts(){
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Post')->orderBy('date', 'desc');
+    }
+
+    public function threads(){
+        return $this->hasMany('App\Thread')->orderBy('date', 'desc');
     }
 
     public function participatesAs($type) {
@@ -29,7 +32,6 @@ class Event extends Model
     }
 
     public function questions(){
-        
         return $this->hasMany('App\Question');
     }
 
@@ -39,6 +41,42 @@ class Event extends Model
 
     public function category() {
         return $this->belongsTo('App\Category', 'category');
+    }
+
+    public function reports(){
+        return $this->hasMany('App\EventReport');
+    }
+    public function postComments($posts) {
+        foreach ($posts as $key => $value) {
+            $value['commentsContent'] = Post::find($value->id)->comments()->get();
+
+            foreach ($value['commentsContent'] as $key1 => $comment) {
+                $comment['comments'] = Comment::find($comment->id)->comments()->get();
+
+            }
+
+        }
+
+        return $posts;
+    }
+
+    public function getQuestions($type) {
+
+        $answered = array();
+        $unanswered = array();
+        
+        foreach ($this->questions()->get() as $question) {
+            if (!$question->answer()->exists() && ($type == 'Host' || $type == 'Artist')) {
+                array_push($unanswered, Question::find($question->id));
+            } else if ($question->answer()->exists()) {
+                array_push($answered, Question::find($question->id));
+            }
+        }
+
+        $questions['answered'] = $answered;
+        $questions['unanswered'] = $unanswered;
+     
+        return $questions;
     }
 
 }

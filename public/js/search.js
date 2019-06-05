@@ -1,4 +1,4 @@
-import {request} from "./requests.js";
+import {request} from "/requests.js";
 import {getEventCard} from './event_card.js';
 
 let stuck = true;
