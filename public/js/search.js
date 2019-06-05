@@ -1,11 +1,12 @@
 import {request} from "./requests.js";
 import {getEventCard} from './event_card.js';
 
+let stuck = true;
+let requesting = false;
+
 /**
  * Navbar scroll transition.
  */
-let stuck = true;
-
 (new IntersectionObserver((e,o) => {
     if (document.querySelector('.navbar-toggler').classList.contains('collapsed')) {
         if (e[0].intersectionRatio > 0){
@@ -209,7 +210,7 @@ document.getElementById('button-go').addEventListener('click', () => {
     let query = document.getElementById('search-input').value;
 
     if (query === "")
-        document.getElementById('search-query').textContent = "Trending event";
+        document.getElementById('search-query').textContent = "Trending events";
     else
         document.getElementById('search-query').textContent = query;
 
@@ -223,7 +224,6 @@ document.getElementById('button-go').addEventListener('click', () => {
 /**
  * Infinite scrolling
  */
-let requesting = false;
 document.addEventListener('scroll', () => {
     if ((($(document).height()-$(window).height())-$(window).scrollTop() < 5) && !requesting) {
         search();
@@ -248,10 +248,19 @@ async function search() {
         }
     });
 
-    data.data.forEach((event) => {
-        let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
-        document.getElementById('card-container').appendChild(card);
-    });
+    if (data.data.length === 0 && requestObj.page === 1 && document.getElementById('no-results') === null) {
+        let noResults = document.createElement('h3');
+        noResults.id = 'no-results';
+        noResults.className = 'w-100 text-center';
+        noResults.textContent = 'No results were found.';
+        document.getElementById('card-container').appendChild(noResults);
+    }
+    else {
+        data.data.forEach((event) => {
+            let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
+            document.getElementById('card-container').appendChild(card);
+        });
+    }
 
     if (data.data.length > 0)
         requestObj.page++;
