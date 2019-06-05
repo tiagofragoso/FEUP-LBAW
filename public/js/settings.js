@@ -6,7 +6,7 @@ document.getElementById('delete-account-btn').addEventListener('click',async() =
     const response = await request(
         '/api/profile/delete',
         {
-            method: 'PUT',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -14,8 +14,14 @@ document.getElementById('delete-account-btn').addEventListener('click',async() =
             }
         }
     );
-
     console.log(response);
+    if(response.status == 200){
+        console.log(document.getElementById('delete-account-btn'));
+        document.getElementById('delete-account-btn').setAttribute("href","{{ url('/logout')}}");
+
+    }
+
+    
 
 });
 document.getElementById('profile-submit').addEventListener('click', async () => {

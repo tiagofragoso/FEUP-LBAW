@@ -219,7 +219,7 @@ class ProfileController extends Controller
     public function deleteAccount(){
         if (!Auth::check()) return response()->json(null, 403);
         $user = User::find(Auth::user()->id);
-        $user->update(['name'=>null, 'username'=>null,'email'=>null,'deleted'=>true]);
+        $user->delete();
 
         return response()->json(null,200);
     }

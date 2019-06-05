@@ -38,8 +38,8 @@ CREATE TYPE post_type AS ENUM ('Post', 'Poll', 'File');
 CREATE TABLE users (
     id serial PRIMARY KEY,
     "name" varchar(30),
-    username varchar(15) UNIQUE,
-    email varchar(255) UNIQUE,
+    username varchar(15) UNIQUE NOT NULL,
+    email varchar(255) UNIQUE NOT NULL,
     "password" text NOT NULL,
     birthdate date,
     followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
