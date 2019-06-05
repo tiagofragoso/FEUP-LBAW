@@ -1,5 +1,7 @@
 import { clearErrors, createErrors, request } from "./requests.js";
 
+let delete_account = document.getElementById('delete-account-btn');
+console.log(delete_account);
 document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors('.form-group-general');
     document.getElementById('general-message').classList.add('d-none');
