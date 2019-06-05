@@ -32,10 +32,15 @@ class InvitesController extends Controller
         if (!Auth::check()) {
             return response()->json(null, 403);
         }
+        
+        $user = Auth::user();
+
+        if ($user->isAdmin) {
+            return response()->json(null, 403);
+        }
 
         $this->validator($request);
 
-        $user = Auth::user();
 
         try {
             $event = Event::findOrFail($request->event_id);
@@ -65,6 +70,10 @@ class InvitesController extends Controller
 
         $user = Auth::user();
 
+        if ($user->isAdmin) {
+            return response()->json(null, 403);
+        }
+
         Validator::make($request->all(), ['event_id' => 'numeric|required'])->validate();
 
         try {
@@ -80,8 +89,6 @@ class InvitesController extends Controller
 
     public function search(Request $request) {
         if (!Auth::check()) return response()->json(null, 403);
-
-        $user = Auth::user();
 
         Validator::make($request->all(), ['event_id' => 'numeric|required', 'query_term' => 'string|required'])->validate();
 
@@ -119,5 +126,33 @@ class InvitesController extends Controller
             return $ret;
         });
         return $mapped;
+    }
+
+    public function respond($id, Request $request) {
+        if (!Auth::check()) return response()->json(null, 403);
+
+        $user = Auth::user();
+
+        if ($user->isAdmin) {
+            return response()->json(null, 403);
+        }
+
+        Validator::make($request->all(), ['answer' => 'string|required|in:Accepted,Declined'])->validate();
+
+        try {
+            $invite = Invite::findOrFail($id);
+        } catch(\Exception $e) {
+            return response()->json('Invite not found', 404);
+        }
+
+        try {
+            $invite->status = $request->answer;
+            $invite->save();
+        } catch(\Exception $e) {
+            return response()->json('Could not update invite', 400);
+        }
+        
+        return response()->json(null, 200);
+
     }
 }

@@ -217,7 +217,14 @@ class ProfileController extends Controller
             abort(403); 
         }
 
-        $invites = Invite::where('invited_user_id', $user->id)->get()->map(function ($e) {
+        $invites = Invite::where('invited_user_id', $user->id)
+            ->orderBy('date', 'desc')
+            ->get()
+            ->groupBy(function($inv){
+                return $inv->status === 'Pending'? 'pending': 'answered';
+            })->sortByDesc(function($item, $key) {return $key;})
+            ->flatten()
+            ->map(function ($e) {
             switch($e->type) {
                 case "Participant":
                     $e['formattedType'] = "join";
@@ -231,7 +238,6 @@ class ProfileController extends Controller
             }
             return $e;
         });
-
 
         return view('pages.invites', ['user' => $user, 'invites' => $invites]);
 

@@ -736,7 +736,12 @@ border: 3px solid var(--green)!important;
 
 .profile-page .card-fade {
 	opacity: 0.3;
+	transition: opacity 0.3s ease-in-out;
 }
+
+.profile-page .card-fade:hover {
+	opacity: 1;
+} 
 
 .profile-page .mytickets > .row{
 	overflow-x: auto; 

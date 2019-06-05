@@ -10,10 +10,6 @@ delete_buttons.forEach(button => {
         let reports = JSON.parse(button.closest('.report-card').dataset.id);
 
         for (let report of reports) {
-
-
-
-
             let url = 'api/reports/' + report['id'];
             let type;
             let id;

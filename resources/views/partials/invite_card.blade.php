@@ -1,8 +1,8 @@
-<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id="{{$invite->id}}">
+<div class="card col-12 col-lg-9 report-card px-0 mt-5 {{$invite->status !== 'Pending'? 'card-fade': ''}}" data-id="{{$invite->id}}">
 		<div class="card-header">
 			<div class="row align-items-center">
 				<div class="col-12">
-					<p class="mb-0"><a href="{{url('/users/'. $invite->invitee()->first()->id)}}"><strong>{{$invite->invitee()->first()->displayName()}}</strong></a>  invited you to 
+					<p class="mb-0"><a href="{{url('/users/'. $invite->inviter()->first()->id)}}"><strong>{{$invite->inviter()->first()->displayName()}}</strong></a> invited you to 
 						<strong>{{$invite->formattedType}}</strong> an event.</p>
 				</div>
 			</div>

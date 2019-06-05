@@ -39,6 +39,7 @@ Route::post('api/events/{id}/posts', 'PostController@store');
 Route::get('api/invites/following', 'InvitesController@getFollowing');
 Route::get('api/invites/search', 'InvitesController@search');
 Route::post('api/invites', 'InvitesController@store');
+Route::put('api/invites/{id}', 'InvitesController@respond');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
