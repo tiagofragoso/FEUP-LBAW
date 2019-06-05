@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\User;
 use App\EventReport;
 use App\UserReport;
@@ -25,8 +26,11 @@ class ProfileController extends Controller
     
         
 
+        if ($user->banned && !Auth::user()->is_admin) {
+            abort(403);
+        }
         if ($user->is_admin) {
-            abort(403); 
+            abort(403);
         }
         if (Auth::check() && Auth::user()-> id == $id) {
             return redirect('profile');
@@ -38,50 +42,44 @@ class ProfileController extends Controller
         return view('pages.user_profile', $data);
     }
 
-    public function showProfile() 
+    public function showProfile()
     {
         if (!Auth::check()) return redirect('/login');
 
         $data = $this->getEventsData(Auth::user());
-        
-        if (Auth::user()->is_admin){
-            $pendingEventReports = EventReport::all()->where('status','Pending')->groupBy('event_id');
 
-            foreach($pendingEventReports as $eventReport){
-                
-                $eventReport['reports'] = $eventReport->toArray();
-                $eventReport['status'] = $eventReport->first()->status;
-                $eventReport['event'] = $eventReport->first()->first()->event()->get()->first();
-                $eventReport['user'] =  $eventReport->first()->first()->user()->get()->first();
-            }
-    
-            $pendingUserReports = UserReport::all()->where('status','Pending')->groupBy('reported_user');
+        if (Auth::user()->is_admin) {
+            $pendingEventReports = EventReport::all()->where('status', 'Pending')->groupBy('event_id');
 
-            foreach($pendingUserReports as $userReport){
-
-                $userReport['reports'] = $userReport->toArray();
-                $userReport['status'] = $userReport->first()->status;
-                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-                $userReport['user'] = $userReport->first()->user()->get()->first();
-               
-            }
-            $allEventReports = EventReport::all()->whereNotIn('status','Pending')->groupBy('event_id');
-            foreach($allEventReports as $eventReport){
+            foreach ($pendingEventReports as $eventReport) {
 
                 $eventReport['reports'] = $eventReport->toArray();
                 $eventReport['status'] = $eventReport->first()->status;
                 $eventReport['event'] = $eventReport->first()->event()->get()->first();
-                $eventReport['user'] =  $eventReport->first()->user()->get()->first();
             }
-            
-            $allUserReports = UserReport::all()->whereNotIn('status','Pending')->groupBy('reported_user');
-        
-            foreach($allUserReports as $userReport){
-                
+
+            $pendingUserReports = UserReport::all()->where('status', 'Pending')->groupBy('reported_user');
+
+            foreach ($pendingUserReports as $userReport) {
+
                 $userReport['reports'] = $userReport->toArray();
                 $userReport['status'] = $userReport->first()->status;
                 $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-                $userReport['user'] = $userReport->first()->user()->get()->first();
+            }
+            $allEventReports = EventReport::all()->whereNotIn('status', 'Pending')->groupBy('event_id');
+            foreach ($allEventReports as $eventReport) {
+
+                $eventReport['reports'] = $eventReport->toArray();
+                $eventReport['status'] = $eventReport->first()->status;
+                $eventReport['event'] = $eventReport->first()->event()->get()->first();
+            }
+            $allUserReports = UserReport::all()->whereNotIn('status', 'Pending')->groupBy('reported_user');
+
+            foreach ($allUserReports as $userReport) {
+
+                $userReport['reports'] = $userReport->toArray();
+                $userReport['status'] = $userReport->first()->status;
+                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
             }
             $pendingReports['user'] = $pendingUserReports;
             $pendingReports['event'] = $pendingEventReports;
@@ -91,13 +89,13 @@ class ProfileController extends Controller
             $data['allReports'] = $allReports;
 
             $data['user'] = Auth::user();
-            return view('pages.admin_profile',$data);
-        }
-        else 
+            return view('pages.admin_profile', $data);
+        } else
             return view('pages.profile',  $data);
     }
 
-    public function getEventsData($user) {
+    public function getEventsData($user)
+    {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
         $data['performing'] = $user->events('Artist')->orderByDesc('start_date')->get();
         $data['hosting'] = $user->events(['Host', 'Owner'])->orderByDesc('start_date')->get();
@@ -109,7 +107,7 @@ class ProfileController extends Controller
             $data['hosting'] = Auth::user()->eventsParticipation($data['hosting']);
             $data['performing'] = Auth::user()->eventsParticipation($data['performing']);
         }
-        
+
         return $data;
     }
 
@@ -140,8 +138,8 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => 'nullable|string|max:30',
-            'email' => 'required|unique:users,email,'.$user->id.'|email|max:255',
-            'username' => 'required|string|unique:users,username,'.$user->id.'|max:15',
+            'email' => 'required|unique:users,email,' . $user->id . '|email|max:255',
+            'username' => 'required|string|unique:users,username,' . $user->id . '|max:15',
             'birthdate' => 'nullable|date'
         ]);
 
@@ -151,10 +149,11 @@ class ProfileController extends Controller
         $user->birthdate = $request->input('birthdate');
         $user->save();
 
-        return response(200);
+        return response()->json(null, 200);
     }
 
-    public function updatePassword(Request $request) {
+    public function updatePassword(Request $request)
+    {
 
         if (!Auth::check()) return redirect('/login');
 
@@ -175,8 +174,7 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        return response(200);
-
+        return response()->json(null, 200);
     }
 
     /**
@@ -190,23 +188,38 @@ class ProfileController extends Controller
         //
     }
 
-    public function followUser($id){
-        if (!Auth::check()) return response(403);
-        if (User::find($id) == null) return reponse(404);
+    public function followUser($id)
+    {
+        if (!Auth::check()) return response()->json(null, 403);
+        if (User::find($id) == null) return response()->json(null, 404);
 
-        if (Auth::user()->hasFollow($id)) return response(200);
+        if (Auth::user()->hasFollow($id)) return response()->json(null, 200);
 
         Auth::user()->follow($id);
-        return response(200);
+        return response()->json(null, 200);
     }
 
-    public function unfollowUser($id){
-        if (!Auth::check()) return response(403);
-        if (User::find($id) == null) return reponse(404);
+    public function unfollowUser($id)
+    {
+        if (!Auth::check()) return response()->json(null, 403);
+        if (User::find($id) == null) return response()->json(null, 404);
 
-        if (!Auth::user()->hasFollow($id)) return response(200);
+        if (!Auth::user()->hasFollow($id)) return response()->json(null, 200);
 
         Auth::user()->unfollow($id);
-        return response(200);
+        return response()->json(null, 200);
     }
+
+    public function banUser($id)
+    {
+        if (!Auth::user()->is_admin) return response()->json(null, 403);
+
+        if (User::find($id) == null) return response()->json(null, 404);
+
+        User::find($id)->update(['banned' => true]);
+
+        return response()->json(null, 200);
+    }
+
+    
 }

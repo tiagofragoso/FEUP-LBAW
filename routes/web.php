@@ -27,15 +27,26 @@ Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
+Route::put('api/users/{id}/ban','ProfileController@banUser');
+Route::post('api/users/{id}/report','ReportController@reportUser');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
-
+Route::put('api/events/{id}/ban','EventController@banEvent');
+Route::post('api/events/{id}/report','ReportController@reportEvent');
 Route::put('api/reports','ReportController@update');
 
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
+Route::post('api/events/{id}/questions', 'QuestionController@store');
+
+Route::put('api/posts/{id}/like','PostController@likePost');
+Route::delete('api/posts/{id}/like','PostController@dislikePost');
+
+Route::put('api/comments/{id}/like','CommentController@likeComment');
+Route::delete('api/comments/{id}/like','CommentController@dislikeComment');
+
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

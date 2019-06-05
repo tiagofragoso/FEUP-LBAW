@@ -10,7 +10,7 @@ class EventReport extends Model
         public $timestamps = false;
 
      protected $table = 'event_reports';
-     protected $fillable = ['status'];
+     protected $fillable = ['event_id','user_id','status'];
  
      public function event(){
         return $this->hasOne('App\Event','id','event_id');
