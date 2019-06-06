@@ -1,12 +1,16 @@
 <div class="col-12 mb-5">
     <div class="activity-message mb-2">
-        <a href="{{ url('users/'.$participation->user_id) }}" class="user-tag">@<span>{{ $participation->username }}</span></a> 
+        @if (Auth::user()->id == $participation->user_id)
+        You have 
+        @else
+        <a href="{{ url('users/'.$participation->user_id) }}" class="user-tag">@<span>{{ $participation->username }}</span></a> has 
+        @endif
         @if ($participation->type == 'Owner')
-        has created an event.
+        created an event.
         @elseif ($participation->type == 'Participant')
-        has joined an event.
+        joined an event.
         @elseif ($participation->type == 'Host')
-        start hosting an event
+        started hosting an event
         @endif
     </div>
 

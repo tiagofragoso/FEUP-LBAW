@@ -59,6 +59,7 @@ class HomeController extends Controller
                 })
                 ->toArray()
             )
+            ->orWhere('participations.user_id', '=', Auth::user()->id)
             ->get();
 
         foreach ($participations as $p) {
@@ -95,6 +96,6 @@ class HomeController extends Controller
             }
         }
 
-        return $participations->merge($posts)->sortBy('date');
+        return $participations->toBase()->merge($posts)->sortByDesc('date');
     }
 }
