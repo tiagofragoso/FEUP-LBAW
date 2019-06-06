@@ -32,7 +32,7 @@
                 </div>
             </div>
             @each('partials.child_comment', $comment->comments, 'comment')
-                <div class="col-12 mt-3 justify-content-center align-items-center collapse" id="childcomments{{$comment->id}}">                
+            <div class="col-12 mt-3 justify-content-center align-items-center child-comment-form collapse" id="childcomments{{$comment->id}}" data-id="{{$comment->id}}">                
                     <div class="col-12 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />

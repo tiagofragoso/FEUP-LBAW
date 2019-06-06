@@ -41,7 +41,7 @@ class CommentController extends Controller
         return Validator::make($data->all(), [
             'content' => 'required|string|max:5000',
             'post_id' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
         ])->validate();
     }
 
@@ -70,7 +70,8 @@ class CommentController extends Controller
             'content' => $comment->content,
             'user_id' => $comment->user_id,
             'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
-            'user' => $comment->user->displayName()
+            'user' => $comment->user->displayName(),
+            'post_id' => $id,
         ], 201); 
     }
 

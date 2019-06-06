@@ -12,6 +12,7 @@ if (postContent !== null) {
 function createPost(response) {
     const post = document.createElement('div');
     post.className = 'post-wrapper';
+    post.dataset.id = response.id;
     post.innerHTML =
         ` <div class="row justify-content-center">
         <div class="card col-12 col-lg-9 mb-4 hover-shadow">

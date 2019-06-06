@@ -10,11 +10,11 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $guarded = [
-        'likes', 'parent'
+        'likes'
     ];
 
     public function comments() {
-        return $this->hasMany('App\Comment', 'parent')->orderBy('date', 'desc');
+        return $this->hasMany('App\Comment', 'parent')->orderBy('date', 'asc');
     }
 
     public function user() {

@@ -1,9 +1,56 @@
 import {request} from "./requests.js";
 
 let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
-let commentSection = document.querySelectorAll('.comment-section-posts');
+let commentSections = document.querySelectorAll('.comment-section-posts');
+let childSections = document.querySelectorAll('.child-comment-form'); 
 
-commentSection.forEach(section => {
+childSections.forEach(section => {
+
+    let button = section.querySelector('.submit-child-comment');
+    let context = {};
+
+    context.content = section.querySelector('textarea');
+    context.comment_id = section.dataset.id;
+    console.log(context.comment_id);
+    context.post_id = section.closest('.post-wrapper').dataset.id;
+    context.divider = section;
+
+    button.addEventListener('click', postChild.bind(context));
+});
+
+async function postChild(event) {
+    event.preventDefault();
+
+    let requestBody = {
+        content: this.content.value,
+        parent: this.comment_id
+    }
+
+    const response = await request(
+        '/api/posts/' + this.post_id + '/comments',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        }
+    );
+
+    console.log(response); 
+
+    if (response.status === 201) {
+        this.content.value = "";
+        console.log(this.divider);
+        console.log(this.divider.parentNode);
+        this.divider.parentNode.insertBefore(createChild(response.data), this.divider);
+    }
+    
+}
+
+commentSections.forEach(section => {
 
     console.log(section);
 
@@ -50,6 +97,42 @@ export async function postComment(event) {
     }
 }
 
+function createChild(response) {
+    const comment = document.createElement('div');
+    comment.className = 'pl-1 mt-3 align-items-start d-flex flex-row';
+    comment.innerHTML = `
+    <a href="/users/${response.user_id}">
+        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
+    </a>
+    <div class="comment-wrapper d-flex flex-column w-100" data-id ="${response.id}">
+        <div class="comment-text px-3 py-2">
+            <span>
+                <a class="title-link mr-2" href="/users/${response.user_id}">
+                    <span class=" author">${response.user}</span>
+                </a>
+                ${response.content}
+            </span>
+        </div>
+        <div class="comment-footer ml-3">
+            <span id="numberLikes"> 0 </span>
+            <span> likes </span>
+            •
+            <button class="bg-transparent border-0 like-comment-btn" >
+               Like
+        </button>
+            •
+            <span>${response.date}</span>
+        </div>
+    </div>
+    `;
+
+    let button = comment.querySelector('.like-comment-btn');
+    button.addEventListener('click', commentLikes.bind(button));
+
+    return comment;
+
+}
+
 
 function createComment(response) {
     const comment = document.createElement('div');
@@ -86,7 +169,7 @@ function createComment(response) {
                         <span>${response.date}</span>
                     </div>
                 </div>
-                    <div class="col-12 mt-3 justify-content-center align-items-center collapse" id="childcomments${response.id}">                
+                    <div class="col-12 mt-3 justify-content-center align-items-center child-comment-form collapse" id="childcomments${response.id}" data-id="${response.id}">                
                         <div class="col-12 d-flex flex-row align-items-center">
                             <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                                 width="30" height="30" />
@@ -108,6 +191,18 @@ function createComment(response) {
 
     let button = comment.querySelector('.like-comment-btn');
     button.addEventListener('click', commentLikes.bind(button));
+
+    let section = comment.querySelector('.child-comment-form');
+    button = section.querySelector('.submit-child-comment');
+    let context = {};
+
+    context.content = section.querySelector('textarea');
+    context.comment_id = section.dataset.id;
+    console.log(context.comment_id);
+    context.post_id = response.post_id;
+    context.divider = section;
+
+    button.addEventListener('click', postChild.bind(context));
 
     return comment;
 }
@@ -155,6 +250,5 @@ async function commentLikes(event) {
 }
 
 commentLikeBtns.forEach(button => {
-
     button.addEventListener('click', commentLikes.bind(button));
 });
