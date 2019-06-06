@@ -55,7 +55,8 @@ class AnswerController extends Controller
         $question = Question::find($id);
         if (is_null($question)) return response()->json(null, 404);
         $event = Event::find($question->event_id);
-        $this->authorize('create', [$event, Answer::class]);
+        $a = new Answer();
+        $this->authorize('create', [$a, $event]);
         $request->request->add(['question_id' => $id]);
         $this->validateAnswer($request);
         $answer = Answer::create($request->all());

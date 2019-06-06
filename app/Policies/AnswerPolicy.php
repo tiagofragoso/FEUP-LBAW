@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Answer;
+use App\Event;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AnswerPolicy
@@ -30,7 +31,7 @@ class AnswerPolicy
      */
     public function create(User $user, Answer $answer, Event $event) 
     {
-        return $event->participateAs(['Host', 'Owner'])->get()->contains($user);
+        return $event->participatesAs(['Host', 'Owner'])->get()->contains($user);
     }
 
     /**
