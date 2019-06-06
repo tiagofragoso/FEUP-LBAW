@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -124,8 +125,7 @@ class User extends Authenticatable
     }
 
     public function acquireTicket($event, $price){
-       
-        $qrcode = 'qrcode'.$event->id.$this->id;
+        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->id);
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }
 
