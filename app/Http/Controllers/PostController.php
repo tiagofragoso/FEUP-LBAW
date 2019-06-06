@@ -129,11 +129,14 @@ class PostController extends Controller
         if (!Auth::check()) return response()->json(null, 403);
         if (is_null(Poll::where('post_id', $postId)->get()->first())) return response()->json(null, 404);
         $post = Poll::where('post_id', $postId)->get()->first();
+        $event = Event::find(Post::find($postId)->event_id);
         if (!($post->hasVote(Auth::user()->id))) {
+            $this->authorize('create', [$event, PollVote::class]);
             Auth::user()->voteOnPoll($postId, $pollOption);
             return response()->json(null, 200);
         } else{
-          $post->changeVote(Auth::user()->id,$pollOption);
+            $this->authorize('update', [$event, PollVote::class]);
+            $post->changeVote(Auth::user()->id,$pollOption);
             return response()->json(null, 200);
         }
         
