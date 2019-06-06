@@ -11,7 +11,7 @@
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">
                 <div class="card-header">
-                    @include('partials.admin_header', ['user' => $user])
+                    @include('partials.admin_header', ['user' => Auth::user()])
                     <div class="row justify-content-center mb-3">
                         <div class="col text-center">
                             <a href="{{ url('/settings')}}" class="card-link border-bottom">Settings</a>
