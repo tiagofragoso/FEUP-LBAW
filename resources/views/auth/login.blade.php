@@ -47,6 +47,9 @@
                     <div class="col-12 text-center">
                         Don't have an account? <a class="register" href="{{ route('register') }}">Sign up</a>
                     </div>
+                    <div class="col-12 text-center">
+                        Forgot password? <a class="register"  href="{{ route('password.request') }}">Password recover</a>
+                    </div>
                 </div>
             </div>
         </div>
