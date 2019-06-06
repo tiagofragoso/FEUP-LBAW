@@ -6,6 +6,8 @@ use App\ThreadComment;
 use App\Thread;
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ThreadCommentController extends Controller
 {
@@ -55,7 +57,7 @@ class ThreadCommentController extends Controller
         if (is_null($thread)) return response()->json(null, 404);
         $event = Event::find($thread->event_id);
         $this->authorize('create', [$event, ThreadComment::class]);
-        $request->request->add(['author_id' => Auth::user()->id]);
+        $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['thread_id' => $id]);
         $this->validateThreadComment($request);
         $comment = ThreadComment::create($request->all());
@@ -63,10 +65,10 @@ class ThreadCommentController extends Controller
         return response()->json([
             'id' => $comment->id,
             'content' => $comment->content,
-            'author_id' => $comment->author_id,
+            'user_id' => $comment->user_id,
             'thread_id' => $thread->id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d | H:i'),
-            'author' => $comment->author->displayName()
+            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
+            'user' => $comment->user->displayName()
         ], 201);
     }
 
