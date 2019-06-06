@@ -3,13 +3,13 @@
     {{ $post->poll->title }}
     </strong>
 </p>
-<div class="container" data-id="{{$post->id}}">
+<div class="container poll-container" data-id="{{$post->id}}">
     @foreach ($post->poll->pollOptions as $option)
     <div class="row align-items-center mb-2" data-id= "{{$option->id}}">
         <div class="input-group col-12 col-sm-8">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="radio"  name="poll"
+                    <input type="radio"  name="poll{{$post->id}}"
                         aria-label="" {{(Auth::check() && $post->poll->hasVoteInOption(Auth::user()->id, $option->id)) ? 'checked' : ''}}>
                 </div>
             </div>
