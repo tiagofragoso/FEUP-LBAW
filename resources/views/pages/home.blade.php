@@ -6,6 +6,7 @@
 @section('scripts')
 <script type="module" src="js/posts.js"></script>
 <script type="module" src="js/join_event.js"></script>
+<script type="module" src="js/comments.js"></script>
 @endsection
 
 @section('content')
