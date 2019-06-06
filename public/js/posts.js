@@ -24,6 +24,8 @@ pollOptions.forEach(option => {
                 }
             }
         );
+
+        console.log(response);
         if (response.status == 200) {
             option.closest('.row').childNodes[3].dataset.id++;
             option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";

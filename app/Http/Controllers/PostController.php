@@ -126,16 +126,34 @@ class PostController extends Controller
 
     public function pollVote($postId, $pollOption)
     {
-        if (!Auth::check()) return response(403);
-        if (is_null(Poll::where('post_id', $postId)->get()->first())) return response(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Poll::where('post_id', $postId)->get()->first())) return response()->json(null, 404);
         $post = Poll::where('post_id', $postId)->get()->first();
-        if (!($post->pollVotes(Auth::user()->id))) {
-            Auth::user()->pollVotes($postId, $pollOption);
-            return response(200);
+        if (!($post->hasVote(Auth::user()->id))) {
+            Auth::user()->voteOnPoll($postId, $pollOption);
+            return response()->json(null, 200);
         } else{
-          $post->updatePollVotes(Auth::user()->id,$pollOption);
-            return response(200);
+          $post->changeVote(Auth::user()->id,$pollOption);
+            return response()->json(null, 200);
         }
         
+    }
+
+    public function likePost($id){
+       
+        if (!Auth::check()) return response()->json(null, 403);
+        
+        if (is_null(Post::find($id))) return response()->json(null, 404);
+        Auth::user()->likePost($id);
+        return response()->json(null, 200);
+        
+    }
+    public function dislikePost($id){
+        
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Post::find($id))) return response()->json(null, 404);
+        Auth::user()->dislikePost($id);
+        return response()->json(null, 200);
+
     }
 }
