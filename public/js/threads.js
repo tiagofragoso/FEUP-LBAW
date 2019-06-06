@@ -72,7 +72,7 @@ function createThread(response) {
     </div>
     `
 
-    let section = thread.querySelector('.comment-section');
+    let section = thread.querySelector('.comment-section-threads');
     let button = section.querySelector('.submit-btn');
 
     let context = {};
@@ -152,7 +152,7 @@ if (threadContent !== null) {
     })
 }
 
-let commentsSections = document.querySelectorAll('.comment-section');
+let commentsSections = document.querySelectorAll('.comment-section-threads');
 
 commentsSections.forEach(section => {
     let button = section.querySelector('.submit-btn');
