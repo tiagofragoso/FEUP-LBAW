@@ -1,11 +1,11 @@
-export function getEventCard(id, title, start_date, location, price) {
+export function getEventCard(id, title, start_date, location, price, photo) {
     let card = document.createElement('div');
     card.className = 'col-12 col-md-6 col-lg-4';
 
     card.innerHTML = `
         <a href="events/${id}" class="event-card mb-5 hover-shadow link" tabindex="-1">
             <header class="w-100 position-relative event-header d-flex align-items-center">
-                <img src="../assets/event-placeholder.png" class="w-100" alt="">
+                <img src="${photo}" class="w-100" alt="">
                 <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                 <h6 class="position-absolute event-title px-3"></h6>
             </header>

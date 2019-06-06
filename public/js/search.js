@@ -267,7 +267,8 @@ async function search() {
     }
     else {
         response.data.data.forEach((event) => {
-            let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price);
+            const photo = event.photo? '/public/storage/' + event.photo: '/assets/event-placeholder.png';
+            let card = getEventCard(event.id, event.title, event.start_date, event.location, event.price, photo);
             document.getElementById('card-container').appendChild(card);
         });
     }

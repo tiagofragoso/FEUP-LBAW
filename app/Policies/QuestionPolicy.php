@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Question;
+use App\Event;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class QuestionPolicy
@@ -30,7 +31,7 @@ class QuestionPolicy
      */
     public function create(User $user, Question $question, Event $event) 
     {
-        return $event->participateAs(['Participant'])->get()->contains($user);
+        return $event->participatesAs(['Participant'])->get()->contains($user);
     }
 
     /**
