@@ -70,35 +70,7 @@
 								</span>
 							@endif
 						</div>
-						<div class="col-12 col-md-4 input-group order-0 order-md-1 mb-3 mb-md-0">
-							<div class="input-group w-100 justify-content-stretch">
-								<div class="input-group-prepend">
-									<label class="input-group-text" for="dateSelect">
-										<i class="mr-1 far fa-calendar-alt"></i>
-									</label>
-								</div>
-								<input type="datetime-local" name="start_date" 
-									value="{{ old('start_date', !empty($event->start_date)? \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('Y-m-d\TH:i') : '') }}" 
-									class="custom-select border-blue {{$errors->has('start_date')? 'is-invalid' : '' }}">
-								@if ($errors->has('start_date'))
-									<span class="invalid-feedback">
-										{{ $errors->first('start_date') }}
-									</span>
-								@endif
-							</div>
-						</div>
-					</div>
-					<div class="row mb-3 justify-content-between align-items-start">
-						<div class="col-12 col-md-8 mb-3 mb-md-0">
-							<input name="address" class="form-control form-control {{$errors->has('address')? 'is-invalid' : '' }}" 
-								value="{{ old('address', !empty($event->address)? $event->address : '') }}" type="text" placeholder="Address">
-							@if ($errors->has('address'))
-								<span class="invalid-feedback">
-									{{ $errors->first('address') }}
-								</span>
-							@endif
-						</div>
-						<div class="col-12 col-md-4">
+						<div class="col-12 col-md-4 order-0 order-md-1 mb-3 mb-md-0">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="type">
@@ -119,17 +91,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="row mb-3 justify-content-between">
-						<div class="col-12 col-md-8 order-1 order-md-0">
-							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="3" name="brief" placeholder="Brief description"
-								style="resize:none" required>{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
-							@if ($errors->has('brief'))
+					<div class="row mb-3 justify-content-between align-items-start">
+						<div class="col-12 col-md-8 mb-3 mb-md-0">
+							<input name="address" class="form-control form-control {{$errors->has('address')? 'is-invalid' : '' }}" 
+								value="{{ old('address', !empty($event->address)? $event->address : '') }}" type="text" placeholder="Address">
+							@if ($errors->has('address'))
 								<span class="invalid-feedback">
-									{{ $errors->first('brief') }}
+									{{ $errors->first('address') }}
 								</span>
 							@endif
 						</div>
-						<div class="col-12 col-md-4 mb-3 mb-md-0 order-0 order-md-1">
+						<div class="col-12 col-md-4 ">
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="Visibility"><i
@@ -147,7 +119,50 @@
 								@endif
 							</div>
 						</div>
-
+						
+					</div>
+					<div class="row mb-3 justify-content-between">
+						<div class="col-12 col-md-8 order-1 order-md-0">
+							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="4" name="brief" placeholder="Brief description"
+								style="resize:none">{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
+							@if ($errors->has('brief'))
+								<span class="invalid-feedback">
+									{{ $errors->first('brief') }}
+								</span>
+							@endif
+						</div>
+						<div class="col-12 col-md-4 mb-3 mb-md-0 input-group order-0 order-md-1">
+							<div class="input-group w-100 justify-content-stretch h-100">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="dateSelect">
+										<i class="mr-1 far fa-calendar-alt"></i>
+									</label>
+								</div>
+								<input type="text" style="display:none;" name="start_date">
+								<input type="text" style="display:none;" name="end_date">
+								<div class="dropup flex-grow-1">
+									<button id="date-toggle" type="button" class="w-100 h-100 dropdownField text-left custom-select border-blue " data-field="dropdownDate"
+										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false" title="">
+										<div class="h-100 w-100 d-flex flex-column justify-content-around">
+											<span id="start-date-label">Start date</span>
+											<span class="text-muted mx-3">to</span>
+											<span id="end-date-label">End date</span>
+										</div>
+									</button>
+									<div id="date-dropdown" aria-labelledby="dropdownDate" class="dropdown-menu dropdown-menu-right"></div>
+								</div>
+								@if ($errors->has('start_date'))
+									<span class="invalid-feedback">
+										{{ $errors->first('start_date') }}
+									</span>
+								@endif
+								@if ($errors->has('end_date'))
+									<span class="invalid-feedback">
+										{{ $errors->first('end_date') }}
+									</span>
+								@endif
+							</div>
+						</div>
 					</div>
 					<div class="row justify-content-between">
 						<div class="col-12 col-md-8 mb-2 mb-lg-0 ">
@@ -155,7 +170,7 @@
 								<input type="radio" id="step-1" name="status" value="Planning" style="display: none;" 
 									{{ (old('status', !empty($event->status)? $event->status : '') == 'Planning' || empty(old('status', !empty($event->status)? $event->status : '')))? 'checked' : ''}}>
 								<div class="progress progress-1 position-absolute"></div>
-								<div class="ml-3 step-wrapper d-flex flex-column align-items-center">
+								<div class="ml-5 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-1"
 										class="step rounded-circle d-flex align-items-center justify-content-center">
 										1
@@ -164,7 +179,7 @@
 								</div>
 								<input type="radio" id="step-2" name="status" value="Tickets" style="display: none;" {{ (old('status', !empty($event->status)? $event->status : '') == 'Tickets')? 'checked' : ''}}>
 								<div class="progress progress-3 position-absolute"></div>
-								<div class="mr-3 step-wrapper d-flex flex-column align-items-center">
+								<div class="mr-5 step-wrapper d-flex flex-column align-items-center">
 									<label for="step-2"
 										class="step rounded-circle d-flex align-items-center justify-content-center">
 										2
@@ -204,7 +219,7 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col-12">
-							<textarea rows="5" class="form-control" name="description" required
+							<textarea rows="6" class="form-control" name="description"
 								placeholder="Comprehensive event description">{{ old('description', !empty($event->description)? $event->description : '') }}</textarea>
 							@if ($errors->has('description'))
 								<span class="invalid-feedback">
