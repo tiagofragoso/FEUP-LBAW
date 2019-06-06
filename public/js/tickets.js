@@ -23,7 +23,7 @@ acquireTicketBtn.addEventListener('click',async () => {
 );
 console.log(response);
 if (response.status === 200) {
-    //updateVisual.call(button, false);
+    
 }
 
 });
