@@ -3,12 +3,14 @@
 @section('scripts')
 <script defer type="module" src="/js/join_event.js"> </script>
 <script defer type="module" src="/js/posts.js"> </script>
+<script defer type="module" src="/js/event_invites.js"> </script>
 <script defer type="module" src="/js/admin.js"> </script>
 <script defer type="module" src="/js/reports.js"> </script>
 <script defer type="module" src="/js/comments.js"> </script>
 <script defer type="module" src="/js/questions.js"> </script>
 <script defer type="module" src="/js/answers.js"> </script>
 <script defer type="module" src="/js/tickets.js"> </script>
+<script defer type="module" src="/js/threads.js"> </script>
 @endsection
 
 @section('title', $event->title)
@@ -39,51 +41,92 @@
 							@endif
 						</div>
 					</div>
-				@if ($joined == 'Host')
-				<a href="#" class="position-absolute invite-button">
-					<button class="btn btn-light border-light">
-						<i class="fas fa-envelope mr-1"></i>
-						Invite
-					</button>
-				</a>
-				@endif
-				<button class="btn btn-light border-light position-absolute tag-button" type="button">
-					<i class="fas fa-tag mr-1"></i>
-					{{ $event->category()->first()->name }}
-				</button>
-				<img class="d-block w-100" src="{{asset('assets/event-placeholder.png')}}" alt="First slide">
-			</div>
-			<div class="container-fluid mt-3">
-				<div class="row justify-content-between">
-					<div class="col-12 col-sm-9 mb-2 mb-sm-0 d-flex flex-column">
-						<h5 class="card-title">
-							<strong>{{ $event->title }}</strong>
-						</h5>
-						<p class="text-muted mb-0">Hosted by <strong><a href="{{ url('/users/' . $owner->id) }}" class="host-name text-muted">{{$owner->displayName()}}</a></strong>
-							@if ($hosts->count() > 0)
-							and {{$hosts->count()}} others
+					<div class="event-btns d-flex flex-row position-absolute">
+							@if ($joined == 'Host')
+							<button id="invite-btn" class="btn btn-light border-light mr-2"
+								data-toggle="modal" data-target="#inviteRequestsModal">
+								<i class="fas fa-envelope mr-1"></i>
+								Invite
+							</button>
 							@endif
-						</p>
+							<button class="btn btn-light border-light" type="button">
+								<i class="fas fa-tag mr-1"></i>
+								{{ $event->category()->first()->name }}
+							</button>
 					</div>
-					<div class="col-12 col-sm-3">
-						@if($joined === null)
-						<button type="submit" class="btn btn-primary w-100 join-btn join" data-id="{{$event->id}}">
-							Join </button>
-						@elseif($joined === 'Host')
-						<a href="{{ url('/events/' . $event->id . '/edit') }}" class="btn btn-info w-100"> Edit </a>
-						@else
-						<button type="submit" class="btn btn-outline-primary w-100 join-btn joined" data-id="{{$event->id}}"> Joined </button>
-						@endif
+					<img class="d-block w-100" src="{{$event->image()}}" alt="First slide">
+				</div>
+				<!-- Invite requests modal -->
+				<div class="modal fade" id="inviteRequestsModal" tabindex="-1" role="dialog" aria-labelledby="inviteRequestsTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="inviteRequestsTitle">Invite users</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="container-fluid">
+									<div class="row">
+										<form id="invite-search" class="form-inline mx-auto col-11">
+											<div class="input-group w-100">
+												<input type="text" class="form-control" placeholder="Search for name or username" aria-label="Search"
+													aria-describedby="button-addon2" name="query">
+												<div class="input-group-append">
+													<button class="btn btn-primary" id="button-addon2">Go!</button>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<hr class="mb-1">
+										</div>
+									</div>
+									<div id="invite-list" class="d-flex flex-column">
+										<div id="no-results" class="row mt-3">
+											<div class="col-12">
+												<p class="text-center">No results found.</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<hr>
-				<div class="row mb-3 justify-content-between">
-					<div class="col-8">
-						<p class="card-subtitle text-muted">
-							@if (!empty($event->start_date))
-							<span>
-								{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
-							</span>
+				<div class="container-fluid mt-3">
+						<div class="row justify-content-between">
+							<div class="col-12 col-sm-9 mb-2 mb-sm-0 d-flex flex-column">
+								<h5 class="card-title">
+									<strong>{{ $event->title }}</strong>
+								</h5>
+								<p class="text-muted mb-0">Hosted by <strong><a href="{{ url('/users/' . $owner->id) }}" class="host-name text-muted">{{$owner->displayName()}}</a></strong>
+									@if ($hosts->count() > 0)
+									and {{$hosts->count()}} others
+									@endif
+								</p>
+							</div>
+							<div class="col-12 col-sm-3">
+								@if($joined === null)
+								<button type="submit" class="btn btn-primary w-100 join-btn join" data-id="{{$event->id}}">
+									Join </button>
+								@elseif($joined === 'Host')
+								<a href="{{ url('/events/' . $event->id . '/edit') }}" class="btn btn-info w-100"> Edit </a>
+								@else
+								<button type="submit" class="btn btn-outline-primary w-100 join-btn joined" data-id="{{$event->id}}"> Joined </button>
+								@endif
+							</div>
+						</div>
+						<hr>
+						<div class="row mb-3 justify-content-between">
+							<div class="col-8">
+								<p class="card-subtitle text-muted">
+									@if (!empty($event->start_date))
+									<span>
+										{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
+									</span>
 							@endif
 							@if (!empty($event->end_date))
 							-
@@ -386,7 +429,7 @@
 										</div>
 										<div class="row">
 											<div class="col-12">
-												<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+												<textarea class="form-control" id="threadTextarea" rows="3"></textarea>
 											</div>
 										</div>
 										<hr class="mb-1">
@@ -396,7 +439,7 @@
 												<label class="form-check-label mr-2" for="thread"><i class="fas fa-font"></i></label>
 											</div>
 											<div class="col-6 text-right">
-												<button class="submit-btn" type="submit">
+												<button class="submit-btn submit-thread-button" data-id = {{$event->id}} type="submit">
 													<i class="fas fa-angle-double-right"></i>
 												</button>
 											</div>
@@ -405,8 +448,11 @@
 								</div>
 							</div>
 							@if ($joined === 'Host' || $joined === 'Artist')
-							@each('partials.thread', $threads, 'thread')
+								<div class="threads-list">
+								@each('partials.thread', $threads, 'thread')
+								</div>
 							@endif
+
 						</div>
 					</div>
 				</div>

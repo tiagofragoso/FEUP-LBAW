@@ -54,7 +54,8 @@ class QuestionController extends Controller
         if (!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
-        $this->authorize('create', [$event, Question::class]);
+        $q = new Question();
+        $this->authorize('create', [$q, $event]);
         $request->request->add(['event_id' => $id]);
         $this->validateQuestion($request);
         $question = Question::create($request->all());

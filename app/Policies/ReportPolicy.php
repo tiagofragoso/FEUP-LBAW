@@ -31,7 +31,7 @@ class ReportPolicy
      */
     public function create(User $user)
     {
-        return Auth::check();
+        return Auth::check() && !$user->is_admin;
     }
 
     /**
@@ -43,7 +43,7 @@ class ReportPolicy
      */
     public function update(User $user, EventReport $eventReport)
     {
-        return true;
+        return $user->is_admin;
     }
 
     /**

@@ -9,6 +9,10 @@ class Thread extends Model
     //
     public $timestamps = false;
 
+    protected $fillable = [
+        'event_id', 'content', 'author_id'
+     ];
+
     public function event() {
         return $this->belongsTo('App\Event');
     }

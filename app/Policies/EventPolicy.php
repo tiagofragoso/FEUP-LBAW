@@ -43,7 +43,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        $canEdit = $event->participatesAs(['Owner', 'Host'])->get();
+        $canEdit = $event->hosts()->get();
         return $canEdit->contains($user);
     }
 
@@ -63,6 +63,11 @@ class EventPolicy
         
         $canAcquire = $event->participatesAs(['Participant'])->get();
         return $canAcquire->contains($user);
+    }
 
+    public function canVote(User $user, Event $event){
+
+        $canVote = $event->participatesAs(['Owner', 'Host','Artist','Participant'])->get();
+        return $canVote->contains($user);
     }
 }

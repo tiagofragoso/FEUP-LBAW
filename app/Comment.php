@@ -10,7 +10,7 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $guarded = [
-        'likes', 'parent'
+        'likes'
     ];
 
     public function comments() {
