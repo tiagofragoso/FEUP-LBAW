@@ -20,6 +20,10 @@ body {
 	outline-color: rgba(0, 0, 0, 0.2);
 }
 
+a {
+	color: inherit;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Rubik', sans-serif;
 }
@@ -201,6 +205,36 @@ input:focus, textarea:focus {
 .nav .nav-item > a.active {
 	font-weight: bold;
 	color: var(--green);
+}
+
+.error {
+	padding-left: 0.8em;
+	font-size: 0.8em;
+	color: var(--orange);
+}
+
+.success {
+    padding-left: 0.8em;
+	font-size: 0.8em;
+	color: var(--green);
+}
+
+.navbar .invite-badge {
+	width: 12px;
+	height: 12px;
+	top: 10%;
+	left: 10%;
+	background-color: var(--orange);
+	border-radius: 100%;
+}
+
+.navbar button.navbar-toggler .invite-badge {
+	top: 12%;
+	left: 18%;
+}
+
+.navbar button.navbar-toggler:not(.collapsed) ~ * .invite-badge {
+	display: none;
 }
 
 /* about */
@@ -501,14 +535,6 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	opacity: 0.8;
 }
 
-
-.tag-button {
-	z-index: 1;
-	right: 1rem;
-	bottom: 1rem;
-	opacity: 0.8;
-}
-
 .event-page .artists-wrapper a {
 	color: var(--blue);
 }
@@ -538,15 +564,19 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	max-height: 360px;
 }
 
-.invite-btn {
-	width: 40px;
-	height: 40px;
-	font-weight: bold;
+.event-page .event-btns > button {
+	opacity: 0.8;
 	vertical-align: middle;
 	text-decoration: none;
 }
 
-.post-type input[type="radio"] + label {
+.event-page .event-btns {
+	z-index: 1;
+	right: 1rem;
+	bottom: 1rem;
+}
+
+.event-page .post-type input[type="radio"] + label {
 	padding: 0.2em 0.3em;
 	border-radius: 4px;
 }
@@ -557,6 +587,38 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 
 .post-type input[type="radio"]:checked + label {
 	background-color: var(--grey);
+}
+
+.event-page .user-row {
+	min-height: 58px;
+}
+
+.event-page .user-row input[type="radio"] + label {
+	color: var(--grey);
+	cursor: pointer;
+	display: inline-flex;
+	margin-bottom: 0;
+}
+
+.event-page .user-row input[type="radio"]:checked + label {
+	font-weight: bold;
+	color: var(--green);
+	border: 1px solid var(--grey);
+	border-bottom: 0px;
+}
+
+.event-page .user-row form label {
+	border-radius: 5px 5px 0px 0px;
+	border-color: var(--grey);
+	border-bottom: 1px solid;
+}
+
+.event-page .user-row .right-wrapper > div {
+	min-width: 106px;
+}
+
+.event-page #invite-list {
+	min-height: 40vh;
 }
 
 /** event form **/
@@ -707,11 +769,16 @@ border: 3px solid var(--green)!important;
 
 .card-fade {
 	opacity: 0.3;
+	transition: opacity 0.3s ease-in-out;
 }
 
-.mytickets > .row{
+.profile-page .card-fade:hover {
+	opacity: 1;
+} 
+
+.profile-page .mytickets > .row{
 	overflow-x: auto; 
-flex-wrap: nowrap;
+	flex-wrap: nowrap;
 }
 
 #profile-picture-btn {
@@ -737,8 +804,8 @@ top: 20%;
 font-weight: bold;
 }
 
-.ban-btn, .diss-btn{
-color: var(--darkgrey);
+.profile-page .ban-btn, .diss-btn {
+    color: var(--darkgrey);
 }
 
 .ban-btn:hover {
@@ -1006,5 +1073,3 @@ opacity: 0.8;
 .error-container > h1 {
 	font-size: 52px;
 }
-
-
