@@ -9,7 +9,6 @@
 
 @section('content')
 <div id="content" class="container my-0 my-sm-5">
-	{{var_dump($errors)}}
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
 		<form method="POST" action="{{ empty($event)? '/events' : '/events/'.$event->id }}" class="card mb-5" enctype="multipart/form-data">
