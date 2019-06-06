@@ -48,12 +48,14 @@
                     @endif
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-muted" href="{{ url('/profile') }}">My profile</a>
-                        <a class="dropdown-item text-muted" href="{{ url('/invites') }}">
-                            Invites
-                            @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
-                                <span style="color: var(--orange)">({{Auth::user()->pendingInviteCount()}})</span>
-                            @endif
-                        </a>
+                        @if (Auth::check() && !Auth::user()->is_admin)
+                            <a class="dropdown-item text-muted" href="{{ url('/invites') }}">
+                                Invites
+                                @if (Auth::user()->pendingInviteCount() > 0)
+                                    <span style="color: var(--orange)">({{Auth::user()->pendingInviteCount()}})</span>
+                                @endif
+                            </a>
+                        @endif
                         <a class="dropdown-item text-muted" href="{{ url('/settings') }}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-muted" href="{{ url('/logout') }}">Log out</a>
