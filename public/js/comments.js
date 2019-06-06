@@ -1,11 +1,20 @@
 import {request} from "./requests.js";
 
 let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
-let commentContent = document.querySelectorAll('.commentFormTextArea');
+let commentSection = document.querySelectorAll('.comment-section');
 
-commentContent.forEach(content => {
+commentSection.forEach(section => {
 
-    content.nextElementSibling.querySelector('.submit-comment').addEventListener('click',postComment);
+    let button = section.querySelector('.submit-comment');
+    let context = {};
+
+    context.content = section.querySelector('.textarea-parent');
+    context.post_id = section.dataset.id;
+    context.divider = section;
+
+
+    button.addEventListener('click', postComment.bind(context));
+
 });
 
 
@@ -13,16 +22,13 @@ async function postComment(event) {
 
     event.preventDefault();
 
-    if (event.target.parentNode.parentNode.previousElementSibling.value !== "" &&
-    event.target.parentNode.parentNode.previousElementSibling.value != undefined ){
     let requestBody = {
-        content: event.target.parentNode.parentNode.previousElementSibling.value,
+        content: this.content.value,
         parent: null
     }
 
-    let post_id = event.target.parentNode.parentNode.querySelector('.submit-comment').dataset.id;
     const response = await request(
-        '/api/posts/' + post_id + '/comments',
+        '/api/posts/' + this.post_id + '/comments',
         {
             method: 'POST',
             headers: {
@@ -33,12 +39,16 @@ async function postComment(event) {
             body: JSON.stringify(requestBody)
         }
     );
-    if (!response.errors) {
-        event.target.parentNode.parentNode.previousElementSibling.value = "";
-        insertComment(createComment(response),post_id);
+    
+   console.log(response); 
+
+    if (response.status === 201) {
+        this.content.value = "";
+        insertComment(createComment(response.data), this.post_id);
     }
 }
-}
+
+
 function createComment(response) {
     const comment = document.createElement('div');
     comment.className = 'row col-12 comment align-items-start justify-content-center';

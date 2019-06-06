@@ -59,7 +59,7 @@
                     </button>
                 </div>
             </div>
-            <div class="row comment-section collapse mb-3 border-top border-light pt-3" id="comments{{$post->id}}">
+            <div class="row comment-section collapse mb-3 border-top border-light pt-3" id="comments{{$post->id}}" data-id="{{$post->id}}">
                 <div class="col-12" id="comments-list{{$post->id}}">
                     @each('partials.comment', $post->commentsContent, 'comment')
                 </div>
@@ -68,12 +68,12 @@
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
-                        <form class="position-relative w-100" action="#">
-                            <textarea class="form-control position-relative w-100 pr-5" rows="1"
+                        <form class="position-relative w-100" action="">
+                            <textarea class="form-control position-relative w-100 pr-5 textarea-parent" rows="1"
                                 placeholder="Write a comment..." style="resize: none"></textarea>
                             <div
                                 class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
-                                <button class="submit-btn" type="submit">
+                                <button class="submit-btn submit-comment" type="submit">
                                     <i class="fas fa-angle-double-right submit-comment-btn"></i>
                                 </button>
                             </div>

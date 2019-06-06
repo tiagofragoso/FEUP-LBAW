@@ -72,8 +72,7 @@ class CommentController extends Controller
             'user_id' => $comment->user_id,
             'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
             'user' => $comment->user->displayName()
-        ]);
-        return response(200);
+        ], 201); 
     }
 
 
