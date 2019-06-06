@@ -16,7 +16,7 @@
     </li>
     @endunless
 </ul>
-<div class="tab-content my-3 mx-3" id="myTabProfile">
+<div class="tab-content my-3 mx-3" id="myTabProfile1">
     <div class="tab-pane fade show active" id="joined" role="tabpanel" aria-labelledby="joined-tab">
         <div class="row">
             @if (count($joined) == 0)
@@ -38,12 +38,12 @@
         </div>
     </div>
     <div class="tab-pane fade" id="hosting" role="tabpanel" aria-labelledby="performing-tab">
-        <div class="row">
+        <div class="row" id = "performing-tab">
             @each('partials.activity_event_card', $hosting, 'event')
         </div>
     </div>
-    <div class="tab-pane fade" id="performing" role="tabpanel" aria-labelledby="performing-tab">
-        <div class="row">
+    <div class="tab-pane fade" id="performing" role="tabpanel" aria-labelledby="performing-tab1">
+        <div class="row" id ="performing-tab1">
             @each('partials.activity_event_card', $performing, 'event')
         </div>
     </div>

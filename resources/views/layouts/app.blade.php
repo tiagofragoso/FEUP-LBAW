@@ -25,10 +25,6 @@
   <script defer src="{{ asset('libs/air-datepicker/datepicker.min.js') }}"></script>
   <script defer src="{{ asset('libs/air-datepicker/datepicker.en.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('libs/air-datepicker/datepicker.min.css') }}">
-  <script type="text/javascript">
-    // Fix for Firefox autofocus CSS bug
-    // See: http://stackoverflow.com/questions/18943276/html-5-autofocus-messes-up-css-loading/18945951#18945951
-  </script>
   @yield('scripts')
 </head>
 
