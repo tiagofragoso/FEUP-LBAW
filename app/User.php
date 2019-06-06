@@ -114,6 +114,7 @@ class User extends Authenticatable
     }
 
     public function acquireTicket($event, $price){
+       
         $qrcode = 'qrcode'.$event->id.$this->id;
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }

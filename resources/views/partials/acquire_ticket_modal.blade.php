@@ -15,7 +15,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="acquire-ticket-btn btn btn-secondary" data-id ="{{$event->id}}">Acquire Ticket</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="cancel-btn btn btn-danger" data-dismiss="modal">Cancel</button>
 
             </div>
         </div>
