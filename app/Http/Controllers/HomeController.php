@@ -61,6 +61,10 @@ class HomeController extends Controller
             )
             ->get();
 
+        foreach ($participations as $p) {
+            $p['joined'] = Auth::user()->hasParticipation($p->id, ['Participant', 'Owner', 'Host']);
+        }
+
         $posts = Post::select(
                 'posts.*',
                 'participations.type as event_participation',
