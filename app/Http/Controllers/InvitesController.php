@@ -58,7 +58,16 @@ class InvitesController extends Controller
             return response()->json(null, 403);
         }
 
+        
         try {
+            $part = Participation::where('event_id', $event->id)->where('user_id', $request->invited_id)->first();
+            if (!empty($part)) {
+                if ($part->type !== 'Participant') {
+                    return response()->json('Can\'t perform this invite', 400);
+                } 
+                if ($request->type === 'Participant')
+                    return response()->json('User already joined', 400);
+            }
             Invite::create(['user_id' => $user->id, 
                 'invited_user_id' => $request->invited_id,
                 'event_id' => $request->event_id,
