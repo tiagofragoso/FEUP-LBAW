@@ -1,6 +1,7 @@
 import {request} from "./requests.js";
 
 let postContent = document.querySelector('#postFormTextarea');
+let postLikeBtns = document.querySelectorAll('.like-post-btn');
 
 let pollOptions = document.querySelectorAll("input[type=radio][name=poll]");
 let selectedOption = null;
@@ -159,3 +160,47 @@ async function postPost(event) {
 
 
 }
+
+
+postLikeBtns.forEach(button => {
+
+    button.addEventListener('click', async () => {
+        let i = button.querySelector('i');
+        let postId = button.dataset.id;
+        let numberLikes = button.querySelector('span').textContent;
+        let url = '/api/posts/' + postId + '/like';
+        if (i.classList.contains('far')) {
+            const response = await request(
+                url,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            if (response.status === 200) {
+                i.classList.replace('far', 'fas');
+                button.querySelector('span').textContent++;
+            }
+        } else {
+            const response = await request(
+                url,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+            if (response.status === 200) {
+                i.classList.replace('fas', 'far');
+                button.querySelector('span').textContent--;
+            }
+        }
+    })
+});

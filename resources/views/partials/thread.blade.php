@@ -1,3 +1,4 @@
+<div class="thread-wrapper" data-id="{{$thread->id}}">
 <div class="row justify-content-center">
     <div class="card col-12 col-lg-9 mb-4 hover-shadow">
         <div class="row">
@@ -42,7 +43,7 @@
                     <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                         width="30" height="30" />
                     <form class="position-relative w-100" action="#">
-                        <textarea class="form-control position-relative w-100 pr-5" id="exampleFormControlTextarea1"
+                        <textarea class="form-control position-relative w-100 pr-5"
                             rows="1" placeholder="Reply to this thread..." style="resize: none"></textarea>
                         <div
                             class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
@@ -57,4 +58,5 @@
             @each('partials.thread_comment', $thread->comments, 'comment')
         </div>
     </div>
+</div>
 </div>

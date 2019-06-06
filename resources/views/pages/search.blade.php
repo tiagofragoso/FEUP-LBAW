@@ -5,10 +5,21 @@
 
 @section('scripts')
     <script type="text/javascript">
-        let requestObj = {};
-        requestObj.page = 2;
+        let requestObj = {
+            page: 2,
+            start_date: '',
+            end_date: '',
+            location: '',
+            start_price: '',
+            end_price: '',
+            category: '',
+            status: '',
+            sort_by: ''
+        };
         @if (app('request')->has('search'))
         requestObj.search = "{{ app('request')->input('search') }}";
+        @else 
+        requestObj.search = "";
         @endif
     </script>
     <script defer type="module" src="/js/search.js"></script>
@@ -26,7 +37,7 @@
                 Search for worldwide music events to collaborate and attend at any time and place.
             </h5>
         </div>
-        <form class="container search-card p-4" action="#results-container">
+        <div class="container search-card p-4">
             <div class="row">
                 <div class="col-12 input-group mb-3">
                     <input type="text" class="form-control py-3 py-md-4 h-100" placeholder="Search..." id="search-input" aria-describedby="button-go">
@@ -36,9 +47,9 @@
                 </div>
             </div>
             <div class="row">
-                @include('partials.search_filters')
+                @include('partials.search_filters', ['categories' => $categories])
             </div>
-        </form>
+        </div>
     </div>
     <div class="banner-overlay w-100 h-100 position-absolute"></div>
 </div>
