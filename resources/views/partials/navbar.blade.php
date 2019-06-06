@@ -1,7 +1,10 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-navbar">
         <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('assets/logo-horizontal.svg')}}" height="30" alt="logo" /></a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        <button class="navbar-toggler collapsed position-relative" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
+                <div class="position-absolute invite-badge"></div>
+            @endif
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -37,11 +40,20 @@
                 @if (Auth::check())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
                     </a>
+                    @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
+                        <div class="invite-badge position-absolute"></div>
+                    @endif
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-muted" href="{{ url('/profile') }}">My profile</a>
+                        <a class="dropdown-item text-muted" href="{{ url('/invites') }}">
+                            Invites
+                            @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
+                                <span style="color: var(--orange)">({{Auth::user()->pendingInviteCount()}})</span>
+                            @endif
+                        </a>
                         <a class="dropdown-item text-muted" href="{{ url('/settings') }}">Settings</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-muted" href="{{ url('/logout') }}">Log out</a>

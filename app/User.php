@@ -89,4 +89,8 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
+    public function pendingInviteCount() {
+        return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
+    }
+
 }

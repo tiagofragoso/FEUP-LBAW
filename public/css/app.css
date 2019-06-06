@@ -213,6 +213,24 @@ input:focus, textarea:focus {
 	color: var(--green);
 }
 
+.navbar .invite-badge {
+	width: 12px;
+	height: 12px;
+	top: 10%;
+	left: 10%;
+	background-color: var(--orange);
+	border-radius: 100%;
+}
+
+.navbar button.navbar-toggler .invite-badge {
+	top: 12%;
+	left: 18%;
+}
+
+.navbar button.navbar-toggler:not(.collapsed) ~ * .invite-badge {
+	display: none;
+}
+
 
 /* about */
 .about-page .faq-wrapper {
