@@ -11,7 +11,6 @@ childSections.forEach(section => {
 
     context.content = section.querySelector('textarea');
     context.comment_id = section.dataset.id;
-    console.log(context.comment_id);
     context.post_id = section.closest('.post-wrapper').dataset.id;
     context.divider = section;
 

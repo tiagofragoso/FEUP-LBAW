@@ -53,18 +53,19 @@ class CommentController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if (!Auth::check()) return response(403);
+        if (!Auth::check()) return response()->json(null, 403);
         $post = Post::find($id);
-        if (is_null($post)) return response(404);
+        if (is_null($post)) return response()->json(null, 404);
         $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['post_id' => $id]);
+        $event = Event::find($post->event_id);
+        $c = new Comment();
+        $this->authorize('create', [$c, $event]);
 
-        $comment = new Comment($request->all());
         $this->validateComment($request);
-        $event = Event::find($post->id);
-        
-        $comment->save();
+        $comment = Comment::create($request->all());
         $comment = Comment::find($comment->id);
+
         return response()->json([
             'id' => $comment->id,
             'content' => $comment->content,

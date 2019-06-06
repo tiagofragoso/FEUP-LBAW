@@ -29,9 +29,9 @@ class CommentPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user,Event $event)
+    public function create(User $user, Comment $comment, Event $event)
     {
-        $canCreate = $event->participateAs(['Owner', 'Host', 'Artist','Participant'])->get();
+        $canCreate = $event->participatesAs(['Owner', 'Host', 'Artist','Participant'])->get();
         return $canCreate->contains($user);
     
     }
