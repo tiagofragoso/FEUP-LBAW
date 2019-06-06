@@ -41,6 +41,9 @@ class InvitesController extends Controller
 
         $this->validator($request);
 
+        if ($user->id == $request->invited_id) {
+            return response()->json(null, 400);
+        }
 
         try {
             $event = Event::findOrFail($request->event_id);
@@ -101,15 +104,16 @@ class InvitesController extends Controller
         $formattedQuery = "%".$request->query_term."%";
 
         try {
-            $users = User::where('name', 'ilike', $formattedQuery)->orWhere('username', 'ilike', $formattedQuery)->limit(10)->get();
+            $users = User::where('name', 'ilike', $formattedQuery)->orWhere('username', 'ilike', $formattedQuery)->where('id', '<>', Auth::user()->id)->limit(10)->get();
         } catch(\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
-
-        $formatted = $this->mapUsers($users, $request->event_id)->toArray();
-
-        return response()->json($formatted, 200);
-
+        if ($users->count() > 0) {
+            $formatted = $this->mapUsers($users, $request->event_id)->toArray();
+            return response()->json($formatted, 200);
+        } else {
+            return response()->json([], 200);
+        }
     }
 
     private function mapUsers($users, $event_id) {
