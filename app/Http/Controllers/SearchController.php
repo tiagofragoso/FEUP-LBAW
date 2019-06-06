@@ -11,12 +11,18 @@ class SearchController extends Controller
 {
     public function show(Request $request)
     {
+        try{
         $events = $this->getEvents($request);
         $categories = Category::all();
         return view('pages.search', ['events' => $events, 'categories' => $categories]);
+        }catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return null;
+        }
     }
 
     public function getEvents(Request $request) {
+        try{
         if ($request->has('search') && $request->search != '') {
             $events = Event::where([
                     ['private', 'false'],
@@ -78,5 +84,9 @@ class SearchController extends Controller
 
         $events = $events->paginate(6);
         return $events;
+    }catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return null;
+    }
     }
 }

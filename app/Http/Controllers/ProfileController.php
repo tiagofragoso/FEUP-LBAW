@@ -45,6 +45,7 @@ class ProfileController extends Controller
 
     public function showProfile()
     {
+        try{
         if (!Auth::check()) return redirect('/login');
 
         if (Auth::user()->is_admin) {
@@ -53,11 +54,16 @@ class ProfileController extends Controller
         } else {
             $data = $this->getEventsData(Auth::user());
             return view('pages.profile',  $data);
-        }   
+        }  
+    }catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return;
     }
+}
 
     private function getEventsData($user)
     {
+        try{
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
         $data['performing'] = $user->events('Artist')->orderByDesc('start_date')->get();
         $data['hosting'] = $user->events(['Host', 'Owner'])->orderByDesc('start_date')->get();
@@ -71,9 +77,14 @@ class ProfileController extends Controller
         $data['user'] = $user;
 
         return $data;
+    }  catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return;
+    }
     }
 
     private function getReportsData() {
+        try{
         $pendingEventReports = EventReport::all()->where('status', 'Pending')->groupBy('event_id');
 
         $pendingEventReports = $pendingEventReports->map(function($value, $key) {
@@ -116,6 +127,10 @@ class ProfileController extends Controller
         $answered = $answeredEventReports->concat($answeredUserReports)->sortByDesc('count');
 
         return ['pending' => $pending, 'answered' => $answered];
+    }catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return;
+    }
     }
 
 
@@ -139,6 +154,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        try{
         if (!Auth::check()) return redirect('/login');
 
         $user = Auth::user();
@@ -157,11 +173,15 @@ class ProfileController extends Controller
         $user->save();
 
         return response()->json(null, 200);
+        }catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     public function updatePassword(Request $request)
     {
-
+        try{
         if (!Auth::check()) return redirect('/login');
 
         $user = Auth::user();
@@ -182,6 +202,10 @@ class ProfileController extends Controller
         $user->save();
 
         return response()->json(null, 200);
+        } catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     /**
@@ -197,6 +221,7 @@ class ProfileController extends Controller
 
     public function followUser($id)
     {
+        try{
         if (!Auth::check()) return response()->json(null, 403);
         if (User::find($id) == null) return response()->json(null, 404);
 
@@ -204,10 +229,15 @@ class ProfileController extends Controller
 
         Auth::user()->follow($id);
         return response()->json(null, 200);
+        }catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     public function unfollowUser($id)
     {
+        try{
         if (!Auth::check()) return response()->json(null, 403);
         if (User::find($id) == null) return response()->json(null, 404);
 
@@ -215,10 +245,14 @@ class ProfileController extends Controller
 
         Auth::user()->unfollow($id);
         return response()->json(null, 200);
+        }catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     public function showInvites() {
-
+        try{
         if (!Auth::check()) return redirect('/login');
 
         $user = Auth::user();
@@ -250,11 +284,17 @@ class ProfileController extends Controller
         });
 
         return view('pages.invites', ['user' => $user, 'invites' => $invites]);
+    }
+    catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return null;
+    }
 
     }
 
     public function banUser($id)
     {
+        try{
         if (!Auth::user()->is_admin) return response()->json(null, 403);
 
         if (User::find($id) == null) return response()->json(null, 404);
@@ -262,6 +302,10 @@ class ProfileController extends Controller
         User::find($id)->update(['banned' => true]);
 
         return response()->json(null, 200);
+        }catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     

@@ -51,6 +51,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request, $id)
     {
+        try{
         if (!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
@@ -60,6 +61,11 @@ class QuestionController extends Controller
         $this->validateQuestion($request);
         $question = Question::create($request->all());
         return response()->json($question, 201);
+
+        } catch(\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     /**

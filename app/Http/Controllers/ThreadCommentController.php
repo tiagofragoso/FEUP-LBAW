@@ -16,7 +16,8 @@ class ThreadCommentController extends Controller
         $this->middleware('auth');
     }
 
-    public function validateThreadComment($data) {
+    public function validateThreadComment($data)
+    {
         return Validator::make($data->all(), [
             'content' => 'required|string|max:2500',
             'thread_id' => 'required',
@@ -52,25 +53,30 @@ class ThreadCommentController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if (!Auth::check()) return response()->json(null, 403);
-        $thread = Thread::find($id);
-        if (is_null($thread)) return response()->json(null, 404);
-        $event = Event::find($thread->event_id);
-        $c = new ThreadComment();
-        $this->authorize('create', [$c, $event]);
-        $request->request->add(['user_id' => Auth::user()->id]);
-        $request->request->add(['thread_id' => $id]);
-        $this->validateThreadComment($request);
-        $comment = ThreadComment::create($request->all());
-        $comment = ThreadComment::find($comment->id);
-        return response()->json([
-            'id' => $comment->id,
-            'content' => $comment->content,
-            'user_id' => $comment->user_id,
-            'thread_id' => $thread->id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
-            'user' => $comment->user->displayName()
-        ], 201);
+        try {
+            if (!Auth::check()) return response()->json(null, 403);
+            $thread = Thread::find($id);
+            if (is_null($thread)) return response()->json(null, 404);
+            $event = Event::find($thread->event_id);
+            $c = new ThreadComment();
+            $this->authorize('create', [$c, $event]);
+            $request->request->add(['user_id' => Auth::user()->id]);
+            $request->request->add(['thread_id' => $id]);
+            $this->validateThreadComment($request);
+            $comment = ThreadComment::create($request->all());
+            $comment = ThreadComment::find($comment->id);
+            return response()->json([
+                'id' => $comment->id,
+                'content' => $comment->content,
+                'user_id' => $comment->user_id,
+                'thread_id' => $thread->id,
+                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
+                'user' => $comment->user->displayName()
+            ], 201);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     /**
