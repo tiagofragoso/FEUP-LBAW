@@ -39,7 +39,7 @@ Route::put('api/reports','ReportController@update');
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
-Route::put('api/polls/{poll_id}/votes/{poll_option_id}','PostController@pollVote');
+Route::put('api/polls/{poll_id}/votes','PostController@pollVote');
 Route::post('api/events/{id}/questions', 'QuestionController@store');
 Route::post('api/events/{id}/threads', 'ThreadController@store');
 Route::post('api/questions/{id}/answer', 'AnswerController@store');

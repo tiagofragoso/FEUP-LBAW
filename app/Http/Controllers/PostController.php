@@ -124,8 +124,9 @@ class PostController extends Controller
         //
     }
 
-    public function pollVote($postId, $pollOption)
+    public function pollVote(Request $request, $postId)
     {
+        $pollOption = $request->pollOption;
         if (!Auth::check()) return response()->json(null, 403);
         if (is_null(Poll::where('post_id', $postId)->get()->first())) return response()->json(null, 404);
         $post = Poll::where('post_id', $postId)->get()->first();
