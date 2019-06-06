@@ -4,7 +4,8 @@
 @section('container', 'home-page')
 
 @section('scripts')
-
+<script type="module" src="js/posts.js"></script>
+<script type="module" src="js/join_event.js"></script>
 @endsection
 
 @section('content')
@@ -32,13 +33,13 @@
     </div>
 
     <div class="row">
-        @include('partials.participation_card')
-
-        @include('partials.feed_post_card')
-
-        @include('partials.participation_card')
-
-        @include('partials.feed_poll_card')
+        @foreach ($activity as $a)
+            @if ($a->type == 'Post' || $a->type == 'Poll' || $a->type == 'File')
+                @include('partials.feed_post_card', ['post' => $a])
+            @else
+                @include('partials.participation_card', ['participation' => $a])
+            @endif
+        @endforeach
     </div>
 </div>
 @endsection

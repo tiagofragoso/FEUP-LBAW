@@ -44,7 +44,7 @@ class HomeController extends Controller
                 'users.username',
                 'participations.type',
                 'participations.date',
-                'events.id as event_id',
+                'events.id',
                 'events.title',
                 'events.location',
                 'events.start_date'
@@ -63,11 +63,9 @@ class HomeController extends Controller
 
         $posts = Post::select(
                 'posts.*',
-                'users.username',
-                'users.name',
                 'participations.type as event_participation',
                 'events.id as event_id',
-                'events.title'
+                'events.title as event_title'
             )
             ->leftJoin('participations', 'participations.event_id', '=', 'posts.event_id')
             ->leftJoin('events', 'participations.event_id', '=', 'events.id')
@@ -93,6 +91,6 @@ class HomeController extends Controller
             }
         }
 
-        return $participations->merge($posts);
+        return $participations->merge($posts)->sortBy('date');
     }
 }

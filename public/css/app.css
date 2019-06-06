@@ -599,67 +599,75 @@ input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 
 /* home */
 
-.link {
+.home-page .link {
 	text-decoration: none;
 	color: inherit;
 	display: block;
 }
 
-.link:focus, .link:hover, .link:active {
+.home-page .link:focus, .link:hover, .link:active {
 	text-decoration: none;
 	color: inherit;
 }
 
-.card {
+.home-page .card {
 	overflow: hidden;
 }
 
-.card-wrapper {
-max-width: 720px;
+.home-page .card-wrapper {
+    max-width: 720px;
 }
 
-.home-page .card-header {
-font-weight: bold;
-font-size: 1rem;
+.home-page .home-page .card-header {
+    font-weight: bold;
+    font-size: 1rem;
 }
 
-.post-card-header {
+.home-page .post-card-header {
 	height: 75px;
 	background-color: rgba(0,0,0,.03);
 }
 
-.post-card-header a {
+.home-page .post-card-header a {
 	color: var(--blue);
 }
 
-.user-tag {
+.home-page .user-tag {
 	color: var(--green);
 }
 
-.user-tag:hover {
+.home-page .user-tag:hover {
 	color: var(--darkgreen);
 }
 
 @media screen and (max-width: 767px) {
-	.post-card-header {
-			height: 50px;
+	.home-page .post-card-header {
+        height: 50px;
 	}
 
-	.post-card-header .event-title {
-			font-size: 0.9em;
+	.home-page .post-card-header .event-title {
+        font-size: 0.9em;
 	}
 }
 
 @media screen and (max-width: 576px) {
-	.post-card-header {
-			height: 40px;
+	.home-page .post-card-header {
+        height: 40px;
 	}
 
-	.post-card-header .event-title {
-			font-size: 0.7em;
+	.home-page .post-card-header .event-title {
+        font-size: 0.7em;
 	}
 }
 
+.home-page .nested-post .hover-shadow {
+    border: none;
+	transition: none;
+}
+
+.home-page .nested-post .hover-shadow:hover, .hover-shadow:focus {
+	box-shadow: none;
+}
 
 /* profile */
 
