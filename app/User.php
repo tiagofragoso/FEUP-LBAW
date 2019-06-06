@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned'
     ];
 
     /**
@@ -91,6 +91,30 @@ class User extends Authenticatable
 
     public function pendingInviteCount() {
         return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
+    }
+    
+    public function likePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->attach($post_id);
+       
+    }
+
+    public function dislikePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->detach($post_id);
+       
+    }
+
+    public function likeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->attach($comment_id);
+       
+    }
+
+    public function dislikeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->detach($comment_id);
+       
     }
 
 }
