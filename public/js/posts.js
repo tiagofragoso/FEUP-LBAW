@@ -18,7 +18,7 @@ polls.forEach(function (poll) {
         let post_id = option.closest('.container').dataset.id;
         option.addEventListener('click', async () => {
             let url = '/api/polls/' + post_id + '/votes';
-            let requestBody = {pollOption: option_id};
+            let requestBody = { pollOption: option_id };
             const response = await request(
                 url,
                 {
@@ -32,21 +32,22 @@ polls.forEach(function (poll) {
                 }
             );
             if (response.status == 200) {
-            option.closest('.row').childNodes[3].dataset.id++;
-            option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
-                if (selectedOption !== null){
-                selectedOption.closest('.row').childNodes[3].dataset.id--;
-                selectedOption.closest('.row').childNodes[3].textContent = selectedOption.closest('.row').childNodes[3].dataset.id + " votes";
-            }
-            selectedOption = option;
+                poll.querySelector('.poll-error-message').classList.add('d-none');
+                option.closest('.row').childNodes[3].dataset.id++;
+                option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
+                if (selectedOption !== null) {
+                    selectedOption.closest('.row').childNodes[3].dataset.id--;
+                    selectedOption.closest('.row').childNodes[3].textContent = selectedOption.closest('.row').childNodes[3].dataset.id + " votes";
                 }
-                else if (response.status == 403) {
+                selectedOption = option;
+            }
+            else if (response.status == 403) {
                 poll.querySelector('.poll-error-message').classList.remove('d-none');
 
             }
-        
 
-    })
+
+        })
     });
 });
 
