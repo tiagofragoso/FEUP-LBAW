@@ -39,20 +39,14 @@ async function postChild(event) {
         }
     );
 
-    console.log(response); 
-
     if (response.status === 201) {
         this.content.value = "";
-        console.log(this.divider);
-        console.log(this.divider.parentNode);
         this.divider.parentNode.insertBefore(createChild(response.data), this.divider);
     }
     
 }
 
 commentSections.forEach(section => {
-
-    console.log(section);
 
     let button = section.querySelector('.submit-comment');
     let context = {};
@@ -88,8 +82,6 @@ export async function postComment(event) {
             body: JSON.stringify(requestBody)
         }
     );
-    
-   console.log(response); 
 
     if (response.status === 201) {
         this.content.value = "";
@@ -198,7 +190,6 @@ function createComment(response) {
 
     context.content = section.querySelector('textarea');
     context.comment_id = section.dataset.id;
-    console.log(context.comment_id);
     context.post_id = response.post_id;
     context.divider = section;
 
@@ -211,7 +202,6 @@ async function commentLikes(event) {
 
     let comment_id = this.closest('.comment-wrapper').dataset.id;
         let url = '/api/comments/' + comment_id + '/like';
-        console.log(this.textContent);
         if (this.textContent.trim() === 'Like') {
             const response = await request(
                 url,
