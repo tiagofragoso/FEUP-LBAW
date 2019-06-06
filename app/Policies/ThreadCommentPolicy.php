@@ -31,7 +31,7 @@ class ThreadCommentPolicy
      */
     public function create(User $user, ThreadComment $comment, Event $event)
     {
-        return $event->participatesAs(['Host', 'Owner', 'Artist'])->get()->constains($user);
+        return $event->participatesAs(['Host', 'Owner', 'Artist'])->get()->contains($user);
     }
 
     /**
