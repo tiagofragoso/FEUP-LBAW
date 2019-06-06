@@ -32,14 +32,14 @@
                 </div>
             </div>
             @each('partials.child_comment', $comment->comments, 'comment')
-                <div class="row col-12 mt-3 justify-content-center align-items-center collapse" id="childcomments{{$comment->id}}">
-                    <div class="dropdown-divider col-12 col-md-10 mx-auto mb-3 mt-2"></div>
-                    <div class="col-12 col-md-10 d-flex flex-row align-items-center">
+                <div class="col-12 mt-3 justify-content-center align-items-center collapse" id="childcomments{{$comment->id}}">
+                    <!--<div class="dropdown-divider col-12 col-md-10 mx-auto mb-3 mt-2"></div>-->
+                    <div class="col-12 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
                         <form class="position-relative w-100" action="#">
                             <textarea class="form-control position-relative w-100 pr-5" rows="1"
-                                placeholder="Write a comment..." style="resize: none"></textarea>
+                                placeholder="Replying to X" style="resize: none"></textarea>
                             <div
                                 class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
                                 <button class="submit-btn" type="submit">
