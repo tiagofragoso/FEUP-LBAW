@@ -47,10 +47,10 @@ class ProfileController extends Controller
             return view('pages.admin_profile', $data);
         } else {
             $data = $this->getEventsData(Auth::user());
+            $data['tickets'] =Auth::user()->sortedTickets();
             return view('pages.profile',  $data);
         }   
     }
-
     private function getEventsData($user)
     {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
