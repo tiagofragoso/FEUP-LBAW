@@ -52,7 +52,7 @@
 								{{ $event->category()->first()->name }}
 							</button>
 					</div>
-					<img class="d-block w-100" src="{{asset('assets/event-placeholder.png')}}" alt="First slide">
+					<img class="d-block w-100" src="{{$event->image()}}" alt="First slide">
 				</div>
 				<!-- Invite requests modal -->
 				<div class="modal fade" id="inviteRequestsModal" tabindex="-1" role="dialog" aria-labelledby="inviteRequestsTitle" aria-hidden="true">

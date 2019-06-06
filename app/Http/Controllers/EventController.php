@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App;
 use App\Event;
-use App\EventReport;
-use App\Category;
-use App\Currency;
-use App\Participation;
-use App\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +28,9 @@ class EventController extends Controller
             'private' => 'required',
             'status' => 'required',
             'price' => 'nullable|numeric|min:0',
-            'start_date' => 'nullable|date|after:now'
+            'start_date' => 'nullable|date|after:now',
+            'end_date' => 'nullable|date|after:start_date',
+            'photo' => 'nullable|image'
         ])->validate();
     }
 
@@ -72,11 +69,16 @@ class EventController extends Controller
 
         $this->validateEvent($request);
 
-        $event = Event::create($request->except('photo'));
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('events', 'public');
+            $event = Event::create(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
+        } else {
+            $event = Event::create($request->except(['photo', 'hours', 'minutes']));
+        }
 
         Auth::user()->joinEvent($event->id, 'Owner');
 
-        return $this->show($event->id);
+        return redirect('/events/'.$event->id);
     }
 
     /**
@@ -179,11 +181,31 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $event = Event::findOrFail($id);
+        try {
+            $event = Event::findOrFail($id);
+        } catch(\Exception $e) {
+            abort(404);
+        } 
+
         $this->authorize('update', $event);
         $this->validateEvent($request);
-        $event->update($request->except(['photo']));
-        return $this->show($id);
+
+        if ($request->hasFile('photo')) {
+            if (!empty($event->photo)) {
+                try {
+                    $old = Storage::disk('public')->get($event->photo);
+                } catch (Exception $e) { }
+                if (isset($old)) {
+                    Storage::disk('public')->delete($event->photo);
+                }
+            }
+            $path = $request->file('photo')->store('events', 'public');
+            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+        } else {
+            $event = $event->update($request->except('photo'));
+        }
+
+        return redirect('/events/'.$id);
     }
 
     /**
