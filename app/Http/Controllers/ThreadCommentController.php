@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\ThreadComment;
 use App\Thread;
 use App\Event;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
-class ThreadController extends Controller
+class ThreadCommentController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function validateThread($data) {
+    public function validateThreadComment($data) {
         return Validator::make($data->all(), [
-            'content' => 'required|string|max:5000',
-            'event_id' => 'required',
-            'author_id' => 'required' 
+            'content' => 'required|string|max:2500',
+            'thread_id' => 'required',
+            'user_id' => 'required'
         ])->validate();
     }
 
@@ -52,30 +51,32 @@ class ThreadController extends Controller
     public function store(Request $request, $id)
     {
         if (!Auth::check()) return response()->json(null, 403);
-        $event = Event::find($id);
-        if (is_null($event)) return response()->json(null, 404);
-        $this->authorize('create', [$event, Thread::class]);
-        $request->request->add(['event_id' => $id]);
+        $thread = Thread::find($id);
+        if (is_null($thread)) return response()->json(null, 404);
+        $event = Event::find($thread->event_id);
+        $this->authorize('create', [$event, ThreadComment::class]);
         $request->request->add(['author_id' => Auth::user()->id]);
-        $this->validateThread($request);
-        $thread = Thread::create($request->all());
-        $thread = Thread::find($thread->id);
+        $request->request->add(['thread_id' => $id]);
+        $this->validateThreadComment($request);
+        $comment = ThreadComment::create($request->all());
+        $comment = ThreadComment::find($comment->id);
         return response()->json([
-            'id' => $thread->id,
-            'content' => $thread->content,
-            'author_id' => $thread->author_id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $thread->date)->format('M d | H:i'),
-            'author' => $thread->author->displayName()
+            'id' => $comment->id,
+            'content' => $comment->content,
+            'author_id' => $comment->author_id,
+            'thread_id' => $thread->id,
+            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d | H:i'),
+            'author' => $comment->author->displayName()
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Thread  $thread
+     * @param  \App\ThreadComment  $threadComment
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show(ThreadComment $threadComment)
     {
         //
     }
@@ -83,10 +84,10 @@ class ThreadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Thread  $thread
+     * @param  \App\ThreadComment  $threadComment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Thread $thread)
+    public function edit(ThreadComment $threadComment)
     {
         //
     }
@@ -95,10 +96,10 @@ class ThreadController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Thread  $thread
+     * @param  \App\ThreadComment  $threadComment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Request $request, ThreadComment $threadComment)
     {
         //
     }
@@ -106,10 +107,10 @@ class ThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Thread  $thread
+     * @param  \App\ThreadComment  $threadComment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy(ThreadComment $threadComment)
     {
         //
     }
