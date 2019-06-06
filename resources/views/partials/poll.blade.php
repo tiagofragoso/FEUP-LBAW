@@ -22,5 +22,7 @@
             {{$option->votes}} votes
         </div>
     </div> 
+    
     @endforeach
+    <div class="text-danger d-none poll-error-message">To vote on an event's poll, you need to participate in the event!</div>
 </div>

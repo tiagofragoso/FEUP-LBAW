@@ -12,7 +12,6 @@ polls.forEach(function (poll) {
 
     if (poll.querySelector("input[type=radio][name="+pollName+"]:checked") !== null)
         selectedOption = poll.querySelector("input[type=radio][name="+pollName+"]:checked").closest('.row');
-    console.log(selectedOption);
 
     pollOptions.forEach(option => {
         let option_id = option.closest('.row').dataset.id;
@@ -31,7 +30,7 @@ polls.forEach(function (poll) {
                 }
             );
 
-            console.log(response);
+;
                 if (response.status == 200) {
                 option.closest('.row').childNodes[3].dataset.id++;
                 option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
@@ -40,7 +39,11 @@ polls.forEach(function (poll) {
                     selectedOption.closest('.row').childNodes[3].textContent = selectedOption.closest('.row').childNodes[3].dataset.id + " votes";
                 }
                 selectedOption = option;
-        }
+                }
+                else if (response.status == 403){
+                    poll.querySelector('.poll-error-message').classList.remove('d-none');
+
+                }
             
 
     })
