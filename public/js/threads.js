@@ -49,7 +49,7 @@ function createThread(response) {
                     </button>
                 </div>
             </div>
-            <div class="row comment-section collapse mb-3 border-top border-light pt-3" id="comments${response.id}" data-id="${response.id}">
+            <div class="row comment-section comment-section-threads collapse mb-3 border-top border-light pt-3" id="comments${response.id}" data-id="${response.id}">
                 <div class="dropdown-divider col-12 col-md-10 mx-auto mt-2 mb-3"></div>
                 <div class="row col-12 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
@@ -72,7 +72,7 @@ function createThread(response) {
     </div>
     `
 
-    let section = thread.querySelector('.comment-section');
+    let section = thread.querySelector('.comment-section-threads');
     let button = section.querySelector('.submit-btn');
 
     let context = {};
@@ -152,7 +152,7 @@ if (threadContent !== null) {
     })
 }
 
-let commentsSections = document.querySelectorAll('.comment-section');
+let commentsSections = document.querySelectorAll('.comment-section-threads');
 
 commentsSections.forEach(section => {
     let button = section.querySelector('.submit-btn');

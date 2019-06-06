@@ -40,11 +40,11 @@
                     </button>
                 </div>
             </div>
-            <div class="row comment-section collapse mb-3 border-top border-light pt-3" id="comments{{$thread->id}}"
+            <div class="row comment-section comment-section-threads collapse mb-3 border-top border-light pt-3" id="comments{{$thread->id}}"
                 data-id="{{$thread->id}}">
                 @each('partials.thread_comment', $thread->comments, 'comment')
                 <div class="dropdown-divider col-12 col-md-10 mx-auto mt-2 mb-3"></div>
-                <div class="row col-12 justify-content-center align-items-center">
+                <div class="row col-12 mt-3 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
