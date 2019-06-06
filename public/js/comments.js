@@ -44,7 +44,7 @@ async function postComment(event) {
 
     if (response.status === 201) {
         this.content.value = "";
-        insertComment(createComment(response.data), this.post_id);
+       this.divider.insertBefore(createComment(response.data))
     }
 }
 
@@ -53,42 +53,57 @@ function createComment(response) {
     const comment = document.createElement('div');
     comment.className = 'row col-12 comment align-items-start justify-content-center';
     comment.innerHTML = `
+    <div class="row col-12 comment align-items-start justify-content-center">
     <div class="col-12 col-md-10 d-flex flex-row">
-        <a href="url('/users/${response.user_id}')}">
+        <a href="/users/${response.user_id}">
             <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
         </a>
         <div class="w-100 d-flex flex-column">
             <div class="comment-wrapper d-flex flex-column w-100" data-id="${response.id}">
                 <div class="comment-text px-3 py-2">
                     <span>
-                        <a class="title-link mr-2" href="{{ url('/users/'.${response.user_id})}}">
+                        <a class="title-link mr-2" href=""/users/${response.user_id}"">
                             <span class=" author">${response.user}</span>
                         </a>
                         ${response.content}
                     </span>
                 </div>
                 <div class="comment-footer ml-3">
-                    <span id="numberLikes">0</span>
+                    <span class="numberLikes"> 0 </span>
                     <span> likes </span>
                     •
-                    <button class="bg-transparent border-0" id="like-comment-btn">
-                       Like
+                    <button class="bg-transparent border-0 like-comment-btn">
+                        Like
+                    </button>
+                    •
+                    <button class="bg-transparent border-0 reply-comment-btn" type="button" data-toggle="collapse" data-target="#childcomments{{$comment->id}}"
+                            aria-expanded="false" aria-controls="collapseExample">
+                        Reply
                     </button>
                     •
                     <span>${response.date}</span>
                 </div>
             </div>
+                <div class="col-12 mt-3 justify-content-center align-items-center collapse" id="childcomments${response.id}">                
+                    <div class="col-12 d-flex flex-row align-items-center">
+                        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
+                            width="30" height="30" />
+                        <form class="position-relative w-100" action="#">
+                            <textarea class="form-control position-relative w-100 pr-5" rows="1"
+                            placeholder="Replying to ${response.user}" style="resize: none"></textarea>
+                            <div
+                                class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
+                                <button class="submit-btn submit-child-comment" type="submit">
+                                    <i class="fas fa-angle-double-right submit-comment-btn"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
         </div>
     </div>
 </div>`;
     return comment;
-}
-
-function insertComment(comment,post_id) {
-    
-    let comments = document.getElementById("comments-list"+post_id);
-    console.log(comments);
-    comments.insertBefore(comment, comments.childNodes[0]);
 }
 
 commentLikeBtns.forEach(button => {
