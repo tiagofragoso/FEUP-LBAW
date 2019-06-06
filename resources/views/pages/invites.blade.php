@@ -21,7 +21,13 @@
                 <div class="card-body">
                     <div class="container">
                         <div class="row justify-content-center">
-                            @each('partials.invite_card', $invites, 'invite')
+                            @if ($invites->count() === 0)
+                                <span class="text-center">
+                                    You haven't been invited to any event yet.
+                                </span>
+                            @else
+                                @each('partials.invite_card', $invites, 'invite')
+                            @endif
                         </div>
                     </div>
                 </div>
