@@ -48,7 +48,6 @@ async function fetchUsers(query) {
 			'Accept': 'application/json'
 		}
 	});
-	console.log(response);
 	return response;
 }
 
@@ -117,38 +116,53 @@ function createEl(user) {
 	const refEl = wrapper.querySelector('.right-wrapper .invite-type');
 
 	if (!user['invited']) {
-		const form = document.createElement('form');
-		form.innerHTML = `
-			<input id="p${user['id']}" type="radio" name="type" style="display: none" value="Participant" checked>
-			<label class="invite-label p-2" for="p${user['id']}">
-				<i class="fas fa-user"></i>
-			</label>
-			<input id="a${user['id']}" type="radio" name="type" style="display: none" value="Artist">
-			<label class="invite-label p-2" for="a${user['id']}">
-				<i class="fas fa-guitar"></i>
-			</label>
-			<input id="h${user['id']}" type="radio" name="type" style="display: none" value="Host">
-			<label class="invite-label p-2" for="h${user['id']}">
-				<i class="fas fa-star"></i>
-			</label>`;
-
-		form.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener('change', (e) => updateInviteType(e.target, wrapper)));
-		wrapper.querySelector('.right-wrapper > div').insertBefore(form, refEl);
+		if (user['part'] && user['part'] !== 'Participant') {
+			wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
+			const joined = document.createElement('span');
+			joined.textContent = user['part'].toUpperCase();
+			joined.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
+			wrapper.querySelector('.right-wrapper > div').insertBefore(joined, wrapper.querySelector('.invite-type'));
+			wrapper.querySelector('.invite-type').remove();
+			wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
+		} else {
+			const form = document.createElement('form');
+			form.innerHTML = `
+				<input id="p${user['id']}" type="radio" name="type" style="display: none" value="Participant" checked>
+				<label class="invite-label p-2" for="p${user['id']}">
+					<i class="fas fa-user"></i>
+				</label>
+				<input id="a${user['id']}" type="radio" name="type" style="display: none" value="Artist">
+				<label class="invite-label p-2" for="a${user['id']}">
+					<i class="fas fa-guitar"></i>
+				</label>
+				<input id="h${user['id']}" type="radio" name="type" style="display: none" value="Host">
+				<label class="invite-label p-2" for="h${user['id']}">
+					<i class="fas fa-star"></i>
+				</label>`;
+			if (user['part']) {
+				form.querySelector('input[value="Participant"]').setAttribute('disabled', null);
+				form.querySelector('input[value="Participant"]').removeAttribute('checked');
+				form.querySelector('input[value="Artist"]').setAttribute('checked', null);
+				wrapper.querySelector('.invite-type').textContent = 'ARTIST';
+			}
+			form.querySelectorAll('input[type="radio"]').forEach(el => el.addEventListener('change', (e) => updateInviteType(e.target, wrapper)));
+			wrapper.querySelector('.right-wrapper > div').insertBefore(form, refEl);
+		}
 	} else {
-		const invited = document.createElement('span');
 		let text;
 		switch (user['invite_status']) {
 			case 'Pending':
 				text = 'INVITED';
 				break;
-			case 'Accepted':
-				text = 'ACCEPTED';
+				case 'Accepted':
+					text = 'ACCEPTED';
 				break;
 			case 'Declined':
 				text = 'DECLINED';
 				break;
-		}
+			}
 		wrapper.querySelector('.invite-type').textContent = user['invite_type'].toUpperCase();
+		const invited = document.createElement('span');
 		invited.textContent = text;
 		invited.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
 		wrapper.querySelector('.right-wrapper > div').insertBefore(invited, wrapper.querySelector('.invite-type'));
@@ -190,8 +204,6 @@ async function sendInvite(wrapper) {
 		body: JSON.stringify({ 'event_id': EVENT_ID, 'invited_id': invited_id, 'type': type })
 	});
 
-	console.log(response);
-
 	if (response.status === 201) {
 		form.remove();
 		const invited = document.createElement('span');
@@ -199,8 +211,6 @@ async function sendInvite(wrapper) {
 		invited.style = `border-bottom: 1px solid var(--grey); color: var(--grey);`;
 		wrapper.querySelector('.right-wrapper > div').insertBefore(invited, wrapper.querySelector('.invite-type'));
 		wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
-	} else {
-		console.error("Oops");
 	}
 
 }

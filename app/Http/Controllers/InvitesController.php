@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Participation;
 
 class InvitesController extends Controller
 {
@@ -120,12 +121,16 @@ class InvitesController extends Controller
         $mapped = $users->map(function ($u) use($event_id) {
             $ret = $u->makeHidden(['email', 'followers', 'following', 'birthdate'])->toArray();
             $invite = Invite::where('invited_user_id', $u->id)->where('event_id', $event_id)->first();
+            $part = Participation::where('user_id', $u->id)->where('event_id', $event_id)->first();
             if (empty($invite)) {
                 $ret['invited'] = false;
             } else {
                 $ret['invited'] = true;
                 $ret['invite_status'] = $invite->status;
                 $ret['invite_type'] = $invite->type;
+            }
+            if (!empty($part)) {
+                $ret['part'] = $part->type;
             }
             return $ret;
         });
