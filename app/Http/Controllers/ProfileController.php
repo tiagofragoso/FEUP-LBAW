@@ -20,22 +20,27 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check() && Auth::user()->id == $id) {
-            return redirect('profile');
-        }
+        try {
+            if (Auth::check() && Auth::user()->id == $id) {
+                return redirect('profile');
+            }
 
-        $user = User::findOrFail($id);
-        if ($user->banned && !Auth::user()->is_admin) {
-            abort(403);
-        }
-        if ($user->is_admin) {
-            abort(403);
-        }
+            $user = User::findOrFail($id);
+            if ($user->banned && !Auth::user()->is_admin) {
+                abort(403);
+            }
+            if ($user->is_admin) {
+                abort(403);
+            }
 
-        $data = $this->getEventsData($user);
-        $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
+            $data = $this->getEventsData($user);
+            $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
 
-        return view('pages.user_profile', $data);
+            return view('pages.user_profile', $data);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return;
+        }
     }
 
     public function showProfile()

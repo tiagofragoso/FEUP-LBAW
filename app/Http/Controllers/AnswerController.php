@@ -51,20 +51,22 @@ class AnswerController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if (!Auth::check()) return response()->json(null, 403);
-        $question = Question::find($id);
-        if (is_null($question)) return response()->json(null, 404);
-        $event = Event::find($question->event_id);
-        $a = new Answer();
-        $this->authorize('create', [$a, $event]);
-        $request->request->add(['question_id' => $id]);
-        $this->validateAnswer($request);
-        $answer = Answer::create($request->all());
-        return response()->json($answer, 201);
-        /*
-        */
-
-        return response(200);
+        try {
+            if (!Auth::check()) return response()->json(null, 403);
+            $question = Question::find($id);
+            if (is_null($question)) return response()->json(null, 404);
+            $event = Event::find($question->event_id);
+            $a = new Answer();
+            $this->authorize('create', [$a, $event]);
+            $request->request->add(['question_id' => $id]);
+            $this->validateAnswer($request);
+            $answer = Answer::create($request->all());
+            return response()->json($answer, 201);
+            return response(200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     /**

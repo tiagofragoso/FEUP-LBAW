@@ -53,27 +53,32 @@ class CommentController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if (!Auth::check()) return response()->json(null, 403);
-        $post = Post::find($id);
-        if (is_null($post)) return response()->json(null, 404);
-        $request->request->add(['user_id' => Auth::user()->id]);
-        $request->request->add(['post_id' => $id]);
-        $event = Event::find($post->event_id);
-        $c = new Comment();
-        $this->authorize('create', [$c, $event]);
+        try {
+            if (!Auth::check()) return response()->json(null, 403);
+            $post = Post::find($id);
+            if (is_null($post)) return response()->json(null, 404);
+            $request->request->add(['user_id' => Auth::user()->id]);
+            $request->request->add(['post_id' => $id]);
+            $event = Event::find($post->event_id);
+            $c = new Comment();
+            $this->authorize('create', [$c, $event]);
 
-        $this->validateComment($request);
-        $comment = Comment::create($request->all());
-        $comment = Comment::find($comment->id);
+            $this->validateComment($request);
+            $comment = Comment::create($request->all());
+            $comment = Comment::find($comment->id);
 
-        return response()->json([
-            'id' => $comment->id,
-            'content' => $comment->content,
-            'user_id' => $comment->user_id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
-            'user' => $comment->user->displayName(),
-            'post_id' => $id,
-        ], 201); 
+            return response()->json([
+                'id' => $comment->id,
+                'content' => $comment->content,
+                'user_id' => $comment->user_id,
+                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
+                'user' => $comment->user->displayName(),
+                'post_id' => $id,
+            ], 201);
+        }  catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
 
@@ -124,18 +129,27 @@ class CommentController extends Controller
     public function likeComment($id)
     {
 
-        if (!Auth::check()) return response(403);
-
-        if (is_null(Comment::find($id))) return response(404);
-        Auth::user()->likeComment($id);
-        return response(200);
+        try {
+            if (!Auth::check()) return response(403);
+    
+            if (is_null(Comment::find($id))) return response(404);
+            Auth::user()->likeComment($id);
+            return response(200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
     public function dislikeComment($id)
     {
-
-        if (!Auth::check()) return response(403);
-        if (is_null(Comment::find($id))) return response(404);
-        Auth::user()->dislikeComment($id);
-        return response(200);
+        try {
+            if (!Auth::check()) return response(403);
+            if (is_null(Comment::find($id))) return response(404);
+            Auth::user()->dislikeComment($id);
+            return response(200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 }
