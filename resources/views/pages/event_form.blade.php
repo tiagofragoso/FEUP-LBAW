@@ -24,8 +24,47 @@
 							<i class="fas fa-camera mr-1"></i> Upload a photo
 						</label>
 					</div>
+					<button type="button" class="btn btn-light border-light position-absolute help-btn" data-toggle="modal" data-target="#help-modal">
+							<div class="help-text mr-3 ">Having trouble filling out the form? Click here.</div>
+							<i class="fas fa-question mr-1"></i>
+					</button>
 					<img id="img" class="d-block w-100" src="{{ !empty($event)? $event->image() : asset('assets/event-placeholder.png') }}" alt="Event photo">
 				</div>
+				<div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-title" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="help-modal-title">Filling out the event form</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="container">
+										<div class="row">
+											<ol>
+												<li>Give your event an <strong>appealing title</strong>.</li>
+												<li>Upload an <strong>attractive image</strong>.<small>(Optional)</small></li>
+												<li>Fill out the <strong>location</strong> and <strong>address</strong> fields.<small>(Optional)</small></li>
+												<li>Add a <strong>brief description</strong>.</li>
+												<li>Choose the event <strong>category, performance type and visibility</strong>.</li>
+												<li>Fill out the <strong>date range</strong>.<small>(Optional for planning status)</small></li>
+												<li>Choose the event <strong>status</strong>. The <strong>planning</strong> phase is used to gather information
+													from the users before deciding on final event information. The <strong>tickets</strong> phase is applicable
+													when core event info is set.</li>
+												<li>Choose the <strong>ticket price</strong>.<small>(Optional for planning status)</small></li>
+												<li>Write a <strong>comprehensive description</strong> describing the event.</li>
+												<li><strong>Submit!</strong></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				<div class="container-fluid mt-3">
 					@if ($errors->has('photo'))
 						<span class="invalid-feedback" style="display:block;">
@@ -144,8 +183,8 @@
 										<i class="mr-1 far fa-calendar-alt"></i>
 									</label>
 								</div>
-								<input type="text" style="display:none;" name="start_date">
-								<input type="text" style="display:none;" name="end_date">
+								<input type="text" style="display:none;" name="start_date" value="{{ old('start_date', !empty($event->start_date)? $event->start_date: '' ) }}">
+								<input type="text" style="display:none;" name="end_date" value="{{ old('end_date', !empty($event->end_date)? $event->end_date: '' ) }}">
 								<div class="dropup flex-grow-1">
 									<button id="date-toggle" type="button" class="w-100 h-100 dropdownField text-left custom-select border-blue " data-field="dropdownDate"
 										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-flip="false" title="">

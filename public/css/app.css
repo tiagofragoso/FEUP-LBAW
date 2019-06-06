@@ -746,6 +746,38 @@ input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	border: none;
 }
 
+.event-form-page .help-btn {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+	opacity: 0.8;
+}
+
+.event-form-page .help-text {
+	display: none;
+	max-width: 0px;
+}
+
+.event-form-page .help-btn:hover .help-text {
+	display: inline-block;
+	max-width: none;
+}
+
+.event-form-page ol {
+	list-style: none;
+	counter-reset: help-counter;
+	padding-inline-start: 0px;
+  }
+  .event-form-page ol li {
+	counter-increment: help-counter;
+  }
+  .event-form-page ol li::before {
+	content: counter(help-counter) ". ";
+	font-weight: bold;
+	font-size: 1.2em;
+  }
+  
+
 
 /* home */
 
