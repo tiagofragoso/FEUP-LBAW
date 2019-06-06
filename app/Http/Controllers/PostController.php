@@ -53,27 +53,32 @@ class PostController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if(!Auth::check()) return response()->json(null, 403);
-        $event = Event::find($id);
-        if (is_null($event)) return response()->json(null, 404);
-        $p = new Post();
-        $this->authorize('create', [$p, $event]);
-        $request->request->add(['author_id' => Auth::user()->id]);
-        $request->request->add(['event_id' => $id]);
-        $this->validatePost($request);
-        if ($request->type == 'Post') {
-            $post = Post::create($request->all());
-            $post = Post::find($post->id);
-            return response()->json([
-                'id' => $post->id,
-                'content' => $post->content,
-                'author_id' => $post->author_id,
-                'type' => $post->type,
-                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
-                'author' => $post->author->displayName()
-            ], 201);
-        } else {
-            return response()->json(null, 404);
+        try {
+            if(!Auth::check()) return response()->json(null, 403);
+            $event = Event::find($id);
+            if (is_null($event)) return response()->json(null, 404);
+            $p = new Post();
+            $this->authorize('create', [$p, $event]);
+            $request->request->add(['author_id' => Auth::user()->id]);
+            $request->request->add(['event_id' => $id]);
+            $this->validatePost($request);
+            if ($request->type == 'Post') {
+                $post = Post::create($request->all());
+                $post = Post::find($post->id);
+                return response()->json([
+                    'id' => $post->id,
+                    'content' => $post->content,
+                    'author_id' => $post->author_id,
+                    'type' => $post->type,
+                    'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
+                    'author' => $post->author->displayName()
+                ], 201);
+            } else {
+                return response()->json(null, 404);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
         }
     }
 
@@ -124,21 +129,28 @@ class PostController extends Controller
 
     public function likePost($id){
        
-        if (!Auth::check()) return response()->json(null, 403);
+        try {
+            if (!Auth::check()) return response()->json(null, 403);
         
-        if (is_null(Post::find($id))) return response()->json(null, 404);
-        Auth::user()->likePost($id);
-        return response()->json(null, 200);
+            if (is_null(Post::find($id))) return response()->json(null, 404);
+            Auth::user()->likePost($id);
+            return response()->json(null, 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
         
     }
     public function dislikePost($id){
         
-        if (!Auth::check()) return response()->json(null, 403);
-        if (is_null(Post::find($id))) return response()->json(null, 404);
-        Auth::user()->dislikePost($id);
-        return response()->json(null, 200);
-
+        try {
+            if (!Auth::check()) return response()->json(null, 403);
+            if (is_null(Post::find($id))) return response()->json(null, 404);
+            Auth::user()->dislikePost($id);
+            return response()->json(null, 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
-
-
 }

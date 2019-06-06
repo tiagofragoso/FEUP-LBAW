@@ -30,147 +30,172 @@ class InvitesController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json(null, 403);
-        }
-        
-        $user = Auth::user();
-
-        if ($user->is_admin) {
-            return response()->json(null, 403);
-        }
-
-        $this->validator($request);
-
-        if ($user->id == $request->invited_id) {
-            return response()->json(null, 400);
-        }
-
         try {
-            $event = Event::findOrFail($request->event_id);
-        } catch(\Exception $e) {
-            return response()->json('Event not found', 404);
-        }
-
-        $canInvite = $event->hosts()->get()->where('id', $user->id)->count() === 1;
-        
-        if (!$canInvite) {
-            return response()->json(null, 403);
-        }
-
-        
-        try {
-            $part = Participation::where('event_id', $event->id)->where('user_id', $request->invited_id)->first();
-            if (!empty($part)) {
-                if ($part->type !== 'Participant') {
-                    return response()->json('Can\'t perform this invite', 400);
-                } 
-                if ($request->type === 'Participant')
-                    return response()->json('User already joined', 400);
+            if (!Auth::check()) {
+                return response()->json(null, 403);
             }
-            Invite::create(['user_id' => $user->id, 
-                'invited_user_id' => $request->invited_id,
-                'event_id' => $request->event_id,
-                'type' => $request->type]);
-            return response()->json(null, 201);
-        } catch (\Exception $e) {
-            return response()->json($e->getMessage(), 400);
+            
+            $user = Auth::user();
+
+            if ($user->is_admin) {
+                return response()->json(null, 403);
+            }
+
+            $this->validator($request);
+
+            if ($user->id == $request->invited_id) {
+                return response()->json(null, 400);
+            }
+
+            try {
+                $event = Event::findOrFail($request->event_id);
+            } catch(\Exception $e) {
+                return response()->json('Event not found', 404);
+            }
+
+            $canInvite = $event->hosts()->get()->where('id', $user->id)->count() === 1;
+            
+            if (!$canInvite) {
+                return response()->json(null, 403);
+            }
+
+            
+            try {
+                $part = Participation::where('event_id', $event->id)->where('user_id', $request->invited_id)->first();
+                if (!empty($part)) {
+                    if ($part->type !== 'Participant') {
+                        return response()->json('Can\'t perform this invite', 400);
+                    } 
+                    if ($request->type === 'Participant')
+                        return response()->json('User already joined', 400);
+                }
+                Invite::create(['user_id' => $user->id, 
+                    'invited_user_id' => $request->invited_id,
+                    'event_id' => $request->event_id,
+                    'type' => $request->type]);
+                return response()->json(null, 201);
+            } catch (\Exception $e) {
+                return response()->json($e->getMessage(), 400);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
         }
     }
 
     public function getFollowing(Request $request) {
-        if (!Auth::check()) return response()->json(null, 403);
-
-        $user = Auth::user();
-
-        if ($user->is_admin) {
-            return response()->json(null, 403);
-        }
-
-        Validator::make($request->all(), ['event_id' => 'numeric|required'])->validate();
-
         try {
-            Event::findOrFail($request->event_id);
-        } catch(\Exception $e) {
-            return response()->json('Event not found', 404);
-        }
+            if (!Auth::check()) return response()->json(null, 403);
 
-        $following = $this->mapUsers($user->following()->get(), $request->event_id)->toArray();
-        
-        return response()->json($following, 200);
+            $user = Auth::user();
+
+            if ($user->is_admin) {
+                return response()->json(null, 403);
+            }
+
+            Validator::make($request->all(), ['event_id' => 'numeric|required'])->validate();
+
+            try {
+                Event::findOrFail($request->event_id);
+            } catch(\Exception $e) {
+                return response()->json('Event not found', 404);
+            }
+
+            $following = $this->mapUsers($user->following()->get(), $request->event_id)->toArray();
+            
+            return response()->json($following, 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     public function search(Request $request) {
-        if (!Auth::check()) return response()->json(null, 403);
-
-        Validator::make($request->all(), ['event_id' => 'numeric|required', 'query_term' => 'string|required'])->validate();
-
         try {
-            Event::findOrFail($request->event_id);
-        } catch(\Exception $e) {
-            return response()->json('Event not found', 404);
-        }
+            if (!Auth::check()) return response()->json(null, 403);
 
-        $formattedQuery = "%".$request->query_term."%";
+            Validator::make($request->all(), ['event_id' => 'numeric|required', 'query_term' => 'string|required'])->validate();
 
-        try {
-            $users = User::where('name', 'ilike', $formattedQuery)->orWhere('username', 'ilike', $formattedQuery)->where('id', '<>', Auth::user()->id)->limit(10)->get();
-        } catch(\Exception $e) {
-            return response()->json($e->getMessage(), 500);
-        }
-        if ($users->count() > 0) {
-            $formatted = $this->mapUsers($users, $request->event_id)->toArray();
-            return response()->json($formatted, 200);
-        } else {
-            return response()->json([], 200);
+            try {
+                Event::findOrFail($request->event_id);
+            } catch(\Exception $e) {
+                return response()->json('Event not found', 404);
+            }
+
+            $formattedQuery = "%".$request->query_term."%";
+
+            try {
+                $users = User::where('name', 'ilike', $formattedQuery)->orWhere('username', 'ilike', $formattedQuery)->where('id', '<>', Auth::user()->id)->limit(10)->get();
+            } catch(\Exception $e) {
+                return response()->json($e->getMessage(), 500);
+            }
+            if ($users->count() > 0) {
+                $formatted = $this->mapUsers($users, $request->event_id)->toArray();
+                return response()->json($formatted, 200);
+            } else {
+                return response()->json([], 200);
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()>json(null, 400);
         }
     }
 
     private function mapUsers($users, $event_id) {
-        $mapped = $users->map(function ($u) use($event_id) {
-            $ret = $u->makeHidden(['email', 'followers', 'following', 'birthdate'])->toArray();
-            $invite = Invite::where('invited_user_id', $u->id)->where('event_id', $event_id)->first();
-            $part = Participation::where('user_id', $u->id)->where('event_id', $event_id)->first();
-            if (empty($invite)) {
-                $ret['invited'] = false;
-            } else {
-                $ret['invited'] = true;
-                $ret['invite_status'] = $invite->status;
-                $ret['invite_type'] = $invite->type;
-            }
-            if (!empty($part)) {
-                $ret['part'] = $part->type;
-            }
-            return $ret;
-        });
-        return $mapped;
+        try {
+            $mapped = $users->map(function ($u) use($event_id) {
+                $ret = $u->makeHidden(['email', 'followers', 'following', 'birthdate'])->toArray();
+                $invite = Invite::where('invited_user_id', $u->id)->where('event_id', $event_id)->first();
+                $part = Participation::where('user_id', $u->id)->where('event_id', $event_id)->first();
+                if (empty($invite)) {
+                    $ret['invited'] = false;
+                } else {
+                    $ret['invited'] = true;
+                    $ret['invite_status'] = $invite->status;
+                    $ret['invite_type'] = $invite->type;
+                }
+                if (!empty($part)) {
+                    $ret['part'] = $part->type;
+                }
+                return $ret;
+            });
+            return $mapped;
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
+        }
     }
 
     public function respond($id, Request $request) {
-        if (!Auth::check()) return response()->json(null, 403);
-
-        $user = Auth::user();
-
-        if ($user->is_admin) {
-            return response()->json(null, 403);
-        }
-
-        Validator::make($request->all(), ['answer' => 'string|required|in:Accepted,Declined'])->validate();
-
         try {
-            $invite = Invite::findOrFail($id);
-        } catch(\Exception $e) {
-            return response()->json('Invite not found', 404);
-        }
+            if (!Auth::check()) return response()->json(null, 403);
 
-        try {
-            $invite->status = $request->answer;
-            $invite->save();
-        } catch(\Exception $e) {
-            return response()->json('Could not update invite', 400);
+            $user = Auth::user();
+
+            if ($user->is_admin) {
+                return response()->json(null, 403);
+            }
+
+            Validator::make($request->all(), ['answer' => 'string|required|in:Accepted,Declined'])->validate();
+
+            try {
+                $invite = Invite::findOrFail($id);
+            } catch(\Exception $e) {
+                return response()->json('Invite not found', 404);
+            }
+
+            try {
+                $invite->status = $request->answer;
+                $invite->save();
+            } catch(\Exception $e) {
+                return response()->json('Could not update invite', 400);
+            }
+            
+            return response()->json(null, 200);
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return response()->json(null, 400);
         }
-        
-        return response()->json(null, 200);
 
     }
 }
