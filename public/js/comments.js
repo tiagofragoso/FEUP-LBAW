@@ -18,7 +18,7 @@ commentSection.forEach(section => {
 });
 
 
-async function postComment(event) {
+export async function postComment(event) {
 
     event.preventDefault();
 
@@ -44,7 +44,7 @@ async function postComment(event) {
 
     if (response.status === 201) {
         this.content.value = "";
-       this.divider.insertBefore(createComment(response.data))
+       this.divider.insertBefore(createComment(response.data), this.divider.querySelector('.dropdown-divider'));
     }
 }
 
@@ -58,7 +58,7 @@ function createComment(response) {
         <a href="/users/${response.user_id}">
             <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
         </a>
-        <div class="w-100 d-flex flex-column">
+        <div class="w-100 d-flex flex-column mb-2">
             <div class="comment-wrapper d-flex flex-column w-100" data-id="${response.id}">
                 <div class="comment-text px-3 py-2">
                     <span>
@@ -76,7 +76,7 @@ function createComment(response) {
                         Like
                     </button>
                     •
-                    <button class="bg-transparent border-0 reply-comment-btn" type="button" data-toggle="collapse" data-target="#childcomments{{$comment->id}}"
+                    <button class="bg-transparent border-0 reply-comment-btn" type="button" data-toggle="collapse" data-target="#childcomments${response.id}"
                             aria-expanded="false" aria-controls="collapseExample">
                         Reply
                     </button>

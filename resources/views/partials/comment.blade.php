@@ -3,7 +3,7 @@
         <a href="{{ url('/users/'.$comment->user->id)}}">
             <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
         </a>
-        <div class="w-100 d-flex flex-column">
+        <div class="w-100 d-flex flex-column mb-2">
             <div class="comment-wrapper d-flex flex-column w-100" data-id="{{$comment->id}}">
                 <div class="comment-text px-3 py-2">
                     <span>
