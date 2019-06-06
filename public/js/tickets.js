@@ -36,13 +36,17 @@ acquireTicketBtn.addEventListener('click', async () => {
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').innerText = 'Close';
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').classList.replace('btn-danger','btn-primary');
 
+        $('#acquireTicketModal').on('hidden.bs.modal', function (e) {
+            acquireTicketBtn.classList.remove('d-none');
+            acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').classList.replace('btn-primary','btn-danger');
+            acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').innerText = 'Cancel';
+            acquireTicketBtn.closest('.modal-content').querySelector('.modal-body').innerText = 'Price: ' + response.data.price;
+          })
+
     } else if (response.status === 422) {
         acquireTicketBtn.closest('.modal-content').querySelector('.modal-body').innerText = 'You have already acquired a ticket to this event!';
         acquireTicketBtn.classList.add('d-none');
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').innerText = 'Close';
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').classList.replace('btn-danger','btn-primary');
     }
-
-
-
 });

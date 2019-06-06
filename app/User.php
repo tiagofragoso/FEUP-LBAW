@@ -125,7 +125,7 @@ class User extends Authenticatable
     }
 
     public function acquireTicket($event, $price){
-        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->id);
+        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }
 
