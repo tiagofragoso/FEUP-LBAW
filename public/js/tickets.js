@@ -29,6 +29,15 @@ acquireTicketBtn.addEventListener('click', async () => {
         acquireTicketBtn.classList.add('d-none');
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').innerText = 'Close';
         acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').classList.replace('btn-danger','btn-primary');
+    } else if (response.status === 403){
+        
+        acquireTicketBtn.closest('.modal-content').querySelector('.modal-body').innerText = 'You have to join the event before you buy a ticket!';
+        acquireTicketBtn.classList.add('d-none');
+        acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').innerText = 'Close';
+        acquireTicketBtn.closest('.modal-footer').querySelector('.cancel-btn').classList.replace('btn-danger','btn-primary');
+
     }
+
+
 
 });
