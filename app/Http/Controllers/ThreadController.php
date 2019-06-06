@@ -51,6 +51,7 @@ class ThreadController extends Controller
      */
     public function store(Request $request, $id)
     {
+        try{
         if (!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
@@ -68,6 +69,10 @@ class ThreadController extends Controller
             'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $thread->date)->format('M d | H:i'),
             'author' => $thread->author->displayName()
         ], 201);
+    } catch(\Illuminate\Database\QueryException $e) {
+        report($e);
+        return response()->json(null, 400);
+    }
     }
 
     /**
