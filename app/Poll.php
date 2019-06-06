@@ -20,6 +20,11 @@ class Poll extends Model
         ->wherePivot('user_id',$user_id)->exists();
     }
 
+    public function hasVoteInOption($user_id, $option_id) {
+        return $this->belongsToMany('App\User','poll_votes','poll_id','user_id')
+        ->wherePivot('user_id',$user_id)->wherePivot('poll_option', $option_id)->exists();
+    }
+
     public function changeVote($user_id, $poll_option){
         
         $this->belongsToMany('App\User','poll_votes','poll_id','user_id')

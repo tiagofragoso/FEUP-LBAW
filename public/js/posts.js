@@ -8,6 +8,8 @@ let selectedOption = null;
 
 if (document.querySelector("input[type=radio][name=poll]:checked") !== null)
     selectedOption =  document.querySelector("input[type=radio][name=poll]:checked").closest('.row');
+
+    
 pollOptions.forEach(option => {
     let option_id = option.closest('.row').dataset.id;
     let post_id = option.closest('.container').dataset.id;
