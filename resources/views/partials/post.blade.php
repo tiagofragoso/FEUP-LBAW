@@ -59,7 +59,7 @@
                     </button>
                 </div>
             </div>
-            <div class="row comment-section collapse mb-3 border-top border-light pt-3" id="comments{{$post->id}}" data-id="{{$post->id}}">
+            <div class="row comment-section comment-section-posts collapse mb-3 border-top border-light pt-3" id="comments{{$post->id}}" data-id="{{$post->id}}">
                 <div class="col-12" id="comments-list{{$post->id}}">
                     @each('partials.comment', $post->commentsContent, 'comment')
                 </div>

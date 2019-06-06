@@ -1,9 +1,11 @@
 import {request} from "./requests.js";
 
 let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
-let commentSection = document.querySelectorAll('.comment-section');
+let commentSection = document.querySelectorAll('.comment-section-posts');
 
 commentSection.forEach(section => {
+
+    console.log(section);
 
     let button = section.querySelector('.submit-comment');
     let context = {};
@@ -110,7 +112,7 @@ function createComment(response) {
     return comment;
 }
 
-export async function commentLikes(event) {
+async function commentLikes(event) {
 
     let comment_id = this.closest('.comment-wrapper').dataset.id;
         let url = '/api/comments/' + comment_id + '/like';
