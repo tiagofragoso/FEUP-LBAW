@@ -46,7 +46,7 @@ class ProfileController extends Controller
             $data = $this->getReportsData();
             return view('pages.admin_profile', $data);
         } else {
-            $data = $this->getEventsData();
+            $data = $this->getEventsData(Auth::user());
             return view('pages.profile',  $data);
         }   
     }
