@@ -54,7 +54,8 @@ class ThreadController extends Controller
         if (!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
-        $this->authorize('create', [$event, Thread::class]);
+        $t = new Thread();
+        $this->authorize('create', [$t, $event]);
         $request->request->add(['event_id' => $id]);
         $request->request->add(['author_id' => Auth::user()->id]);
         $this->validateThread($request);

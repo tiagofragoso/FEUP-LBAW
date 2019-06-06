@@ -56,7 +56,8 @@ class ThreadCommentController extends Controller
         $thread = Thread::find($id);
         if (is_null($thread)) return response()->json(null, 404);
         $event = Event::find($thread->event_id);
-        $this->authorize('create', [$event, ThreadComment::class]);
+        $c = new ThreadComment();
+        $this->authorize('create', [$c, $event]);
         $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['thread_id' => $id]);
         $this->validateThreadComment($request);

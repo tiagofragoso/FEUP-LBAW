@@ -31,7 +31,7 @@ class ThreadPolicy
      */
     public function create(User $user, Thread $thread, Event $event)
     {
-        return $event->participateAs(['Host', 'Owner', 'Artist'])->get()->contains($user);
+        return $event->participatesAs(['Host', 'Owner', 'Artist'])->get()->contains($user);
     }
 
     /**

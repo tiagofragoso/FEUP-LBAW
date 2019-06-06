@@ -186,6 +186,8 @@ async function commentHandler(event) {
         }
     );
 
+    console.log(response);
+
     if (response.status === 201) {
         this.content.value = "";
         let comment = createThreadComment(response.data);
