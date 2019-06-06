@@ -51,17 +51,19 @@ class ProfileController extends Controller
         }   
     }
 
-    private function getEventsData()
+    private function getEventsData($user)
     {
-        $data['joined'] = Auth::user()->events('Participant')->orderByDesc('start_date')->get();
-        $data['performing'] = Auth::user()->events('Artist')->orderByDesc('start_date')->get();
-        $data['hosting'] = Auth::user()->events(['Host', 'Owner'])->orderByDesc('start_date')->get();
+        $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
+        $data['performing'] = $user->events('Artist')->orderByDesc('start_date')->get();
+        $data['hosting'] = $user->events(['Host', 'Owner'])->orderByDesc('start_date')->get();
 
         if (Auth::check()) {
             $data['joined'] = Auth::user()->eventsParticipation($data['joined']);
             $data['hosting'] = Auth::user()->eventsParticipation($data['hosting']);
             $data['performing'] = Auth::user()->eventsParticipation($data['performing']);
         }
+
+        $data['user'] = $user;
 
         return $data;
     }

@@ -8,6 +8,57 @@ document.querySelectorAll('#pending .card.report-card').forEach(e => {
     e.querySelector('#pending button.diss-btn').addEventListener('click', () => updateReport(e, id, type, 'Declined'));
 });
 
+const ban_event = document.querySelector('.event-page #ban-event-btn');
+
+if (ban_event) {
+    const id = document.querySelector('#content').dataset.id;
+    ban_event.addEventListener('click', () => banEvent(id));
+}
+
+const ban_user = document.querySelector('.profile-page #ban-user-btn');
+
+if (ban_user) {
+    const id = document.querySelector('#content').dataset.id;
+    ban_user.addEventListener('click', () => banUser(id));
+}
+
+async function banEvent(id) {
+        const url = `/api/events/${id}/ban`;
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if (response.status === 200){
+            document.querySelector('.banned-alert').classList.remove('d-none');
+        }
+}
+
+async function banUser(id) {
+    const url = `/api/users/${id}/ban`;
+    const response = await request(
+        url,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            }
+        }
+    );
+    if (response.status === 200){
+        document.querySelector('.banned-alert').classList.remove('d-none');
+
+    }
+}
+
 async function updateReport(element, id, type, status) {
     const url = `/api/${type}s/reports/${id}`;
     const response = await request(
