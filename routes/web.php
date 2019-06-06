@@ -48,6 +48,7 @@ Route::delete('api/posts/{id}/like','PostController@dislikePost');
 Route::put('api/comments/{id}/like','CommentController@likeComment');
 Route::delete('api/comments/{id}/like','CommentController@dislikeComment');
 
+Route::post('api/events/{event_id}/tickets','EventController@acquireTicket');
 
 // Auth
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

@@ -231,5 +231,19 @@ class EventController extends Controller
         return response()->json(null, 200);
     }
 
+    public function acquireTicket(Request $request, $id){
+
+        if(!Auth::check()) return response()->json(null,403);
+        $event = Event::find($id);
+       
+        $this->authorize('acquireTicket',$event);
+
+        $price = $request->price;
+
+
+        return response()->json(null,200);
+
+    }
+
     
 }

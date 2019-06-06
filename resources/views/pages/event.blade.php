@@ -18,7 +18,7 @@
 <div id="content" class="container my-0 my-sm-5" data-id="{{$event->id}}">
 	@include('partials.banned_card',['object' => $event])
 	@include('partials.report_modal')
-	@include('partials.acquire_ticket_modal')
+	@include('partials.acquire_ticket_modal',['event'=> $event])
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
 			<div class="card mb-5">
@@ -167,7 +167,7 @@
 					<div class="col-12 col-lg-3">
 						@if ($event->status == 'Tickets')
 						
-						<button type="submit" class="acquire-ticket-btn btn btn-secondary w-100" data-toggle="modal" data-target="#acquireTicketModal">
+						<button type="submit" class="btn btn-secondary w-100" data-toggle="modal" data-target="#acquireTicketModal">
 							@elseif ($event->status == 'Planning')
 							<button type="submit" class="btn btn-info w-100">
 								@endif

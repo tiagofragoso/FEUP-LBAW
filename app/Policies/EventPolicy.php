@@ -58,4 +58,11 @@ class EventPolicy
     {
         //
     }
+
+    public function acquireTicket(User $user,Event $event){
+        
+        $canAcquire = $event->participatesAs(['Participant'])->get();
+        return $canAcquire->contains($user);
+
+    }
 }
