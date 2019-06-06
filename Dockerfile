@@ -20,6 +20,6 @@ WORKDIR "/var/www"
 #RUN php artisan cache:clea
 RUN php artisan config:cache
 RUN php artisan config:clear
-
+RUN php artisan storage:link
 # Start command
 CMD sh /docker_run.sh

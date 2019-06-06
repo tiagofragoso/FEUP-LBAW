@@ -564,13 +564,13 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	max-height: 360px;
 }
 
-.event-page .event-btns > button {
+.event-page .event-btns > button, .event-form-page .event-btns > button {
 	opacity: 0.8;
 	vertical-align: middle;
 	text-decoration: none;
 }
 
-.event-page .event-btns {
+.event-page .event-btns, .event-form-page .event-btns {
 	z-index: 1;
 	right: 1rem;
 	bottom: 1rem;
@@ -657,6 +657,10 @@ input#priceSelect {
 input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	background: none;
 	padding-right: .75rem;
+}
+
+.event-form-page label[for="photo"] {
+	cursor: pointer;
 }
 
 /* home */

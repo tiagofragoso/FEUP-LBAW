@@ -3,21 +3,27 @@
 @section('title', $title)
 @section('container', 'event-form-page')
 
+@section('scripts')
+<script defer type="module" src="/js/event_form.js"> </script>
+@endsection
+
 @section('content')
 <div id="content" class="container my-0 my-sm-5">
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
-		<form method="POST" action="{{ empty($event)? '/events' : '/events/'.$event->id }}" class="card mb-5">
+		<form method="POST" action="{{ empty($event)? '/events' : '/events/'.$event->id }}" class="card mb-5" enctype="multipart/form-data">
 			@if (!empty($event))
 				{{ method_field('PUT') }}
 			@endif
 			{{ csrf_field() }}
 				<div class="img-container w-100 d-flex align-items-center position-relative overflow-hidden">
-					<label for="photo" class="btn btn-light border-light position-absolute tag-button">
-						<i class="fas fa-camera mr-1"></i> Upload a photo
-					</label>
 					<input type="file" id="photo" name="photo" style="display:none;" accept="image/png, image/jpeg" >
-					<img class="d-block w-100" src="{{ asset('assets/event-placeholder.png')}}" alt="First slide">
+					<div class="event-btns d-flex flex-row position-absolute">
+						<label for="photo" class="btn btn-light border-light">
+							<i class="fas fa-camera mr-1"></i> Upload a photo
+						</label>
+					</div>
+					<img id="img" class="d-block w-100" src="{{ !empty($event)? $event->image() : asset('assets/event-placeholder.png') }}" alt="Event photo">
 				</div>
 				<div class="container-fluid mt-3">
 					<div class="row justify-content-between align-items-start">
