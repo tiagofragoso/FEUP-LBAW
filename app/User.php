@@ -129,4 +129,8 @@ class User extends Authenticatable
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }
 
+    public function tickets() {
+        return $this->hasMany('App\Ticket', 'owner');
+    }
+
 }

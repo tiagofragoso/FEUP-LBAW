@@ -266,6 +266,7 @@ class EventController extends Controller
         
         $event = Event::find($id);
         if($event == null) return response()->json(null, 404);
+        if (Auth::user()->tickets()->where('event_id', $id)->exists()) return response()->json(null, 422);
        
         $this->authorize('acquireTicket',$event);
 
