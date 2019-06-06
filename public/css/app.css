@@ -1077,3 +1077,19 @@ opacity: 0.8;
 	height:530px;
 
 }
+
+@media print {
+
+	body {
+   font: 12pt;
+   line-height: 1.3;
+   }
+nav.navbar{
+   display:none;
+}
+
+header, footer{
+	   display: none;
+}
+   
+}
