@@ -95,6 +95,9 @@ function createPost(response) {
 
     button.addEventListener('click', postComment.bind(context));
 
+    let like = post.querySelector('.like-post-btn');
+    like.addEventListener('click', likePost.bind(like));
+
     return post;
 }
 
@@ -141,46 +144,48 @@ async function postPost(event) {
     }
 }
 
+async function likePost(event) {
+    let i = this.querySelector('i');
+    let postId = this.dataset.id;
+    let numberLikes = this.querySelector('span').textContent;
+    let url = '/api/posts/' + postId + '/like';
+    if (i.classList.contains('far')) {
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if (response.status === 200) {
+            i.classList.replace('far', 'fas');
+            this.querySelector('span').textContent++;
+        }
+    } else {
+        const response = await request(
+            url,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if (response.status === 200) {
+            i.classList.replace('fas', 'far');
+            this.querySelector('span').textContent--;
+        }
+    }
+}
+
 
 postLikeBtns.forEach(button => {
 
-    button.addEventListener('click', async () => {
-        let i = button.querySelector('i');
-        let postId = button.dataset.id;
-        let numberLikes = button.querySelector('span').textContent;
-        let url = '/api/posts/' + postId + '/like';
-        if (i.classList.contains('far')) {
-            const response = await request(
-                url,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                }
-            );
-            if (response.status === 200) {
-                i.classList.replace('far', 'fas');
-                button.querySelector('span').textContent++;
-            }
-        } else {
-            const response = await request(
-                url,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                }
-            );
-            if (response.status === 200) {
-                i.classList.replace('fas', 'far');
-                button.querySelector('span').textContent--;
-            }
-        }
-    })
+    button.addEventListener('click', likePost.bind(button));
 });
