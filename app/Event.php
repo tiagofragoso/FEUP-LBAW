@@ -14,7 +14,7 @@ class Event extends Model
      * @var array
      */
     protected $guarded = [
-        'participants', 'banned', 'search'
+        'participants', 'search'
     ];
 
     public function posts(){

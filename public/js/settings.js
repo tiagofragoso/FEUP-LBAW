@@ -24,22 +24,22 @@ document.getElementById('profile-submit').addEventListener('click', async () => 
         }
     );
 
-    if (response.errors) {
-        if (response.errors.name) {
+    if (response.data.errors) {
+        if (response.data.errors.name) {
             document.getElementById('nameInput').classList.add('is-invalid');
-            createErrors(response.errors.name, 'name-errors');
+            createErrors(response.data.errors.name, 'name-errors');
         }
-        if (response.errors.email) {
+        if (response.data.errors.email) {
             document.getElementById('emailInput').classList.add('is-invalid');
-            createErrors(response.errors.email, 'email-errors');
+            createErrors(response.data.errors.email, 'email-errors');
         }
-        if (response.errors.username) {
+        if (response.data.errors.username) {
             document.getElementById('usernameInput').classList.add('is-invalid');
-            createErrors(response.errors.username, 'username-errors');
+            createErrors(response.data.errors.username, 'username-errors');
         }
-        if (response.errors.birthdate) {
+        if (response.data.errors.birthdate) {
             document.getElementById('dateofbirthInput').classList.add('is-invalid');
-            createErrors(response.errors.birthdate, 'birthdate-errors');
+            createErrors(response.data.errors.birthdate, 'birthdate-errors');
         }
         return;
     }
@@ -72,14 +72,14 @@ document.getElementById('password-submit').addEventListener('click', async () =>
         }
     );
 
-    if (response.errors) {
-        if (response.errors.password) {
+    if (response.data.errors) {
+        if (response.data.errors.password) {
             document.getElementById('passwordInput').classList.add('is-invalid');
-            createErrors(response.errors.password, 'password-errors');
+            createErrors(response.data.errors.password, 'password-errors');
         }
-        if (response.errors.new_password) {
+        if (response.data.errors.new_password) {
             document.getElementById('newpasswordInput').classList.add('is-invalid');
-            createErrors(response.errors.new_password, 'new-password-errors');
+            createErrors(response.data.errors.new_password, 'new-password-errors');
         }
         return;
     }

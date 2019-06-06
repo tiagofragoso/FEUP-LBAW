@@ -53,10 +53,11 @@ class PostController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if(!Auth::check()) return response(403);
+        if(!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
-        if (is_null($event)) return response(404);
-        $this->authorize('create', [$event, Post::class]);
+        if (is_null($event)) return response()->json(null, 404);
+        $p = new Post();
+        $this->authorize('create', [$p, $event]);
         $request->request->add(['author_id' => Auth::user()->id]);
         $request->request->add(['event_id' => $id]);
         $this->validatePost($request);
@@ -70,9 +71,9 @@ class PostController extends Controller
                 'type' => $post->type,
                 'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
                 'author' => $post->author->displayName()
-            ]);
+            ], 201);
         } else {
-            return response(404);
+            return response()->json(null, 404);
         }
     }
 
@@ -123,19 +124,19 @@ class PostController extends Controller
 
     public function likePost($id){
        
-        if (!Auth::check()) return response(403);
+        if (!Auth::check()) return response()->json(null, 403);
         
-        if (is_null(Post::find($id))) return response(404);
+        if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->likePost($id);
-        return response(200);
+        return response()->json(null, 200);
         
     }
     public function dislikePost($id){
         
-        if (!Auth::check()) return response(403);
-        if (is_null(Post::find($id))) return response(404);
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->dislikePost($id);
-        return response(200);
+        return response()->json(null, 200);
 
     }
 

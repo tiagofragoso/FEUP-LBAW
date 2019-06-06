@@ -1,6 +1,7 @@
+import {request} from "./requests.js";
 
+let commentLikeBtns = document.querySelectorAll('.like-comment-btn');
 let commentContent = document.querySelectorAll('.commentFormTextArea');
-let commentLikeBtns = document.querySelectorAll('#like-comment-btn');
 
 commentContent.forEach(content => {
 
@@ -83,11 +84,10 @@ function insertComment(comment,post_id) {
 commentLikeBtns.forEach(button => {
 
     button.addEventListener('click', async () => {
-        let textBtn = button.closest('.comment-footer').getElementsByTagName('button')[0].innerText;
         let comment_id = button.closest('.comment-wrapper').dataset.id;
-        let numberLikes = button.closest('.comment-footer').getElementsByTagName('span')[0].textContent;
         let url = '/api/comments/' + comment_id + '/like';
-        if (textBtn.trim().localeCompare("Like") == 0) {
+        console.log(button.textContent);
+        if (button.textContent.trim() === 'Like') {
             const response = await request(
                 url,
                 {
@@ -99,9 +99,9 @@ commentLikeBtns.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
-                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText = 'Liked';
-                button.closest('.comment-footer').getElementsByTagName('span')[0].textContent++;
+            if (response.status === 200) {
+                button.textContent = 'Liked';
+                button.closest('.comment-footer').querySelector('span').textContent++;
             }
         } else {
             const response = await request(
@@ -115,11 +115,10 @@ commentLikeBtns.forEach(button => {
                     }
                 }
             );
-            if (response === 200) {
-
-                button.closest('.comment-footer').getElementsByTagName('button')[0].innerText = 'Like';
-                button.closest('.comment-footer').getElementsByTagName('span')[0].textContent--;
-
+            if (response.status === 200) {
+                button.textContent = 'Like';
+                button.closest('.comment-footer').querySelector('span').textContent--;
+                
             }
         }
 

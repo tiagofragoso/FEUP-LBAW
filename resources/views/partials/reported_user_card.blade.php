@@ -1,9 +1,13 @@
-<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id ="{{json_encode($user['reports'])}}">
+<div class="card col-12 col-lg-9 report-card px-0 mt-5" data-id="{{$user['reportedUser']->id}}" data-type="user">
     <div class="card-header">
         <div class="row align-items-center">
             <div class="col-12">
-                <p class="mb-0"><strong>{{$user['user']->name}}</strong> and <strong>{{count($user['reports'])-1}}
-                        others</strong> reported a user.</p>
+                <p class="mb-0"><strong>{{count($user['reports'])}} 
+                    @if (count($user['reports']) > 1)users 
+                    @else user
+                    @endif
+                    </strong> reported an user.
+                </p>  
             </div>
         </div>
     </div>
