@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Post;
+use App\Event;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
@@ -43,7 +44,10 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+        $event = Event::where('id',$post->event_id)->get()->first();
+        $canCreate = $event->participateAs(['Owner', 'Host', 'Artist','Participant'])->get();
+        return $canCreate->contains($user);
+        
     }
 
     /**
@@ -57,4 +61,5 @@ class PostPolicy
     {
         //
     }
+
 }
