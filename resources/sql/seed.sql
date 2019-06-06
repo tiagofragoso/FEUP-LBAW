@@ -370,8 +370,14 @@ CREATE OR REPLACE FUNCTION accept_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF New.status = 'Accepted' THEN
-        INSERT INTO participations("user_id", event_id, "type")
-        VALUES (New.invited_user_id, New.event_id, New.type);
+        IF EXISTS (SELECT * FROM participations WHERE "user_id" = New.invited_user_id AND event_id = New.event_id) THEN
+            UPDATE participations
+            SET "type" = New.type
+            WHERE "user_id" = New.invited_user_id AND event_id = New.event_id;
+        ELSE
+            INSERT INTO participations("user_id", event_id, "type")
+            VALUES (New.invited_user_id, New.event_id, New.type);
+        END IF;
     END IF;
     RETURN NEW;
 END
