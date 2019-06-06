@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container email">
     <h1 class="my-3">Reset Password</h1>
     <hr>
     <section class="pb-3">
