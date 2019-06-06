@@ -44,7 +44,10 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        //
+        $event = Event::where('id',$post->event_id)->get()->first();
+        $canCreate = $event->participateAs(['Owner', 'Host', 'Artist','Participant'])->get();
+        return $canCreate->contains($user);
+        
     }
 
     /**
@@ -58,4 +61,5 @@ class PostPolicy
     {
         //
     }
+
 }

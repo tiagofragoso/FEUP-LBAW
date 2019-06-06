@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\PollVote;
+use App\Poll;
+use App\EventReport;
+use App\Category;
+use App\Currency;
+use App\Participation;
+use App\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -141,7 +148,7 @@ class EventController extends Controller
         } else {
             $threads = null;
         }
-        
+
         $questions = $event->getQuestions($joined);
 
        

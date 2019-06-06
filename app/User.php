@@ -89,6 +89,12 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
+    public function voteOnPoll($post_id, $poll_option){
+        return $this->belongsToMany('App\Poll','poll_votes','user_id','poll_id')
+             ->attach($post_id,['poll_option'=>$poll_option]);
+       
+    }
+
     public function pendingInviteCount() {
         return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
     }

@@ -4,6 +4,55 @@ import {postComment} from "./comments.js"
 let postContent = document.querySelector('#postFormTextarea');
 let postLikeBtns = document.querySelectorAll('.like-post-btn');
 
+let polls = document.querySelectorAll(".poll-container");
+polls.forEach(function (poll) {
+    let pollName = 'poll' + poll.dataset.id;
+    let pollOptions = poll.querySelectorAll("input[type=radio][name=" + pollName + "]");
+    let selectedOption = null;
+
+
+    if (poll.querySelector("input[type=radio][name=" + pollName + "]:checked") !== null)
+        selectedOption = poll.querySelector("input[type=radio][name=" + pollName + "]:checked").closest('.row');
+
+    pollOptions.forEach(option => {
+        let option_id = option.closest('.row').dataset.id;
+        let post_id = option.closest('.container').dataset.id;
+        option.addEventListener('click', async () => {
+            let url = '/api/polls/' + post_id + '/votes';
+            let requestBody = { pollOption: option_id };
+            const response = await request(
+                url,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                }
+            );
+            if (response.status == 200) {
+                poll.querySelector('.poll-error-message').classList.add('d-none');
+                option.closest('.row').childNodes[3].dataset.id++;
+                option.closest('.row').childNodes[3].innerText = option.closest('.row').childNodes[3].dataset.id + " votes";
+                if (selectedOption !== null) {
+                    selectedOption.closest('.row').childNodes[3].dataset.id--;
+                    selectedOption.closest('.row').childNodes[3].textContent = selectedOption.closest('.row').childNodes[3].dataset.id + " votes";
+                }
+                selectedOption = option;
+            }
+            else if (response.status == 403) {
+                poll.querySelector('.poll-error-message').classList.remove('d-none');
+
+            }
+
+
+        })
+    });
+});
+
+
 
 if (postContent !== null) {
     document.querySelector('.submit-post').addEventListener('click', postPost);
@@ -143,6 +192,8 @@ async function postPost(event) {
         postContent.value = "";
         insertPost(createPost(response.data));
     }
+
+
 }
 
 async function likePost(event) {

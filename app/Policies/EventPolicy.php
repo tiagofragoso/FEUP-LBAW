@@ -58,4 +58,10 @@ class EventPolicy
     {
         //
     }
+
+    public function canVote(User $user, Event $event){
+
+        $canVote = $event->participatesAs(['Owner', 'Host','Artist','Participant'])->get();
+        return $canVote->contains($user);
+    }
 }
