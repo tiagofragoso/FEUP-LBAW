@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Participation;
+use App\Poll;
+use App\Post;
+use App\File;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +21,9 @@ class HomeController extends Controller
 
         $events = $this->getTrending();
 
-        return view('pages.home', ['events' => $events]);
+        $activity = $this->getActivity();
+
+        return view('pages.home', ['events' => $events, 'activity' => $activity]);
     }
 
     public function getTrending()
@@ -28,5 +35,64 @@ class HomeController extends Controller
         ])
         ->orderBy('participants', 'DESC')
         ->get();
+    }
+
+    public function getActivity()
+    {
+        $participations = Participation::select(
+                'users.id as user_id',
+                'users.username',
+                'participations.type',
+                'participations.date',
+                'events.id as event_id',
+                'events.title',
+                'events.location',
+                'events.start_date'
+            )
+            ->leftJoin('users', 'participations.user_id', '=', 'users.id')
+            ->leftJoin('events', 'participations.event_id', '=', 'events.id')
+            ->whereIn('participations.user_id', Auth::user()
+                ->following()
+                ->get()
+                ->map(function($user){
+                    return $user->id;
+                })
+                ->toArray()
+            )
+            ->get();
+
+        $posts = Post::select(
+                'posts.*',
+                'users.username',
+                'users.name',
+                'participations.type as event_participation',
+                'events.id as event_id',
+                'events.title'
+            )
+            ->leftJoin('participations', 'participations.event_id', '=', 'posts.event_id')
+            ->leftJoin('events', 'participations.event_id', '=', 'events.id')
+            ->leftJoin('users', 'users.id', '=', 'posts.author_id')
+            ->where('participations.user_id', '=', Auth::user()->id)
+            ->orderBy('posts.date', 'DESC')
+            ->get();
+
+        foreach ($posts as $key => $value) {
+            $value['commentsContent'] = Post::find($value->id)->comments()->get();
+            foreach ($value['commentsContent'] as $key1 => $comment) {
+                $comment['comments'] = Comment::find($comment->id)->comments()->get();
+            }
+        }
+
+        foreach($posts as $post) {
+            $post['hasLike'] = $post->hasLike(Auth::user()->id);
+            foreach($post->commentsContent as $comment) {
+                $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
+                foreach($comment->comments as $commentComment) {
+                    $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
+                }
+            }
+        }
+
+        return $participations->merge($posts);
     }
 }
