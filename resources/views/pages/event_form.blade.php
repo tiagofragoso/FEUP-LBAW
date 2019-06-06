@@ -27,10 +27,15 @@
 					<img id="img" class="d-block w-100" src="{{ !empty($event)? $event->image() : asset('assets/event-placeholder.png') }}" alt="Event photo">
 				</div>
 				<div class="container-fluid mt-3">
+					@if ($errors->has('photo'))
+						<span class="invalid-feedback" style="display:block;">
+							{{ $errors->first('photo') }}
+						</span>
+					@endif
 					<div class="row justify-content-between align-items-start">
 						<div class="col-12 col-md-8 mb-2 mb-md-0">
 							<input type="text" name="title" class="form-control form-control-lg {{$errors->has('title')? 'is-invalid' : '' }}" 
-								placeholder="Event title" value="{{old('title', !empty($event->title)? $event->title : '') }}" required>
+								placeholder="Event title" value="{{old('title', !empty($event->title)? $event->title : '') }}" required maxlength="60">
 							@if ($errors->has('title'))
 								<span class="invalid-feedback">
 									{{ $errors->first('title') }}
@@ -63,7 +68,7 @@
 					<hr>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 order-1 order-md-0">
-							<input type="text" name="location" class="form-control {{$errors->has('location')? 'is-invalid' : '' }}" 
+							<input type="text" name="location" class="form-control {{$errors->has('location')? 'is-invalid' : '' }} " maxlength="50" 
 								value="{{ old('location', !empty($event->location)? $event->location : '') }}" placeholder="Location">
 							@if ($errors->has('location'))
 								<span class="invalid-feedback">
@@ -94,7 +99,7 @@
 					</div>
 					<div class="row mb-3 justify-content-between align-items-start">
 						<div class="col-12 col-md-8 mb-3 mb-md-0">
-							<input name="address" class="form-control form-control {{$errors->has('address')? 'is-invalid' : '' }}" 
+							<input name="address" class="form-control form-control {{$errors->has('address')? 'is-invalid' : '' }}" maxlength="100"
 								value="{{ old('address', !empty($event->address)? $event->address : '') }}" type="text" placeholder="Address">
 							@if ($errors->has('address'))
 								<span class="invalid-feedback">
@@ -109,9 +114,9 @@
 											class="fas fa-eye"></i></label>
 								</div>
 								<select name="private" class="custom-select border-blue {{$errors->has('private')? 'is-invalid' : '' }}" id="Visibility" required>
-									<option {{ !empty(old('private', !empty($event->private)? $event->private : '')) ? '' : 'selected' }} disabled value="">Visibility</option>
-									<option value="0" {{ (old('private') == 0)? 'selected' : ''}}>Public</option>
-									<option value="1" {{ (old('private') == 1)? 'selected' : ''}}>Private</option>
+									<option {{ is_null(old('private', isset($event->private)? $event->private : null)) ? 'selected' : '' }} disabled value="">Visibility</option>
+									<option value="0" {{ (old('private', isset($event->private)? $event->private : '') === 0)? 'selected' : ''}}>Public</option>
+									<option value="1" {{ (old('private', isset($event->private)? $event->private : '') === 1)? 'selected' : ''}}>Private</option>
 								</select>
 								@if ($errors->has('private'))
 									<span class="invalid-feedback">
@@ -125,7 +130,7 @@
 					<div class="row mb-3 justify-content-between">
 						<div class="col-12 col-md-8 order-1 order-md-0">
 							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="4" name="brief" placeholder="Brief description"
-								style="resize:none" required>{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
+								style="resize:none" required maxlength="140">{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
 							@if ($errors->has('brief'))
 								<span class="invalid-feedback">
 									{{ $errors->first('brief') }}
@@ -133,7 +138,7 @@
 							@endif
 						</div>
 						<div class="col-12 col-md-4 mb-3 mb-md-0 input-group order-0 order-md-1">
-							<div class="input-group w-100 justify-content-stretch h-100">
+							<div class="input-group w-100 justify-content-stretch">
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="dateSelect">
 										<i class="mr-1 far fa-calendar-alt"></i>
@@ -152,17 +157,12 @@
 									</button>
 									<div id="date-dropdown" aria-labelledby="dropdownDate" class="dropdown-menu dropdown-menu-right"></div>
 								</div>
-								@if ($errors->has('start_date'))
-									<span class="invalid-feedback">
-										{{ $errors->first('start_date') }}
-									</span>
-								@endif
-								@if ($errors->has('end_date'))
-									<span class="invalid-feedback">
-										{{ $errors->first('end_date') }}
-									</span>
-								@endif
 							</div>
+							@if ($errors->has('start_date') || $errors->has('end_date'))
+								<span class="invalid-feedback" style="display:block;">
+									{{ $errors->first('start_date').$errors->first('end_date') }}
+								</span>
+							@endif
 						</div>
 					</div>
 					<div class="row justify-content-between">
@@ -188,6 +188,11 @@
 									<span>Buy a ticket</span>
 								</div>
 							</div>
+							@if ($errors->has('status'))
+								<span class="invalid-feedback" style="display: block;">
+									{{ $errors->first('status') }}
+								</span>
+							@endif
 						</div>
 						<div class="col-12 col-md-4">
 							<div class="input-group priceSelect w-100">
@@ -195,8 +200,8 @@
 									<label class="input-group-text" for="priceSelect"><i
 											class="fas fa-ticket-alt"></i></label>
 								</div>
-								<input type="number" name="price" min="0" placeholder="Free" id="priceSelect" value="{{ old('price') }}"
-									class="custom-select {{$errors->has('price', !empty($event->price)? $event->price : '')? 'is-invalid' : '' }}">
+								<input type="number" name="price" min="0" placeholder="Free" id="priceSelect" value="{{ old('price', !empty($event->price)? $event->price : '') }}"
+									class="custom-select {{$errors->has('price')? 'is-invalid' : '' }}">
 								<div class="input-group-append">
 									<select class="custom-select currency" name="currency">
 										@foreach ($currencies as $curr)
