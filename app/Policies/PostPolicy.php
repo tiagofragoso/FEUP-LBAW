@@ -31,7 +31,7 @@ class PostPolicy
      */
     public function create(User $user, Post $post, Event $event)
     {
-        $canCreate = $event->participateAs(['Owner', 'Host', 'Artist'])->get();
+        $canCreate = $event->participatesAs(['Owner', 'Host', 'Artist'])->get();
         return $canCreate->contains($user);
     }
 

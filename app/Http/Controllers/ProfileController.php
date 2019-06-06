@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\EventReport;
 use App\UserReport;
+use App\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,61 +42,20 @@ class ProfileController extends Controller
     {
         if (!Auth::check()) return redirect('/login');
 
-        $data = $this->getEventsData(Auth::user());
-
         if (Auth::user()->is_admin) {
-            $pendingEventReports = EventReport::all()->where('status', 'Pending')->groupBy('event_id');
-
-            foreach ($pendingEventReports as $eventReport) {
-
-                $eventReport['reports'] = $eventReport->toArray();
-                $eventReport['status'] = $eventReport->first()->status;
-                $eventReport['event'] = $eventReport->first()->event()->get()->first();
-            }
-
-            $pendingUserReports = UserReport::all()->where('status', 'Pending')->groupBy('reported_user');
-
-            foreach ($pendingUserReports as $userReport) {
-
-                $userReport['reports'] = $userReport->toArray();
-                $userReport['status'] = $userReport->first()->status;
-                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-            }
-            $allEventReports = EventReport::all()->whereNotIn('status', 'Pending')->groupBy('event_id');
-            foreach ($allEventReports as $eventReport) {
-
-                $eventReport['reports'] = $eventReport->toArray();
-                $eventReport['status'] = $eventReport->first()->status;
-                $eventReport['event'] = $eventReport->first()->event()->get()->first();
-            }
-            $allUserReports = UserReport::all()->whereNotIn('status', 'Pending')->groupBy('reported_user');
-
-            foreach ($allUserReports as $userReport) {
-
-                $userReport['reports'] = $userReport->toArray();
-                $userReport['status'] = $userReport->first()->status;
-                $userReport['reportedUser'] = $userReport->first()->reportedUser()->get()->first();
-            }
-            $pendingReports['user'] = $pendingUserReports;
-            $pendingReports['event'] = $pendingEventReports;
-            $allReports['user'] = $allUserReports;
-            $allReports['event'] = $allEventReports;
-            $data['pendingReports'] = $pendingReports;
-            $data['allReports'] = $allReports;
-
-            $data['user'] = Auth::user();
+            $data = $this->getReportsData();
             return view('pages.admin_profile', $data);
-        } else
+        } else {
+            $data = $this->getEventsData(Auth::user());
             return view('pages.profile',  $data);
+        }   
     }
 
-    public function getEventsData($user)
+    private function getEventsData($user)
     {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
         $data['performing'] = $user->events('Artist')->orderByDesc('start_date')->get();
         $data['hosting'] = $user->events(['Host', 'Owner'])->orderByDesc('start_date')->get();
-
-        $data['user'] = $user;
 
         if (Auth::check()) {
             $data['joined'] = Auth::user()->eventsParticipation($data['joined']);
@@ -103,7 +63,54 @@ class ProfileController extends Controller
             $data['performing'] = Auth::user()->eventsParticipation($data['performing']);
         }
 
+        $data['user'] = $user;
+
         return $data;
+    }
+
+    private function getReportsData() {
+        $pendingEventReports = EventReport::all()->where('status', 'Pending')->groupBy('event_id');
+
+        $pendingEventReports = $pendingEventReports->map(function($value, $key) {
+            return ['type' => 'event', 'count' => $value->count(), 'report_id' => $value->first()->id, 'event' => $value->first()->event()->get()->first(), 'status' => $value->first()->status];
+        });
+        
+        
+        $pendingUserReports = UserReport::all()->where('status', 'Pending')->groupBy('reported_user');
+        
+        $pendingUserReports = $pendingUserReports->map(function($value) {
+            return ['type' => 'user', 'count' => $value->count(), 'report_id' => $value->first()->id, 'user' => $value->first()->reportedUser()->get()->first(), 'status' => $value->first()->status];
+        });
+
+
+        $answeredEventReports = EventReport::all()->whereNotIn('status', 'Pending')->groupBy('event_id');
+        
+        $answeredEventReports = $answeredEventReports->map(function($value, $key) {
+            return ['type' => 'event', 
+            'count' => $value->count(), 
+            'report_id' => $value->first()->id, 
+            'event' => $value->first()->event()->get()->first(), 
+            'status' => $value->contains(function ($value) {
+                return $value->status === 'Accepted';
+                })? 'Accepted' : 'Declined'];
+        });
+
+        $answeredUserReports = UserReport::all()->whereNotIn('status', 'Pending')->groupBy('reported_user');
+
+        $answeredUserReports = $answeredUserReports->map(function($value) {
+            return ['type' => 'user', 
+            'count' => $value->count(), 
+            'report_id' => $value->first()->id, 
+            'user' => $value->first()->reportedUser()->get()->first(), 
+            'status' => $value->contains(function ($value) {
+                return $value->status === 'Accepted';
+                })? 'Accepted' : 'Declined'];
+        });
+
+        $pending = $pendingEventReports->concat($pendingUserReports)->sortByDesc('count');
+        $answered = $answeredEventReports->concat($answeredUserReports)->sortByDesc('count');
+
+        return ['pending' => $pending, 'answered' => $answered];
     }
 
 
@@ -203,6 +210,42 @@ class ProfileController extends Controller
 
         Auth::user()->unfollow($id);
         return response()->json(null, 200);
+    }
+
+    public function showInvites() {
+
+        if (!Auth::check()) return redirect('/login');
+
+        $user = Auth::user();
+
+        if ($user->is_admin) {
+            abort(403); 
+        }
+
+        $invites = Invite::where('invited_user_id', $user->id)
+            ->orderBy('date', 'desc')
+            ->get()
+            ->groupBy(function($inv){
+                return $inv->status === 'Pending'? 'pending': 'answered';
+            })->sortByDesc(function($item, $key) {return $key;})
+            ->flatten()
+            ->map(function ($e) {
+            switch($e->type) {
+                case "Participant":
+                    $e['formattedType'] = "join";
+                    break;
+                case "Artist":
+                    $e['formattedType'] = "perform at";
+                    break;
+                case "Host":
+                    $e['formattedType'] = "co-host";
+                    break;
+            }
+            return $e;
+        });
+
+        return view('pages.invites', ['user' => $user, 'invites' => $invites]);
+
     }
 
     public function banUser($id)

@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $visible = [
-        'name', 'username', 'email', 'birthdate', 'followers', 'following'
+        'id', 'name', 'username', 'email', 'birthdate', 'followers', 'following'
     ];
 
 
@@ -95,6 +95,10 @@ class User extends Authenticatable
        
     }
 
+    public function pendingInviteCount() {
+        return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
+    }
+    
     public function likePost($post_id){
         $this->belongsToMany('App\Post','post_likes','user_id','post_id')
              ->attach($post_id);

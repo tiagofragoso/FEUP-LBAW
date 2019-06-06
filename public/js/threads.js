@@ -49,8 +49,9 @@ function createThread(response) {
                     </button>
                 </div>
             </div>
-            <div class="row comment-section collapse mb-3 border-top border-light" id="comments${response.id}">
-                <div class="row col-12 mt-3 justify-content-center align-items-center">
+            <div class="row comment-section comment-section-threads collapse mb-3 border-top border-light pt-3" id="comments${response.id}" data-id="${response.id}">
+                <div class="dropdown-divider col-12 col-md-10 mx-auto mt-2 mb-3"></div>
+                <div class="row col-12 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
                         <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
@@ -66,14 +67,55 @@ function createThread(response) {
                         </form>
                     </div>
                 </div>
-                <div class="dropdown-divider col-12 col-md-10 mx-auto my-3"></div>
-                @each('partials.thread_comment', $thread->comments, 'comment')
             </div>
         </div>
     </div>
     `
 
+    let section = thread.querySelector('.comment-section-threads');
+    let button = section.querySelector('.submit-btn');
+
+    let context = {};
+
+    context.content = section.querySelector('textarea');
+    context.thread_id = section.dataset.id;
+    context.divider = section;
+
+    button.addEventListener('click', commentHandler.bind(context));
+
     return thread;
+
+}
+
+function createThreadComment(response) {
+    const comment = document.createElement('div');
+    comment.className = 'row col-12 comment align-items-start justify-content-center';
+    comment.innerHTML = `
+    <div class="col-12 col-md-10 d-flex flex-row">
+        <a href="/users/${response.user_id}">
+        <img src="../assets/user.svg"
+            class="rounded-circle rounded-circle border border-light mr-3"
+            width="30" height="30" />
+        </a>
+        <div class="w-100 d-flex flex-column">
+            <div class="comment-wrapper d-flex flex-column w-100">
+                <div class="comment-text px-3 py-2">
+                    <span>
+                        <a class="title-link mr-2" href="/users/${response.user_id}">
+                        <span class=" author">${response.user}</span>
+                        </a>
+                        ${response.content}
+                    </span>
+                </div>
+                <div class="comment-footer ml-3">                
+                    <span>${response.date}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+
+    return comment;
 
 }
 
@@ -108,4 +150,47 @@ if (threadContent !== null) {
             insertThread(createThread(response.data))
         }
     })
+}
+
+let commentsSections = document.querySelectorAll('.comment-section-threads');
+
+commentsSections.forEach(section => {
+    let button = section.querySelector('.submit-btn');
+
+    let context = {};
+
+    context.content = section.querySelector('textarea');
+    context.thread_id = section.dataset.id;
+    context.divider = section;
+
+    button.addEventListener('click', commentHandler.bind(context));
+})
+
+async function commentHandler(event) {
+    event.preventDefault();
+
+    let requestBody = {
+        content : this.content.value
+    }
+
+    const response = await request (
+        '/api/threads/' + this.thread_id + '/comments',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        }
+    );
+
+    console.log(response);
+
+    if (response.status === 201) {
+        this.content.value = "";
+        let comment = createThreadComment(response.data);
+        this.divider.insertBefore(comment, this.divider.querySelector('.dropdown-divider'));
+    }
 }
