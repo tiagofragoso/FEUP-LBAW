@@ -21,8 +21,8 @@ class EventController extends Controller
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
             'address' => 'nullable|string|max:100',
-            'brief' => 'nullable|string|max:140',
-            'description' => 'nullable|string',
+            'brief' => 'required|string|max:140',
+            'description' => 'required|string',
             'category' => 'required',
             'type' => 'required',
             'private' => 'required',
@@ -30,7 +30,7 @@ class EventController extends Controller
             'price' => 'nullable|numeric|min:0',
             'start_date' => 'nullable|date|after:now',
             'end_date' => 'nullable|date|after:start_date',
-            'photo' => 'nullable|image|size:5000'
+            'photo' => 'nullable|image'
         ])->validate();
     }
 
@@ -69,16 +69,12 @@ class EventController extends Controller
 
         $this->validateEvent($request);
 
-        dd($request->start_date);
-
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('events', 'public');
-            $event = Event::create(array_merge($request->except(['photo']), ['photo' => $path]));
+            $event = Event::create(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
-            $event = Event::create($request->except('photo'));
+            $event = Event::create($request->except(['photo', 'hours', 'minutes']));
         }
-
-        $event = Event::create($request->except('photo'));
 
         Auth::user()->joinEvent($event->id, 'Owner');
 

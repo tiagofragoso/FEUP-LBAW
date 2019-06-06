@@ -9,6 +9,7 @@
 
 @section('content')
 <div id="content" class="container my-0 my-sm-5">
+	{{var_dump($errors)}}
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
 		<form method="POST" action="{{ empty($event)? '/events' : '/events/'.$event->id }}" class="card mb-5" enctype="multipart/form-data">
@@ -124,7 +125,7 @@
 					<div class="row mb-3 justify-content-between">
 						<div class="col-12 col-md-8 order-1 order-md-0">
 							<textarea class="form-control {{$errors->has('brief')? 'is-invalid' : '' }}" rows="4" name="brief" placeholder="Brief description"
-								style="resize:none">{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
+								style="resize:none" required>{{ old('brief', !empty($event->brief)? $event->brief : '') }}</textarea>
 							@if ($errors->has('brief'))
 								<span class="invalid-feedback">
 									{{ $errors->first('brief') }}
@@ -219,7 +220,7 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col-12">
-							<textarea rows="6" class="form-control" name="description"
+							<textarea rows="6" class="form-control" name="description" required
 								placeholder="Comprehensive event description">{{ old('description', !empty($event->description)? $event->description : '') }}</textarea>
 							@if ($errors->has('description'))
 								<span class="invalid-feedback">
