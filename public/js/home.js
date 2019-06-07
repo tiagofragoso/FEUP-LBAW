@@ -93,8 +93,6 @@ function createParticipationActivity(activity) {
 }
 
 function createPostActivityCard(activity) {
-    console.log(activity);
-    
     const postActivity = document.createElement('div');
     postActivity.className = 'col-12 mb-5';
 
@@ -119,9 +117,7 @@ function createPostActivityCard(activity) {
     postActivity.querySelector('.event-title').textContent = activity.event_title;
 
     activity.date = moment(new Date(activity.date)).format('MMM DD | HH:mm')
-    if (activity.type == 'Post') {
-        postActivity.querySelector('.nested-post').appendChild(createActivityPost(activity));
-    }
+    postActivity.querySelector('.nested-post').appendChild(createActivityPost(activity));
 
     return postActivity;
 }
@@ -205,10 +201,10 @@ function createActivityPost(activity) {
     post.querySelector('.comments-container').textContent = activity.comments;
 
     if (activity.type == 'Poll') {
-        post.querySelector('.extra-content').appendChild(createPollContent(activity.poll_options));
+        post.querySelector('.extra-content').appendChild(createPollContent(activity.id, activity.poll_title, activity.poll_options));
     }
     else if (activity.type == 'File') {
-        post.querySelector('.extra-content').appendChild(createFileContent(activity.file));
+        post.querySelector('.extra-content').appendChild(createFileContent(activity.post_file));
     }
 
     let section = post.querySelector('.comment-section-posts');
@@ -227,10 +223,67 @@ function createActivityPost(activity) {
     return post;
 }
 
-function createPollContent(pollOptions) {
-    
+function createPollContent(id, title, pollOptions) {
+    const pollContent = document.createElement('div');
+    pollContent.innerHTML = `
+        <p class="card-text mt-3">
+            <strong class="poll-title"></strong>
+        </p>
+        <div class="container poll-container" data-id="${id}">
+        </div>
+    `;
+
+    pollContent.querySelector('.poll-title').textContent = title;
+
+    pollOptions.forEach(pollOption => {
+        pollContent.querySelector('.poll-container').appendChild(createPollOption(id, pollOption));
+    });
+
+    const info = document.createElement('div');
+    info.className = 'text-danger d-none poll-error-message';
+    info.textContent = 'To vote on an event\'s poll, you need to participate in the event!';
+    pollContent.querySelector('.poll-container').appendChild(info);
+
+    return pollContent;
+}
+
+function createPollOption(post_id, pollOption) {
+    const pollOptionContainer = document.createElement('div');
+    pollOptionContainer.className = 'row align-items-center mb-2';
+    pollOptionContainer.dataset.id = pollOption.id;
+    pollOptionContainer.innerHTML = `
+        <div class="input-group col-12 col-sm-8">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <input type="radio" name="poll${post_id}" aria-label="">
+                </div>
+            </div>
+            <span type="text" class="form-control option-name"></span>
+        </div>
+        <div
+            class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted" id="pollVotes" data-id="${pollOption.votes}">
+            ${pollOption.votes} votes
+        </div>
+    `;
+
+    pollOptionContainer.querySelector('.option-name').textContent = pollOption.name;
+    pollOptionContainer.querySelector('input').checked = pollOption.voted;
+
+    return pollOptionContainer;
 }
 
 function createFileContent(file) {
-    
+    const fileContainer = document.createElement('a');
+    fileContainer.href = '#';
+    fileContainer.className = 'card-text mt-3 title-link';
+    fileContainer.innerHTML = `
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+            </div>
+            <div class="form-control"> <strong class="file-name"></strong> </div>
+        </div>
+    `;
+    fileContainer.querySelector('.file-name').textContent = file.file;
+    return fileContainer;
 }

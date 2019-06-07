@@ -89,10 +89,14 @@ class HomeController extends Controller
             }
 
             if ($value->type == 'Poll') {
+                $value['poll_title'] = $post->poll()->first()->title;
                 $value['poll_options'] = $post->poll()->first()->pollOptions()->get();
+                foreach ($value->poll_options as $poll_option) {
+                    $poll_option['voted'] = $post->poll()->first()->hasVoteInOption(Auth::user()->id, $poll_option->id);
+                }
             }
             elseif ($value->type == 'File') {
-                $value['files'] = $post->file()->get();
+                $value['post_file'] = $post->file()->first();
             }
         }
 
