@@ -54,9 +54,7 @@ polls.forEach(function (poll) {
 
 
 
-if (postContent !== null) {
-    document.querySelector('.submit-post').addEventListener('click', postPost);
-}
+
 
 function createPost(response) {
     const post = document.createElement('div');
@@ -156,46 +154,6 @@ function insertPost(post) {
     posts.insertBefore(post, posts.childNodes[0]);
 }
 
-async function postPost(event) {
-    event.preventDefault();
-
-    let postType;
-    if (document.querySelector('#text').checked) {
-        postType = 'Post';
-    } else if (document.querySelector('#poll').checked) {
-        postType = 'Poll';
-    } else if (document.querySelector('#file').checked) {
-        postType = 'File';
-    }
-
-    let requestBody = {
-        content: postContent.value,
-        type: postType
-    }
-
-    let event_id = document.querySelector('.submit-post').dataset.id;
-
-    const response = await request(
-        '/api/events/' + event_id + '/posts',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        }
-    );
-
-    if (response.status === 201) {
-        postContent.value = "";
-        insertPost(createPost(response.data));
-    }
-
-
-}
-
 async function likePost(event) {
     let i = this.querySelector('i');
     let postId = this.dataset.id;
@@ -245,6 +203,8 @@ if (document.querySelector('.post-type')) {
     const postTypeTitle = document.querySelector('#posts .card-title');
     const pollWrapper = document.querySelector('#poll-wrapper');
     const fileWrapper = document.querySelector('#file-wrapper');
+    
+    document.querySelector('.submit-post').addEventListener('click', (e) => makePost(e));
 
     document.querySelectorAll('.post-type input[type="radio"][name="post-type"]').forEach(el => el.addEventListener('change', () => changeTab(el.getAttribute('value'))));
     pollWrapper.querySelectorAll('.poll-option-input .poll-option-close-btn').forEach(el => el.addEventListener('click', () => tryToRemove(el)));
@@ -331,6 +291,80 @@ if (document.querySelector('.post-type')) {
         sp.textContent = name;
         el.appendChild(sp);
         return el;
+    }
+
+    async function makePost(event) {
+    
+        event.preventDefault();
+        const content = postContent.value.trim();
+
+        if (content == '')
+            return;
+    
+        console.log('called');
+            
+        let postType;
+        if (document.querySelector('#text').checked) {
+            postType = 'Post';
+        } else if (document.querySelector('#poll').checked) {
+            postType = 'Poll';
+        } else if (document.querySelector('#file').checked) {
+            postType = 'File';
+        }
+    
+        const formData = new FormData();
+        formData.append('type', postType);
+        formData.append('content', content);
+    
+        if (postType === 'Poll') {
+            const title = pollWrapper.querySelector('input[name="title"]');
+            if (title.value.trim() != '') {
+                formData.append('title', title.value.trim());
+            } else {
+                console.log('Error');
+                return;
+            }
+            let validOptions = [];
+            pollWrapper.querySelectorAll('.poll-option-input').forEach(el => {
+                const input = el.querySelector('input').value.trim();
+                if (input != '')
+                    validOptions.push(input);
+            });
+            if (validOptions.length >= 2) {
+                formData.append('poll_options', JSON.stringify(validOptions));
+            } else {
+                console.log('Error');
+                return;
+            }
+        } else if (postType === 'File') {
+            const file = fileInput.files[0];
+            if (file) {
+                formData.append('file', file);
+            } else {
+                console.log('Error');
+                return;
+            }
+        }
+    
+        let event_id = document.querySelector('.submit-post').dataset.id;
+    
+        const response = await request(
+            '/api/events/' + event_id + '/posts',
+            {
+                method: 'POST',
+                headers: {
+                    //'Content-Type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            }
+        );
+    
+        if (response.status === 201) {
+            postContent.value = "";
+            insertPost(createPost(response.data));
+        }
     }
 
 }

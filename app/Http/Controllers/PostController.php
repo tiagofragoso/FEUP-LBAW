@@ -6,10 +6,12 @@ use App\Comment;
 use App\Post;
 use App\Poll;
 use App\Event;
-use App\PollVote;
+use App\PollOption;
+use App\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -24,7 +26,7 @@ class PostController extends Controller
             'content' => 'required|string|max:5000',
             'event_id' => 'required',
             'author_id' => 'required',
-            'type' => 'required'
+            'type' => 'required|in:Post,Poll,File'
         ])->validate();
     }
 
@@ -59,25 +61,80 @@ class PostController extends Controller
         if(!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
-        $p = new Post();
-        $this->authorize('create', [$p, $event]);
-        $request->request->add(['author_id' => Auth::user()->id]);
-        $request->request->add(['event_id' => $id]);
+
+        $this->authorize('create', [new Post(), $event]);
+
+        $request->request->add(['author_id' => Auth::user()->id, 'event_id' => $id]);
+
         $this->validatePost($request);
-        if ($request->type == 'Post') {
-            $post = Post::create($request->all());
-            $post = Post::find($post->id);
-            return response()->json([
+        return DB::transaction(function () use($request, $id) {
+            try {
+                $post = Post::create($request->except(['poll_options', 'title', 'file']));
+            } catch (\Exception $e) {
+                //log this
+                return response()->json(null, 400);
+            }
+    
+            $returnObject = [
                 'id' => $post->id,
                 'content' => $post->content,
                 'author_id' => $post->author_id,
                 'type' => $post->type,
-                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
+                'date' => $post->date,
                 'author' => $post->author->displayName()
-            ], 201);
-        } else {
-            return response()->json(null, 404);
-        }
+            ];
+    
+            if ($request->type === 'Post') {
+                return response()->json($returnObject, 201);
+            } else if ($request->type === 'Poll') {
+                $title = $request->title;
+                if (empty($title)) {
+                    return response()->json('1', 400);
+                }
+                $poll_options = $request->poll_options;
+                if (empty($poll_options)) {
+                    return response()->json('2', 400);
+                }
+                $poll_options = json_decode($poll_options);
+                if (is_array($poll_options)) {
+                    if (count($poll_options) < 2) {
+                        return response()->json('3', 400);        
+                    } else {
+                        try {
+                            Poll::create(['post_id' => $post->id, 'title' => $title]);
+                            $poll_opt_objects = array();
+                            foreach ($poll_options as $key => $value) {
+                                array_push($poll_opt_objects, PollOption::create(['post_id' => $post->id, 'name' => $value]));
+                            }
+                            $returnObject['title'] = $title;
+                            $returnObject['poll_options'] = json_encode($poll_opt_objects);
+                            return response()->json($returnObject, 201);
+                        } catch(\Exception $e) {
+                            //log this
+                            return response()->json($e->getMessage(), 400);
+                        }
+                    } 
+                } else {
+                    return response()->json('5', 400);        
+                }
+            } else if ($request->type === 'File') {
+                if (!$request->hasFile('file')) {
+                    return response()->json(null, 400);
+                } else {
+                    $path = $request->file('file')->store('events/files', 'public');
+                    try {
+                        File::create(['post_id' => $post->id, 'file' => $path]);
+                        $returnObject['file'] = $request->file('file')->getClientOriginalName();
+                        return response()->json($returnObject, 201);
+                    } catch(\Exception $e) {
+                        //log this
+                        return response()->json($e->getMessage(), 400);
+                    }
+                }
+            } else {
+                return response()->json(null, 400);
+            }
+        });
     }
 
     /**
