@@ -18,9 +18,11 @@ let requestObj = {
 
 if (new URL(window.location.href).searchParams.has('search')) {
     requestObj.search = new URL(window.location.href).searchParams.get('search');
-    document.getElementById('card-container').scrollIntoView({
-        behavior: 'smooth'
-    });
+    if (requestObj.search != '') {
+        document.getElementById('results-container').scrollIntoView({
+            behavior: 'smooth'
+        });
+    }
 }
 
 /**
@@ -245,7 +247,7 @@ function queryTextRequest() {
 
     resetRequest();
     search();
-    document.getElementById('card-container').scrollIntoView({
+    document.getElementById('results-container').scrollIntoView({
         behavior: 'smooth'
     });
 }
