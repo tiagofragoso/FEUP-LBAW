@@ -283,5 +283,25 @@ class ProfileController extends Controller
         return response()->json(null,200);
     }
 
-    
+    public function followers($id) {
+        try {
+            $followers = User::findOrFail($id)->followers()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'followers' => $followers
+        ], 200);
+    }
+
+    public function following($id) {
+        try {
+            $following = User::findOrFail($id)->following()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'following' => $following
+        ], 200);
+    }
 }
