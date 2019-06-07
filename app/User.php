@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned'
     ];
 
     /**
@@ -26,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $visible = [
-        'name', 'username', 'email', 'birthdate', 'followers', 'following'
+        'id', 'name', 'username', 'email', 'birthdate', 'followers', 'following'
     ];
 
 
@@ -89,5 +90,47 @@ class User extends Authenticatable
         return $this->hasMany('App\UserReport','reported_user');
     }
 
+    public function voteOnPoll($post_id, $poll_option){
+        return $this->belongsToMany('App\Poll','poll_votes','user_id','poll_id')
+             ->attach($post_id,['poll_option'=>$poll_option]);
+       
+    }
+
+    public function pendingInviteCount() {
+        return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
+    }
+    
+    public function likePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->attach($post_id);
+       
+    }
+
+    public function dislikePost($post_id){
+        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
+             ->detach($post_id);
+       
+    }
+
+    public function likeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->attach($comment_id);
+       
+    }
+
+    public function dislikeComment($comment_id){
+        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
+             ->detach($comment_id);
+       
+    }
+
+    public function acquireTicket($event, $price){
+        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
+        Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
+    }
+
+    public function tickets() {
+        return $this->hasMany('App\Ticket', 'owner');
+    }
 
 }

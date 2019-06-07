@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App;
+
 use App\Event;
+use App\PollVote;
+use App\Poll;
+use App\EventReport;
 use App\Category;
 use App\Currency;
 use App\Participation;
+use App\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +22,8 @@ class EventController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validateEvent($data) {
+    public function validateEvent($data)
+    {
         return Validator::make($data->all(), [
             'title' => 'required|string|max:60',
             'location' => 'nullable|string|max:50',
@@ -29,7 +35,9 @@ class EventController extends Controller
             'private' => 'required',
             'status' => 'required',
             'price' => 'nullable|numeric|min:0',
-            'start_date' => 'nullable|date|after:now'
+            'start_date' => 'nullable|date|after:now',
+            'end_date' => 'nullable|date|after:start_date',
+            'photo' => 'nullable|image'
         ])->validate();
     }
 
@@ -54,7 +62,6 @@ class EventController extends Controller
         $this->authorize('create', Event::class);
 
         return view('pages.event_form', ['title' => 'Create event']);
-
     }
 
     /**
@@ -69,11 +76,16 @@ class EventController extends Controller
 
         $this->validateEvent($request);
 
-        $event = Event::create($request->except('photo'));
+        if ($request->hasFile('photo')) {
+            $path = $request->file('photo')->store('events', 'public');
+            $event = Event::create(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
+        } else {
+            $event = Event::create($request->except(['photo', 'hours', 'minutes']));
+        }
 
         Auth::user()->joinEvent($event->id, 'Owner');
-        
-        return $this->show($event->id);
+
+        return redirect('/events/'.$event->id);
     }
 
     /**
@@ -86,7 +98,8 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (Auth::check()){
+        if (!(!(Auth::check() && Auth::user()->is_admin) && $event->banned)){
+        if (Auth::check()) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
             } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
@@ -102,16 +115,40 @@ class EventController extends Controller
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
         $artists = $event->participatesAs('Artist')->get()->take(6);
-        
+
         $posts = $event->posts()->get();
         $posts = $event->postComments($posts);
-        
+
+        foreach($posts as $post){
+
+            if (Auth::check()) {
+                $post['hasLike'] = $post->hasLike(Auth::user()->id);
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
+                    }
+            
+                }
+            } else {
+                $post['hasLike'] = false;
+                foreach($post->commentsContent as $comment) {
+                    $comment['hasLike'] = false;
+                    foreach($comment->comments as $commentComment) {
+                        $commentComment['hasLike'] = false;
+                    }
+            
+                }
+            }
+        }
+    
+
         if ($joined === 'Host' || $joined === 'Artist') {
             $threads = $event->threads()->get();
         } else {
             $threads = null;
         }
-        
+
         $questions = $event->getQuestions($joined);
 
        
@@ -125,7 +162,9 @@ class EventController extends Controller
             'questions' => $questions,
             'threads' => $threads,
             'joined'=> $joined]);  
-        }
+        } else abort(404);
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -149,11 +188,31 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $event = Event::findOrFail($id);
+        try {
+            $event = Event::findOrFail($id);
+        } catch(\Exception $e) {
+            abort(404);
+        } 
+
         $this->authorize('update', $event);
         $this->validateEvent($request);
-        $event->update($request->except(['photo']));
-        return $this->show($id);
+
+        if ($request->hasFile('photo')) {
+            if (!empty($event->photo)) {
+                try {
+                    $old = Storage::disk('public')->get($event->photo);
+                } catch (Exception $e) { }
+                if (isset($old)) {
+                    Storage::disk('public')->delete($event->photo);
+                }
+            }
+            $path = $request->file('photo')->store('events', 'public');
+            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+        } else {
+            $event = $event->update($request->except('photo'));
+        }
+
+        return redirect('/events/'.$id);
     }
 
     /**
@@ -167,24 +226,57 @@ class EventController extends Controller
         //
     }
 
-    public function joinEvent($id){
-        if (!Auth::check()) return response(403);
-        if (is_null(Event::find($id))) return response(404);
+    public function joinEvent($id)
+    {
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Event::find($id))) return response()->json(null, 404);
         
-        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response(200);
+        if (Auth::user()->hasParticipation($id, ['Participant', 'Artist', 'Owner', 'Host'])) return response()->json(null, 200);
 
         Auth::user()->joinEvent($id, 'Participant');
-        return response(200);
+        return response()->json(null, 200);
     }
 
-    public function leaveEvent($id) {
-        if (!Auth::check()) return response(403);
-        if (is_null(Event::find($id))) return response(404);
+    public function leaveEvent($id)
+    {
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Event::find($id))) return response()->json(null, 404);
 
-        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response(403);
-        if (!Auth::user()->hasParticipation($id, 'Participant')) return response(200);
+        if (Auth::user()->hasParticipation($id, ['Artist', 'Owner', 'Host'])) return response()->json(null, 403);
+        if (!Auth::user()->hasParticipation($id, 'Participant')) return response()->json(null, 200);
 
         Auth::user()->leaveEvent($id, 'Participant');
-        return response(200);
+        return response()->json(null, 200);
     }
+
+    public function banEvent($id)
+    {
+        if (!Auth::user()->is_admin) return response()->json(null, 403);
+       
+        if (Event::find($id) == null) return response()->json(null, 404);
+
+        Event::find($id)->update(['banned'=>true]);
+        
+        return response()->json(null, 200);
+    }
+
+    public function acquireTicket(Request $request, $id){
+
+        if(!Auth::check()) return response()->json(['price' => $request->price],403);
+        
+        $event = Event::find($id);
+        if($event == null) return response()->json(null, 404);
+        if (Auth::user()->tickets()->where('event_id', $id)->exists()) return response()->json(null, 422);
+       
+        $this->authorize('acquireTicket',$event);
+
+        $price = $request->price;
+        Auth::user()->acquireTicket($event,$price);
+
+
+        return response()->json(null,200);
+
+    }
+
+    
 }

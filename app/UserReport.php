@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class UserReport extends Model
 {
     //
-        public $timestamps = false;
+    public $timestamps = false;
 
      protected $table = 'user_reports';
-     protected $fillable = ['status'];
+     protected $fillable = ['user_id','reported_user','status'];
 
      public function reportedUser(){
-        return $this->hasOne('App\User','id','reported_user');
+        return $this->belongsTo('App\User', 'reported_user');
     }
     public function user(){
-        return $this->hasMany('App\User','id','user_id');
+        return $this->belongsTo('App\User','user_id');
     }
 
 }

@@ -80,6 +80,7 @@ CREATE TABLE events (
     currency integer NOT NULL REFERENCES currencies ON DELETE CASCADE,
     category integer NOT NULL REFERENCES categories ON DELETE CASCADE,
     search tsvector,
+    photo text,
     CONSTRAINT event_dates_integrity CHECK ("start_date" < "end_date"),
     CONSTRAINT ticket_sale_date_integrity CHECK ("ticket_sale_start_date" < "start_date")
 );
@@ -109,7 +110,8 @@ CREATE TABLE invite_requests (
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
+    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    UNIQUE(invited_user_id, event_id)
 );
 
 CREATE TABLE follows (
@@ -370,8 +372,14 @@ CREATE OR REPLACE FUNCTION accept_invitation() RETURNS TRIGGER AS
 $BODY$
 BEGIN
     IF New.status = 'Accepted' THEN
-        INSERT INTO participations("user_id", event_id, "type")
-        VALUES (New.invited_user_id, New.event_id, New.type);
+        IF EXISTS (SELECT * FROM participations WHERE "user_id" = New.invited_user_id AND event_id = New.event_id) THEN
+            UPDATE participations
+            SET "type" = New.type
+            WHERE "user_id" = New.invited_user_id AND event_id = New.event_id;
+        ELSE
+            INSERT INTO participations("user_id", event_id, "type")
+            VALUES (New.invited_user_id, New.event_id, New.type);
+        END IF;
     END IF;
     RETURN NEW;
 END

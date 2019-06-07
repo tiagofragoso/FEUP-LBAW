@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Event extends Model
 {
     //
@@ -15,7 +14,7 @@ class Event extends Model
      * @var array
      */
     protected $guarded = [
-        'participants', 'banned', 'search'
+        'participants', 'search'
     ];
 
     public function posts(){
@@ -30,6 +29,10 @@ class Event extends Model
         if (!is_array($type))
             $type = [$type];
         return $this->belongsToMany('App\User', 'participations')->using('App\Participation')->wherePivotIn('type', $type);
+    }
+
+    public function hosts() {
+        return $this->participatesAs(['Owner', 'Host']);
     }
 
     public function questions(){
@@ -53,10 +56,9 @@ class Event extends Model
 
             foreach ($value['commentsContent'] as $key1 => $comment) {
                 $comment['comments'] = Comment::find($comment->id)->comments()->get();
+
             }
-
         }
-
         return $posts;
     }
 
@@ -77,6 +79,10 @@ class Event extends Model
         $questions['unanswered'] = $unanswered;
      
         return $questions;
+    }
+
+    public function image() {
+        return !empty($this->photo)? asset('storage/'.$this->photo) : asset('assets/event-placeholder.png');
     }
 
 }

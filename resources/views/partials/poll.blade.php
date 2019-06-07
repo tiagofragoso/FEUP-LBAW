@@ -3,14 +3,14 @@
     {{ $post->poll->title }}
     </strong>
 </p>
-<div class="container">
+<div class="container poll-container" data-id="{{$post->id}}">
     @foreach ($post->poll->pollOptions as $option)
-    <div class="row align-items-center mb-2">
+    <div class="row align-items-center mb-2" data-id= "{{$option->id}}">
         <div class="input-group col-12 col-sm-8">
             <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <input type="radio" name="poll"
-                        aria-label="">
+                    <input type="radio"  name="poll{{$post->id}}"
+                        aria-label="" {{(Auth::check() && $post->poll->hasVoteInOption(Auth::user()->id, $option->id)) ? 'checked' : ''}}>
                 </div>
             </div>
             <span type="text" class="form-control">
@@ -18,9 +18,11 @@
             </span>
         </div>
         <div
-            class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted">
+            class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted" id ="pollVotes" data-id = "{{$option->votes}}">
             {{$option->votes}} votes
         </div>
     </div> 
+    
     @endforeach
+    <div class="text-danger d-none poll-error-message">To vote on an event's poll, you need to participate in the event!</div>
 </div>
