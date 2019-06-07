@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -121,6 +122,15 @@ class User extends Authenticatable
         $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
              ->detach($comment_id);
        
+    }
+
+    public function acquireTicket($event, $price){
+        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
+        Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
+    }
+
+    public function tickets() {
+        return $this->hasMany('App\Ticket', 'owner');
     }
 
 }
