@@ -1,7 +1,7 @@
 <div class="activity-event-card d-flex align-items-center hover-shadow"
     tabindex="-1">
     <div class="w-25 h-100 overflow-hidden d-flex justify-content-center">
-        <img class="h-100" src="../assets/event-placeholder.png" alt="">
+        <img class="h-100" src="{{$event->image()}}" alt="">
     </div>
     <div class="d-flex align-items-center w-75">
         <div class="container-fluid">
