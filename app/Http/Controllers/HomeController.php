@@ -82,9 +82,17 @@ class HomeController extends Controller
             ->get();
 
         foreach ($posts as $key => $value) {
-            $value['commentsContent'] = Post::find($value->id)->comments()->get();
+            $post = Post::find($value->id);
+            $value['commentsContent'] = $post->comments()->get();
             foreach ($value['commentsContent'] as $key1 => $comment) {
                 $comment['comments'] = Comment::find($comment->id)->comments()->get();
+            }
+
+            if ($value->type == 'Poll') {
+                $value['poll_options'] = $post->poll()->first()->pollOptions()->get();
+            }
+            elseif ($value->type == 'File') {
+                $value['files'] = $post->file()->get();
             }
         }
 

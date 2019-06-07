@@ -196,7 +196,7 @@ async function postPost(event) {
 
 }
 
-async function likePost(event) {
+export async function likePost(event) {
     let i = this.querySelector('i');
     let postId = this.dataset.id;
     let numberLikes = this.querySelector('span').textContent;
