@@ -21,8 +21,12 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        $canSee = $event->participatesAs(['Owner', 'Host','Participant'])->get();
-        return $canSee->contains($user);
+        if ($event->banned) {
+            return ($user->is_admin);
+        } else if ($event->private) {
+            return $event->participatesAs(['Owner', 'Host', 'Artist', 'Participant'])->contains($user);
+        } 
+        return true;
     }
 
     /**

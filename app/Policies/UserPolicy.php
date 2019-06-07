@@ -18,7 +18,13 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {   
-        return (!($model->banned || $model->deleted));
+        if ($model->banned) {
+            return $user->is_admin;
+        } else if ($model->is_admin) {
+            return false;
+        }
+
+        return true;
         
     }
 

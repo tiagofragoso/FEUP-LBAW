@@ -20,14 +20,15 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check() && Auth::user()-> id == $id) {
+        if (Auth::check() && Auth::user()->id == $id) {
             return redirect('profile');
-        } 
-        
+        }
+
         $user = User::findOrFail($id);
-       if(!$user->can('view',$user)) return view('errors.403');
-    
-        if ($user->is_admin) {
+
+        if (Auth::check()) {
+            $this->authorize('view', $user);
+        } else if ($user->is_admin || $user->banned) {
             abort(403);
         }
       

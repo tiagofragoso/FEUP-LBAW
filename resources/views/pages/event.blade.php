@@ -233,11 +233,6 @@
 						<h5>Artists</h5>
 					</div>
 					<div class="col-4 text-right">
-						@unless(count($artists) === 0)
-						<a href="#" class="view-all">
-							View all
-						</a>
-						@endunless
 					</div>
 				</div>
 				<div class="row artists-wrapper">
