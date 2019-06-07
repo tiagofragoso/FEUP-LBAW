@@ -16,7 +16,7 @@
     </li>
     @endunless
 </ul>
-<div class="tab-content my-3 mx-3" id="myTabProfile">
+<div class="tab-content my-3 mx-3" id="myTabProfile1">
     <div class="tab-pane fade show active" id="joined" role="tabpanel" aria-labelledby="joined-tab">
         <div class="row">
             @if (count($joined) == 0)
