@@ -91,8 +91,15 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (!(!(Auth::check() && Auth::user()->is_admin) && $event->banned)){
+
         if (Auth::check()) {
+            $this->authorize('view', $event);
+        } else if ($event->banned || $event->private) {
+            abort(403);
+        }
+
+
+        if (Auth::check() && !Auth::user()->is_admin) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
             } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
@@ -102,8 +109,6 @@ class EventController extends Controller
             }
         }
 
-        if ($event->private)
-            $this->authorize('view', $event);
 
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
@@ -155,8 +160,6 @@ class EventController extends Controller
             'questions' => $questions,
             'threads' => $threads,
             'joined'=> $joined]);  
-        } else abort(404);
-
     }
 
     /**
