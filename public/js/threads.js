@@ -35,7 +35,6 @@ function createThread(response) {
                             </div>
                         </div>
                         <p class="card-text mt-3">
-                           ${response.content}
                         </p>
                     </div>
                 </div>
@@ -72,6 +71,7 @@ function createThread(response) {
     </div>
     `
 
+    thread.querySelector('.card-text.mt-3').textContent = response.content;
     let section = thread.querySelector('.comment-section-threads');
     let button = section.querySelector('.submit-btn');
 
@@ -104,7 +104,8 @@ function createThreadComment(response) {
                         <a class="title-link mr-2" href="/users/${response.user_id}">
                         <span class=" author">${response.user}</span>
                         </a>
-                        ${response.content}
+                        <span>
+                        <span>
                     </span>
                 </div>
                 <div class="comment-footer ml-3">                
@@ -115,6 +116,7 @@ function createThreadComment(response) {
     </div>
     `
 
+    comment.querySelector('span span').textContent = response.content;
     return comment;
 
 }
@@ -123,6 +125,8 @@ if (threadContent !== null) {
     let button = document.querySelector('.submit-thread-button');
     button.addEventListener('click', async () => {
         event.preventDefault();
+
+        if (threadContent.value === "") return;
 
         let requestBody = {
             content: threadContent.value
@@ -168,6 +172,8 @@ commentsSections.forEach(section => {
 
 async function commentHandler(event) {
     event.preventDefault();
+
+    if (this.content.value === "") return;
 
     let requestBody = {
         content : this.content.value

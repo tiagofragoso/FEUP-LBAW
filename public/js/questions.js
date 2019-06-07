@@ -10,6 +10,8 @@ if (questionContent !== null) {
 async function postQuestion(event) {
     event.preventDefault();
 
+    if (questionContent.value === "") return;
+
     let requestBody = {
         content: questionContent.value,
     }
