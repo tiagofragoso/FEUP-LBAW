@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
         if (!Auth::check())
             return redirect('/search');
 
         $events = $this->getTrending();
 
-        $activity = $this->getActivity();
+        $activity = $this->getActivity($request);
 
         return view('pages.home', ['events' => $events, 'activity' => $activity]);
     }
@@ -37,7 +37,7 @@ class HomeController extends Controller
         ->get();
     }
 
-    public function getActivity()
+    public function getActivity(Request $request)
     {
         $participations = Participation::select(
                 'users.id as user_id',
@@ -68,6 +68,7 @@ class HomeController extends Controller
 
         $posts = Post::select(
                 'posts.*',
+                'users.name as author_name',
                 'participations.type as event_participation',
                 'events.id as event_id',
                 'events.title as event_title'
@@ -96,6 +97,11 @@ class HomeController extends Controller
             }
         }
 
-        return $participations->toBase()->merge($posts)->sortByDesc('date');
+        if ($request->has('page')) {
+            return $participations->toBase()->merge($posts)->sortByDesc('date')->forPage($request->page, 10);
+        }
+        else {
+            return $participations->toBase()->merge($posts)->sortByDesc('date')->forPage(1, 10);
+        }
     }
 }

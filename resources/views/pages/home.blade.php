@@ -7,6 +7,7 @@
 <script type="module" src="js/posts.js"></script>
 <script type="module" src="js/join_event.js"></script>
 <script type="module" src="js/comments.js"></script>
+<script type="module" src="js/home.js"></script>
 @endsection
 
 @section('content')
@@ -33,7 +34,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="activity-container">
         @foreach ($activity as $a)
             @if ($a->type == 'Post' || $a->type == 'Poll' || $a->type == 'File')
                 @include('partials.feed_post_card', ['post' => $a])

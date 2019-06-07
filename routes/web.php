@@ -21,6 +21,8 @@ Route::get('events/{id}/edit', 'EventController@edit');
 Route::put('events/{id}', 'EventController@update');
 
 // API
+Route::get('api/feed', 'HomeController@getActivity');
+
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
