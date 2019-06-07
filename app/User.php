@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -137,15 +138,10 @@ class User extends Authenticatable
             ->detach($comment_id);
     }
 
-    public function tickets()
-    {
-        return $this->hasMany('App\Ticket', 'owner')->get();
-    }
-
     public function sortedTickets()
     {
 
-        $tickets = $this->tickets();
+        $tickets = $this->tickets()->get();
 
         foreach ($tickets as $ticket) {
             $ticket->event_date = Event::find($ticket->event_id)->start_date;
@@ -155,4 +151,13 @@ class User extends Authenticatable
         });
         return array_reverse($sortedTickets);
     }
+    public function acquireTicket($event, $price){
+        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
+        Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
+    }
+
+    public function tickets() {
+        return $this->hasMany('App\Ticket', 'owner');
+    }
+
 }

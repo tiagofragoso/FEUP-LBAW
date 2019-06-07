@@ -52,6 +52,7 @@ Route::delete('api/posts/{id}/like','PostController@dislikePost');
 Route::put('api/comments/{id}/like','CommentController@likeComment');
 Route::delete('api/comments/{id}/like','CommentController@dislikeComment');
 
+Route::post('api/events/{event_id}/tickets','EventController@acquireTicket');
 
 Route::get('api/invites/following', 'InvitesController@getFollowing');
 Route::get('api/invites/search', 'InvitesController@search');

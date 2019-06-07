@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use App\Event;
+use App\Ticket;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +58,12 @@ class EventPolicy
     public function delete(User $user, Event $event)
     {
         //
+    }
+
+    public function acquireTicket(User $user,Event $event){
+        
+        $canAcquire = $event->participatesAs(['Participant'])->get();
+        return $canAcquire->contains($user) && !Ticket::where('owner', $user->id)->where('event_id', $event->id)->exists();
     }
 
     public function canVote(User $user, Event $event){
