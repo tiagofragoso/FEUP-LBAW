@@ -8,7 +8,9 @@
                 <a class="title-link mr-2" href="{{ url('/users/'.$comment->user->id)}}">
                     <span class=" author">{{$comment->user->displayName()}}</span>
                 </a>
+                <span>
                 {{$comment->content}}
+                </span>
             </span>
         </div>
         <div class="comment-footer ml-3">
