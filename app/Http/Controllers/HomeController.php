@@ -87,17 +87,6 @@ class HomeController extends Controller
             foreach ($value['commentsContent'] as $key1 => $comment) {
                 $comment['comments'] = Comment::find($comment->id)->comments()->get();
             }
-
-            if ($value->type == 'Poll') {
-                $value['poll_title'] = $post->poll()->first()->title;
-                $value['poll_options'] = $post->poll()->first()->pollOptions()->get();
-                foreach ($value->poll_options as $poll_option) {
-                    $poll_option['voted'] = $post->poll()->first()->hasVoteInOption(Auth::user()->id, $poll_option->id);
-                }
-            }
-            elseif ($value->type == 'File') {
-                $value['post_file'] = $post->file()->first();
-            }
         }
 
         foreach($posts as $post) {
@@ -110,11 +99,6 @@ class HomeController extends Controller
             }
         }
 
-        if ($request->has('page')) {
-            return $participations->toBase()->merge($posts)->sortByDesc('date')->forPage($request->page, 10);
-        }
-        else {
-            return $participations->toBase()->merge($posts)->sortByDesc('date')->forPage(1, 10);
-        }
+        return $participations->toBase()->merge($posts)->sortByDesc('date');
     }
 }

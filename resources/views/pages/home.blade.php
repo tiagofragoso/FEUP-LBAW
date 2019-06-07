@@ -10,7 +10,6 @@
 <script type="module" src="js/posts.js" defer></script>
 <script type="module" src="js/join_event.js" defer></script>
 <script type="module" src="js/comments.js" defer></script>
-<script type="module" src="js/home.js" defer></script>
 @endsection
 
 @section('content')
