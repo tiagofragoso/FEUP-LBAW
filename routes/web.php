@@ -31,6 +31,8 @@ Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 Route::put('api/users/{id}/ban','ProfileController@banUser');
 Route::post('api/users/{id}/report','ReportController@reportUser');
 Route::put('api/users/reports/{id}','ReportController@updateUserReport');
+Route::get('api/users/{id}/followers', 'ProfileController@followers');
+Route::get('api/users/{id}/following', 'ProfileController@following');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
