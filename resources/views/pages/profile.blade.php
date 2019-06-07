@@ -16,8 +16,8 @@
                     @include('partials.profile_header', ['user' => $user])
                     <div class="row mb-3 justify-content-center">
                         <div class="col-2 text-right ">
-                            <a class="card-link border-bottom" data-toggle="collapse" href="#mytickets"
-                                role="button" aria-expanded="false" aria-controls="mytickets">My tickets</a>
+                            <a class="card-link border-bottom" href="{{ url('/tickets')}}"
+                                >My tickets</a>
                         </div>
                         <div class="col-2 text-center">
                                 <a href="{{ url('/invites')}}" class="card-link border-bottom">Invites</a>
