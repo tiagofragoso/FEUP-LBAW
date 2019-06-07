@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Invites')
 @section('container', 'profile-page')
 @section('scripts')
     <script defer type="module" src="/js/profile_invites.js"></script>

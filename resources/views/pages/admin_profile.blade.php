@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Admin')
 @section('container', 'profile-page')
 @section('scripts')
     <script defer type="module"  src="/js/admin.js"> </script>
