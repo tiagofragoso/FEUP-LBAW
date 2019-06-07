@@ -223,6 +223,13 @@ CREATE TABLE event_reports (
     "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
+CREATE TABLE password_resets (
+    email text,
+    token text,
+    created_at timestamp
+
+);
+
 -- Triggers
 
 --Trigger: participations_count
