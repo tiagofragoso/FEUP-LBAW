@@ -33,9 +33,9 @@
 </div>
 <div class="row justify-content-center mb-4">
     <div class="col-5 col-sm-4 text-right border-right pr-2">
-        <p class="card-text number-followers">{{$user->followers}}</p>
+        <p class="card-text number-followers" data-id="{{$user->id}}">{{$user->followers}}</p>
     </div>
     <div class="col-5 col-sm-4 text-left pl-0 ml-2">
-        <p class="card-text number-following">{{$user->following}}</p>
+        <p class="card-text number-following" data-id="{{$user->id}}">{{$user->following}}</p>
     </div>
 </div>

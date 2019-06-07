@@ -867,6 +867,14 @@ input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	content: '@';
 }
 
+.number-following, .number-followers {
+    cursor: pointer;
+}
+
+.number-following:hover, .number-followers:hover {
+    text-decoration: underline;
+}
+
 .number-following::after {
 	content : ' following';
 }
