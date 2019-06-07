@@ -14,15 +14,10 @@ document.getElementById('delete-account-btn').addEventListener('click',async() =
             }
         }
     );
-    console.log(response);
+
     if(response.status == 200){
-        console.log(document.getElementById('delete-account-btn'));
         document.getElementById('delete-account-btn').setAttribute("href","{{ url('/logout')}}");
-
     }
-
-    
-
 });
 document.getElementById('profile-submit').addEventListener('click', async () => {
     clearErrors('.form-group-general');
@@ -131,7 +126,7 @@ input.addEventListener('change', async () => {
                 body: formData
             }
         );
-        console.log(response);
+
         if (response.status === 200) {
             document.querySelector('#upload-result').textContent = 'Uploaded successfuly';
             document.querySelector('#upload-result').className = 'text-success';

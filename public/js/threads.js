@@ -147,8 +147,6 @@ if (threadContent !== null) {
             }
         );
 
-        console.log(response);
-
         if (response.status === 201) {
             threadContent.value = "";
             insertThread(createThread(response.data))
@@ -191,8 +189,6 @@ async function commentHandler(event) {
             body: JSON.stringify(requestBody)
         }
     );
-
-    console.log(response);
 
     if (response.status === 201) {
         this.content.value = "";

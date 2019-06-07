@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -36,6 +38,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Database\QueryException) {
+            $dbLog = new Logger('db');
+            $dbLog->pushHandler(new StreamHandler(storage_path('logs/db.log')), Logger::ERROR);
+            $dbLog->error($exception->getMessage());
+        }
         parent::report($exception);
     }
 

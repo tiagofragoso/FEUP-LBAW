@@ -4,24 +4,6 @@
 @section('container', 'search-page')
 
 @section('scripts')
-    <script type="text/javascript">
-        let requestObj = {
-            page: 2,
-            start_date: '',
-            end_date: '',
-            location: '',
-            start_price: '',
-            end_price: '',
-            category: '',
-            status: '',
-            sort_by: ''
-        };
-        @if (app('request')->has('search'))
-        requestObj.search = "{{ app('request')->input('search') }}";
-        @else 
-        requestObj.search = "";
-        @endif
-    </script>
     <script defer type="module" src="/js/search.js"></script>
 @endsection
 
@@ -58,7 +40,11 @@
     <div class="row">
         <div class="col-12">
             <h2>
+                @if (app('request')->has('search'))
+                Search for: <span id="search-query">{{ app('request')->input('search') }}</span>
+                @else 
                 Search for: <span id="search-query">Trending events</span>
+                @endif
             </h2>
         </div>
     </div>
