@@ -34,7 +34,7 @@ document.querySelector('.number-followers').addEventListener('click', async () =
     });
 
     clearModal();
-    if (response.data.followers.length == 0) {
+    if (response.status == 404 || response.data.followers.length == 0) {
         document.querySelector('#followsModal .modal-body .container').innerHTML = '<h4 class="text-center w-100">No results found</h4>';
     }
     else {
@@ -60,7 +60,7 @@ document.querySelector('.number-following').addEventListener('click', async () =
     });
 
     clearModal();
-    if (response.data.following.length == 0) {
+    if (response.status == 404 || response.data.following.length == 0) {
         document.querySelector('#followsModal .modal-body .container').innerHTML = '<h3 class="text-center w-100">No results found</h3>';
     }
     else {
