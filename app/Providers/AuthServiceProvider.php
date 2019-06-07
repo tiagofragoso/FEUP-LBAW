@@ -21,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
       'App\Answer' => 'App\Policies\AnswerPolicy',
       'App\Thread' => 'App\Policies\ThreadPolicy',
       'App\PollVote' => 'App\Policies\PollVotePolicy',
-      'App\ThreadComment' => 'App\Policies\ThreadCommentPolicy'
+      'App\ThreadComment' => 'App\Policies\ThreadCommentPolicy',
+      'App\User'=> 'App\Policies\UserPolicy',
     ];
 
     /**

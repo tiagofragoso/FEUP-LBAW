@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned','deleted'
     ];
 
     /**
@@ -38,6 +38,7 @@ class User extends Authenticatable
     }
 
     public function displayName() {
+    
         return (empty($this->name)? '@'.$this->username : $this->name);
     }
 
