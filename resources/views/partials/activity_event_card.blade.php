@@ -1,4 +1,4 @@
-@if ((new DateTime($event->start_date)) < (new DateTime()))
+@if ((new DateTime($event->end_date)) < (new DateTime()))
 <div class="activity-event-card d-flex align-items-center hover-shadow card-fade" tabindex="-1">
 @else
 <div class="activity-event-card d-flex align-items-center hover-shadow" tabindex="-1">
