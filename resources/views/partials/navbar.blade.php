@@ -19,6 +19,10 @@
                 </div>
             </form>
             <ul class="navbar-nav">
+                <button type="button" class="btn btn-light border-light help-btn mr-4 my-auto rounded-circle" data-toggle="modal" data-target="#nav-help-modal">
+                    <!-- <div class="help-text mr-3 ">Having trouble filling out the form? Click here.</div> -->
+                    <i class="fas fa-question"></i>
+                </button>
                 @if (Auth::check())
                 <li class="nav-item mr-2 my-auto d-none d-lg-block">
                 <a href="{{ url('/events/create') }}">
@@ -41,7 +45,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
+                    <img id="navbar-pic" src="{{ Auth::user()->photo() }}" class="rounded-circle border border-light" />
                     </a>
                     @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
                         <div class="invite-badge position-absolute"></div>
@@ -49,6 +53,9 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-muted" href="{{ url('/profile') }}">My profile</a>
                         @if (Auth::check() && !Auth::user()->is_admin)
+                            <a class="dropdown-item text-muted" href="{{ url('/tickets') }}">
+                                Tickets
+                            </a>
                             <a class="dropdown-item text-muted" href="{{ url('/invites') }}">
                                 Invites
                                 @if (Auth::user()->pendingInviteCount() > 0)

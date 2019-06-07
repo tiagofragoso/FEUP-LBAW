@@ -16,4 +16,8 @@ class Ticket extends Model
        'qrcode', 'owner','price','event_id'
     ];
 
+    public function event() {
+        return $this->belongsTo('App\Event');
+    }
+
 }

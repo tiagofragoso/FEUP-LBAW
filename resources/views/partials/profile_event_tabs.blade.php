@@ -33,18 +33,30 @@
                 @endif
             </div>
             @else
-            @each('partials.activity_event_card', $joined, 'event')
+            @foreach ($joined as $event)
+                <div class="col-12 col-md-10 mx-auto mt-5">
+                    @include('partials.activity_event_card', ['event' => $event])
+                </div>
+            @endforeach
             @endif
         </div>
     </div>
     <div class="tab-pane fade" id="hosting" role="tabpanel" aria-labelledby="performing-tab">
-        <div class="row" id = "performing-tab">
-            @each('partials.activity_event_card', $hosting, 'event')
+        <div class="row">
+            @foreach ($hosting as $event)
+                <div class="col-12 col-md-10 mx-auto mt-5">
+                    @include('partials.activity_event_card', ['event' => $event])
+                </div>
+            @endforeach
         </div>
     </div>
-    <div class="tab-pane fade" id="performing" role="tabpanel" aria-labelledby="performing-tab1">
-        <div class="row" id ="performing-tab1">
-            @each('partials.activity_event_card', $performing, 'event')
+    <div class="tab-pane fade" id="performing" role="tabpanel" aria-labelledby="performing-tab">
+        <div class="row">
+            @foreach ($performing as $event)
+                <div class="col-12 col-md-10 mx-auto mt-5">
+                    @include('partials.activity_event_card', ['event' => $event])
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

@@ -45,7 +45,9 @@ CREATE TABLE users (
     followers integer NOT NULL DEFAULT 0 CONSTRAINT positive_followers CHECK (followers >= 0),
     "following" integer NOT NULL DEFAULT 0 CONSTRAINT positive_following CHECK ("following" >= 0),
     banned boolean NOT NULL DEFAULT FALSE,
+    deleted boolean NOT NULL DEFAULT FALSE,
     remember_token text,
+    photo text,
     is_admin boolean NOT NULL DEFAULT FALSE
 );
 
@@ -63,15 +65,15 @@ CREATE TABLE categories (
 CREATE TABLE events (
     id serial PRIMARY KEY,
     title varchar(60) NOT NULL,
-    "start_date" timestamp CONSTRAINT future_start_date CHECK ("start_date" > CURRENT_TIMESTAMP),
-    "end_date" timestamp CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_TIMESTAMP),
+    "start_date" timestamptz CONSTRAINT future_start_date CHECK ("start_date" > CURRENT_TIMESTAMP),
+    "end_date" timestamptz CONSTRAINT future_end_date CHECK ("end_date" > CURRENT_TIMESTAMP),
     "location" varchar(50),
     "address" varchar(100),
     participants integer NOT NULL DEFAULT 0 CONSTRAINT positive_participants CHECK (participants >= 0),
     price numeric DEFAULT 0 CONSTRAINT positive_price CHECK (price >= 0),
     brief varchar(140) NOT NULL,
     "description" text NOT NULL,
-    ticket_sale_start_date timestamp CONSTRAINT future_ticket_sale_date CHECK ("ticket_sale_start_date" > CURRENT_TIMESTAMP),
+    ticket_sale_start_date timestamptz CONSTRAINT future_ticket_sale_date CHECK ("ticket_sale_start_date" > CURRENT_TIMESTAMP),
     banned boolean NOT NULL DEFAULT FALSE,
     "type" event_type NOT NULL,
     "private" boolean NOT NULL DEFAULT FALSE,
@@ -87,7 +89,7 @@ CREATE TABLE events (
 CREATE TABLE tickets (
     id serial PRIMARY KEY,
     qrcode text NOT NULL,
-    purchase_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_TIMESTAMP),
+    purchase_date timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_purchase_date CHECK ("purchase_date" <= CURRENT_TIMESTAMP),
     price numeric NOT NULL CONSTRAINT positive_price CHECK (price >= 0),
     "owner" integer NOT NULL REFERENCES users ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE
@@ -98,7 +100,7 @@ CREATE TABLE participations (
     "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE,
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     UNIQUE("user_id", event_id)
 );
 
@@ -109,7 +111,7 @@ CREATE TABLE invite_requests (
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     "type" participation_type NOT NULL,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     UNIQUE(invited_user_id, event_id)
 );
 
@@ -122,7 +124,7 @@ CREATE TABLE follows (
 CREATE TABLE posts (
     id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     comments integer NOT NULL DEFAULT 0 CONSTRAINT positive_comments CHECK (comments >= 0),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
@@ -139,7 +141,7 @@ CREATE TABLE post_likes (
 CREATE TABLE comments (
     id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     likes integer NOT NULL DEFAULT 0 CONSTRAINT positive_likes CHECK (likes >= 0),
     post_id integer NOT NULL REFERENCES posts ON DELETE CASCADE,
     "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE,
@@ -174,13 +176,14 @@ CREATE TABLE poll_votes (
 
 CREATE TABLE files (
     post_id integer PRIMARY KEY REFERENCES posts ON DELETE CASCADE,
-    "file" text NOT NULL 
+    "file" text NOT NULL ,
+    "fileName" text NOT NULL
 );
 
 CREATE TABLE threads (
     id serial PRIMARY KEY,
     content varchar(5000) NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     event_id integer NOT NULL REFERENCES events ON DELETE CASCADE,
     author_id integer NOT NULL REFERENCES users ON DELETE CASCADE
 );
@@ -188,7 +191,7 @@ CREATE TABLE threads (
 CREATE TABLE thread_comments (
     id serial PRIMARY KEY,
     content varchar(2500) NOT NULL,
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP),
     thread_id integer NOT NULL REFERENCES threads ON DELETE CASCADE,
     "user_id" integer NOT NULL REFERENCES users ON DELETE CASCADE
 );
@@ -209,7 +212,7 @@ CREATE TABLE user_reports (
     "user_id" integer REFERENCES users ON DELETE CASCADE,
     reported_user integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 CREATE TABLE event_reports (
@@ -217,7 +220,7 @@ CREATE TABLE event_reports (
     event_id integer REFERENCES events ON DELETE CASCADE,
     "user_id" integer REFERENCES users ON DELETE CASCADE,
     "status" status NOT NULL DEFAULT 'Pending',
-    "date" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
+    "date" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP CONSTRAINT past_date CHECK ("date" <= CURRENT_TIMESTAMP)
 );
 
 -- Triggers
@@ -873,10 +876,10 @@ INSERT INTO poll_votes(poll_id,"user_id",poll_option) VALUES (1,12,3);
 
 -- Files
 
-INSERT INTO files(post_id,"file") VALUES (2,'file1');
-INSERT INTO files(post_id,"file") VALUES (5,'file2');
-INSERT INTO files(post_id,"file") VALUES (6,'file3');
-INSERT INTO files(post_id,"file") VALUES (7,'file4');
+INSERT INTO files(post_id,"file","fileName") VALUES (2,'file1','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (5,'file2','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (6,'file3','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (7,'file4','something');
 
 -- Threads
 

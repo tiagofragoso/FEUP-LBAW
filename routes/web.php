@@ -11,8 +11,7 @@
 |
 */
 
-Route::redirect('/', 'search');
-
+Route::get('', 'HomeController@show');
 
 // Events
 Route::get('events/create', 'EventController@create');
@@ -22,13 +21,19 @@ Route::get('events/{id}/edit', 'EventController@edit');
 Route::put('events/{id}', 'EventController@update');
 
 // API
+Route::get('api/feed', 'HomeController@getActivity');
+
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
+Route::delete('api/profile/delete','ProfileController@deleteAccount');
+Route::post('api/profile/photo','ProfileController@uploadPhoto');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 Route::put('api/users/{id}/ban','ProfileController@banUser');
 Route::post('api/users/{id}/report','ReportController@reportUser');
 Route::put('api/users/reports/{id}','ReportController@updateUserReport');
+Route::get('api/users/{id}/followers', 'ProfileController@followers');
+Route::get('api/users/{id}/following', 'ProfileController@following');
 
 Route::put('api/events/{id}/join','EventController@joinEvent');
 Route::delete('api/events/{id}/join','EventController@leaveEvent');
@@ -71,6 +76,7 @@ Route::get('profile', 'ProfileController@showProfile');
 Route::get('users/{id}', 'ProfileController@show');
 Route::get('settings', 'ProfileController@edit');
 Route::get('invites', 'ProfileController@showInvites');
+Route::get('tickets','ProfileController@showTickets');  
 
 //About
 Route::view('about', 'pages.about');

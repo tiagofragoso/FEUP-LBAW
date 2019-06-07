@@ -125,13 +125,13 @@
 								<p class="card-subtitle text-muted">
 									@if (!empty($event->start_date))
 									<span>
-										{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
+										{{ \DateTime::createFromFormat('Y-m-d H:i:sO', $event->start_date)->format('D, d M Y H:i') }}
 									</span>
 							@endif
 							@if (!empty($event->end_date))
 							-
 							<span>
-								{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('D, d M Y') }}
+								{{ \DateTime::createFromFormat('Y-m-d H:i:sO', $event->end_date)->format('D, d M Y H:i') }}
 							</span>
 							@endif
 						</p>
@@ -233,18 +233,13 @@
 						<h5>Artists</h5>
 					</div>
 					<div class="col-4 text-right">
-						@unless(count($artists) === 0)
-						<a href="#" class="view-all">
-							View all
-						</a>
-						@endunless
 					</div>
 				</div>
 				<div class="row artists-wrapper">
 					@if (count($artists) > 0)
 					@foreach($artists as $artist)
 					<a href="{{ url('/users/'.$artist->id) }}" class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-						<img src="{{asset('assets/user.svg')}}" class="rounded-circle rounded-circle border border-light" width="40" />
+						<img src="{{ $artist->photo() }}" class="rounded-circle rounded-circle border border-light" width="40" />
 						<span class="text-center">{{$artist->displayName()}}</span>
 					</a>
 					@endforeach
@@ -295,29 +290,57 @@
 										<div class=" container">
 											<div class="row">
 												<div class="col-12">
-													<p class="card-title"><strong>Create a post</strong></p>
+													<p class="card-title font-weight-bold">Create a post</p>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-12">
-													<textarea class="form-control" id="postFormTextarea" rows="3"></textarea>
+													<textarea class="form-control" id="postFormTextarea" rows="3" maxlength="5000"
+													style="resize:none" placeholder="Post content"></textarea>
 												</div>
 											</div>
+											<div id="poll-wrapper" class="row mt-2 d-none">
+												<div class="col-12">
+													<input class="form-control font-weight-bold" type="text" name="title" placeholder="Poll title" maxlength="100">
+												</div>
+												<div class="poll-option-input col-12 col-sm-8 mt-2 position-relative">
+													<button class="btn poll-option-close-btn position-absolute ml-2"><i class="fas fa-times"></i></button>
+													<input class="form-control pl-5" type="text" placeholder="Option" maxlength="30">
+												</div>
+												<div class="poll-option-input col-12 col-sm-8 mt-2 position-relative">
+													<button class="btn poll-option-close-btn position-absolute ml-2"><i class="fas fa-times"></i></button>
+													<input class="form-control pl-5" type="text" placeholder="Option" maxlength="30">
+												</div>
+												<div class="add-poll-option col-12 col-sm-8 mt-2 d-flex flex-row align-items-center">
+													<button class="btn poll-option-close-btn ml-2"><i class="fas fa-plus"></i></button>
+													<span class="ml-3 text-muted">Add new option</span>
+												</div>
+											</div>
+											<div id="file-wrapper" class="row mt-2 d-none">
+												<div class="col-12 col-sm-8 mt-2">
+													<label for="file-input" class="d-flex flex-row align-items-center">
+														<span class="btn poll-option-close-btn ml-2"><i class="fas fa-upload"></i></span>
+														<span class="ml-3 text-muted" style="cursor:pointer">Upload a file</span>
+													</label>
+													<input id="file-input" type="file" class="d-none">
+												</div>
+											</div>
+											<div class="text-danger d-none post-error"></div>
 											<hr class="mb-1">
-											<div class="row">
+											<div class="row d-flex flex-row justify-content-between">
 												<div class="col-6 post-type">
-													<input class="form-check-input d-none form-post-type" type="radio" id="text" value="option1" name="post-type" checked>
+													<input class="form-check-input d-none form-post-type" type="radio" id="text" value="text" name="post-type" checked>
 													<label class="form-check-label mr-2" for="text"><i class="fas fa-font"></i></label>
 
-													<input class="form-check-input d-none form-post-type" type="radio" id="poll" value="option2" name="post-type">
+													<input class="form-check-input d-none form-post-type" type="radio" id="poll" value="poll" name="post-type">
 													<label class="form-check-label mr-2" for="poll"><i class="fas fa-poll-h"></i></label>
 
-													<input class="form-check-input d-none form-post-type" type="radio" id="file" value="option3" name="post-type">
+													<input class="form-check-input d-none form-post-type" type="radio" id="file" value="file" name="post-type">
 													<label class="form-check-label" for="file"><i class="fas fa-paperclip"></i></label>
 												</div>
-												<div class="col-6 text-right">
-													<button class="submit-btn submit-post" data-id="{{$event->id}}" type="submit">
-														<i class="fas fa-angle-double-right"></i>
+												<div class="col d-flex flex-row justify-content-end">
+													<button class="btn btn-sm btn-secondary submit-post d-flex flex-row align-items-center" data-id="{{$event->id}}" type="submit">
+														Submit <i class="ml-2 fas fa-angle-double-right"></i>
 													</button>
 												</div>
 											</div>
@@ -336,8 +359,8 @@
 								<div class="row justify-content-center align-items-center mb-4">
 									<div class="row col-12 mt-3 justify-content-center align-items-center">
 										<div class="col-12 col-md-10 d-flex flex-row align-items-center">
-											<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
-											<form class="position-relative w-100" action="#">
+										<img src="{{ Auth::user()->photo() }} " class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
+											<form class="position-relative w-100">
 												<textarea class="form-control position-relative w-100 pr-5"
 													id="questionFormTextarea" rows="1"
 													placeholder="Ask a question" style="resize: none"></textarea>
@@ -371,7 +394,7 @@
 												<div class="row align-items-center mb-4">
 													<div class="row col-12 mt-3  align-items-center">
 														<div class="col-12 d-flex flex-row align-items-center">
-															<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30">
+															<img src="{{ Auth::user()->photo() }}" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30">
 															<form class="position-relative form-answer-question w-100">
 																<textarea class="form-control position-relative w-100 pr-5" rows="1" placeholder="Answer" style="resize: none"></textarea>
 																<div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">
@@ -414,6 +437,7 @@
 							</div>
 						</div>
 						<div class="tab-pane fade" id="forum" role="tabpanel" aria-labelledby="forum-tab">
+							@if ($joined === 'Host' || $joined === 'Artist')
 							<div class="row justify-content-center">
 								<div class="col-12 col-lg-9">
 									<p class="text-muted">
@@ -438,16 +462,15 @@
 												<input class="form-check-input d-none" type="radio" id="thread" value="option4" name="thread" checked>
 												<label class="form-check-label mr-2" for="thread"><i class="fas fa-font"></i></label>
 											</div>
-											<div class="col-6 text-right">
-												<button class="submit-btn submit-thread-button" data-id = {{$event->id}} type="submit">
-													<i class="fas fa-angle-double-right"></i>
-												</button>
-											</div>
+											<div class="col d-flex flex-row justify-content-end">
+													<button class="btn btn-sm btn-secondary submit-thread-button d-flex flex-row align-items-center" data-id="{{$event->id}}" type="submit">
+														Submit <i class="ml-2 fas fa-angle-double-right"></i>
+													</button>
+												</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							@if ($joined === 'Host' || $joined === 'Artist')
 								<div class="threads-list">
 								@each('partials.thread', $threads, 'thread')
 								</div>

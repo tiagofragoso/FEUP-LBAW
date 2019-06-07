@@ -9,6 +9,8 @@ use App\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -25,13 +27,14 @@ class ProfileController extends Controller
         }
 
         $user = User::findOrFail($id);
-        if ($user->banned && !Auth::user()->is_admin) {
-            abort(403);
-        }
-        if ($user->is_admin) {
-            abort(403);
-        }
 
+        if (Auth::check()) {
+            $this->authorize('view', $user);
+        } else if ($user->is_admin || $user->banned) {
+            abort(403);
+        }
+      
+       
         $data = $this->getEventsData($user);
         $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
 
@@ -50,7 +53,22 @@ class ProfileController extends Controller
             return view('pages.profile',  $data);
         }   
     }
+    public function showTickets(){
+        if (!Auth::check()) return redirect('/login');
 
+        $user = Auth::user();
+        if ($user->is_admin) {
+            abort(403); 
+        }
+        $tickets =$user->sortedTickets();
+        if (Auth::user()->is_admin) { 
+            
+        }
+        else {
+            return view('pages.tickets',['user'=>$user,'tickets'=>$tickets]);
+        }
+
+    }
     private function getEventsData($user)
     {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
@@ -259,5 +277,57 @@ class ProfileController extends Controller
         return response()->json(null, 200);
     }
 
-    
+    public function deleteAccount(){
+        if (!Auth::check()) return response()->json(null, 403);
+        $user = User::find(Auth::user()->id);
+        $user->delete();
+
+        return response()->json(null,200);
+    }
+
+    public function uploadPhoto(Request $request){
+        if (!Auth::check()) return response()->json(null, 403);
+        Validator::make($request->all(), ['photo' => 'required|image'])->validate();
+        if ($request->hasFile('photo')) {
+            if (!empty(Auth::user()->photo)) {
+                try {
+                    $old = Storage::disk('public')->get(Auth::user()->photo);
+                } catch (Exception $e) { }
+                if (isset($old)) {
+                    Storage::disk('public')->delete(Auth::user()->photo);
+                }
+            }
+            try {
+                $path = $request->file('photo')->store('users', 'public');
+                Auth::user()->update(['photo' => $path]);
+                return response()->json(['path' => $path], 200);
+            } catch(\Exception $e) {
+                return response()->json(null, 400);    
+            }
+        } else {
+            return response()->json(null, 400);
+        }
+    }
+
+    public function followers($id) {
+        try {
+            $followers = User::findOrFail($id)->followers()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'followers' => $followers
+        ], 200);
+    }
+
+    public function following($id) {
+        try {
+            $following = User::findOrFail($id)->following()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'following' => $following
+        ], 200);
+    }
 }

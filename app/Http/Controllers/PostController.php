@@ -6,10 +6,12 @@ use App\Comment;
 use App\Post;
 use App\Poll;
 use App\Event;
-use App\PollVote;
+use App\PollOption;
+use App\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -24,7 +26,7 @@ class PostController extends Controller
             'content' => 'required|string|max:5000',
             'event_id' => 'required',
             'author_id' => 'required',
-            'type' => 'required'
+            'type' => 'required|in:Post,Poll,File'
         ])->validate();
     }
 
@@ -56,27 +58,100 @@ class PostController extends Controller
      */
     public function store(Request $request, $id)
     {
-        if(!Auth::check()) return response()->json(null, 403);
+        if (!Auth::check()) return response()->json(null, 403);
         $event = Event::find($id);
         if (is_null($event)) return response()->json(null, 404);
-        $p = new Post();
-        $this->authorize('create', [$p, $event]);
-        $request->request->add(['author_id' => Auth::user()->id]);
-        $request->request->add(['event_id' => $id]);
+
+        $this->authorize('create', [new Post(), $event]);
+
+        $request->request->add(['author_id' => Auth::user()->id, 'event_id' => $id]);
+
+        DB::beginTransaction();
+
         $this->validatePost($request);
-        if ($request->type == 'Post') {
-            $post = Post::create($request->all());
-            $post = Post::find($post->id);
-            return response()->json([
-                'id' => $post->id,
-                'content' => $post->content,
-                'author_id' => $post->author_id,
-                'type' => $post->type,
-                'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i'),
-                'author' => $post->author->displayName()
-            ], 201);
+        try {
+            $post = Post::create($request->except(['poll_options', 'title', 'file']));
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(null, 400);
+        }
+
+        $returnObject = [
+            'id' => $post->id,
+            'content' => $post->content,
+            'author_id' => $post->author_id,
+            'type' => $post->type,
+            'date' => Post::find($post->id)->date,
+            'author' => $post->author->displayName(),
+            'photo' => $post->author->photo()
+        ];
+
+        if ($request->type === 'Post') {
+            DB::commit();
+            return response()->json($returnObject, 201);
+        } else if ($request->type === 'Poll') {
+            return $this->storePoll($request, $returnObject, $post);
+        } else if ($request->type === 'File') {
+            return $this->storeFile($request, $returnObject, $post);
+        }
+    }
+
+    private function storePoll($request, $returnObject, $post)
+    {
+        $title = $request->title;
+        if (empty($title)) {
+            DB::rollback();
+            return response()->json('Empty title', 422);
+        }
+        $poll_options = $request->poll_options;
+        if (empty($poll_options)) {
+            DB::rollback();
+            return response()->json('Empty poll options', 422);
+        }
+        $poll_options = json_decode($poll_options);
+        if (is_array($poll_options)) {
+            if (count($poll_options) < 2) {
+                DB::rollback();
+                return response()->json('There should be at least 2 poll options', 422);
+            } else {
+                try {
+                    Poll::create(['post_id' => $post->id, 'title' => $title]);
+                    $poll_opt_objects = array();
+                    foreach ($poll_options as $key => $value) {
+                        array_push($poll_opt_objects, PollOption::create(['post_id' => $post->id, 'name' => $value]));
+                    }
+                    $returnObject['title'] = $title;
+                    $returnObject['poll_options'] = json_encode($poll_opt_objects);
+                    DB::commit();
+                    return response()->json($returnObject, 201);
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return response()->json("Could\'t submit poll", 400);
+                }
+            }
         } else {
-            return response()->json(null, 404);
+            DB::rollback();
+            return response()->json('Poll options error', 422);
+        }
+    }
+
+    private function storeFile($request, $returnObject, $post) {
+        if (!$request->hasFile('file')) {
+            DB::rollback();
+            return response()->json('No file provided', 422);
+        } else {
+            try {
+                $path = $request->file('file')->store('events/files', 'public');
+                $name = $request->file('file')->getClientOriginalName();
+                File::create(['post_id' => $post->id, 'file' => $path, 'fileName' => $name]);
+                $returnObject['fileName'] = $name;
+                $returnObject['file'] = $path;
+                DB::commit();
+                return response()->json($returnObject, 201);
+            } catch (\Exception $e) {
+                DB::rollback();
+                return response()->json('Couldn\'t upload file', 400);
+            }
         }
     }
 
@@ -131,22 +206,22 @@ class PostController extends Controller
         if (!Auth::check()) return response()->json(null, 403);
         if (is_null(Poll::where('post_id', $postId)->get()->first())) return response()->json(null, 404);
         $post = Poll::where('post_id', $postId)->get()->first();
-    
+
         $event = Event::find(Post::find($postId)->event_id);
         if (!($post->hasVote(Auth::user()->id))) {
             $this->authorize('canVote', $event);
             Auth::user()->voteOnPoll($postId, $pollOption);
             return response()->json(null, 200);
-        } else{
+        } else {
             $this->authorize('canVote', $event);
-            $post->changeVote(Auth::user()->id,$pollOption);
+            $post->changeVote(Auth::user()->id, $pollOption);
             return response()->json(null, 200);
         }
-        
     }
 
-    public function likePost($id){
-       
+    public function likePost($id)
+    {
+
         if (!Auth::check()) return response()->json(null, 403);
         $post = Post::find($id);
         if (is_null($post)) return response()->json(null, 404);
@@ -155,10 +230,10 @@ class PostController extends Controller
         if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->likePost($id);
         return response()->json(null, 200);
-        
     }
-    public function dislikePost($id){
-        
+    public function dislikePost($id)
+    {
+
         if (!Auth::check()) return response()->json(null, 403);
         $post = Post::find($id);
         if (is_null($post)) return response()->json(null, 404);
@@ -166,6 +241,5 @@ class PostController extends Controller
         $this->authorize('canVote', $event);
         Auth::user()->dislikePost($id);
         return response()->json(null, 200);
-
     }
 }

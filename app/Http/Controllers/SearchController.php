@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Database\Exception;
 use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller

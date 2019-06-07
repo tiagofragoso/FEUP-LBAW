@@ -70,8 +70,9 @@ class CommentController extends Controller
             'id' => $comment->id,
             'content' => $comment->content,
             'user_id' => $comment->user_id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
+            'date' => (new \DateTime($comment->date))->format('M d | H:i'),
             'user' => $comment->user->displayName(),
+            'photo' => $comment->user->photo(),
             'post_id' => $id,
         ], 201); 
     }
@@ -126,7 +127,7 @@ class CommentController extends Controller
         if (!Auth::check()) return response(403);
         $comment = Comment::find($id);
         if (is_null($comment)) return response(404);
-        $post = Post::find($commen->post_id);
+        $post = Post::find($comment->post_id);
         $event = Event::find($post->event_id);
         $c = new Comment();
         $this->authorize('create', [$c, $event]);
@@ -138,7 +139,7 @@ class CommentController extends Controller
         if (!Auth::check()) return response(403);
         $comment = Comment::find($id);
         if (is_null($comment)) return response(404);
-        $post = Post::find($commen->post_id);
+        $post = Post::find($comment->post_id);
         $event = Event::find($post->event_id);
         $c = new Comment();
         $this->authorize('create', [$c, $event]);

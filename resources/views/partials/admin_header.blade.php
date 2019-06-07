@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-6 mb-3 mt-3 text-center position-relative">
-        <img src="../assets/user.svg" alt="..." class="rounded-circle border border-green"
+        <img src="{{ Auth::user()->photo() }}" alt="..." class="rounded-circle border border-green"
             width="120" height="120">
     </div>
 </div>

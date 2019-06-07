@@ -6,7 +6,7 @@
                     <div class="py-3 px-0 px-md-3 w-100">
                         <div class="row">
                             <div class="col-12 d-flex flex-row">
-                                <img src="../assets/user.svg"
+                            <img src="{{ $post->author->photo() }}"
                                     class="rounded-circle rounded-circle border border-light mr-2" width="30"
                                     height="30" />
                                 <div class="d-flex flex-column">
@@ -26,7 +26,7 @@
                                         @endif
                                     </p>
                                     <span class="post-date text-muted">
-                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i')}}
+                                        {{ (new \DateTime($post->date))->format('M d | H:i')}}
                                     </span>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                 <div class="dropdown-divider col-12 col-md-10 mx-auto mb-3 mt-2"></div>
                 <div class="row col-12 mt-3 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
-                        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
+                        <img src="{{ Auth::check()? Auth::user()->photo() : asset('assets/user.svg') }}" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
                         <form class="position-relative w-100" action="">
                             <textarea class="form-control position-relative w-100 pr-5 textarea-parent" rows="1"

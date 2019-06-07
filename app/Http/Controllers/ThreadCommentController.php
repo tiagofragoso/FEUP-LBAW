@@ -68,7 +68,8 @@ class ThreadCommentController extends Controller
             'content' => $comment->content,
             'user_id' => $comment->user_id,
             'thread_id' => $thread->id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i'),
+            'date' =>  (new \DateTime($comment->date))->format('M d | H:i'),
+            'photo' => $comment->user->photo(),
             'user' => $comment->user->displayName()
         ], 201);
     }

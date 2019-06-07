@@ -18,7 +18,7 @@ function createThread(response) {
                     <div class="py-3 px-0 px-md-3 w-100">
                         <div class="row">
                             <div class="col-12 d-flex flex-row">
-                                <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-2"
+                                <img src="${response.photo? response.photo: '/assets/user.svg'}" class="rounded-circle rounded-circle border border-light mr-2"
                                     width="30" height="30" />
                                 <div class="d-flex flex-column">
                                     <p class="card-text mb-0">
@@ -35,7 +35,6 @@ function createThread(response) {
                             </div>
                         </div>
                         <p class="card-text mt-3">
-                           ${response.content}
                         </p>
                     </div>
                 </div>
@@ -53,7 +52,7 @@ function createThread(response) {
                 <div class="dropdown-divider col-12 col-md-10 mx-auto mt-2 mb-3"></div>
                 <div class="row col-12 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
-                        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
+                        <img src="${document.querySelector('#navbar-pic').getAttribute('src')}" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
                         <form class="position-relative w-100" action="#">
                             <textarea class="form-control position-relative w-100 pr-5"
@@ -72,6 +71,7 @@ function createThread(response) {
     </div>
     `
 
+    thread.querySelector('.card-text.mt-3').textContent = response.content;
     let section = thread.querySelector('.comment-section-threads');
     let button = section.querySelector('.submit-btn');
 
@@ -93,7 +93,7 @@ function createThreadComment(response) {
     comment.innerHTML = `
     <div class="col-12 col-md-10 d-flex flex-row">
         <a href="/users/${response.user_id}">
-        <img src="../assets/user.svg"
+        <img src="${response.photo? response.photo: '/assets/user.svg'}"
             class="rounded-circle rounded-circle border border-light mr-3"
             width="30" height="30" />
         </a>
@@ -104,7 +104,8 @@ function createThreadComment(response) {
                         <a class="title-link mr-2" href="/users/${response.user_id}">
                         <span class=" author">${response.user}</span>
                         </a>
-                        ${response.content}
+                        <span>
+                        <span>
                     </span>
                 </div>
                 <div class="comment-footer ml-3">                
@@ -115,6 +116,7 @@ function createThreadComment(response) {
     </div>
     `
 
+    comment.querySelector('span span span').textContent = response.content;
     return comment;
 
 }
@@ -123,6 +125,8 @@ if (threadContent !== null) {
     let button = document.querySelector('.submit-thread-button');
     button.addEventListener('click', async () => {
         event.preventDefault();
+
+        if (threadContent.value === "") return;
 
         let requestBody = {
             content: threadContent.value
@@ -168,6 +172,8 @@ commentsSections.forEach(section => {
 
 async function commentHandler(event) {
     event.preventDefault();
+
+    if (this.content.value === "") return;
 
     let requestBody = {
         content : this.content.value
