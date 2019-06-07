@@ -5,7 +5,7 @@ export function getEventCard(id, title, start_date, location, price, photo) {
     card.innerHTML = `
         <a href="events/${id}" class="event-card mb-5 hover-shadow link" tabindex="-1">
             <header class="w-100 position-relative event-header d-flex align-items-center">
-                <img src="${photo}" class="w-100" alt="">
+                <img src="${photo}" class="w-100" alt="event image">
                 <div class="position-absolute w-100 h-100 gradient-overlay"></div>
                 <h6 class="position-absolute event-title px-3"></h6>
             </header>

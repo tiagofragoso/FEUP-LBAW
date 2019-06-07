@@ -6,7 +6,7 @@ export function createActivityEventCard(event) {
     eventCard.tabIndex = '-1';
     eventCard.innerHTML = `
         <div class="w-25 h-100 overflow-hidden d-flex justify-content-center">
-            <img class="h-100" src="../assets/event-placeholder.png" alt="">
+            <img class="h-100" src="../assets/event-placeholder.png" alt="event placeholder image">
         </div>
         <div class="d-flex align-items-center w-75">
             <div class="container-fluid">
