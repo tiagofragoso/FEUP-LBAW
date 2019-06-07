@@ -17,38 +17,40 @@ function updateVisual(join) {
 
 buttons.forEach(button => {
     let event_id = button.dataset.id;
-    button.addEventListener('click', async () => {
-        let url = '/api/events/'+ event_id + '/join';
-        if (button.classList.contains('join')) {
-            const response = await request(
-                url,
-                {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                }
-            );
-            if (response.status === 200) {
-                updateVisual.call(button, false);
-            }
-        } else if (button.classList.contains('joined')) {
-            const response = await request(
-                url,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                        'Accept': 'application/json'
-                    }
-                }
-            );
-            if (response.status === 200) {
-                updateVisual.call(button, true);
-            } 
-        }
-    });
+    button.addEventListener('click', joinHandler.bind(button, event_id));
 });
+
+export async function joinHandler(event_id) {
+    let url = '/api/events/'+ event_id + '/join';
+    if (this.classList.contains('join')) {
+        const response = await request(
+            url,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if (response.status === 200) {
+            updateVisual.call(this, false);
+        }
+    } else if (this.classList.contains('joined')) {
+        const response = await request(
+            url,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            }
+        );
+        if (response.status === 200) {
+            updateVisual.call(this, true);
+        } 
+    }
+}

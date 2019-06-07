@@ -58,7 +58,7 @@ if (postContent !== null) {
     document.querySelector('.submit-post').addEventListener('click', postPost);
 }
 
-function createPost(response) {
+export function createPost(response) {
     const post = document.createElement('div');
     post.className = 'post-wrapper';
     post.dataset.id = response.id;
@@ -76,7 +76,7 @@ function createPost(response) {
                                 <div class="d-flex flex-column">
                                     <p class="card-text mb-0">
                                         <a href="/users/${response.author_id}" class="badge badge-secondary">
-                                            ${response.author}
+                                            ${response.author_name}
                                         </a>
                                         created a
                                         <strong>post</strong>.
@@ -199,7 +199,7 @@ async function postPost(event) {
 
 }
 
-async function likePost(event) {
+export async function likePost(event) {
     let i = this.querySelector('i');
     let postId = this.dataset.id;
     let numberLikes = this.querySelector('span').textContent;
