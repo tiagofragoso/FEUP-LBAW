@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 col-lg-4">
     <a href="{{ url('events/'.$event->id) }}" class="event-card mb-5 hover-shadow link" tabindex="-1">
         <header class="w-100 position-relative event-header d-flex align-items-center">
-            <img src="{{ $event->image() }}" class="h-100 w-100" alt="">
+            <img src="{{ $event->image() }}" class="h-100 w-100" alt="event image">
             <div class="position-absolute w-100 h-100 gradient-overlay"></div>
             <h6 class="position-absolute event-title px-3">
                 {{ $event->title }}
