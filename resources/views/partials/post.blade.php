@@ -26,7 +26,7 @@
                                         @endif
                                     </p>
                                     <span class="post-date text-muted">
-                                        {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $post->date)->format('M d | H:i')}}
+                                        {{ (new \DateTime($post->date))->format('M d | H:i')}}
                                     </span>
                                 </div>
                             </div>

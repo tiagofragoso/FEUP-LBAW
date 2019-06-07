@@ -3,13 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\PollVote;
-use App\Poll;
-use App\EventReport;
-use App\Category;
-use App\Currency;
-use App\Participation;
-use App\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -77,7 +70,7 @@ class EventController extends Controller
         $this->validateEvent($request);
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('events', 'public');
+            $path = $request->file('photo')->store('events/img', 'public');
             $event = Event::create(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
             $event = Event::create($request->except(['photo', 'hours', 'minutes']));
@@ -207,9 +200,9 @@ class EventController extends Controller
                 }
             }
             $path = $request->file('photo')->store('events', 'public');
-            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+            $event = $event->update(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
-            $event = $event->update($request->except('photo'));
+            $event = $event->update($request->except(['photo', 'hours', 'minutes']));
         }
 
         return redirect('/events/'.$id);
@@ -262,7 +255,7 @@ class EventController extends Controller
 
     public function acquireTicket(Request $request, $id){
 
-        if(!Auth::check()) return response()->json(['price' => $request->price],403);
+        if(!Auth::check()) return response()->json(null,403);
         
         $event = Event::find($id);
         if($event == null) return response()->json(null, 404);

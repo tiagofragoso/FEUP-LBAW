@@ -19,7 +19,7 @@
                                         <strong>thread</strong>.
                                     </p>
                                     <span class="post-date text-muted">
-                                        {{  \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $thread->date)->format('M d | H:i')}}
+                                            {{ (new \DateTime($thread->date))->format('M d | H:i')}}
                                     </span>
                                 </div>
                             </div>

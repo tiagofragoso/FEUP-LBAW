@@ -5,7 +5,7 @@
     </button>
    
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        @if(Auth::check() && !$user->banned)
+        @if(Auth::check() && !$user->banned && !$user->deleted)
         @if(Auth::check() && Auth::user()->is_admin)
         <a class="dropdown-item text-danger" id="ban-user-btn" href="#"> Ban user</a>
         @else

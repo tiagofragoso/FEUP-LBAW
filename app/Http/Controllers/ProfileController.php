@@ -36,9 +36,7 @@ class ProfileController extends Controller
         if ($user->is_admin) {
             abort(403);
         }
-        if (Auth::check() && Auth::user()-> id == $id) {
-            return redirect('profile');
-        } 
+      
        
         $data = $this->getEventsData($user);
         $data['follow'] = (Auth::check() && Auth::user()->hasFollow($id));
@@ -58,7 +56,22 @@ class ProfileController extends Controller
             return view('pages.profile',  $data);
         }   
     }
+    public function showTickets(){
+        if (!Auth::check()) return redirect('/login');
 
+        $user = Auth::user();
+        if ($user->is_admin) {
+            abort(403); 
+        }
+        $tickets =$user->sortedTickets();
+        if (Auth::user()->is_admin) { 
+            
+        }
+        else {
+            return view('pages.tickets',['user'=>$user,'tickets'=>$tickets]);
+        }
+
+    }
     private function getEventsData($user)
     {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();
@@ -265,6 +278,14 @@ class ProfileController extends Controller
         User::find($id)->update(['banned' => true]);
 
         return response()->json(null, 200);
+    }
+
+    public function deleteAccount(){
+        if (!Auth::check()) return response()->json(null, 403);
+        $user = User::find(Auth::user()->id);
+        $user->delete();
+
+        return response()->json(null,200);
     }
 
     

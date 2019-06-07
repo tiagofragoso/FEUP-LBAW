@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable
 {
@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned','deleted'
     ];
 
     /**
@@ -31,7 +31,8 @@ class User extends Authenticatable
     ];
 
 
-    public function events($type) {
+    public function events($type)
+    {
         if (!is_array($type))
             $type = [$type];
         return $this->belongsToMany('App\Event', 'participations')->withPivot('type')->wherePivotIn('type', $type);
@@ -41,11 +42,13 @@ class User extends Authenticatable
         return (empty($this->name)? '@'.$this->username : $this->name);
     }
 
-    public function event($id) {
+    public function event($id)
+    {
         return $this->belongsToMany('App\Event', 'participations')->wherePivot('event_id', $id);
     }
 
-    public function eventsParticipation($events) {
+    public function eventsParticipation($events)
+    {
         foreach ($events as $key => $value) {
             if ($this->event($value->id)->get()->isEmpty()) {
                 $value['joined'] = false;
@@ -56,76 +59,98 @@ class User extends Authenticatable
         return $events;
     }
 
-    public function following() {
+    public function following()
+    {
         return $this->belongsToMany('App\User', 'follows', 'follower_id', 'followed_id');
     }
 
-    public function follow($user_id) {
+    public function follow($user_id)
+    {
         return $this->following()->attach($user_id);
     }
 
-    public function unfollow($user_id) {
+    public function unfollow($user_id)
+    {
         return $this->following()->detach($user_id);
     }
 
-    public function hasFollow($user_id) {
+    public function hasFollow($user_id)
+    {
         return $this->following()->wherePivot('followed_id', $user_id)->exists();
     }
 
-    public function joinEvent($event_id, $type) {
+    public function joinEvent($event_id, $type)
+    {
         return $this->events($type)->attach($event_id, ['type' => $type]);
     }
 
-    public function hasParticipation($event_id, $type) {
+    public function hasParticipation($event_id, $type)
+    {
         if (!is_array($type))
             $type = [$type];
         return $this->events($type)->wherePivot('event_id', $event_id)->wherePivotIn('type', $type)->exists();
     }
 
-    public function leaveEvent($event_id, $type) {
+    public function leaveEvent($event_id, $type)
+    {
         return $this->events($type)->detach($event_id);
     }
 
-    public function reports(){
-        return $this->hasMany('App\UserReport','reported_user');
+    public function reports()
+    {
+        return $this->hasMany('App\UserReport', 'reported_user');
     }
 
-    public function voteOnPoll($post_id, $poll_option){
-        return $this->belongsToMany('App\Poll','poll_votes','user_id','poll_id')
-             ->attach($post_id,['poll_option'=>$poll_option]);
-       
+    public function voteOnPoll($post_id, $poll_option)
+    {
+        return $this->belongsToMany('App\Poll', 'poll_votes', 'user_id', 'poll_id')
+            ->attach($post_id, ['poll_option' => $poll_option]);
     }
 
-    public function pendingInviteCount() {
+    public function pendingInviteCount()
+    {
         return $this->hasMany('App\Invite', 'invited_user_id')->where('status', 'Pending')->count();
     }
-    
-    public function likePost($post_id){
-        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
-             ->attach($post_id);
-       
+
+    public function likePost($post_id)
+    {
+        $this->belongsToMany('App\Post', 'post_likes', 'user_id', 'post_id')
+            ->attach($post_id);
     }
 
-    public function dislikePost($post_id){
-        $this->belongsToMany('App\Post','post_likes','user_id','post_id')
-             ->detach($post_id);
-       
+    public function dislikePost($post_id)
+    {
+        $this->belongsToMany('App\Post', 'post_likes', 'user_id', 'post_id')
+            ->detach($post_id);
     }
 
-    public function likeComment($comment_id){
-        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
-             ->attach($comment_id);
-       
+    public function likeComment($comment_id)
+    {
+        $this->belongsToMany('App\Comment', 'comment_likes', 'user_id', 'comment_id')
+            ->attach($comment_id);
     }
 
-    public function dislikeComment($comment_id){
-        $this->belongsToMany('App\Comment','comment_likes','user_id','comment_id')
-             ->detach($comment_id);
-       
+    public function dislikeComment($comment_id)
+    {
+        $this->belongsToMany('App\Comment', 'comment_likes', 'user_id', 'comment_id')
+            ->detach($comment_id);
     }
 
+    public function sortedTickets()
+    {
+
+        $tickets = $this->tickets()->get();
+
+        foreach ($tickets as $ticket) {
+            $ticket->event_date = Event::find($ticket->event_id)->start_date;
+        }
+        $sortedTickets = Arr::sort($tickets, function ($ticket) {
+            return $ticket->event_date;
+        });
+        return array_reverse($sortedTickets);
+    }
     public function acquireTicket($event, $price){
-        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
+        $qrcode = $event->id.'qrcode'.$this->username;
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }
 
