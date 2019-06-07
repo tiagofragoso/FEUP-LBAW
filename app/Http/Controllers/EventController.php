@@ -200,9 +200,9 @@ class EventController extends Controller
                 }
             }
             $path = $request->file('photo')->store('events', 'public');
-            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+            $event = $event->update(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
-            $event = $event->update($request->except('photo'));
+            $event = $event->update($request->except(['photo', 'hours', 'minutes']));
         }
 
         return redirect('/events/'.$id);
