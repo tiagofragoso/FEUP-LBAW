@@ -123,13 +123,13 @@
 								<p class="card-subtitle text-muted">
 									@if (!empty($event->start_date))
 									<span>
-										{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
+										{{ \DateTime::createFromFormat('Y-m-d H:i:sO', $event->start_date)->format('D, d M Y H:i') }}
 									</span>
 							@endif
 							@if (!empty($event->end_date))
 							-
 							<span>
-								{{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->end_date)->format('D, d M Y') }}
+								{{ \DateTime::createFromFormat('Y-m-d H:i:sO', $event->end_date)->format('D, d M Y H:i') }}
 							</span>
 							@endif
 						</p>

@@ -80,7 +80,7 @@ function createPost(response) {
                                         <strong>${response.type.toLowerCase()}</strong>.
                                     </p>
                                     <span class="post-date text-muted">
-                                       ${response.date}
+                                       ${moment(response.date).format('MMM D | H:mm')}
                                     </span>
                                 </div>
                             </div>

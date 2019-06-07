@@ -13,7 +13,7 @@
                     <i class="col-1 far fa-calendar-alt"></i>
                     <div class="col-10">
                         @if (!empty($event->start_date))
-                        {{ \DateTime::createFromFormat('Y-m-d H:i:s', $event->start_date)->format('D, d M Y') }}
+                        {{ \DateTime::createFromFormat('Y-m-d H:i:sO', $event->start_date)->format('D, d M Y') }}
                         @else
                         Unscheduled
                         @endif
