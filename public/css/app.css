@@ -883,6 +883,11 @@ color: var(--green);
 	color: var(--blue);
 }
 
+.qrcode {
+	border: 10px solid white;
+	border-radius: 2%;
+}
+
 .border-green {
 border: 3px solid var(--green)!important;
 }

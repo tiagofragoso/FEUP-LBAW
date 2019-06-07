@@ -3,6 +3,7 @@
 @section('container', 'profile-page')
 @section('scripts')
     <script defer type="module" src="/js/profile_invites.js"></script>
+    <script defer type="module" src="/js/tickets.js"></script>
 @endsection
 
 @section('content')
@@ -20,12 +21,13 @@
                 </div>
                 <div class="card-body">
                     <div class="container">
-                        <div class="row justify-content-center">
-                            @if (count($tickets) === 0)
+                        @if (count($tickets) === 0)
+                            <div class="row justify-content-center">
                                 <span class="text-center">
-                                    You haven't ourchased any ticket yet.
+                                You haven't purchased any tickets.
                                 </span>
-                            @else
+                                @else
+                            <div class="row">
                                 @each('partials.ticket_card', $tickets, 'ticket')
                             @endif
                         </div>

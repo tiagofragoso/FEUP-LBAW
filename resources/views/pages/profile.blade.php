@@ -17,7 +17,7 @@
                     <div class="row mb-3 justify-content-center">
                         <div class="col-2 text-right ">
                             <a class="card-link border-bottom" href="{{ url('/tickets')}}"
-                                >My tickets</a>
+                                >Tickets</a>
                         </div>
                         <div class="col-2 text-center">
                                 <a href="{{ url('/invites')}}" class="card-link border-bottom">Invites</a>

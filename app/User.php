@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -152,7 +151,7 @@ class User extends Authenticatable
         return array_reverse($sortedTickets);
     }
     public function acquireTicket($event, $price){
-        $qrcode = Crypt::encryptString($event->id.'qrcode'.$this->username);
+        $qrcode = $event->id.'qrcode'.$this->username;
         Ticket::create(['qrcode'=>$qrcode,'price'=>$price,'owner'=>$this->id,'event_id'=>$event->id]);
     }
 
