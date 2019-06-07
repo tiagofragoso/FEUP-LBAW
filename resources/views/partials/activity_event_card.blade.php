@@ -1,5 +1,8 @@
-<div class="activity-event-card d-flex align-items-center hover-shadow"
-    tabindex="-1">
+@if ((new DateTime($event->end_date)) < (new DateTime()))
+<div class="activity-event-card d-flex align-items-center hover-shadow card-fade" tabindex="-1">
+@else
+<div class="activity-event-card d-flex align-items-center hover-shadow" tabindex="-1">
+@endif
     <div class="w-25 h-100 overflow-hidden d-flex justify-content-center">
         <img class="h-100" src="{{ App\Event::find($event->id)->image()}}" alt="event placeholder image">
     </div>
