@@ -217,6 +217,7 @@ document.getElementById('search-input').addEventListener('keypress', e => {
 
 function queryTextRequest() {
     let query = document.getElementById('search-input').value;
+    requestObj.search = query;
 
     if (query === "")
         document.getElementById('search-query').textContent = "Trending events";

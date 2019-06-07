@@ -56,7 +56,7 @@ polls.forEach(function (poll) {
 
 
 
-function createPost(response) {
+export function createPost(response) {
     const post = document.createElement('div');
     post.className = 'post-wrapper';
     post.dataset.id = response.id;
@@ -74,19 +74,19 @@ function createPost(response) {
                                 <div class="d-flex flex-column">
                                     <p class="card-text mb-0">
                                         <a href="/users/${response.author_id}" class="badge badge-secondary">
-                                            ${response.author}
+                                            ${response.author_name}
                                         </a>
                                         ${response.type !== 'File'? 'created a' : 'uploaded a'}
                                         <strong>${response.type.toLowerCase()}</strong>.
                                     </p>
                                     <span class="post-date text-muted">
-                                       ${moment(response.date).format('MMM D | H:mm')}
+                                       ${moment(response.date).format('MMM DD | H:mm')}
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <p class="post-content card-text mt-3">
-                            ${response.content}
+                            
                         </p>
                     </div>
                 </div>
@@ -132,6 +132,7 @@ function createPost(response) {
         </div>
     </div>`;
 
+    post.querySelector('.card-text.mt-3').textContent = response.content;
     let section = post.querySelector('.comment-section-posts');
     let button = section.querySelector('.submit-comment');
     let context = {};
@@ -154,7 +155,7 @@ function insertPost(post) {
     posts.insertBefore(post, posts.childNodes[0]);
 }
 
-async function likePost(event) {
+export async function likePost(event) {
     let i = this.querySelector('i');
     let postId = this.dataset.id;
     let numberLikes = this.querySelector('span').textContent;
@@ -259,7 +260,6 @@ postLikeBtns.forEach(button => {
 });
 
 if (document.querySelector('.post-type')) {
-    console.log(document.querySelector('.post-type'));
     const postTypeTitle = document.querySelector('#posts .card-title');
     const pollWrapper = document.querySelector('#poll-wrapper');
     const fileWrapper = document.querySelector('#file-wrapper');
@@ -427,7 +427,7 @@ if (document.querySelector('.post-type')) {
                 body: formData
             }
         );
-        console.log(response);
+
         if (response.status === 201) {
             switch (response.data.type) {
                 case 'Post':

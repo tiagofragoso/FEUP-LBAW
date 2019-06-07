@@ -9,6 +9,7 @@
 <script defer type="module" src="/js/comments.js"> </script>
 <script defer type="module" src="/js/questions.js"> </script>
 <script defer type="module" src="/js/answers.js"> </script>
+<script defer type="module" src="/js/tickets.js"> </script>
 <script defer type="module" src="/js/threads.js"> </script>
 @endsection
 
@@ -19,6 +20,7 @@
 <div id="content" class="container my-0 my-sm-5" data-id="{{$event->id}}">
 	@include('partials.banned_card',['object' => $event])
 	@include('partials.report_modal')
+	@include('partials.acquire_ticket_modal',['event'=> $event])
 	<div class="row">
 		<div class="card-wrapper col-12 mx-auto">
 			<div class="card mb-5">
@@ -207,7 +209,8 @@
 					@if ($event->status == 'Planning' || $event->status == 'Tickets')
 					<div class="col-12 col-lg-3">
 						@if ($event->status == 'Tickets')
-						<button type="submit" class="btn btn-secondary w-100">
+						
+						<button type="submit" class="btn btn-secondary w-100" data-toggle="modal" data-target="#acquireTicketModal">
 							@elseif ($event->status == 'Planning')
 							<button type="submit" class="btn btn-info w-100">
 								@endif

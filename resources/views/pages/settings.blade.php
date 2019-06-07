@@ -19,8 +19,8 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-h"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="deleteAccount">
-                            <a class="dropdown-item" href="#">Delete account</a>
+                        <div class="dropdown-menu dropdown-menu-right"  aria-labelledby="deleteAccount">
+                            <a class="dropdown-item" id = "delete-account-btn" href="{{ url('/logout')}}">Delete account</a>
                         </div>
                     </div>
                     @include('partials.profile_header', ['user' => $user])

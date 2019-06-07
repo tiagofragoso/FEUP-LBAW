@@ -49,6 +49,9 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item text-muted" href="{{ url('/profile') }}">My profile</a>
                         @if (Auth::check() && !Auth::user()->is_admin)
+                            <a class="dropdown-item text-muted" href="{{ url('/tickets') }}">
+                                Tickets
+                            </a>
                             <a class="dropdown-item text-muted" href="{{ url('/invites') }}">
                                 Invites
                                 @if (Auth::user()->pendingInviteCount() > 0)

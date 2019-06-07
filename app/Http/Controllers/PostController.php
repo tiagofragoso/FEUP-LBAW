@@ -222,7 +222,10 @@ class PostController extends Controller
     {
 
         if (!Auth::check()) return response()->json(null, 403);
-
+        $post = Post::find($id);
+        if (is_null($post)) return response()->json(null, 404);
+        $event = Event::find($post->event_id);
+        $this->authorize('canVote', $event);
         if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->likePost($id);
         return response()->json(null, 200);
@@ -231,7 +234,10 @@ class PostController extends Controller
     {
 
         if (!Auth::check()) return response()->json(null, 403);
-        if (is_null(Post::find($id))) return response()->json(null, 404);
+        $post = Post::find($id);
+        if (is_null($post)) return response()->json(null, 404);
+        $event = Event::find($post->event_id);
+        $this->authorize('canVote', $event);
         Auth::user()->dislikePost($id);
         return response()->json(null, 200);
     }

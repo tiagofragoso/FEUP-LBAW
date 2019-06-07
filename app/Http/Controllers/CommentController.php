@@ -123,18 +123,25 @@ class CommentController extends Controller
     }
     public function likeComment($id)
     {
-
         if (!Auth::check()) return response(403);
-
-        if (is_null(Comment::find($id))) return response(404);
+        $comment = Comment::find($id);
+        if (is_null($comment)) return response(404);
+        $post = Post::find($comment->post_id);
+        $event = Event::find($post->event_id);
+        $c = new Comment();
+        $this->authorize('create', [$c, $event]);
         Auth::user()->likeComment($id);
         return response(200);
     }
     public function dislikeComment($id)
     {
-
         if (!Auth::check()) return response(403);
-        if (is_null(Comment::find($id))) return response(404);
+        $comment = Comment::find($id);
+        if (is_null($comment)) return response(404);
+        $post = Post::find($comment->post_id);
+        $event = Event::find($post->event_id);
+        $c = new Comment();
+        $this->authorize('create', [$c, $event]);
         Auth::user()->dislikeComment($id);
         return response(200);
     }

@@ -33,7 +33,7 @@ export function getEventCard(id, title, start_date, location, price, photo) {
     `;
 
     card.querySelector('.event-title').textContent = title;
-    card.querySelector('.event-date').textContent = moment(start_date).format('ddd, d MMM Y') || "Unscheduled";
+    card.querySelector('.event-date').textContent = moment(start_date).format('ddd, D MMM Y') || "Unscheduled";
     card.querySelector('.event-location').textContent = location;
     card.querySelector('.event-price').textContent = price;
     return card;

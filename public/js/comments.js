@@ -20,6 +20,8 @@ childSections.forEach(section => {
 async function postChild(event) {
     event.preventDefault();
 
+    if (this.content.value === "") return;
+
     let requestBody = {
         content: this.content.value,
         parent: this.comment_id
@@ -64,6 +66,8 @@ export async function postComment(event) {
 
     event.preventDefault();
 
+    if (this.content.value === "") return;
+
     let requestBody = {
         content: this.content.value,
         parent: null
@@ -101,7 +105,8 @@ function createChild(response) {
                 <a class="title-link mr-2" href="/users/${response.user_id}">
                     <span class=" author">${response.user}</span>
                 </a>
-                ${response.content}
+                <span>
+                </span>
             </span>
         </div>
         <div class="comment-footer ml-3">
@@ -117,6 +122,7 @@ function createChild(response) {
     </div>
     `;
 
+    comment.querySelector('span span').textContent = response.content;
     let button = comment.querySelector('.like-comment-btn');
     button.addEventListener('click', commentLikes.bind(button));
 
@@ -141,7 +147,8 @@ function createComment(response) {
                             <a class="title-link mr-2" href=""/users/${response.user_id}"">
                                 <span class=" author">${response.user}</span>
                             </a>
-                            ${response.content}
+                            <span>                        
+                            </span>
                         </span>
                     </div>
                     <div class="comment-footer ml-3">
@@ -180,6 +187,9 @@ function createComment(response) {
         </div>
      </div>`;
 
+
+    comment.querySelector('span span').textContent = response.content;
+
     let button = comment.querySelector('.like-comment-btn');
     button.addEventListener('click', commentLikes.bind(button));
 
@@ -213,6 +223,8 @@ async function commentLikes(event) {
                     }
                 }
             );
+
+            console.log(response)
             if (response.status === 200) {
                 this.textContent = 'Liked';
                 this.closest('.comment-footer').querySelector('span').textContent++;
@@ -229,6 +241,7 @@ async function commentLikes(event) {
                     }
                 }
             );
+            console.log(response)
             if (response.status === 200) {
                 this.textContent = 'Like';
                 this.closest('.comment-footer').querySelector('span').textContent--;
