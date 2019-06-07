@@ -43,15 +43,20 @@ class ProfileController extends Controller
 
     public function showProfile()
     {
-        if (!Auth::check()) return redirect('/login');
-
-        if (Auth::user()->is_admin) {
-            $data = $this->getReportsData();
-            return view('pages.admin_profile', $data);
-        } else {
-            $data = $this->getEventsData(Auth::user());
-            return view('pages.profile',  $data);
-        }   
+        try {
+            if (!Auth::check()) return redirect('/login');
+    
+            if (Auth::user()->is_admin) {
+                $data = $this->getReportsData();
+                return view('pages.admin_profile', $data);
+            } else {
+                $data = $this->getEventsData(Auth::user());
+                return view('pages.profile',  $data);
+            }   
+        } catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return null;
+        }
     }
     public function showTickets(){
         if (!Auth::check()) return redirect('/login');

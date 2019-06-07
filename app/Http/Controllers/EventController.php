@@ -89,77 +89,84 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        $event = Event::findOrFail($id);
-        $joined = null;
+        try {
 
-        if (Auth::check()) {
-            $this->authorize('view', $event);
-        } else if ($event->banned || $event->private) {
-            abort(403);
-        }
-
-
-        if (Auth::check() && !Auth::user()->is_admin) {
-            if (Auth::user()->hasParticipation($id, 'Participant')) {
-                $joined = 'Participant';
-            } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
-                $joined = 'Host';
-            } else if (Auth::user()->hasParticipation($id, 'Artist')) {
-                $joined = 'Artist';
-            }
-        }
-
-
-        $owner = $event->participatesAs('Owner')->first();
-        $hosts = $event->participatesAs('Host')->get();
-        $artists = $event->participatesAs('Artist')->get()->take(6);
-
-        $posts = $event->posts()->get();
-        $posts = $event->postComments($posts);
-
-        foreach($posts as $post){
-
-            if (Auth::check()) {
-                $post['hasLike'] = $post->hasLike(Auth::user()->id);
-                foreach($post->commentsContent as $comment) {
-                    $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
-                    foreach($comment->comments as $commentComment) {
-                        $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
-                    }
-            
-                }
-            } else {
-                $post['hasLike'] = false;
-                foreach($post->commentsContent as $comment) {
-                    $comment['hasLike'] = false;
-                    foreach($comment->comments as $commentComment) {
-                        $commentComment['hasLike'] = false;
-                    }
-            
-                }
-            }
-        }
+            $event = Event::findOrFail($id);
+            $joined = null;
     
+            if (Auth::check()) {
+                $this->authorize('view', $event);
+            } else if ($event->banned || $event->private) {
+                abort(403);
+            }
+    
+    
+            if (Auth::check() && !Auth::user()->is_admin) {
+                if (Auth::user()->hasParticipation($id, 'Participant')) {
+                    $joined = 'Participant';
+                } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
+                    $joined = 'Host';
+                } else if (Auth::user()->hasParticipation($id, 'Artist')) {
+                    $joined = 'Artist';
+                }
+            }
+    
+    
+            $owner = $event->participatesAs('Owner')->first();
+            $hosts = $event->participatesAs('Host')->get();
+            $artists = $event->participatesAs('Artist')->get()->take(6);
+    
+            $posts = $event->posts()->get();
+            $posts = $event->postComments($posts);
+    
+            foreach($posts as $post){
+    
+                if (Auth::check()) {
+                    $post['hasLike'] = $post->hasLike(Auth::user()->id);
+                    foreach($post->commentsContent as $comment) {
+                        $comment['hasLike'] = $comment->hasLike(Auth::user()->id);
+                        foreach($comment->comments as $commentComment) {
+                            $commentComment['hasLike'] = $commentComment->hasLike(Auth::user()->id);
+                        }
+                
+                    }
+                } else {
+                    $post['hasLike'] = false;
+                    foreach($post->commentsContent as $comment) {
+                        $comment['hasLike'] = false;
+                        foreach($comment->comments as $commentComment) {
+                            $commentComment['hasLike'] = false;
+                        }
+                
+                    }
+                }
+            }
+        
+    
+            if ($joined === 'Host' || $joined === 'Artist') {
+                $threads = $event->threads()->get();
+            } else {
+                $threads = null;
+            }
+    
+            $questions = $event->getQuestions($joined);
+    
+           
+            return view('pages.event', 
+                [ 'title' => $event->name,
+                'event' => $event,
+                'owner' => $owner,
+                'hosts' => $hosts,
+                'artists' => $artists,
+                'posts' => $posts,
+                'questions' => $questions,
+                'threads' => $threads,
+                'joined'=> $joined]);  
 
-        if ($joined === 'Host' || $joined === 'Artist') {
-            $threads = $event->threads()->get();
-        } else {
-            $threads = null;
+        }  catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return null;
         }
-
-        $questions = $event->getQuestions($joined);
-
-       
-        return view('pages.event', 
-            [ 'title' => $event->name,
-            'event' => $event,
-            'owner' => $owner,
-            'hosts' => $hosts,
-            'artists' => $artists,
-            'posts' => $posts,
-            'questions' => $questions,
-            'threads' => $threads,
-            'joined'=> $joined]);  
     }
 
     /**
@@ -184,31 +191,38 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         try {
-            $event = Event::findOrFail($id);
-        } catch(\Exception $e) {
-            abort(404);
-        } 
-
-        $this->authorize('update', $event);
-        $this->validateEvent($request);
-
-        if ($request->hasFile('photo')) {
-            if (!empty($event->photo)) {
-                try {
-                    $old = Storage::disk('public')->get($event->photo);
-                } catch (Exception $e) { }
-                if (isset($old)) {
-                    Storage::disk('public')->delete($event->photo);
+            try {
+                $event = Event::findOrFail($id);
+            } catch(\Exception $e) {
+                abort(404);
+            } 
+    
+            $this->authorize('update', $event);
+            $this->validateEvent($request);
+    
+            if ($request->hasFile('photo')) {
+                if (!empty($event->photo)) {
+                    try {
+                        $old = Storage::disk('public')->get($event->photo);
+                    } catch (Exception $e) { }
+                    if (isset($old)) {
+                        Storage::disk('public')->delete($event->photo);
+                    }
                 }
+                $path = $request->file('photo')->store('events', 'public');
+                $event = $event->update(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
+            } else {
+                $event = $event->update($request->except(['photo', 'hours', 'minutes']));
             }
-            $path = $request->file('photo')->store('events', 'public');
-            $event = $event->update(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
-        } else {
-            $event = $event->update($request->except(['photo', 'hours', 'minutes']));
-        }
+    
+            return redirect('/events/'.$id);
 
-        return redirect('/events/'.$id);
+        }  catch (\Illuminate\Database\QueryException $e) {
+            report($e);
+            return null;
+        }
     }
 
     /**
