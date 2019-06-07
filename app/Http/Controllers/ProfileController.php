@@ -50,7 +50,22 @@ class ProfileController extends Controller
             return view('pages.profile',  $data);
         }   
     }
+    public function showTickets(){
+        if (!Auth::check()) return redirect('/login');
 
+        $user = Auth::user();
+        if ($user->is_admin) {
+            abort(403); 
+        }
+        $tickets =$user->sortedTickets();
+        if (Auth::user()->is_admin) { 
+            
+        }
+        else {
+            return view('pages.tickets',['user'=>$user,'tickets'=>$tickets]);
+        }
+
+    }
     private function getEventsData($user)
     {
         $data['joined'] = $user->events('Participant')->orderByDesc('start_date')->get();

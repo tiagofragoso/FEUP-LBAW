@@ -72,6 +72,7 @@ Route::get('profile', 'ProfileController@showProfile');
 Route::get('users/{id}', 'ProfileController@show');
 Route::get('settings', 'ProfileController@edit');
 Route::get('invites', 'ProfileController@showInvites');
+Route::get('tickets','ProfileController@showTickets');  
 
 //About
 Route::view('about', 'pages.about');
