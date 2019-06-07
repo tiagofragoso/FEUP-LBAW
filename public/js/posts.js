@@ -76,8 +76,8 @@ function createPost(response) {
                                         <a href="/users/${response.author_id}" class="badge badge-secondary">
                                             ${response.author}
                                         </a>
-                                        created a
-                                        <strong>post</strong>.
+                                        ${response.type !== 'File'? 'created a' : 'uploaded a'}
+                                        <strong>${response.type.toLowerCase()}</strong>.
                                     </p>
                                     <span class="post-date text-muted">
                                        ${response.date}
@@ -241,14 +241,16 @@ function createPoll(response) {
     <div
         class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted" id="pollVotes" data-id="0">
         0 votes
-    </div>`;
+    </div>
+    <div class="text-danger d-none poll-error-message">To vote on an event's poll, you need to participate in the event!</div>
+    `;
         optDiv.querySelector('input[type="radio"]').setAttribute('name', response.id);
         optDiv.querySelector('span.form-control').textContent = o.name;
         div.appendChild(optDiv);
     }
     post.querySelector('.post-content').parentNode.appendChild(p);
     post.querySelector('.post-content').parentNode.appendChild(div);
-    // <div class="text-danger d-none poll-error-message">To vote on an event's poll, you need to participate in the event!</div>
+    
     return post;
 }
 
@@ -285,6 +287,7 @@ if (document.querySelector('.post-type')) {
                 showFile();
                 break;
         }
+        document.querySelector('.post-error').classList.add('d-none');
     }
 
     function showPost() {
@@ -335,6 +338,12 @@ if (document.querySelector('.post-type')) {
                 fileWrapper.querySelector('div').insertBefore(newEl, fileWrapper.querySelector('label[for="file-input"]'));
             }
             fileWrapper.querySelector('label[for="file-input"] > span:last-of-type').textContent = 'Upload another file';
+        } else {
+            const el = fileWrapper.querySelector('#uploaded-file');
+            if (el) {
+                el.remove();
+            } 
+            fileWrapper.querySelector('label[for="file-input"] > span:last-of-type').textContent = 'Upload a file';
         }
     }
 
@@ -351,14 +360,14 @@ if (document.querySelector('.post-type')) {
     }
 
     async function makePost(event) {
-
         event.preventDefault();
+        document.querySelector('.post-error').classList.add('d-none');
         const content = postContent.value.trim();
 
-        if (content == '')
+        if (content == '') {
+            showError('Post content can\'t be empty');
             return;
-
-        console.log('called');
+        }
 
         let postType;
         if (document.querySelector('#text').checked) {
@@ -378,7 +387,7 @@ if (document.querySelector('.post-type')) {
             if (title.value.trim() != '') {
                 formData.append('title', title.value.trim());
             } else {
-                console.log('Error');
+                showError('Post content can\'t be empty');
                 return;
             }
             let validOptions = [];
@@ -390,7 +399,7 @@ if (document.querySelector('.post-type')) {
             if (validOptions.length >= 2) {
                 formData.append('poll_options', JSON.stringify(validOptions));
             } else {
-                console.log('Error');
+                showError('Add at least 2 valid options');
                 return;
             }
         } else if (postType === 'File') {
@@ -398,7 +407,7 @@ if (document.querySelector('.post-type')) {
             if (file) {
                 formData.append('file', file);
             } else {
-                console.log('Error');
+                showError('File upload error');
                 return;
             }
         }
@@ -430,8 +439,33 @@ if (document.querySelector('.post-type')) {
                     insertPost(createFile(response.data));
                     break;
             }
-            postContent.value = "";
+            resetForm();
+        } else {
+            if (response.data instanceof String) {
+                showError(response.data);
+            } else {
+                showError('Error submiting post');
+            }
         }
+    }
+    
+    function resetForm() {
+        document.querySelector('.post-error').classList.add('d-none');
+        postContent.value = "";
+        pollWrapper.querySelector('input[name="title"]').value = "";
+        let opts = pollWrapper.querySelectorAll('.poll-option-input');
+        while (opts.length > 2) {
+            opts[0].remove();
+            opts = pollWrapper.querySelectorAll('.poll-option-input');
+        }
+        opts.forEach(e => e.querySelector('input').value = "");
+        fileInput.value = "";
+        uploadedFile();
+    }
+
+    function showError(message) {
+        document.querySelector('.post-error').classList.remove('d-none');
+        document.querySelector('.post-error').textContent = message;
     }
 
 }

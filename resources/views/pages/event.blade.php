@@ -327,6 +327,7 @@
 													<input id="file-input" type="file" class="d-none">
 												</div>
 											</div>
+											<div class="text-danger d-none post-error"></div>
 											<hr class="mb-1">
 											<div class="row d-flex flex-row justify-content-between">
 												<div class="col-6 post-type">
