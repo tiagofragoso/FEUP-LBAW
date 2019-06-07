@@ -259,6 +259,7 @@ postLikeBtns.forEach(button => {
 });
 
 if (document.querySelector('.post-type')) {
+    console.log(document.querySelector('.post-type'));
     const postTypeTitle = document.querySelector('#posts .card-title');
     const pollWrapper = document.querySelector('#poll-wrapper');
     const fileWrapper = document.querySelector('#file-wrapper');

@@ -439,6 +439,7 @@
 							</div>
 						</div>
 						<div class="tab-pane fade" id="forum" role="tabpanel" aria-labelledby="forum-tab">
+							@if ($joined === 'Host' || $joined === 'Artist')
 							<div class="row justify-content-center">
 								<div class="col-12 col-lg-9">
 									<p class="text-muted">
@@ -463,16 +464,15 @@
 												<input class="form-check-input d-none" type="radio" id="thread" value="option4" name="thread" checked>
 												<label class="form-check-label mr-2" for="thread"><i class="fas fa-font"></i></label>
 											</div>
-											<div class="col-6 text-right">
-												<button class="submit-btn submit-thread-button" data-id = {{$event->id}} type="submit">
-													<i class="fas fa-angle-double-right"></i>
-												</button>
-											</div>
+											<div class="col d-flex flex-row justify-content-end">
+													<button class="btn btn-sm btn-secondary submit-thread-button d-flex flex-row align-items-center" data-id="{{$event->id}}" type="submit">
+														Submit <i class="ml-2 fas fa-angle-double-right"></i>
+													</button>
+												</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							@if ($joined === 'Host' || $joined === 'Artist')
 								<div class="threads-list">
 								@each('partials.thread', $threads, 'thread')
 								</div>
