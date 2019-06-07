@@ -69,6 +69,7 @@ class HomeController extends Controller
         $posts = Post::select(
                 'posts.*',
                 'users.name as author_name',
+                'users.username as username',
                 'participations.type as event_participation',
                 'events.id as event_id',
                 'events.title as event_title'
