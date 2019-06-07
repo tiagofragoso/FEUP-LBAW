@@ -88,7 +88,7 @@ function createPost(response) {
                             </div>
                         </div>
                         <p class="card-text mt-3">
-                            ${response.content}
+                            
                         </p>
                     </div>
                 </div>
@@ -134,6 +134,7 @@ function createPost(response) {
         </div>
     </div>`;
 
+    post.querySelector('.card-text.mt-3').textContent = response.content;
     let section = post.querySelector('.comment-section-posts');
     let button = section.querySelector('.submit-comment');
     let context = {};
@@ -167,6 +168,8 @@ async function postPost(event) {
     } else if (document.querySelector('#file').checked) {
         postType = 'File';
     }
+
+    if (postContent.value === "") return;
 
     let requestBody = {
         content: postContent.value,
