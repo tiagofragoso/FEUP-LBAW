@@ -85,7 +85,7 @@ function createPost(response) {
                                 </div>
                             </div>
                         </div>
-                        <p class="card-text mt-3">
+                        <p class="post-content card-text mt-3">
                             ${response.content}
                         </p>
                     </div>
@@ -195,6 +195,63 @@ async function likePost(event) {
 }
 
 
+function createFile(response) {
+
+    const post = createPost(response);
+
+    const el = document.createElement('a');
+    el.setAttribute('href', '/storage/' + response.file);
+    el.setAttribute('download', response.fileName);
+    el.classList.add('card-text', 'mt-3', 'title-link');
+    el.innerHTML = `<div class="input-group mb-3">
+    <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+    </div>
+    <div class="form-control font-weight-bold">
+    </div>
+    </div>`;
+    el.querySelector('.form-control').appendChild(document.createTextNode(response.fileName));
+    post.querySelector('.post-content').parentNode.appendChild(el);
+
+    return post;
+}
+
+function createPoll(response) {
+    const post = createPost(response);
+    const p = document.createElement('p');
+    p.classList.add('card-text', 'mt-3', 'font-weight-bold');
+    p.textContent = response.title;
+    const div = document.createElement('div');
+    div.classList.add('container', 'poll-container');
+    div.setAttribute('data-id', response.id);
+    const pollOptions = JSON.parse(response.poll_options);
+    for (let o of pollOptions) {
+        const optDiv = document.createElement('div');
+        optDiv.classList.add('row', 'align-items-center', 'mb-2');
+        optDiv.setAttribute('data-id', o.id);
+        optDiv.innerHTML = `<div class="input-group col-12 col-sm-8">
+        <div class="input-group-prepend">
+            <div class="input-group-text">
+                <input type="radio"
+                    aria-label="">
+            </div>
+        </div>
+        <span class="form-control"></span>
+    </div>
+    <div
+        class="col-12 col-sm-4 ml-5 ml-sm-0 mt-1 mt-sm-0 text-muted" id="pollVotes" data-id="0">
+        0 votes
+    </div>`;
+        optDiv.querySelector('input[type="radio"]').setAttribute('name', response.id);
+        optDiv.querySelector('span.form-control').textContent = o.name;
+        div.appendChild(optDiv);
+    }
+    post.querySelector('.post-content').parentNode.appendChild(p);
+    post.querySelector('.post-content').parentNode.appendChild(div);
+    // <div class="text-danger d-none poll-error-message">To vote on an event's poll, you need to participate in the event!</div>
+    return post;
+}
+
 postLikeBtns.forEach(button => {
     button.addEventListener('click', likePost.bind(button));
 });
@@ -203,7 +260,7 @@ if (document.querySelector('.post-type')) {
     const postTypeTitle = document.querySelector('#posts .card-title');
     const pollWrapper = document.querySelector('#poll-wrapper');
     const fileWrapper = document.querySelector('#file-wrapper');
-    
+
     document.querySelector('.submit-post').addEventListener('click', (e) => makePost(e));
 
     document.querySelectorAll('.post-type input[type="radio"][name="post-type"]').forEach(el => el.addEventListener('change', () => changeTab(el.getAttribute('value'))));
@@ -294,15 +351,15 @@ if (document.querySelector('.post-type')) {
     }
 
     async function makePost(event) {
-    
+
         event.preventDefault();
         const content = postContent.value.trim();
 
         if (content == '')
             return;
-    
+
         console.log('called');
-            
+
         let postType;
         if (document.querySelector('#text').checked) {
             postType = 'Post';
@@ -311,11 +368,11 @@ if (document.querySelector('.post-type')) {
         } else if (document.querySelector('#file').checked) {
             postType = 'File';
         }
-    
+
         const formData = new FormData();
         formData.append('type', postType);
         formData.append('content', content);
-    
+
         if (postType === 'Poll') {
             const title = pollWrapper.querySelector('input[name="title"]');
             if (title.value.trim() != '') {
@@ -345,9 +402,9 @@ if (document.querySelector('.post-type')) {
                 return;
             }
         }
-    
+
         let event_id = document.querySelector('.submit-post').dataset.id;
-    
+
         const response = await request(
             '/api/events/' + event_id + '/posts',
             {
@@ -360,10 +417,20 @@ if (document.querySelector('.post-type')) {
                 body: formData
             }
         );
-    
+        console.log(response);
         if (response.status === 201) {
+            switch (response.data.type) {
+                case 'Post':
+                    insertPost(createPost(response.data));
+                    break;
+                case 'Poll':
+                    insertPost(createPoll(response.data));
+                    break;
+                case 'File':
+                    insertPost(createFile(response.data));
+                    break;
+            }
             postContent.value = "";
-            insertPost(createPost(response.data));
         }
     }
 

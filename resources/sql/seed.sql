@@ -174,7 +174,8 @@ CREATE TABLE poll_votes (
 
 CREATE TABLE files (
     post_id integer PRIMARY KEY REFERENCES posts ON DELETE CASCADE,
-    "file" text NOT NULL 
+    "file" text NOT NULL ,
+    "fileName" text NOT NULL
 );
 
 CREATE TABLE threads (
@@ -873,10 +874,10 @@ INSERT INTO poll_votes(poll_id,"user_id",poll_option) VALUES (1,12,3);
 
 -- Files
 
-INSERT INTO files(post_id,"file") VALUES (2,'file1');
-INSERT INTO files(post_id,"file") VALUES (5,'file2');
-INSERT INTO files(post_id,"file") VALUES (6,'file3');
-INSERT INTO files(post_id,"file") VALUES (7,'file4');
+INSERT INTO files(post_id,"file","fileName") VALUES (2,'file1','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (5,'file2','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (6,'file3','something');
+INSERT INTO files(post_id,"file","fileName") VALUES (7,'file4','something');
 
 -- Threads
 

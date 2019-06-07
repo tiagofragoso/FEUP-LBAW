@@ -80,7 +80,7 @@ class PostController extends Controller
                 'content' => $post->content,
                 'author_id' => $post->author_id,
                 'type' => $post->type,
-                'date' => $post->date,
+                'date' => Post::find($post->id),
                 'author' => $post->author->displayName()
             ];
     
@@ -122,9 +122,11 @@ class PostController extends Controller
                     return response()->json(null, 400);
                 } else {
                     $path = $request->file('file')->store('events/files', 'public');
+                    $name = $request->file('file')->getClientOriginalName();
                     try {
-                        File::create(['post_id' => $post->id, 'file' => $path]);
-                        $returnObject['file'] = $request->file('file')->getClientOriginalName();
+                        File::create(['post_id' => $post->id, 'file' => $path, 'fileName' => $name]);
+                        $returnObject['fileName'] = $name;
+                        $returnObject['file'] = $path;
                         return response()->json($returnObject, 201);
                     } catch(\Exception $e) {
                         //log this
