@@ -25,7 +25,7 @@
 					</div>
 					<button type="button" class="btn btn-light border-light position-absolute help-btn" data-toggle="modal" data-target="#help-modal">
 							<div class="help-text mr-3 ">Having trouble filling out the form? Click here.</div>
-							<i class="fas fa-question mr-1"></i>
+							<i class="fas fa-question"></i>
 					</button>
 					<img id="img" class="d-block w-100" src="{{ !empty($event)? $event->image() : asset('assets/event-placeholder.png') }}" alt="Event photo">
 				</div>
