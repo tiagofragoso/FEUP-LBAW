@@ -38,6 +38,7 @@
     <div class="@yield('container')">
         @unless(Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
         @include('partials.navbar')
+        @include('partials.nav_help_modal')
         @endunless
         
         @yield('content')

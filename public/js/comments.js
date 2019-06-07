@@ -105,7 +105,7 @@ function createChild(response) {
                 <a class="title-link mr-2" href="/users/${response.user_id}">
                     <span class=" author">${response.user}</span>
                 </a>
-                <span>
+                <span class="content">
                 </span>
             </span>
         </div>
@@ -122,7 +122,7 @@ function createChild(response) {
     </div>
     `;
 
-    comment.querySelector('span span').textContent = response.content;
+    comment.querySelector('.content').textContent = response.content;
     let button = comment.querySelector('.like-comment-btn');
     button.addEventListener('click', commentLikes.bind(button));
 
@@ -147,7 +147,7 @@ function createComment(response) {
                             <a class="title-link mr-2" href=""/users/${response.user_id}"">
                                 <span class=" author">${response.user}</span>
                             </a>
-                            <span>                        
+                            <span class="content">                        
                             </span>
                         </span>
                     </div>
@@ -188,7 +188,7 @@ function createComment(response) {
      </div>`;
 
 
-    comment.querySelector('span span').textContent = response.content;
+    comment.querySelector('span span.content').textContent = response.content;
 
     let button = comment.querySelector('.like-comment-btn');
     button.addEventListener('click', commentLikes.bind(button));

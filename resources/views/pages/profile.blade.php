@@ -2,13 +2,15 @@
 
 @section('container', 'profile-page')
 @section('scripts')
-	<script defer type="module" src="/js/join_event.js"> </script>
+    <script defer type="module" src="/js/join_event.js"> </script>
+    <script defer type="module" src="/js/follows.js"></script>
 @endsection
 
 @section('content')
 <div id ="content" class="container-fluid my-0 my-sm-5 profile-container">
 @include('partials.banned_card',['object' => $user])
 @include('partials.report_modal')
+@include('partials.follows_modal')
     <div class="row">
         <div class="card-wrapper mx-auto w-100">
             <div class="card pb-4">

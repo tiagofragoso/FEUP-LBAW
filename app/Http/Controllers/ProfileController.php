@@ -22,14 +22,15 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check() && Auth::user()-> id == $id) {
+        if (Auth::check() && Auth::user()->id == $id) {
             return redirect('profile');
-        } 
-        
+        }
+
         $user = User::findOrFail($id);
-       if(!$user->can('view',$user)) return view('errors.403');
-    
-        if ($user->is_admin) {
+
+        if (Auth::check()) {
+            $this->authorize('view', $user);
+        } else if ($user->is_admin || $user->banned) {
             abort(403);
         }
       
@@ -308,4 +309,25 @@ class ProfileController extends Controller
         }
     }
 
+    public function followers($id) {
+        try {
+            $followers = User::findOrFail($id)->followers()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'followers' => $followers
+        ], 200);
+    }
+
+    public function following($id) {
+        try {
+            $following = User::findOrFail($id)->following()->get();
+        } catch (\Exception $e) {
+            return response()->json(null, 404);
+        }
+        return response()->json([
+            'following' => $following
+        ], 200);
+    }
 }

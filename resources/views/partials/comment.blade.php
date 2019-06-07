@@ -10,7 +10,7 @@
                         <a class="title-link mr-2" href="{{ url('/users/'.$comment->user->id)}}">
                             <span class=" author">{{$comment->user->displayName()}}</span>
                         </a>
-                        <span>
+                        <span class="content">
                         {{$comment->content}}
                         </span>
                     </span>

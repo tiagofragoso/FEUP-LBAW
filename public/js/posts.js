@@ -74,7 +74,7 @@ export function createPost(response) {
                                 <div class="d-flex flex-column">
                                     <p class="card-text mb-0">
                                         <a href="/users/${response.author_id}" class="badge badge-secondary">
-                                            ${response.author_name}
+                                            ${response.author}
                                         </a>
                                         ${response.type !== 'File'? 'created a' : 'uploaded a'}
                                         <strong>${response.type.toLowerCase()}</strong>.
