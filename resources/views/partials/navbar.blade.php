@@ -19,6 +19,10 @@
                 </div>
             </form>
             <ul class="navbar-nav">
+                <button type="button" class="btn btn-light border-light help-btn mr-4 my-auto rounded-circle" data-toggle="modal" data-target="#nav-help-modal">
+                    <!-- <div class="help-text mr-3 ">Having trouble filling out the form? Click here.</div> -->
+                    <i class="fas fa-question"></i>
+                </button>
                 @if (Auth::check())
                 <li class="nav-item mr-2 my-auto d-none d-lg-block">
                 <a href="{{ url('/events/create') }}">

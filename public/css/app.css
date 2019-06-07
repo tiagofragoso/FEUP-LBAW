@@ -625,6 +625,25 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	min-height: 40vh;
 }
 
+.event-page .poll-option-close-btn {
+	width: 25px;
+    height: 25px;
+    padding: 4px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+	background-color: var(--grey);
+	color: var(--darkgrey);
+	opacity: 0.4;
+	cursor: pointer;
+	top: 7px;
+}
+
+.event-page .poll-option-close-btn:hover {
+	opacity: 0.7;
+}
+
 /** event form **/
 
 .event-form-page .input-group-text, .event-page .input-group-text {

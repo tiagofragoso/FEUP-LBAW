@@ -1,7 +1,7 @@
 <div class="activity-event-card d-flex align-items-center hover-shadow"
     tabindex="-1">
     <div class="w-25 h-100 overflow-hidden d-flex justify-content-center">
-        <img class="h-100" src="../assets/event-placeholder.png" alt="">
+        <img class="h-100" src="{{$event->image()}}" alt="event placeholder image">
     </div>
     <div class="d-flex align-items-center w-75">
         <div class="container-fluid">
@@ -13,7 +13,7 @@
                 </a>
 
                 <div class="col-7 col-md-9 mt-4">
-                    <div class="text-muted event-date">{{(new DateTime($event->start_date))->format('j M Y')}}</div>
+                    <div class="text-muted event-date">{{(new DateTime($event->start_date))->format('D, d M Y')}}</div>
                     <div class="text-muted event-location">{{$event->location}}</div>
                 </div>
 

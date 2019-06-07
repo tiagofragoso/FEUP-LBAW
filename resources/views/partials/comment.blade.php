@@ -10,7 +10,7 @@
                         <a class="title-link mr-2" href="{{ url('/users/'.$comment->user->id)}}">
                             <span class=" author">{{$comment->user->displayName()}}</span>
                         </a>
-                        <span>
+                        <span class="content">
                         {{$comment->content}}
                         </span>
                     </span>
@@ -30,7 +30,7 @@
                         Reply
                     </button>
                     •
-                    <span>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $comment->date)->format('M d H:i')}}</span>
+                    <span>{{ (new \DateTime($comment->date))->format('M d | H:i')}}</span>
                 </div>
             </div>
             @each('partials.child_comment', $comment->comments, 'comment')

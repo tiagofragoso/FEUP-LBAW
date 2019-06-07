@@ -3,13 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use App\PollVote;
-use App\Poll;
-use App\EventReport;
-use App\Category;
-use App\Currency;
-use App\Participation;
-use App\Post;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -77,7 +70,7 @@ class EventController extends Controller
         $this->validateEvent($request);
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('events', 'public');
+            $path = $request->file('photo')->store('events/img', 'public');
             $event = Event::create(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
             $event = Event::create($request->except(['photo', 'hours', 'minutes']));
@@ -98,8 +91,15 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $joined = null;
-        if (!(!(Auth::check() && Auth::user()->is_admin) && $event->banned)){
+
         if (Auth::check()) {
+            $this->authorize('view', $event);
+        } else if ($event->banned || $event->private) {
+            abort(403);
+        }
+
+
+        if (Auth::check() && !Auth::user()->is_admin) {
             if (Auth::user()->hasParticipation($id, 'Participant')) {
                 $joined = 'Participant';
             } else if (Auth::user()->hasParticipation($id, ['Host', 'Owner'])) {
@@ -109,8 +109,6 @@ class EventController extends Controller
             }
         }
 
-        if ($event->private)
-            $this->authorize('view', $event);
 
         $owner = $event->participatesAs('Owner')->first();
         $hosts = $event->participatesAs('Host')->get();
@@ -162,8 +160,6 @@ class EventController extends Controller
             'questions' => $questions,
             'threads' => $threads,
             'joined'=> $joined]);  
-        } else abort(404);
-
     }
 
     /**
@@ -207,9 +203,9 @@ class EventController extends Controller
                 }
             }
             $path = $request->file('photo')->store('events', 'public');
-            $event = $event->update(array_merge($request->except('photo'), ['photo' => $path]));
+            $event = $event->update(array_merge($request->except(['photo', 'hours', 'minutes']), ['photo' => $path]));
         } else {
-            $event = $event->update($request->except('photo'));
+            $event = $event->update($request->except(['photo', 'hours', 'minutes']));
         }
 
         return redirect('/events/'.$id);

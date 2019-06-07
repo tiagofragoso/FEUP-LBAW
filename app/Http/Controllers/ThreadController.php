@@ -65,7 +65,7 @@ class ThreadController extends Controller
             'id' => $thread->id,
             'content' => $thread->content,
             'author_id' => $thread->author_id,
-            'date' => \Carbon\Carbon::createFromFormat('Y-m-d H:i:s.u', $thread->date)->format('M d | H:i'),
+            'date' =>  (new \DateTime($thread->date))->format('M d | H:i'),
             'author' => $thread->author->displayName()
         ], 201);
     }
