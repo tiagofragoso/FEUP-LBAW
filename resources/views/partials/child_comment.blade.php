@@ -1,6 +1,6 @@
 <div class="pl-1 mt-3 align-items-start d-flex flex-row">
     <a href="{{ url('/users/'.$comment->user->id)}}">
-        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
+        <img src="{{ $comment->user->photo() }}" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
     </a>
     <div class="comment-wrapper d-flex flex-column w-100" data-id ="{{$comment->id}}">
         <div class="comment-text px-3 py-2">

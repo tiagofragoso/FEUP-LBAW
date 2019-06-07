@@ -66,6 +66,7 @@ class ThreadController extends Controller
             'content' => $thread->content,
             'author_id' => $thread->author_id,
             'date' =>  (new \DateTime($thread->date))->format('M d | H:i'),
+            'photo' => $thread->author->photo(),
             'author' => $thread->author->displayName()
         ], 201);
     }

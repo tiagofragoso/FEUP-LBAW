@@ -244,7 +244,7 @@
 					@if (count($artists) > 0)
 					@foreach($artists as $artist)
 					<a href="{{ url('/users/'.$artist->id) }}" class="col-lg-2 col-4 d-inline-flex flex-column align align-items-center">
-						<img src="{{asset('assets/user.svg')}}" class="rounded-circle rounded-circle border border-light" width="40" />
+						<img src="{{ $artist->photo() }}" class="rounded-circle rounded-circle border border-light" width="40" />
 						<span class="text-center">{{$artist->displayName()}}</span>
 					</a>
 					@endforeach
@@ -364,8 +364,8 @@
 								<div class="row justify-content-center align-items-center mb-4">
 									<div class="row col-12 mt-3 justify-content-center align-items-center">
 										<div class="col-12 col-md-10 d-flex flex-row align-items-center">
-											<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
-											<form class="position-relative w-100" action="#">
+										<img src="{{ Auth::user()->photo() }} " class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30" />
+											<form class="position-relative w-100">
 												<textarea class="form-control position-relative w-100 pr-5"
 													id="questionFormTextarea" rows="1"
 													placeholder="Ask a question" style="resize: none"></textarea>
@@ -399,7 +399,7 @@
 												<div class="row align-items-center mb-4">
 													<div class="row col-12 mt-3  align-items-center">
 														<div class="col-12 d-flex flex-row align-items-center">
-															<img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30">
+															<img src="{{ Auth::user()->photo() }}" class="rounded-circle rounded-circle border border-light mr-3" width="30" height="30">
 															<form class="position-relative form-answer-question w-100">
 																<textarea class="form-control position-relative w-100 pr-5" rows="1" placeholder="Answer" style="resize: none"></textarea>
 																<div class="position-absolute submit-btn-wrapper d-flex justify-content-center align-items-center mr-1">

@@ -69,6 +69,7 @@ class ThreadCommentController extends Controller
             'user_id' => $comment->user_id,
             'thread_id' => $thread->id,
             'date' =>  (new \DateTime($comment->date))->format('M d | H:i'),
+            'photo' => $comment->user->photo(),
             'user' => $comment->user->displayName()
         ], 201);
     }

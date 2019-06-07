@@ -47,6 +47,7 @@ CREATE TABLE users (
     banned boolean NOT NULL DEFAULT FALSE,
     deleted boolean NOT NULL DEFAULT FALSE,
     remember_token text,
+    photo text,
     is_admin boolean NOT NULL DEFAULT FALSE
 );
 

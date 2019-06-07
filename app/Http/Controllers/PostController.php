@@ -82,7 +82,8 @@ class PostController extends Controller
             'author_id' => $post->author_id,
             'type' => $post->type,
             'date' => Post::find($post->id)->date,
-            'author' => $post->author->displayName()
+            'author' => $post->author->displayName(),
+            'photo' => $post->author->photo()
         ];
 
         if ($request->type === 'Post') {

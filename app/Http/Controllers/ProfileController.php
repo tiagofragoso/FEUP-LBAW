@@ -9,6 +9,8 @@ use App\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -282,5 +284,28 @@ class ProfileController extends Controller
         return response()->json(null,200);
     }
 
-    
+    public function uploadPhoto(Request $request){
+        if (!Auth::check()) return response()->json(null, 403);
+        Validator::make($request->all(), ['photo' => 'required|image'])->validate();
+        if ($request->hasFile('photo')) {
+            if (!empty(Auth::user()->photo)) {
+                try {
+                    $old = Storage::disk('public')->get(Auth::user()->photo);
+                } catch (Exception $e) { }
+                if (isset($old)) {
+                    Storage::disk('public')->delete(Auth::user()->photo);
+                }
+            }
+            try {
+                $path = $request->file('photo')->store('users', 'public');
+                Auth::user()->update(['photo' => $path]);
+                return response()->json(['path' => $path], 200);
+            } catch(\Exception $e) {
+                return response()->json(null, 400);    
+            }
+        } else {
+            return response()->json(null, 400);
+        }
+    }
+
 }

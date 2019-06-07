@@ -992,6 +992,25 @@ top: 1rem;
 opacity: 0.8;
 }
 
+.profile-page .upload-photo-btn {
+	width: 25px;
+    height: 25px;
+    padding: 4px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+	background-color: var(--grey);
+	color: var(--darkgrey);
+	opacity: 0.4;
+	cursor: pointer;
+	top: 7px;
+}
+
+.profile-page .upload-photo-btn:hover {
+	opacity: 0.7;
+}
+
 /*search*/
 .search-page .navbar {
 	background-color: transparent !important;
@@ -1035,6 +1054,10 @@ opacity: 0.8;
 	background-color: var(--blue);
 	border-color: var(--blue);
 	color: var(--white);
+}
+
+#navbar-pic {
+	width: 30px;
 }
 
 .search-page .navbar.stuck .navbar-toggler .navbar-toggler-icon {

@@ -18,8 +18,18 @@
 @endif
 <div class="row justify-content-center">
     <div class="col-6 mb-3 mt-3 text-center position-relative">
-        <img src="../assets/user.svg" alt="..." class="rounded-circle border border-green" width="120" height="120">
+        <img id="user-pic" src="{{$user->photo()}}" alt="user-picture" class="rounded-circle border border-green" width="120" height="120">
     </div>
+</div>
+<div class="row justify-content-center">
+    <label for="photo-input" class="d-flex flex-row align-items-center">
+        <span class="btn upload-photo-btn ml-2"><i class="fas fa-upload"></i></span>
+        <span class="ml-3 text-muted" style="cursor:pointer">Upload a photo</span>
+    </label>
+    <input id="photo-input" type="file" class="d-none">
+</div>
+<div class="row justify-content-center">
+    <span id="upload-result"></span>
 </div>
 <div class="row justify-content-center position-relative">
     <div class="col-10 text-center">

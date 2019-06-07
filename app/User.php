@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned','deleted'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned','deleted', 'photo'
     ];
 
     /**
@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $visible = [
-        'id', 'name', 'username', 'email', 'birthdate', 'followers', 'following'
+        'id', 'name', 'username', 'email', 'birthdate', 'followers', 'following', 'photo'
     ];
 
 
@@ -156,6 +156,10 @@ class User extends Authenticatable
 
     public function tickets() {
         return $this->hasMany('App\Ticket', 'owner');
+    }
+
+    public function photo() {
+        return !empty($this->photo)? asset('storage/'.$this->photo) : asset('/assets/user.svg');
     }
 
 }

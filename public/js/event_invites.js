@@ -170,7 +170,7 @@ if (document.querySelector('#invite-btn')) {
 			wrapper.querySelector('.right-wrapper button').setAttribute('disabled', 'disabled');
 		}
 
-		pic.setAttribute('src', '/assets/user.svg'); //change this?
+		pic.setAttribute('src', user['photo']? '/storage/' + user['photo']: '/assets/user.svg'); 
 		pic.parentElement.setAttribute('href', href);
 
 		if (!user['name']) {
