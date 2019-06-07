@@ -292,29 +292,47 @@
 										<div class=" container">
 											<div class="row">
 												<div class="col-12">
-													<p class="card-title"><strong>Create a post</strong></p>
+													<p class="card-title font-weight-bold">Create a post</p>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-12">
-													<textarea class="form-control" id="postFormTextarea" rows="3"></textarea>
+													<textarea class="form-control" id="postFormTextarea" rows="3" maxlength="5000"
+													style="resize:none" placeholder="Post content"></textarea>
+												</div>
+											</div>
+											<div id="poll-wrapper" class="row mt-2 d-none">
+												<div class="col-12">
+													<input class="form-control font-weight-bold" type="text" name="title" placeholder="Poll title" maxlength="100">
+												</div>
+												<div class="poll-option-input col-12 col-sm-8 mt-2 position-relative">
+													<button class="btn poll-option-close-btn position-absolute ml-2"><i class="fas fa-times"></i></button>
+													<input class="form-control pl-5" type="text" placeholder="Option" maxlength="30">
+												</div>
+												<div class="poll-option-input col-12 col-sm-8 mt-2 position-relative">
+													<button class="btn poll-option-close-btn position-absolute ml-2"><i class="fas fa-times"></i></button>
+													<input class="form-control pl-5" type="text" placeholder="Option" maxlength="30">
+												</div>
+												<div class="add-poll-option col-12 col-sm-8 mt-2 d-flex flex-row align-items-center">
+													<button class="btn poll-option-close-btn ml-2"><i class="fas fa-plus"></i></i></button>
+													<span class="ml-3 text-muted">Add new option</span>
 												</div>
 											</div>
 											<hr class="mb-1">
-											<div class="row">
+											<div class="row d-flex flex-row justify-content-between">
 												<div class="col-6 post-type">
-													<input class="form-check-input d-none form-post-type" type="radio" id="text" value="option1" name="post-type" checked>
+													<input class="form-check-input d-none form-post-type" type="radio" id="text" value="text" name="post-type" checked>
 													<label class="form-check-label mr-2" for="text"><i class="fas fa-font"></i></label>
 
-													<input class="form-check-input d-none form-post-type" type="radio" id="poll" value="option2" name="post-type">
+													<input class="form-check-input d-none form-post-type" type="radio" id="poll" value="poll" name="post-type">
 													<label class="form-check-label mr-2" for="poll"><i class="fas fa-poll-h"></i></label>
 
-													<input class="form-check-input d-none form-post-type" type="radio" id="file" value="option3" name="post-type">
+													<input class="form-check-input d-none form-post-type" type="radio" id="file" value="file" name="post-type">
 													<label class="form-check-label" for="file"><i class="fas fa-paperclip"></i></label>
 												</div>
-												<div class="col-6 text-right">
-													<button class="submit-btn submit-post" data-id="{{$event->id}}" type="submit">
-														<i class="fas fa-angle-double-right"></i>
+												<div class="col d-flex flex-row justify-content-end">
+													<button class="btn btn-sm btn-secondary submit-post d-flex flex-row align-items-center" data-id="{{$event->id}}" type="submit">
+														Submit <i class="ml-2 fas fa-angle-double-right"></i>
 													</button>
 												</div>
 											</div>
