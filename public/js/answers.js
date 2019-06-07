@@ -7,14 +7,14 @@ function createQuestion(response) {
     question.className = 'list-group-item';
     question.innerHTML = `
     <a class="pl-0 text-decoration-none qa-question dropdown-toggle" data-toggle="collapse" href="#" role="button" data-target="#question${response.question_id}" aria-expanded="false" aria-controls="collapseExample">
-    ${response.question}
     </a>
     <div class="collapse" id="question${response.question_id}">
     <p class="text-muted">
-    ${response.content}
     </p>
     </div>
     `
+    question.querySelector('a').textContent = response.question;
+    question.querySelector('p').textContent = response.content;
     return question;
 }
 
