@@ -31,6 +31,10 @@ class Event extends Model
         return $this->belongsToMany('App\User', 'participations')->using('App\Participation')->wherePivotIn('type', $type);
     }
 
+    public function hosts() {
+        return $this->participatesAs(['Owner', 'Host']);
+    }
+
     public function questions(){
         return $this->hasMany('App\Question');
     }
@@ -54,9 +58,7 @@ class Event extends Model
                 $comment['comments'] = Comment::find($comment->id)->comments()->get();
 
             }
-
         }
-
         return $posts;
     }
 
@@ -77,6 +79,10 @@ class Event extends Model
         $questions['unanswered'] = $unanswered;
      
         return $questions;
+    }
+
+    public function image() {
+        return !empty($this->photo)? asset('storage/'.$this->photo) : asset('assets/event-placeholder.png');
     }
 
 }
