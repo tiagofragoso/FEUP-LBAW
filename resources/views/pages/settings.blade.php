@@ -23,7 +23,7 @@
                             <a class="dropdown-item" id = "delete-account-btn" href="{{ url('/logout')}}">Delete account</a>
                         </div>
                     </div>
-                    @include('partials.profile_header', ['user' => $user])
+                    @include('partials.profile_header', ['user' => $user, 'settings' => true])
                     <div class="row justify-content-center mb-3">
                         <div class="col text-center">
                             <a href="/profile" class="card-link border-bottom">View profile</a>
