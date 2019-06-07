@@ -45,7 +45,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
+                    <img id="navbar-pic" src="{{ Auth::user()->photo() }}" class="rounded-circle border border-light" />
                     </a>
                     @if (Auth::check() && Auth::user()->pendingInviteCount() > 0)
                         <div class="invite-badge position-absolute"></div>

@@ -26,6 +26,7 @@ Route::get('api/feed', 'HomeController@getActivity');
 Route::put('api/profile', 'ProfileController@update');
 Route::put('api/profile/password', 'ProfileController@updatePassword');
 Route::delete('api/profile/delete','ProfileController@deleteAccount');
+Route::post('api/profile/photo','ProfileController@uploadPhoto');
 Route::put('api/users/{id}/follows','ProfileController@followUser');
 Route::delete('api/users/{id}/follows', 'ProfileController@unfollowUser');
 Route::put('api/users/{id}/ban','ProfileController@banUser');

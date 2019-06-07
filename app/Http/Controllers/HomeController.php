@@ -34,6 +34,7 @@ class HomeController extends Controller
             ['start_date', '>', DB::raw('CURRENT_TIMESTAMP')]
         ])
         ->orderBy('participants', 'DESC')
+        ->take(6)
         ->get();
     }
 

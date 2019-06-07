@@ -72,6 +72,7 @@ class CommentController extends Controller
             'user_id' => $comment->user_id,
             'date' => (new \DateTime($comment->date))->format('M d | H:i'),
             'user' => $comment->user->displayName(),
+            'photo' => $comment->user->photo(),
             'post_id' => $id,
         ], 201); 
     }

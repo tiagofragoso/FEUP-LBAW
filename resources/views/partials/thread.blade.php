@@ -6,7 +6,7 @@
                     <div class="py-3 px-0 px-md-3 w-100">
                         <div class="row">
                             <div class="col-12 d-flex flex-row">
-                                <img src="../assets/user.svg"
+                                <img src="{{$thread->author->photo()}}"
                                     class="rounded-circle rounded-circle border border-light mr-2" width="30"
                                     height="30" />
                                 <div class="d-flex flex-column">
@@ -46,7 +46,7 @@
                 <div class="dropdown-divider col-12 col-md-10 mx-auto mt-2 mb-3"></div>
                 <div class="row col-12 mt-3 justify-content-center align-items-center">
                     <div class="col-12 col-md-10 d-flex flex-row align-items-center">
-                        <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light mr-3"
+                        <img src="{{Auth::check()? Auth::user()->photo() : asset('assets/user.svg')}}" class="rounded-circle rounded-circle border border-light mr-3"
                             width="30" height="30" />
                         <form class="position-relative w-100" action="#">
                             <textarea class="form-control position-relative w-100 pr-5" rows="1"

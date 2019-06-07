@@ -14,7 +14,7 @@
     <div class="card-body py-4">
         <a href="{{ url('users/' . $report['user']->id)}}" class="row col-12 align-items-center justify-content-center">
             <div class="col-1 mr-4">
-                <img src="../assets/user.svg" class="rounded-circle rounded-circle border border-light" width="40" />
+                <img src="{{$report['user']->photo()}}" class="rounded-circle rounded-circle border border-light" width="40" />
             </div>
             <div class="col-9">
                 <h4 class="card-title user-name mb-1">{{$report['user']->name}}</h4>
