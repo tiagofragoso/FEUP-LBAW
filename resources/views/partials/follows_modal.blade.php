@@ -9,33 +9,6 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-2">
-                            <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
-                        </div>
-                        <a href="{{ url('users/15') }}" class="col-7">
-                            nome
-                        </a>
-                        <div class="col-3">
-                            <button class="btn btn-primary w-100">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-2">
-                            <img src="{{ asset('assets/user.svg')}}" class="rounded-circle border border-light" />
-                        </div>
-                        <a href="{{ url('users/15') }}" class="col-7">
-                            nome
-                        </a>
-                        <div class="col-3">
-                            <button class="btn btn-primary w-100">
-                                Follow
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">

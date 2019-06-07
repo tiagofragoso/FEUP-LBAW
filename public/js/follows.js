@@ -11,14 +11,12 @@ function getFollowCard(follow) {
         <div class="col-2">
             <img src="/assets/user.svg" class="rounded-circle border border-light" />
         </div>
-        <a href="users/${follow.id}" class="col-7 name"></a>
-        <div class="col-3">
-            <button class="btn btn-primary w-100">
-                Follow
-            </button>
-        </div>
+        <a href="/users/${follow.id}" class="col-10 name"></a>
     `;
-    card.querySelector('.name').textContent = follow.name;
+    if (follow.name != null)
+        card.querySelector('.name').textContent = follow.name;
+    else
+        card.querySelector('.name').textContent = follow.username;
     return card;
 }
 

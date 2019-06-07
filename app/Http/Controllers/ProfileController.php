@@ -284,6 +284,11 @@ class ProfileController extends Controller
 
     public function followers($id) {
         $followers = User::findOrFail($id)->followers()->get();
+        foreach ($followers as $key => $f) {
+            $temp = $f->toArray();
+            $temp['follows'] = Auth::user()->hasFollow($f->id);
+            $followers[$key] = $temp;
+        }
         return response()->json([
             'followers' => $followers
         ], 200);
@@ -291,6 +296,11 @@ class ProfileController extends Controller
 
     public function following($id) {
         $following = User::findOrFail($id)->following()->get();
+        foreach ($following as $key => $f) {
+            $temp = $f->toArray();
+            $temp['follows'] = Auth::user()->hasFollow($f->id);
+            $following[$key] = $temp;
+        }
         return response()->json([
             'following' => $following
         ], 200);
