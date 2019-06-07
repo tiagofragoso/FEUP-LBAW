@@ -7,7 +7,6 @@ report_user_btn.forEach(button => {
     button.addEventListener('click', async () => { 
          
         let user_id = button.closest('#content').dataset.id;
-        console.log(user_id);
         let url = '/api/users/'+user_id+'/report';
         const response = await request(
             url,
@@ -51,7 +50,7 @@ report_event_btn.forEach(button => {
                 }
             }
         );
-        console.log(response);
+
         if(response.status == 200){
             let modal = button.closest("#content").getElementsByClassName("modal-body")[0];
             modal.innerText = "Event reported successfully!";

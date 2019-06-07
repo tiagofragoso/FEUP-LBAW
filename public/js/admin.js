@@ -74,7 +74,6 @@ async function updateReport(element, id, type, status) {
         }
     );
 
-    console.log(response);
     if(response.status === 200) {
         updateVisual(element, status);
     }

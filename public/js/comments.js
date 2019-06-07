@@ -224,7 +224,6 @@ async function commentLikes(event) {
                 }
             );
 
-            console.log(response)
             if (response.status === 200) {
                 this.textContent = 'Liked';
                 this.closest('.comment-footer').querySelector('span').textContent++;
@@ -241,7 +240,7 @@ async function commentLikes(event) {
                     }
                 }
             );
-            console.log(response)
+
             if (response.status === 200) {
                 this.textContent = 'Like';
                 this.closest('.comment-footer').querySelector('span').textContent--;
