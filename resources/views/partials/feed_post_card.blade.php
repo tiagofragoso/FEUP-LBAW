@@ -7,7 +7,7 @@
         <div class="row post-card-header align-items-center">
             <div class="col-12">
                 <a href="{{ url('events/'.$post->event_id) }}">
-                    <h5 class="mb-0 event-title px-0 px-md-3">{{ $post->event_title }}</h5>
+                    <h5 class="mb-0 event-title title-link px-0 px-md-3">{{ $post->event_title }}</h5>
                 </a>
             </div>
         </div>
