@@ -9,9 +9,7 @@ if (acquireTicketBtn !== null) {
     
         let event_id = acquireTicketBtn.dataset.id;
         let price = acquireTicketBtn.closest('.modal-content').dataset.id;
-        console.log(price);
         let url = '/api/events/' + event_id + '/tickets';
-       
     
         let requestBody = { price: price }
         const response = await request(
@@ -26,8 +24,7 @@ if (acquireTicketBtn !== null) {
                 body: JSON.stringify(requestBody)
             }
         );
-    
-        console.log(response);
+
         if (response.status === 200) {
     
             acquireTicketBtn.closest('.modal-content').querySelector('.modal-body').innerText = 'Ticket acquired with success!';

@@ -3,6 +3,25 @@ import {getEventCard} from './event_card.js';
 
 let stuck = true;
 let requesting = false;
+let requestObj = {
+    page: 2,
+    search: '',
+    start_date: '',
+    end_date: '',
+    location: '',
+    start_price: '',
+    end_price: '',
+    category: '',
+    status: '',
+    sort_by: ''
+};
+
+if (new URL(window.location.href).searchParams.has('search')) {
+    requestObj.search = new URL(window.location.href).searchParams.get('search');
+    document.getElementById('card-container').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
 
 /**
  * Navbar scroll transition.
