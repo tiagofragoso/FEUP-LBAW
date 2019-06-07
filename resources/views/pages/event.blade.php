@@ -314,8 +314,17 @@
 													<input class="form-control pl-5" type="text" placeholder="Option" maxlength="30">
 												</div>
 												<div class="add-poll-option col-12 col-sm-8 mt-2 d-flex flex-row align-items-center">
-													<button class="btn poll-option-close-btn ml-2"><i class="fas fa-plus"></i></i></button>
+													<button class="btn poll-option-close-btn ml-2"><i class="fas fa-plus"></i></button>
 													<span class="ml-3 text-muted">Add new option</span>
+												</div>
+											</div>
+											<div id="file-wrapper" class="row mt-2 d-none">
+												<div class="col-12 col-sm-8 mt-2">
+													<label for="file-input" class="d-flex flex-row align-items-center">
+														<span class="btn poll-option-close-btn ml-2"><i class="fas fa-upload"></i></span>
+														<span class="ml-3 text-muted" style="cursor:pointer">Upload a file</span>
+													</label>
+													<input id="file-input" type="file" class="d-none">
 												</div>
 											</div>
 											<hr class="mb-1">
