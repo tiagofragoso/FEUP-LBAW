@@ -25,15 +25,10 @@ class ProfileController extends Controller
         }
 
         $user = User::findOrFail($id);
-        if ($user->banned && !Auth::user()->is_admin) {
-            abort(403);
-        }
-    
-       if(!$user->can('view',$user)) return view('errors.403');
-    
-        
 
-        if ($user->is_admin) {
+        if (Auth::check()) {
+            $this->authorize('view', $user);
+        } else if ($user->is_admin || $user->banned) {
             abort(403);
         }
       
