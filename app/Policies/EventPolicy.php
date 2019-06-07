@@ -21,7 +21,8 @@ class EventPolicy
      */
     public function view(User $user, Event $event)
     {
-        return true;
+        $canSee = $event->participatesAs(['Owner', 'Host','Participant'])->get();
+        return $canSee->contains($user);
     }
 
     /**

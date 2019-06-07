@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'is_admin', 'birthdate', 'banned'
+        'name', 'username', 'email', 'password', 'is_admin', 'birthdate','banned','deleted'
     ];
 
     /**
@@ -38,9 +38,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Event', 'participations')->withPivot('type')->wherePivotIn('type', $type);
     }
 
-    public function displayName()
-    {
-        return (empty($this->name) ? '@' . $this->username : $this->name);
+    public function displayName() {
+        return (empty($this->name)? '@'.$this->username : $this->name);
     }
 
     public function event($id)
