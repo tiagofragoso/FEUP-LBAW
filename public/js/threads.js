@@ -126,6 +126,8 @@ if (threadContent !== null) {
     button.addEventListener('click', async () => {
         event.preventDefault();
 
+        if (threadContent.value === "") return;
+
         let requestBody = {
             content: threadContent.value
         }
@@ -170,6 +172,8 @@ commentsSections.forEach(section => {
 
 async function commentHandler(event) {
     event.preventDefault();
+
+    if (this.content.value === "") return;
 
     let requestBody = {
         content : this.content.value

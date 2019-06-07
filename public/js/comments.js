@@ -20,6 +20,8 @@ childSections.forEach(section => {
 async function postChild(event) {
     event.preventDefault();
 
+    if (this.content.value === "") return;
+
     let requestBody = {
         content: this.content.value,
         parent: this.comment_id
@@ -63,6 +65,8 @@ commentSections.forEach(section => {
 export async function postComment(event) {
 
     event.preventDefault();
+
+    if (this.content.value === "") return;
 
     let requestBody = {
         content: this.content.value,

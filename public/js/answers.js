@@ -33,6 +33,8 @@ questions.forEach(question => {
         event.preventDefault();
         let question_id = button.dataset.id;
 
+        if (textarea.value === "") return;
+
         let requestBody = {
             content: textarea.value,
         }

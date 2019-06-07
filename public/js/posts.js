@@ -169,6 +169,8 @@ async function postPost(event) {
         postType = 'File';
     }
 
+    if (postContent.value === "") return;
+
     let requestBody = {
         content: postContent.value,
         type: postType
