@@ -26,7 +26,7 @@
 
                             <div class="col-7 col-md-9 mt-4">
                                 <div class="text-muted event-date">
-                                    {{ \DateTime::createFromFormat('Y-m-d H:i:s',$report['event']->start_date)->format('d M Y') }}
+                                    {{ \DateTime::createFromFormat('Y-m-d H:i:sO',$report['event']->start_date)->format('d M Y') }}
                                 </div>
                                 <div class="text-muted event-location">{{$report['event']->location}}
                                 </div>

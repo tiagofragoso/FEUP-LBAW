@@ -11,6 +11,8 @@ class Poll extends Model
     protected $primaryKey = 'post_id';
     protected $table = 'polls';
 
+    protected $fillable = ['post_id', 'title'];
+
     public function pollOptions() {
         return $this->hasMany('App\PollOption', 'post_id', 'post_id')->orderBy('votes', 'desc');
     }

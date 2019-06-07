@@ -22,7 +22,7 @@
 	
 								<div class="col-7 col-md-9 mt-4">
 									<div class="text-muted event-date">
-											{{ \DateTime::createFromFormat('Y-m-d H:i:s',$invite->event()->first()->start_date)->format('d M Y') }}
+											{{ \DateTime::createFromFormat('Y-m-d H:i:sO',$invite->event()->first()->start_date)->format('d M Y') }}
 									</div>
 									<div class="text-muted event-location">
 											{{$invite->event()->first()->location}}
