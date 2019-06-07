@@ -12,14 +12,10 @@
                             <dt>
                                 <h3><strong>About us</strong></h3>
                             </dt>
-                            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc nec nunc tincidunt, facilisis
-                                neque sit amet, pharetra justo. Vestibulum hendrerit dolor ex, vel aliquet nibh placerat
-                                convallis. Mauris justo metus, aliquam ut placerat eget, vestibulum vitae sem. Nunc
-                                elementum
-                                facilisis odio, eget laoreet dui aliquam quis. Mauris non pulvinar eros. In vestibulum justo
-                                ac
-                                odio aliquam, at porta mi condimentum. In eu nisi ultricies, condimentum turpis sit amet,
-                                tincidunt nulla. Nunc pellentesque diam nisi, eu consectetur leo placerat id.</dd>
+                            <dd><strong>sound.hub</strong> is a music event management platform that aims to encourage users to 
+                                collaboratively organise their events. By providing an easy way for hosts to interact with 
+                                artists and participants, we aim to simplify the planning phase of the event. We also provide
+                                a social network feel which keeps users engaged and looking forward to <strong>YOUR</strong> event.</dd>
                         </div>
                         <div class="col-lg-6 p-5 text-center d-none d-lg-block">
                             <img id="logo-card" src="../assets/logo-card.svg">
@@ -43,11 +39,11 @@
                                         <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
                                             href="#ans1" role="button" aria-expanded="false"
                                             aria-controls="collapseExample">
-                                            Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+                                            Are there any region restrictions?
                                         </a>
                                         <div class="collapse" id="ans1">
                                             <p>
-                                                Maecenas elementum massa sed nunc consectetur gravida.
+                                                No, <strong>sound.hub</strong> is available worldwide.
                                             </p>
                                         </div>
                                     </li>
@@ -55,11 +51,11 @@
                                         <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
                                             href="#ans2" role="button" aria-expanded="false"
                                             aria-controls="collapseExample">
-                                            Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+                                            Can I create events without monetizing them?
                                         </a>
                                         <div class="collapse" id="ans2">
                                             <p>
-                                                Maecenas elementum massa sed nunc consectetur gravida.
+                                                Of course! You choose how to run your event, <strong>sound.hub</strong> is only here to help.
                                             </p>
                                         </div>
                                     </li>
@@ -67,11 +63,11 @@
                                         <a class="font-weight-bold pl-0 text-decoration-none" data-toggle="collapse"
                                             href="#ans3" role="button" aria-expanded="false"
                                             aria-controls="collapseExample">
-                                            Suspendisse non mi quis elit rutrum vehicula convallis vel lorem?
+                                            Is there a fee to host an event through the platform?
                                         </a>
                                         <div class="collapse" id="ans3">
                                             <p>
-                                                Maecenas elementum massa sed nunc consectetur gravida.
+                                                No! <strong>sound.hub</strong> is available for every event for free.
                                             </p>
                                         </div>
                                     </li>
