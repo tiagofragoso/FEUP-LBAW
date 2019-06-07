@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', $user->username)
 @section('container', 'profile-page')
 @section('scripts')
 <script defer type="module" src="/js/user_profile.js"> </script>
