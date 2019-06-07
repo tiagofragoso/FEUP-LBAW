@@ -456,13 +456,17 @@ a.badge-secondary:hover {
 	z-index: 5;
 	border: 1px solid #7ee081;
 	font-weight: bold;
-	cursor: pointer;
 }
 
 .complete {
 	background-color: #7ee081;
 	color: #ffffff;
 	border-color: #7ee081;
+}
+
+.complete:last-of-type {
+	transform: scale(1.15);
+	transition: transform 0.3s ease-in-out;
 }
 
 .step-wrapper {
@@ -551,13 +555,13 @@ input[type="radio"]:checked + .progress + .step-wrapper > label + span {
 	max-height: 360px;
 }
 
-.event-page .event-btns > button {
+.event-page .event-btns > button, .event-form-page .event-btns > button {
 	opacity: 0.8;
 	vertical-align: middle;
 	text-decoration: none;
 }
 
-.event-page .event-btns {
+.event-page .event-btns, .event-form-page .event-btns {
 	z-index: 1;
 	right: 1rem;
 	bottom: 1rem;
@@ -645,6 +649,122 @@ input[type="datetime-local"].custom-select, input[type="number"].custom-select {
 	background: none;
 	padding-right: .75rem;
 }
+
+.event-form-page label[for="photo"] {
+	cursor: pointer;
+}
+
+
+.event-form-page .step {
+	width: 100%;
+	height: 2rem;
+	background-color: var(--white);
+	z-index: 5;
+	border: 1px solid var(--green);
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.event-form-page .step-wrapper {
+	width: 2rem;
+	overflow: visible;
+	white-space: nowrap;
+}
+
+.event-form-page .progress {
+	display: none;
+	top: calc(1rem - 2px);
+	height: 4px;
+	width: 100%;
+}
+
+.event-form-page input[type="radio"]:checked + .progress + .step-wrapper > label {
+	transform: scale(1.15);
+	transition: transform 0.3s ease-in-out;
+}
+
+.event-form-page #step-1 + .progress {
+	display: block;
+}
+
+.event-form-page #step-1 + .progress + .step-wrapper > label {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+.event-form-page #step-1 + .progress + .step-wrapper > label + span {
+	color: var(--green);
+}
+
+.event-form-page #step-2:checked + .progress {
+	display: block;
+}
+
+.event-form-page #step-2:checked + .progress + .step-wrapper > label {
+	background-color: var(--green);
+	color: var(--white);
+	border-color: var(--green);
+}
+
+.event-form-page #step-2:checked + .progress + .step-wrapper > label + span {
+	color: var(--green);
+}
+
+.event-form-page .progress-1 {
+	background: linear-gradient(to right, var(--green) 5rem, var(--grey) 5rem);
+}
+
+.event-form-page .progress-2 {
+	background: linear-gradient(to right, var(--green) 50%, var(--grey) 50%);
+}
+
+.event-form-page .progress-3 {
+	background: linear-gradient(to right, var(--green) calc(100% - 5rem), var(--grey) calc(100% - 5rem) );
+}
+
+.event-form-page #date-toggle {
+	border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.event-form-page .dropup .dropdown-menu-right {
+	background-color: transparent;
+	border: none;
+}
+
+.event-form-page .help-btn {
+	z-index: 1;
+	right: 1rem;
+	top: 1rem;
+	opacity: 0.8;
+}
+
+.event-form-page .help-text {
+	display: none;
+	max-width: 0px;
+}
+
+.event-form-page .help-btn:hover .help-text {
+	display: inline-block;
+	max-width: none;
+}
+
+.event-form-page ol {
+	list-style: none;
+	counter-reset: help-counter;
+	padding-inline-start: 0px;
+  }
+  .event-form-page ol li {
+	counter-increment: help-counter;
+  }
+  .event-form-page ol li::before {
+	content: counter(help-counter) ". ";
+	font-weight: bold;
+	font-size: 1.2em;
+  }
+  
+
 
 /* home */
 

@@ -39,17 +39,20 @@ Route::put('api/events/reports/{id}','ReportController@updateEventReport');
 Route::get('api/search', 'SearchController@getEvents');
 
 Route::post('api/events/{id}/posts', 'PostController@store');
+Route::put('api/polls/{poll_id}/votes','PostController@pollVote');
 Route::post('api/events/{id}/questions', 'QuestionController@store');
 Route::post('api/events/{id}/threads', 'ThreadController@store');
 Route::post('api/questions/{id}/answer', 'AnswerController@store');
 Route::post('api/threads/{id}/comments', 'ThreadCommentController@store');
 
+Route::post('api/posts/{id}/comments','CommentController@store');
 Route::put('api/posts/{id}/like','PostController@likePost');
 Route::delete('api/posts/{id}/like','PostController@dislikePost');
 
 Route::put('api/comments/{id}/like','CommentController@likeComment');
 Route::delete('api/comments/{id}/like','CommentController@dislikeComment');
 
+Route::post('api/events/{event_id}/tickets','EventController@acquireTicket');
 
 Route::get('api/invites/following', 'InvitesController@getFollowing');
 Route::get('api/invites/search', 'InvitesController@search');

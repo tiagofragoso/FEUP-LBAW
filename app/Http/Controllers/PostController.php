@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Post;
+use App\Poll;
 use App\Event;
+use App\PollVote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +18,8 @@ class PostController extends Controller
         $this->middleware('auth')->except(['show']);
     }
 
-    public function validatePost($data) {
+    public function validatePost($data)
+    {
         return Validator::make($data->all(), [
             'content' => 'required|string|max:5000',
             'event_id' => 'required',
@@ -122,10 +125,33 @@ class PostController extends Controller
         //
     }
 
+    public function pollVote(Request $request, $postId)
+    {
+        $pollOption = $request->pollOption;
+        if (!Auth::check()) return response()->json(null, 403);
+        if (is_null(Poll::where('post_id', $postId)->get()->first())) return response()->json(null, 404);
+        $post = Poll::where('post_id', $postId)->get()->first();
+    
+        $event = Event::find(Post::find($postId)->event_id);
+        if (!($post->hasVote(Auth::user()->id))) {
+            $this->authorize('canVote', $event);
+            Auth::user()->voteOnPoll($postId, $pollOption);
+            return response()->json(null, 200);
+        } else{
+            $this->authorize('canVote', $event);
+            $post->changeVote(Auth::user()->id,$pollOption);
+            return response()->json(null, 200);
+        }
+        
+    }
+
     public function likePost($id){
        
         if (!Auth::check()) return response()->json(null, 403);
-        
+        $post = Post::find($id);
+        if (is_null($post)) return response()->json(null, 404);
+        $event = Event::find($post->event_id);
+        $this->authorize('canVote', $event);
         if (is_null(Post::find($id))) return response()->json(null, 404);
         Auth::user()->likePost($id);
         return response()->json(null, 200);
@@ -134,10 +160,12 @@ class PostController extends Controller
     public function dislikePost($id){
         
         if (!Auth::check()) return response()->json(null, 403);
-        if (is_null(Post::find($id))) return response()->json(null, 404);
+        $post = Post::find($id);
+        if (is_null($post)) return response()->json(null, 404);
+        $event = Event::find($post->event_id);
+        $this->authorize('canVote', $event);
         Auth::user()->dislikePost($id);
         return response()->json(null, 200);
 
     }
-
 }

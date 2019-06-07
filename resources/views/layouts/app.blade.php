@@ -23,8 +23,8 @@
   <script defer src="{{ asset('libs/bootstrap/bootstrap.min.js') }}"></script>
   <script defer src="{{ asset('libs/moment/moment.min.js') }}"></script>
   <script defer src="{{ asset('libs/air-datepicker/datepicker.min.js') }}"></script>
-  <script defer src="{{ asset('libs/air-datepicker/datepicker.en.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('libs/air-datepicker/datepicker.min.css') }}">
+  <script defer src="{{ asset('libs/air-datepicker/datepicker.en.js') }}"></script>
   @yield('scripts')
 </head>
 

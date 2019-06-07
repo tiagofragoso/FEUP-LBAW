@@ -18,8 +18,9 @@ RUN mkdir /var/run/php
 # Clear configuration cache
 WORKDIR "/var/www"
 #RUN php artisan cache:clea
+RUN rm -rf public/storage
 RUN php artisan config:cache
 RUN php artisan config:clear
-
+RUN php artisan storage:link
 # Start command
 CMD sh /docker_run.sh
